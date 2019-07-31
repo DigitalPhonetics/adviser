@@ -168,3 +168,6 @@ typings/
 
 # next.js build output
 .next
+
+# OS-specific
+.DS_Store
