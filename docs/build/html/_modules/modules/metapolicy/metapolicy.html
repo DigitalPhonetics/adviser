@@ -95,11 +95,11 @@
 </ul>
 <p class="caption"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/DigitalPhonetics/adviser/tutorial.html#Implementing-your-own-modules">Implementing your Own Modules</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/DigitalPhonetics/adviser/tutorial.html#Creating-a-new-domain">Creating a New Domain</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/DigitalPhonetics/adviser/tutorial.html#Rule-based-Natural-Language-Understanding-(NLU)-through-Regexes">Rule-based NLU</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/DigitalPhonetics/adviser/tutorial.html#Training-a-reinforcement-learning-policy">Training a RL Policy</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/DigitalPhonetics/adviser/tutorial.html#Handcrafted-Natural-Language-Generation-(NLG)-through-Sentence-Templates">Rule-based NLG</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://digitalphonetics.github.io/adviser/tutorial.html#Implementing-your-own-modules">Implementing your Own Modules</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://digitalphonetics.github.io/adviser/tutorial.html#Creating-a-new-domain">Creating a New Domain</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://digitalphonetics.github.io/adviser/tutorial.html#Rule-based-Natural-Language-Understanding-(NLU)-through-Regexes">Rule-based NLU</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://digitalphonetics.github.io/adviser/tutorial.html#Training-a-reinforcement-learning-policy">Training a RL Policy</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://digitalphonetics.github.io/adviser/tutorial.html#Handcrafted-Natural-Language-Generation-(NLG)-through-Sentence-Templates">Rule-based NLG</a></li>
 </ul>
 <p class="caption"><span class="caption-text">FAQ</span></p>
 <ul>
@@ -410,9 +410,8 @@
             <span class="n">d</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">get_domain_name</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_domains</span><span class="p">:</span>
                 <span class="n">sys_act</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sys_act</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">sys_act</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">SysActionType</span><span class="o">.</span><span class="n">Inform</span> <span class="ow">or</span>\
-                        <span class="n">sys_act</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">SysActionType</span><span class="o">.</span><span class="n">InformByName</span> <span class="ow">or</span>\
-                        <span class="n">sys_act</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">SysActionType</span><span class="o">.</span><span class="n">InformByAlternatives</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">sys_act</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">SysActionType</span><span class="o">.</span><span class="n">InformByName</span> <span class="ow">or</span>\
+                   <span class="n">sys_act</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">SysActionType</span><span class="o">.</span><span class="n">InformByAlternatives</span><span class="p">:</span>
 
                     <span class="c1"># TODO: is it ever going to be possible to have multiple</span>
                     <span class="c1"># offers? If so need to fix this --LV</span>
