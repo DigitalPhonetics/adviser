@@ -240,9 +240,8 @@ class HandcraftedMetapolicy(DialogSystem):
             d = graph.domain.get_domain_name()
             if d in self.active_domains:
                 sys_act = self.sys_act[d]
-                if sys_act.type == SysActionType.Inform or\
-                        sys_act.type == SysActionType.InformByName or\
-                        sys_act.type == SysActionType.InformByAlternatives:
+                if sys_act.type == SysActionType.InformByName or\
+                   sys_act.type == SysActionType.InformByAlternatives:
 
                     # TODO: is it ever going to be possible to have multiple
                     # offers? If so need to fix this --LV

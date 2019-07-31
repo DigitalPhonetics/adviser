@@ -120,8 +120,7 @@ class MutliDomainDialogSystem(object):
                             'type': usr_act.type.value,
                             'slot': usr_act.slot,
                             'value': usr_act.value,
-                            'score': "{:1.1f}".format(usr_act.score),
-                            'negate': usr_act.negate
+                            'score': "{:1.1f}".format(usr_act.score)
                         } for usr_act in value
                     ]
                 elif key == 'sys_act':
@@ -145,12 +144,11 @@ class MutliDomainDialogSystem(object):
                     stop = True
             if 'sys_act' in kwargs and kwargs['sys_act'].type == SysActionType.Bye:
                 stop = True
-            elif 'sys_act' in kwargs and kwargs['sys_act'].type == SysActionType.Restart:
-                # TODO maybe ignore stop if system wants to restart?
-                kwargs = {}
-                self.num_turns = 0
-                for module in self.modules:
-                    kwargs = {**kwargs, **module.start_dialog(**kwargs)}
+            # elif 'sys_act' in kwargs and kwargs['sys_act'].type == SysActionType.Restart:
+            #     kwargs = {}
+            #     self.num_turns = 0
+            #     for module in self.modules:
+            #         kwargs = {**kwargs, **module.start_dialog(**kwargs)}
         self.num_turns += 1
         return kwargs, stop, turn_dict
 
