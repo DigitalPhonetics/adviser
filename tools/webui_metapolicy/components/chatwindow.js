@@ -22,6 +22,10 @@ class ChatWindow extends Component {
         }
     }
 
+    scrollToBottom = () => {
+        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    }
+    
     sendEnterKey = (event) => {
         if(event.key == 'Enter') {
             this.send();
@@ -69,6 +73,11 @@ class ChatWindow extends Component {
                 this.props.receivedTurnInfo(res.data['turn_info'])     
             }
         )
+        this.scrollToBottom();
+    }
+
+    componentDidUpdate() {
+        this.scrollToBottom();
     }
 
     send = () => {
@@ -91,7 +100,10 @@ class ChatWindow extends Component {
         return <div className="chatwindow">
             <div className="messagelist">
                 <MessageList messages={this.state.messages} />
-            </div>
+                <div style={{ float:"left", clear: "both" }}
+                ref={(el) => { this.messagesEnd = el; }}>
+                </div>
+            </div>  
             <div className="chatbox">
                 <input className="input" autoFocus onKeyDown={this.sendEnterKey} onChange={this.textChange} value={this.state.input}/>
                 <button className="button" onClick={this.send}>send</button>
@@ -101,6 +113,7 @@ class ChatWindow extends Component {
                 display: grid;
                 height: 100%;
                 grid-template-rows: 1fr auto;
+                max-height: 100%
             }
             .messagelist {
                 overflow-y: scroll; 
@@ -112,7 +125,10 @@ class ChatWindow extends Component {
                 align-self: end;
                 display: flex;
                 width: 100%;
+                height: 25px;
                 grid-row: 2;
+                background: white;
+                z-index: 10; 
             }
             .input {
                 border-radius: 5px;
