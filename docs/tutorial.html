@@ -13592,7 +13592,7 @@ The next example sets up a logger which will log complete dialogs to a file and 
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Typically, dialog system modules are combined in a pipeline as displayed in the following figure (blue modules are included in ADVISER):</p>
-<p><img src="https://github.com/DigitalPhonetics/adviser/raw/master/tutorialresources/pipeline.png" width="800" align="center"/></p>
+<p><img src="tutorialresources/pipeline.png" width="800" align="center"/></p>
 <p>However, ADVISER allows you to freely re-order, remove or insert modules as long as the required inputs for each module inside the pipeline are provided.
 For example, if you want to build an end-to-end system, you may discard most of the modules.
 Or instead of a linear structure, you could also create branching structures.</p>
@@ -13876,7 +13876,7 @@ logger: # DIALOG 0 FINISHED #
 </pre></div>
 <p>from the top level directory.</p>
 <p>As a fist step, you have to choose the table you want to use (we will use the ImsCourses database located in resources/databases for demonstration purposes):
-<img src="https://github.com/DigitalPhonetics/adviser/raw/master/tutorialresources/ontcreator_select_db.png" width="500"/></p>
+<img src="tutorialresources/ontcreator_select_db.png" width="500"/></p>
 <p>Afterwards, you are asked to name your new domain.
 The following selection screens allow you to choose the slots for each slot type.
 An active selection is indicated by a blue circle.</p>
@@ -13894,9 +13894,9 @@ An active selection is indicated by a blue circle.</p>
 </ul>
 <p>A special value you can select is the <code>dontcare</code> value, which, when included, means that the user can just say they don't care about the corresponding slot and leave filling it up to the system (e.g. when searching for a restaurant and the system asks for the <em>area</em>, a user might say something like <code>I don't care</code> - the system will then omit the <em>area</em> slot as a constraint in the database queries).</p>
 <p>Selection screens for slots / values look like this:
-<img src="https://github.com/DigitalPhonetics/adviser/raw/master/tutorialresources/ontcreator_selections.png" width="700"/></p>
+<img src="tutorialresources/ontcreator_selections.png" width="700"/></p>
 <p>The resulting .json file containing the ontology will look like this (excerpt):
-<img src="https://github.com/DigitalPhonetics/adviser/raw/master/tutorialresources/ontcreator_json.png" width="500"/></p>
+<img src="tutorialresources/ontcreator_json.png" width="500"/></p>
 <p>If your database is not already located inside the folder <code>resources/databases</code>,
 confirm the copy operation when asked by the ontology creation tool.</p>
 <p>After the tool terminated successfully, 
@@ -14084,7 +14084,7 @@ This gives you the possibility to change the behaviour of the user simulator, wh
 <h2 id="Training-a-reinforcement-learning-policy">Training a reinforcement learning policy<a class="anchor-link" href="#Training-a-reinforcement-learning-policy">&#182;</a></h2><p>In order to train a reinforcement learning policy with a user simulator instead of chatting with it,
 the dialog graph needs to change slightly.
 User input and output modules need to be replaced by a user simulator module:</p>
-<p><img src="https://github.com/DigitalPhonetics/adviser/raw/master/tutorialresources/policy_training.png" width="350" align="center"/></p>
+<p><img src="tutorialresources/policy_training.png" width="350" align="center"/></p>
 <p>For the sake of reproducibility, it is recommended to store the random seeds you used for training and evaluation along with the results and initialize all random generators used in your pipeline with it.</p>
 <p>If you call <code>utils.common.init_random(seed=12345)</code> before training, the python random module as well as numpy, pytorch and tensorflow modules will be initialized with this random seed.
 If you run the system twice with the same seed, you should get exactly the same results and dialogs.
