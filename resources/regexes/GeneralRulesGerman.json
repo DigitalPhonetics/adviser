@@ -1,0 +1,11 @@
+{
+    "hello": "(\\b|^| )(hi|hallo|guten\\ (tag|abend|mittag|nachmittag)|hey)(\\b|$| )",
+    "bye": "(\\b|^| )(bye(-)?(bye)?|by(by)?|good(-)?bye|tsch\u00fcss|das(\\ ist\\ alles|w\u00e4r(')?s|w\u00e4r(e)?\\ alles))(\\s|$| |\\.)",
+    "deny": "((\\b|^| )(ne(in)?|falsch|nicht richtig|fehler|nope|nicht)|(nicht (richtig|korrekt)))(\\s)?$",
+    "affirm": "((ja|jep|genau|(\\b|^)ok\\b|(\\b|^)OK|okay|klar|^y$|(\\b|^)yep(\\b|$)|(das( ist| is) )?(?<!nicht )(richtig|korrekt)))(\\s)?$",
+    "thanks": "(?=.*(^( )?)(((super|gut|toll|sehr\\ gut|cool) )?((das( war| ist) (sehr )?hilfreich) )?((vielen|(vielen |ganz )?herzlichen) dank|danke)( (das( war| ist) (sehr )?hilfreich))?|((super|gut|toll|sehr\\ gut|cool) )?(das( war| ist) (sehr )?hilfreich)|(super|gut|toll|sehr\\ gut|cool))(( )*))(?=^(?:(?!bye).)*$).*$",
+    "repeat": "(\\b|^| )(wiederhole(n Sie)? das|sag(en Sie)? das nochmal|wiederhole|wiederholung|nochmal)",
+    "reqalts": "(\\b|^| )((irgendwas|irgendetwas|etwas|was) anderes)|(ein )?ander(e|er)|(alternative(n)?)|((andere |weitere )?option(en)?)|((mag |m\u00f6chte |will )?(das|dies(e|es|er))( so)? nicht)",
+    "dontcare": "irgendwas|irgendetwas|jegliche art|jede art|(das |es )?((ist|is) mir |mir )?egal|(das |es )?spielt keine rolle",
+    "req_everything": "(\\b|^| )((sag |erz\u00e4hl )?(mir)?alles( \u00fcber| zu)?|(will |m\u00f6chte |muss )?alles wissen( \u00fcber| zu)?)"
+}

@@ -1,0 +1,13 @@
+torch>=1.0.0
+tensorboardX
+sphinx
+pyqt5==5.10.1
+spacy
+jsonpickle
+pyyaml
+pyinquirer
+numpy
+pytest
+flask
+flask_cors
+flask_jwt_extended

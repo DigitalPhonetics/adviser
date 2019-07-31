@@ -1,0 +1,244 @@
+{
+    "applied_nlp": {
+        "false": "^(?=.*((applied )?(\\bnlp\\b|natural language processing)))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*((applied )?(\\bnlp\\b|natural language processing)))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "bachelor": {
+        "false": "^(?=.*((bachelor|undergraduate|\\bBSc\\b)( program)?))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*((bachelor|undergraduate|\\bBSc\\b)( program)?))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "cognitive_science": {
+        "false": "^(?=.*(cognitive science|psycholinguistics))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*(cognitive science|psycholinguistics))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "course_type": {
+        "se": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bse\\b)|(seminar)|(\\bse\\b)|(seminar)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bse\\b)|(seminar)( (please|and))*",
+        "ue": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bue\\b)|(practical (course)|(?<!lecture with )(exercises|tutorial))|(\\bue\\b)|(practical (course)|(?<!lecture with )(exercises|tutorial))( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bue\\b)|(practical (course)|(?<!lecture with )(exercises|tutorial))( (please|and))*",
+        "vo": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bvo\\b)|(lecture(?=^(?:(?! with (exercises|tutorial)).)*$).*$)|(\\bvo\\b)|(lecture(?=^(?:(?! with (exercises|tutorial)).)*$).*$)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bvo\\b)|(lecture(?=^(?:(?! with (exercises|tutorial)).)*$).*$)( (please|and))*",
+        "vu": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (lecture with (exercises|tutorial))|(lecture with (exercises|tutorial))( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(lecture with (exercises|tutorial))( (please|and))*"
+    },
+    "deep_learning": {
+        "false": "^(?=.*(deep (learning|neural networks)|neural networks|\\bNN(s)?\\b|\\bDL\\b))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*(deep (learning|neural networks)|neural networks|\\bNN(s)?\\b|\\bDL\\b))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "ects": {
+        "3": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b|^| )(3|three)(\\b|$| )|(\\b|^| )(3|three)(\\b|$| )( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b|^| )(3|three)(\\b|$| )( (please|and))*",
+        "6": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (?=.*(\\b|^| )(6|six)(\\b|$| ))(?=^(?:(?!(6|six) sws).)*$).*$|(?=.*(\\b|^| )(6|six)(\\b|$| ))(?=^(?:(?!(6|six) sws).)*$).*$( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(?=.*(\\b|^| )(6|six)(\\b|$| ))(?=^(?:(?!(6|six) sws).)*$).*$( (please|and))*",
+        "9": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b|^| )(9|nine)(\\b|$| )|(\\b|^| )(9|nine)(\\b|$| )( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b|^| )(9|nine)(\\b|$| )( (please|and))*"
+    },
+    "elective": {
+        "false": "^(?=.*(elective|non mandatory))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*(elective|non mandatory))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "extendable": {
+        "false": "^(?=.*(extendable|upgradable))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*(extendable|upgradable))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "id": {
+        "400000007": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b400000007\\b)|(\\b400000007\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b400000007\\b)( (please|and))*",
+        "401018000": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b401018000\\b)|(\\b401018000\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b401018000\\b)( (please|and))*",
+        "401316000": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b401316000\\b)|(\\b401316000\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b401316000\\b)( (please|and))*",
+        "401396000": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b401396000\\b)|(\\b401396000\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b401396000\\b)( (please|and))*",
+        "401400040": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b401400040\\b)|(\\b401400040\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b401400040\\b)( (please|and))*",
+        "401404000": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b401404000\\b)|(\\b401404000\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b401404000\\b)( (please|and))*",
+        "401426001": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b401426001\\b)|(\\b401426001\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b401426001\\b)( (please|and))*",
+        "401516000": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b401516000\\b)|(\\b401516000\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b401516000\\b)( (please|and))*",
+        "401516001": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b401516001\\b)|(\\b401516001\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b401516001\\b)( (please|and))*",
+        "401516004": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b401516004\\b)|(\\b401516004\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b401516004\\b)( (please|and))*",
+        "401516009": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b401516009\\b)|(\\b401516009\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b401516009\\b)( (please|and))*",
+        "401517005": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b401517005\\b)|(\\b401517005\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b401517005\\b)( (please|and))*",
+        "401600001": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b401600001\\b)|(\\b401600001\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b401600001\\b)( (please|and))*",
+        "403000001": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b403000001\\b)|(\\b403000001\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b403000001\\b)( (please|and))*",
+        "403000002": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b403000002\\b)|(\\b403000002\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b403000002\\b)( (please|and))*",
+        "403160600": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b403160600\\b)|(\\b403160600\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b403160600\\b)( (please|and))*",
+        "403160601": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b403160601\\b)|(\\b403160601\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b403160601\\b)( (please|and))*",
+        "403500300": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b403500300\\b)|(\\b403500300\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b403500300\\b)( (please|and))*",
+        "403500301": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b403500301\\b)|(\\b403500301\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b403500301\\b)( (please|and))*",
+        "403504000": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b403504000\\b)|(\\b403504000\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b403504000\\b)( (please|and))*",
+        "403519000": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b403519000\\b)|(\\b403519000\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b403519000\\b)( (please|and))*",
+        "403519010": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b403519010\\b)|(\\b403519010\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b403519010\\b)( (please|and))*",
+        "403529000": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b403529000\\b)|(\\b403529000\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b403529000\\b)( (please|and))*",
+        "403535060": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b403535060\\b)|(\\b403535060\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b403535060\\b)( (please|and))*",
+        "403535091": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b403535091\\b)|(\\b403535091\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b403535091\\b)( (please|and))*",
+        "403543000": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b403543000\\b)|(\\b403543000\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b403543000\\b)( (please|and))*",
+        "403549000": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b403549000\\b)|(\\b403549000\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b403549000\\b)( (please|and))*",
+        "403560000": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b403560000\\b)|(\\b403560000\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b403560000\\b)( (please|and))*",
+        "405300000": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b405300000\\b)|(\\b405300000\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b405300000\\b)( (please|and))*"
+    },
+    "lang": {
+        "de": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bde\\b)|(german|deutsch)|(\\bde\\b)|(german|deutsch)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bde\\b)|(german|deutsch)( (please|and))*",
+        "en": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\ben\\b)|(english|englisch)|(\\ben\\b)|(english|englisch)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\ben\\b)|(english|englisch)( (please|and))*"
+    },
+    "lecturer": {
+        "angeles mastretta": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bangeles mastretta\\b)|(mastretta)|(\\bangeles mastretta\\b)|(mastretta)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bangeles mastretta\\b)|(mastretta)( (please|and))*",
+        "apl. prof. dr. agatha christie": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bapl. prof. dr. agatha christie\\b)|(agatha|christie)|(\\bapl. prof. dr. agatha christie\\b)|(agatha|christie)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bapl. prof. dr. agatha christie\\b)|(agatha|christie)( (please|and))*",
+        "dr. joanne rowling": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bdr. joanne rowling\\b)|(rowling)|(\\bdr. joanne rowling\\b)|(rowling)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bdr. joanne rowling\\b)|(rowling)( (please|and))*",
+        "dr. jose saramago": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bdr. jose saramago\\b)|(saramago)|(\\bdr. jose saramago\\b)|(saramago)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bdr. jose saramago\\b)|(saramago)( (please|and))*",
+        "dr. rosario castellanos": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bdr. rosario castellanos\\b)|(castellanos)|(\\bdr. rosario castellanos\\b)|(castellanos)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bdr. rosario castellanos\\b)|(castellanos)( (please|and))*",
+        "elena garro": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\belena garro\\b)|(garro)|(\\belena garro\\b)|(garro)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\belena garro\\b)|(garro)( (please|and))*",
+        "ernest hemingway": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bernest hemingway\\b)|(hemingway)|(\\bernest hemingway\\b)|(hemingway)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bernest hemingway\\b)|(hemingway)( (please|and))*",
+        "franz kafka": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bfranz kafka\\b)|(kafka)|(\\bfranz kafka\\b)|(kafka)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bfranz kafka\\b)|(kafka)( (please|and))*",
+        "fyodor dostoevsky": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bfyodor dostoevsky\\b)|(fyodor|dostoevsky)|(\\bfyodor dostoevsky\\b)|(fyodor|dostoevsky)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bfyodor dostoevsky\\b)|(fyodor|dostoevsky)( (please|and))*",
+        "george orwell": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bgeorge orwell\\b)|(orwell)|(\\bgeorge orwell\\b)|(orwell)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bgeorge orwell\\b)|(orwell)( (please|and))*",
+        "isabel allende": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bisabel allende\\b)|(allende)|(\\bisabel allende\\b)|(allende)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bisabel allende\\b)|(allende)( (please|and))*",
+        "lewis carroll": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\blewis carroll\\b)|(carroll)|(\\blewis carroll\\b)|(carroll)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\blewis carroll\\b)|(carroll)( (please|and))*",
+        "oscar wilde": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\boscar wilde\\b)|(wilde)|(\\boscar wilde\\b)|(wilde)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\boscar wilde\\b)|(wilde)( (please|and))*",
+        "univ. prof. dr. gabriel garcia marquez": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\buniv. prof. dr. gabriel garcia marquez\\b)|(garcia marquez)|(\\buniv. prof. dr. gabriel garcia marquez\\b)|(garcia marquez)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\buniv. prof. dr. gabriel garcia marquez\\b)|(garcia marquez)( (please|and))*"
+    },
+    "linguistics": {
+        "false": "^(?=.*(linguistics))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*(linguistics))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "machine_learning": {
+        "false": "^(?=.*(machine learning|\\bML\\b|(\\b|^| )AI\\b|artificial intelligence))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*(machine learning|\\bML\\b|(\\b|^| )AI\\b|artificial intelligence))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "master": {
+        "false": "^(?=.*((master|\\bMSc\\b)( program)?))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*((master|\\bMSc\\b)( program)?))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "module_id": {
+        "10180": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b10180\\b)|(\\b10180\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b10180\\b)( (please|and))*",
+        "13270": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b13270\\b)|(\\b13270\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b13270\\b)( (please|and))*",
+        "13960": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b13960\\b)|(\\b13960\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b13960\\b)( (please|and))*",
+        "14040": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b14040\\b)|(\\b14040\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b14040\\b)( (please|and))*",
+        "35190": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b35190\\b)|(\\b35190\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b35190\\b)( (please|and))*",
+        "35210": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b35210\\b)|(\\b35210\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b35210\\b)( (please|and))*",
+        "35350": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b35350\\b)|(\\b35350\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b35350\\b)( (please|and))*",
+        "35360": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b35360\\b)|(\\b35360\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b35360\\b)( (please|and))*",
+        "35410": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b35410\\b)|(\\b35410\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b35410\\b)( (please|and))*",
+        "35520": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b35520\\b)|(\\b35520\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b35520\\b)( (please|and))*",
+        "57030": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b57030\\b)|(\\b57030\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b57030\\b)( (please|and))*",
+        "67370": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b67370\\b)|(\\b67370\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b67370\\b)( (please|and))*",
+        "67380": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b67380\\b)|(\\b67380\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b67380\\b)( (please|and))*",
+        "68430": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b68430\\b)|(\\b68430\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b68430\\b)( (please|and))*",
+        "68460": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b68460\\b)|(\\b68460\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b68460\\b)( (please|and))*",
+        "72270": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b72270\\b)|(\\b72270\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b72270\\b)( (please|and))*",
+        "72450": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b72450\\b)|(\\b72450\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b72450\\b)( (please|and))*",
+        "72820": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b72820\\b)|(\\b72820\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b72820\\b)( (please|and))*",
+        "72850": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b72850\\b)|(\\b72850\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b72850\\b)( (please|and))*",
+        "73530": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b73530\\b)|(\\b73530\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b73530\\b)( (please|and))*",
+        "74180": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b74180\\b)|(\\b74180\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b74180\\b)( (please|and))*",
+        "75510": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b75510\\b)|(\\b75510\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b75510\\b)( (please|and))*",
+        "75680": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b75680\\b)|(\\b75680\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b75680\\b)( (please|and))*",
+        "75690": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b75690\\b)|(\\b75690\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b75690\\b)( (please|and))*"
+    },
+    "module_name": {
+        "advanced computational semantics": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\badvanced computational semantics\\b)|(\\badvanced computational semantics\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\badvanced computational semantics\\b)( (please|and))*",
+        "advanced semantics": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\badvanced semantics\\b)|(\\badvanced semantics\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\badvanced semantics\\b)( (please|and))*",
+        "algorithmisches sprachverstehen": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\balgorithmisches sprachverstehen\\b)|(\\balgorithmisches sprachverstehen\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\balgorithmisches sprachverstehen\\b)( (please|and))*",
+        "bedeutung im kontext": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bbedeutung im kontext\\b)|(\\bbedeutung im kontext\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bbedeutung im kontext\\b)( (please|and))*",
+        "computational linguistics team laboratory": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bcomputational linguistics team laboratory\\b)|((CL |Computational Linguistics )? Team Lab(oratory)?)|(\\bcomputational linguistics team laboratory\\b)|((CL |Computational Linguistics )? Team Lab(oratory)?)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bcomputational linguistics team laboratory\\b)|((CL |Computational Linguistics )? Team Lab(oratory)?)( (please|and))*",
+        "distributional and statistical approaches to semantics": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bdistributional and statistical approaches to semantics\\b)|(\\bdistributional and statistical approaches to semantics\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bdistributional and statistical approaches to semantics\\b)( (please|and))*",
+        "empirische methoden der maschinellen sprachverarbeitung": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bempirische methoden der maschinellen sprachverarbeitung\\b)|(\\bempirische methoden der maschinellen sprachverarbeitung\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bempirische methoden der maschinellen sprachverarbeitung\\b)( (please|and))*",
+        "ethics and nlp": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bethics and nlp\\b)|(\\bethics and nlp\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bethics and nlp\\b)( (please|and))*",
+        "foundations of cognitive science": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bfoundations of cognitive science\\b)|(\\bfoundations of cognitive science\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bfoundations of cognitive science\\b)( (please|and))*",
+        "grundlagentechnologien f\u00fcr die sprachverarbeitung": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bgrundlagentechnologien f\u00fcr die sprachverarbeitung\\b)|(\\bgrundlagentechnologien f\u00fcr die sprachverarbeitung\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bgrundlagentechnologien f\u00fcr die sprachverarbeitung\\b)( (please|and))*",
+        "information retrieval and text mining": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\binformation retrieval and text mining\\b)|(\\binformation retrieval and text mining\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\binformation retrieval and text mining\\b)( (please|and))*",
+        "language and speech in the human brain: advanced methods in neurolinguistics and neurophonetics": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\blanguage and speech in the human brain: advanced methods in neurolinguistics and neurophonetics\\b)|(\\blanguage and speech in the human brain: advanced methods in neurolinguistics and neurophonetics\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\blanguage and speech in the human brain: advanced methods in neurolinguistics and neurophonetics\\b)( (please|and))*",
+        "logik und diskrete strukturen f\u00fcr die maschinelle sprachverarbeitung": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\blogik und diskrete strukturen f\u00fcr die maschinelle sprachverarbeitung\\b)|(\\blogik und diskrete strukturen f\u00fcr die maschinelle sprachverarbeitung\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\blogik und diskrete strukturen f\u00fcr die maschinelle sprachverarbeitung\\b)( (please|and))*",
+        "meaning and interpretation": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bmeaning and interpretation\\b)|(\\bmeaning and interpretation\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bmeaning and interpretation\\b)( (please|and))*",
+        "parsing": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bparsing\\b)|(\\bparsing\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bparsing\\b)( (please|and))*",
+        "speech recognition and synthesis": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bspeech recognition and synthesis\\b)|(\\bspeech recognition and synthesis\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bspeech recognition and synthesis\\b)( (please|and))*",
+        "speech signal processing and microphone array processing": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bspeech signal processing and microphone array processing\\b)|(\\bspeech signal processing and microphone array processing\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bspeech signal processing and microphone array processing\\b)( (please|and))*",
+        "spoken language processing": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bspoken language processing\\b)|(\\bspoken language processing\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bspoken language processing\\b)( (please|and))*",
+        "spoken language understanding": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bspoken language understanding\\b)|(slu)|(slu)|(\\bspoken language understanding\\b)|(slu)|(slu)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bspoken language understanding\\b)|(slu)|(slu)( (please|and))*",
+        "sprachsynthese und spracherkennung": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bsprachsynthese und spracherkennung\\b)|(\\bsprachsynthese und spracherkennung\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bsprachsynthese und spracherkennung\\b)( (please|and))*",
+        "statistical machine translation": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bstatistical machine translation\\b)|(machine translation)|(\\bstatistical machine translation\\b)|(machine translation)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bstatistical machine translation\\b)|(machine translation)( (please|and))*",
+        "topics in cognitive science": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\btopics in cognitive science\\b)|(\\btopics in cognitive science\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\btopics in cognitive science\\b)( (please|and))*",
+        "topics in computational semantics": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\btopics in computational semantics\\b)|(\\btopics in computational semantics\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\btopics in computational semantics\\b)( (please|and))*",
+        "topics in phonetics": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\btopics in phonetics\\b)|(\\btopics in phonetics\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\btopics in phonetics\\b)( (please|and))*"
+    },
+    "name": {
+        "advanced computational semantics": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\badvanced computational semantics\\b)|(\\badvanced computational semantics\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\badvanced computational semantics\\b)( (please|and))*",
+        "advanced speech perception": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\badvanced speech perception\\b)|(\\badvanced speech perception\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\badvanced speech perception\\b)( (please|and))*",
+        "algorithmisches sprachverstehen": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\balgorithmisches sprachverstehen\\b)|(\\balgorithmisches sprachverstehen\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\balgorithmisches sprachverstehen\\b)( (please|and))*",
+        "cognitive and computational models of metaphorical language": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bcognitive and computational models of metaphorical language\\b)|(\\bcognitive and computational models of metaphorical language\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bcognitive and computational models of metaphorical language\\b)( (please|and))*",
+        "computational linguistics team  laboratory": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bcomputational linguistics team  laboratory\\b)|(\\bcomputational linguistics team  laboratory\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bcomputational linguistics team  laboratory\\b)( (please|and))*",
+        "computational linguistics team  laboratory: phonetics": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bcomputational linguistics team  laboratory: phonetics\\b)|(\\bcomputational linguistics team  laboratory: phonetics\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bcomputational linguistics team  laboratory: phonetics\\b)( (please|and))*",
+        "dialog modeling": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bdialog modeling\\b)|(\\bdialog modeling\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bdialog modeling\\b)( (please|and))*",
+        "empirische methoden der maschinellen sprachverarbeitung": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bempirische methoden der maschinellen sprachverarbeitung\\b)|(\\bempirische methoden der maschinellen sprachverarbeitung\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bempirische methoden der maschinellen sprachverarbeitung\\b)( (please|and))*",
+        "ethics and nlp": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bethics and nlp\\b)|(ethics and natural language processing)|(\\bethics and nlp\\b)|(ethics and natural language processing)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bethics and nlp\\b)|(ethics and natural language processing)( (please|and))*",
+        "hot and odd topics in semantics": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bhot and odd topics in semantics\\b)|(\\bhot and odd topics in semantics\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bhot and odd topics in semantics\\b)( (please|and))*",
+        "information retrieval and text mining": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\binformation retrieval and text mining\\b)|(information retrieval|text mining)|(\\binformation retrieval and text mining\\b)|(information retrieval|text mining)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\binformation retrieval and text mining\\b)|(information retrieval|text mining)( (please|and))*",
+        "introduction and application of programming in r": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bintroduction and application of programming in r\\b)|(\\bintroduction and application of programming in r\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bintroduction and application of programming in r\\b)( (please|and))*",
+        "introduction to psycholinguistics": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bintroduction to psycholinguistics\\b)|(\\bintroduction to psycholinguistics\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bintroduction to psycholinguistics\\b)( (please|and))*",
+        "lexical semantic change detection": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\blexical semantic change detection\\b)|(\\blexical semantic change detection\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\blexical semantic change detection\\b)( (please|and))*",
+        "lexical semantics. space as seen through the eyes of natural language": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\blexical semantics. space as seen through the eyes of natural language\\b)|(\\blexical semantics. space as seen through the eyes of natural language\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\blexical semantics. space as seen through the eyes of natural language\\b)( (please|and))*",
+        "lexical semantics: language and force": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\blexical semantics: language and force\\b)|(\\blexical semantics: language and force\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\blexical semantics: language and force\\b)( (please|and))*",
+        "logik und diskrete strukturen f\u00fcr die maschinelle sprachverarbeitung": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\blogik und diskrete strukturen f\u00fcr die maschinelle sprachverarbeitung\\b)|(\\blogik und diskrete strukturen f\u00fcr die maschinelle sprachverarbeitung\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\blogik und diskrete strukturen f\u00fcr die maschinelle sprachverarbeitung\\b)( (please|and))*",
+        "modeling morphology with distributional semantics": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bmodeling morphology with distributional semantics\\b)|(\\bmodeling morphology with distributional semantics\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bmodeling morphology with distributional semantics\\b)( (please|and))*",
+        "narrative perspective and focalization": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bnarrative perspective and focalization\\b)|(\\bnarrative perspective and focalization\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bnarrative perspective and focalization\\b)( (please|and))*",
+        "parsing": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bparsing\\b)|(\\bparsing\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bparsing\\b)( (please|and))*",
+        "pragmatik": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bpragmatik\\b)|(\\bpragmatik\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bpragmatik\\b)( (please|and))*",
+        "speech signal processing and microphone array processing": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bspeech signal processing and microphone array processing\\b)|(\\bspeech signal processing and microphone array processing\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bspeech signal processing and microphone array processing\\b)( (please|and))*",
+        "speech signal processing and speech enhancement": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bspeech signal processing and speech enhancement\\b)|(\\bspeech signal processing and speech enhancement\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bspeech signal processing and speech enhancement\\b)( (please|and))*",
+        "speech synthesis": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bspeech synthesis\\b)|(\\bspeech synthesis\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bspeech synthesis\\b)( (please|and))*",
+        "spoken language processing": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bspoken language processing\\b)|(slp)|(\\bspoken language processing\\b)|(slp)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bspoken language processing\\b)|(slp)( (please|and))*",
+        "sprache und gehirn": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bsprache und gehirn\\b)|(\\bsprache und gehirn\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bsprache und gehirn\\b)( (please|and))*",
+        "sprachsynthese und spracherkennung": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bsprachsynthese und spracherkennung\\b)|(\\bsprachsynthese und spracherkennung\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bsprachsynthese und spracherkennung\\b)( (please|and))*",
+        "statistical machine translation": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bstatistical machine translation\\b)|(smt|machine translation)|(\\bstatistical machine translation\\b)|(smt|machine translation)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bstatistical machine translation\\b)|(smt|machine translation)( (please|and))*",
+        "topics in pragmatics": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\btopics in pragmatics\\b)|(\\btopics in pragmatics\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\btopics in pragmatics\\b)( (please|and))*"
+    },
+    "obligatory_attendance": {
+        "false": "^(?=.*((obligatory|mandatory)( attendance)?))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*((obligatory|mandatory)( attendance)?))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "oral_exam": {
+        "false": "^(?=.*(oral exam))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*(oral exam))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "participation_limit": {
+        "no": "^(?=.*(participation limit|number of participants))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "yes": "^(?=.*(participation limit|number of participants))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "presentation": {
+        "false": "^(?=.*(presentation))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*(presentation))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "programming": {
+        "false": "^(?=.*(programming|coding))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*(programming|coding))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "project": {
+        "false": "^(?=.*(project))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*(project))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "report": {
+        "false": "^(?=.*((written )?report))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*((written )?report))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "semantics": {
+        "false": "^(?=.*(semantics|pragmatics))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*(semantics|pragmatics))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "speech": {
+        "false": "^(?=.*(speech))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*(speech))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "statistics": {
+        "false": "^(?=.*(statistics))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*(statistics))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "sws": {
+        "2": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b|^| )(2|two)(\\b|$| )|(\\b|^| )(2|two)(\\b|$| )( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b|^| )(2|two)(\\b|$| )( (please|and))*",
+        "4": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b|^| )(4|four)(\\b|$| )|(\\b|^| )(4|four)(\\b|$| )( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b|^| )(4|four)(\\b|$| )( (please|and))*",
+        "6": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (?=.*(\\b|^| )(6|six)(\\b|$| ))(?=^(?:(?!(6|six) (ect(s)?|credit(\\b|s| points))).)*$).*$|(?=.*(\\b|^| )(6|six)(\\b|$| ))(?=^(?:(?!(6|six) (ect(s)?|credit(\\b|s| points))).)*$).*$( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(?=.*(\\b|^| )(6|six)(\\b|$| ))(?=^(?:(?!(6|six) (ect(s)?|credit(\\b|s| points))).)*$).*$( (please|and))*"
+    },
+    "syntax": {
+        "false": "^(?=.*(syntax|parsing))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*(syntax|parsing))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "turn": {
+        "sose": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (?=.*summer)(?=^(?:(?!winter).)*$).*$|(?=.*summer)(?=^(?:(?!winter).)*$).*$( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(?=.*summer)(?=^(?:(?!winter).)*$).*$( (please|and))*",
+        "wise": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (?=.*winter)(?=^(?:(?!summer).)*$).*$|(?=.*winter)(?=^(?:(?!summer).)*$).*$( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(?=.*winter)(?=^(?:(?!summer).)*$).*$( (please|and))*",
+        "both": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (both (turn|term|semester))|((?=.*winter)(?=.*summer).*$)|(both (turn|term|semester))|((?=.*winter)(?=.*summer).*$)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(both (turn|term|semester))|((?=.*winter)(?=.*summer).*$)( (please|and))*"
+    },
+    "written_exam": {
+        "false": "^(?=.*(written exam))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*(written exam))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "domain_active": {
+        "true": "(\\b|^| )(I want a (course))"
+    }
+}

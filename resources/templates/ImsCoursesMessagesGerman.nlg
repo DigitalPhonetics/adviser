@@ -1,0 +1,228 @@
+
+# ---------------NEW RULES - IMS COURSE MESSAGES-------------------------#
+
+template welcomemsg(): "Willkommen zum IMS Lehrveranstaltungs Chat Bot. Wie kann ich dir weiterhelfen?"
+template welcomemsg(help): "Ich habe dich leider nicht verstanden. Könntest du mir noch einmal sagen, wonach du suchst."
+template welcomemsg(more) : "Ḱann ich dir bei noch etwas anderem behilflich sein?"
+template bad() : "Entschuldige, ich bin etwas durcheinander. Könntest du mir noch einmal sagen, wonach du suchst."
+# repeat() : "Könntest du das bitte wiederholen?"
+template closingmsg() : "Danke schön, bis zum nächsten Mal."
+
+#--------------System Requests---------------#
+# System Requestable Keywords: 1, 2, 7, 12, 14, 16, 30, 35 
+
+template request(ects)
+	"Wie viele Leistungspunkte soll der Kurs erzielen?"
+template request(lang)
+	"In welcher Sprache soll der Kurs abgehalten werden?"
+template request(turn)
+	"In welchem Semester soll der Kurs angeboten werden?"
+template request(bachelor)
+	"Soll der Kurs zum Bachelorstudium gehören?"
+template request(master)
+	"Soll der Kurs zum Masterstudium gehören?"
+template request(applied_nlp)
+	"Soll der Kurs zu applied NLP gehören?"
+template request(linguistics)
+	"Soll der Kurs zu linguistics gehören?"
+template request(speech)
+	"Soll der Kurs zu speech gehören?"
+
+# ----------- RULES --------------- #
+# Rules for System Inform
+# Informable slots: All (1-36), except: 6, 9, 27, 28 34 (User requestable: 1-36)
+# (Binary slots: 1, 2, 3, 5, 8, 10, 14, 15, 16, 20, 21, 23, 24, 25, 26, 29, 30, 31, 33, 36)
+
+# Aktiv
+
+function info_active(slot, value, alternative, name)
+	# binary slots either are or are NOT something
+	if slot = "applied_nlp": "gehört {either_or(alternative, "auch ", "")}{either_or(value, "", "nicht ")}zu applied NLP"
+	if slot = "bachelor": "wird {either_or(alternative, "auch ", "")}{either_or(value, "", "nicht ")}im Bachelorstudium angeboten"
+	if slot = "cognitive_science": "beschäftigt sich {either_or(alternative, "auch ", "")}{either_or(value, "", "nicht ")}mit Kognitionswissenschaft"
+	if slot = "deep_learning": "beschäftigt sich {either_or(alternative, "auch ", "")}{either_or(value, "", "nicht ")}mit Deep Learning"
+	if slot = "elective": "ist {either_or(alternative, "auch ", "")}{either_or(value, "eine ", "keine ")}Wahlveranstaltung"
+	if slot = "extendable": "{either_or(value, "kann ", "kann nicht ")}{either_or(alternative, "auch ", "")}zu 6 Leistungspunkten erweitert werden"
+	if slot = "linguistics": "gehört {either_or(alternative, "auch ", "")}{either_or(value, "", "nicht ")}zur Linguistik"
+	if slot = "machine_learning": "beschäftigt sich {either_or(alternative, "auch ", "")}{either_or(value, "", "nicht ")}mit machinellem Lernen"
+	if slot = "master": "wird {either_or(alternative, "auch ", "")}{either_or(value, "", "nicht ")}im Masterstudium angeboten"
+	if slot = "obligatory_attendance": "hat {either_or(alternative, "auch ", "")}{either_or(value, "eine ", "keine ")}Anwesenheitspflicht"
+	if slot = "oral_exam": "erfordert {either_or(alternative, "auch ", "")}{either_or(value, "eine ", "keine ")}mündliche Prüfung"
+	if slot = "participation_limit": "hat {either_or(alternative, "auch ", "")}{either_or(value, "eine ", "keine ")}Teilnehmerbegrenzung"
+	if slot = "presentation": "erfordert {either_or(alternative, "auch ", "")}{either_or(value, "eine ", "keine ")}Präsentation"
+	if slot = "programming": "beschäftigt sich {either_or(alternative, "auch ", "")}{either_or(value, "", "nicht ")}mit Programmierung"
+	if slot = "project": "erfordert {either_or(alternative, "auch ", "")}{either_or(value, "ein ", "kein ")}Projekt"
+	if slot = "report": "erfordert {either_or(alternative, "auch ", "")} {either_or(value, "einen ", "keinen ")}Bericht"
+	if slot = "semantics": "beschäftigt sich {either_or(alternative, "auch ", "")}{either_or(value, "", "nicht ")}mit Semantik"
+	if slot = "speech": "gehört {either_or(alternative, "auch ", "")}{either_or(value, "", "nicht ")}zu speech"
+	if slot = "statistics": "beschäftigt sich {either_or(alternative, "auch ", "")}{either_or(value, "", "nicht ")}mit Statistik"
+	if slot = "syntax": "beschäftigt sich {either_or(alternative, "auch ", "")}{either_or(value, "", "nicht ")}mit Syntax"
+	if slot = "written_exam": "erfordert {either_or(alternative, "auch ", "")}{either_or(value, "eine ", "keine ")}schriftliche Prüfung"
+
+	# textual slots
+	if slot = "description": "hat {either_or(alternative, "auch ", "")}folgende Beschreibung: \'{value}\'"
+	if slot = "ects": "erzielt {either_or(alternative, "auch ", "")}{value} Leistungspunkte"
+	if slot = "examination_style": "erfordert {either_or(alternative, "auch ", "")}folgende Prüfungsleistung(en): \'{value}\'"
+	if slot = "id": "wird {either_or(alternative, "auch ", "")}der ID {value} zugewiesen"
+	if slot = "lecturer": "wird {either_or(alternative, "auch ", "")}von {capitalise_lecturer(name, value)} unterrichtet"
+	if slot = "module_id": "ist {either_or(alternative, "auch ", "")}Teil des Moduls mit der zugehörigen Modul-ID {value}"
+	if slot = "module_name": "wird {either_or(alternative, "auch ", "")}dem Modul {value} zugewiesen"
+	if slot = "requirements": "erfordert {either_or(alternative, "auch ", "")}folgende Vorkenntnisse: \'{value}\'"
+	if slot = "room": "findet {either_or(alternative, "auch ", "")}in Raum {value} statt"
+	if slot = "sws": "umfasst {either_or(alternative, "auch ", "")}{value} Stunden pro Woche"
+	if slot = "time_slot": "findet {either_or(alternative, "auch ", "")}{value} statt"
+
+	# other set slots
+	if slot = "course_type"
+		if value = "se": "ist {either_or(alternative, "auch ", "")}ein Seminar"
+		if value = "ue": "ist {either_or(alternative, "auch ", "")}ein praktischer Kurs"
+		if value = "vo": "ist {either_or(alternative, "auch ", "")}eine Vorlesung"
+		if value = "vu": "ist {either_or(alternative, "auch ", "")}eine Vorlesung mit Übung"
+	if slot = "lang"
+		if value = "de": "wird {either_or(alternative, "auch ", "")}auf Deutsch abgehalten"
+		if value = "en": "wird {either_or(alternative, "auch ", "")}auf Englisch abgehalten"
+	if slot = "turn"
+		if value = "sose": "wird {either_or(alternative, "auch ", "")}im Sommersemester angeboten"
+		if value = "wise": "wird {either_or(alternative, "auch ", "")}im Wintersemester angeboten"
+
+# Passiv
+
+function info_passive(slot, value, name)
+	# binary slots either are or are NOT something
+	if slot = "applied_nlp": "{either_or(value, "", "nicht ")}zu applied NLP gehört"
+	if slot = "bachelor": "{either_or(value, "", "nicht ")}im Bachelorstudium angeboten wird"
+	if slot = "cognitive_science": "sich {either_or(value, "", "nicht ")}mit Kognitionswissenschaft beschäftigt"
+	if slot = "deep_learning": "sich {either_or(value, "", "nicht ")}mit Deep Learning beschäftigt"
+	if slot = "elective": "{either_or(value, "eine ", "keine ")}Wahlveranstaltung ist"
+	if slot = "extendable": "{either_or(value, "", "nicht ")}zu 6 Leistungspunkten erweitert werden kann"
+	if slot = "linguistics": "{either_or(value, "", "nicht ")}zur Linguistik gehört"
+	if slot = "machine_learning": "sich {either_or(value, "", "nicht ")}mit machinellem Lernen beschäftigt"
+	if slot = "master": "{either_or(value, "", "nicht ")}im Masterstudium angeboten wird"
+	if slot = "obligatory_attendance": "{either_or(value, "eine ", "keine ")}Anwesenheitspflicht hat"
+	if slot = "oral_exam": "{either_or(value, "eine ", "keine ")}mündliche Prüfung erfodert"
+	if slot = "participation_limit": "{either_or(value, "eine ", "keine ")}Teilnehmerbegrenzung hat"
+	if slot = "presentation": "{either_or(value, "eine ", "keine ")}Präsentation erfordert"
+	if slot = "programming": "sich {either_or(value, "", "nicht ")}mit Programmierung beschäftigt"
+	if slot = "project": "{either_or(value, "ein ", "kein ")}Projekt erfordert"
+	if slot = "report": "{either_or(value, "einen ", "keinen ")}Bericht erfordert"
+	if slot = "semantics": "sich {either_or(value, "", "nicht ")}mit Semantik beschäftigt"
+	if slot = "speech": "{either_or(value, "", "nicht ")}zu speech gehört"
+	if slot = "statistics": "sich {either_or(value, "", "nicht ")}mit Statistik'beschäftigt"
+	if slot = "syntax": "sich {either_or(value, "", "nicht ")}mit Syntax beschäftigt"
+	if slot = "written_exam": "{either_or(value, "eine ", "keine ")}schriftliche Prüfung erfordert"
+
+	# textual slots
+	if slot = "description": "folgende Beschreibung: \'{value}\' hat"
+	if slot = "ects": "erzielt {value} Leistungspunkte"
+	if slot = "examination_style": "folgende Prüfungsleistung(en): \'{value}\' erfordert"
+	if slot = "id": "der ID {value} zugewiesen wird"
+	if slot = "lecturer": "von {capitalise_lecturer(name, value)} unterrichtet wird"
+	if slot = "module_id": "Teil des Moduls mit der zugehörigen Modul-ID {value} ist"
+	if slot = "module_name": "dem Modul {value} zugewiesen wird"
+	if slot = "requirements": "folgende Vorkenntnisse: \'{value}\' erfordert"
+	if slot = "room": "in Raum {value} statt findet"
+	if slot = "sws": "{value} Stunden pro Woche umfasst"
+	if slot = "time_slot": "{value} statt findet"
+
+	# other set slots
+	if slot = "course_type"
+		if value = "se": "ein Seminar ist"
+		if value = "ue": "ein praktischer Kurs ist"
+		if value = "vo": "eine Vorlesung ist"
+		if value = "vu": "eine Vorlesung mit Übung ist"
+	if slot = "lang"
+		if value = "de": "auf Deutsch abgehalten wird"
+		if value = "en": "auf Englisch abgehalten wird"
+	if slot = "turn"
+		if value = "sose": "im Sommersemester angeboten wird"
+		if value = "wise": "im Wintersemester angeboten wird"
+
+function either_or(boolean, if_true, if_false)
+	if boolean = "true": "{if_true}"
+	if boolean = "false": "{if_false}"
+
+function capitalise_lecturer(name, lecturer)
+	"{name.cap_lecturer}"
+	if name = "none": "{lecturer}"
+
+
+# --------------------System Recommendation/Inform--------------------------#
+
+# -------------------------Only Name Slot-----------------------------------#
+
+template inform_byname(name)
+	"Es gibt einen Kurs namens {name}. Was möchtest du über ihn wissen?"
+	
+	special_case name = "none"
+		"Es tut mir Leid, ich konnte den von dir angegebenen Kurs leider nicht finden."
+
+
+# --------All System Informable Slots (1-36), except: 6, 9, 27, 28 34-------#
+
+#------------------------ Name Slot + Slots----------------------------------#
+
+template inform_byname(name, *slots)
+	"Der Kurs {name} {for_entry(slots, "info_active", ", er ", " und er ", "false", name)}."
+	
+	special_case name = "none"
+		"Es tut mir Leid, es gibt keinen Kurs, der {for_entry(slots, "info_passive", ", ", " und ", name)}."
+
+
+# --------------System InformByAlternatives-------------#
+
+template inform_alternatives(name, *slots)
+	
+	"Der Kurs {name} {for_entry(slots, "info_active", ", er ", " und er ", "true", name)}."
+
+	special_case name = "none"
+		"Es tut mir Leid, es gibt leider keinen anderen Kurs, der den Angaben entspricht."
+
+# ----------------------------System Confirm----------------------------------#
+
+template confirm()
+	"Erzähl mir bitte mehr über den Kurs, den du suchst."
+	
+template confirm(name, *slots)
+	if name = "none"
+		"Okay, du suchst also nach einem Kurs, der {for_entry(slots, "info_passive", ", ", " und ", name)}, richtig?"
+
+
+# ---------------------------System RequestMore------------------------------#
+
+template reqmore()
+	"Kann ich dir bei noch etwas anderem behilflich sein?"
+
+template reqmore(ects)
+	if ects = "dontcare"
+		"Möchtest du, dass ich nach einem Kurs suche, welcher beliebig viele Leistungspunkte erzielt?"
+template reqmore(lang)
+	if lang = "dontcare"
+		"Möchtest du, dass ich nach einem Kurs suche, welcher in einer beliebigen Sprache abgehalten wird?"
+template reqmore(turn)
+	if turn = "dontcare"
+		"Möchtest du, dass ich nach einem Kurs suche, welcher in einem beliebigen Semester angeboten wird?"
+template reqmore(bachelor)
+	if bachelor = "dontcare"
+		"Möchtest du, dass ich nach einem Kurs suche, welcher in einem beliebigen Studiengang angeboten wird?"
+template reqmore(master)
+	if master = "dontcare"
+		"Möchtest du, dass ich nach einem Kurs suche, welcher in einem beliebigen Studiengang angeboten wird?"
+template reqmore(course_type)
+	if course_type = "dontcare"
+		"Möchtest du, dass ich nach einem Kurs irgendeiner Art suche?"
+template reqmore(lecturer)
+	if lecturer = "dontcare"
+		"Möchtest du, dass ich nach einem Kurs suche, welcher von einem beliebigen Dozenten gehalten wird?"
+
+
+# ---------------------------System Select----------------------------------#
+
+template select(*slot)
+	"Tut mir Leid, möchtest du einen Kurs, {for_entry(slot, "info_or_dontcare_list", "", "")}?"
+
+function info_or_dontcare_list(slot, value_list)
+	"{for(value_list, "info_or_dontcare", ", ", " oder ", slot)}"
+
+function info_or_dontcare(value, slot)
+	"der {info_passive(slot, value, "none")}"
+	special_case value = "dontcare": "ist dir das egal"

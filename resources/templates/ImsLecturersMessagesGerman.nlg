@@ -1,0 +1,176 @@
+
+# ---------------NEW RULES - IMS LECTURER MESSAGES-------------------------#
+
+template welcomemsg(): "Willkommen zum IMS Lehrveranstaltungs Chat Bot. Wie kann ich dir weiterhelfen?"
+template welcomemsg(help): "Ich habe dich leider nicht verstanden. Könntest du mir bitte noch einmal sagen, wonach du suchst."
+template welcomemsg(more): "Ḱann ich dir bei noch etwas anderem behilflich sein?"
+template bad(): "Entschuldige, ich bin etwas durcheinander. Könntest du mir noch einmal sagen, wonach du suchst."
+# repeat(): "Könntest du das bitte wiederholen?"
+template closingmsg(): "Danke schön, bis zum nächsten Mal."
+
+
+#--------------System Requests---------------#
+# System Requestable Keywords:
+	# 2 department
+	# 7 position
+
+template request(department): "Zu welchem ​​am IMS angebotenen Lehrstuhl soll der Dozent oder die Dozentin gehören?"
+
+template request(position): "Welche Position hält der Dozent bzw. die Dozentin am IMS inne (z. B. Studienberaterin)?"
+
+
+# --------- Helper Functions -------- #
+
+function genitive(name)
+	"{{genitive_s_german(name)}}"
+	if name = "who": "deren"
+
+function capitalised(name)
+	"{name.cap_name}"
+	if name = "who": "who"
+
+function Akk_pers_pron(gender)
+	if gender = "female": "sie"
+	if gender = "male":   "ihn"
+
+function Akk_indef_gender(gender)
+	if gender = "female": "eine Dozentin"
+	if gender = "male": "einen Dozent"
+
+function either_or(boolean, if_true, if_false)
+	if boolean = "true": "{if_true}"
+	if boolean = "false": "{if_false}"
+
+
+# ----------- RULES --------------- #
+# Aktiv
+
+function info_active(slot, value, gender, name, alternative)
+	if slot = "office_hours": "{genitive(capitalised(name))} Sprechstunde findet {either_or(alternative, "auch ", "")}{value} statt"
+	if slot = "mail": "{genitive(capitalised(name))} E-Mail Addresse ist {either_or(alternative, "auch ", "")}{value}"
+	if slot = "phone": "{genitive(capitalised(name))} Telefonnummer ist {either_or(alternative, "auch ", "")}{value}"
+	if slot = "room": "{genitive(capitalised(name))} Büro ist {either_or(alternative, "auch ", "")}in Raum {value}"
+	
+	if slot = "department"
+		if value = "na":          "{genitive(capitalised(name))} Lehrstuhl ist {either_or(alternative, "auch ", "")}nicht bekannt"
+		if value = "phonetics":   "{capitalised(name)} gehört {either_or(alternative, "auch ", "")}dem Lehrstuhl 'Digital Phonetics' an"
+		if value = "theory":      "{capitalised(name)} gehört {either_or(alternative, "auch ", "")}dem Lehrstuhl 'Theoretical Computational Linguistics' an"
+		if value = "foundations": "{capitalised(name)} gehört {either_or(alternative, "auch ", "")}dem Lehrstuhl 'Foundations of Computational Linguistics' an"
+		if value = "external":    "{capitalised(name)} gehört {either_or(alternative, "auch ", "")}einem Lehrstuhl außerhalb des IMS an"
+	
+	if slot = "position"
+		if value = "na":          "{genitive(capitalised(name))} Position ist {either_or(alternative, "auch ", "")}nicht bekannt"
+		if value = "adviser":     
+			if gender = "female": "{capitalised(name)} ist {either_or(alternative, "auch ", "")}Studienberaterin am IMS"
+			if gender = "male":   "{capitalised(name)} ist {either_or(alternative, "auch ", "")}Studienberater am IMS"
+		if value = "erasmus":     
+			if gender = "female": "{capitalised(name)} ist {either_or(alternative, "auch ", "")}Erasmus-Koordinatorin am IMS"
+			if gender = "male":   "{capitalised(name)} ist {either_or(alternative, "auch ", "")}Erasmus-Koordinator am IMS"
+		if value = "examination": 
+			if gender = "female": "{capitalised(name)} ist {either_or(alternative, "auch ", "")}Vorsitzende des Prüfungsausschusses am IMS"
+			if gender = "male":   "{capitalised(name)} ist {either_or(alternative, "auch ", "")}Vorsitzender des Prüfungsausschusses am IMS"
+		if value = "gender":     
+			if gender = "female": "{capitalised(name)} ist {either_or(alternative, "auch ", "")}Gleichstellungsbeauftragte am IMS"
+			if gender = "male":   "{capitalised(name)} ist {either_or(alternative, "auch ", "")}Gleichstellungsbeauftragter am IMS"
+		if value = "phd":         
+			if gender = "female": "{capitalised(name)} ist {either_or(alternative, "auch ", "")}Doktorandin am IMS"
+			if gender = "male":   "{capitalised(name)} ist {either_or(alternative, "auch ", "")}Doktorand am IMS"
+		if value = "postdoc":     
+			if gender = "female": "{capitalised(name)} ist {either_or(alternative, "auch ", "")}Postdoktorandin am IMS"
+			if gender = "male":   "{capitalised(name)} ist {either_or(alternative, "auch ", "")}Postdoktorand am IMS"
+		if value = "professor":  
+			if gender = "female": "{capitalised(name)} ist {either_or(alternative, "auch ", "")}Professorin am IMS"
+			if gender = "male":   "{capitalised(name)} ist {either_or(alternative, "auch ", "")}Professor am IMS"
+		if value = "senate":     
+			if gender = "female":  "{capitalised(name)} ist {either_or(alternative, "auch ", "")}Akademische Oberrätin"
+			if gender = "male":    "{capitalised(name)} ist {either_or(alternative, "auch ", "")}Akademischer Oberrat"
+
+# Passiv
+
+function info_passive(slot, value, name)
+	if slot = "office_hours": "{genitive(capitalised(name))} Sprechstunde {value} stattfindet"
+	if slot = "mail": "{genitive(capitalised(name))} E-Mail Addresse {value} ist"
+	if slot = "phone": "{genitive(capitalised(name))} Telefonnummer {value} ist"
+	if slot = "room": "{genitive(capitalised(name))} Büro in Raum {value} ist"
+	
+	if slot = "department"
+		if value = "na":          "{genitive(capitalised(name))} Lehrstuhl nicht bekannt ist"
+		if value = "phonetics":   "{genitive(capitalised(name))} Lehrstuhl 'Digital Phonetics' ist"
+		if value = "theory":      "{genitive(capitalised(name))} Lehrstuhl 'Theoretical Computational Linguistics' ist"
+		if value = "foundations": "{genitive(capitalised(name))} Lehrstuhl 'Foundations of Computational Linguistics' ist"
+		if value = "external":    "{genitive(capitalised(name))} Lehrstuhl außerhalb des IMS ist"
+	
+	if slot = "position"
+		if value = "na":          "{genitive(capitalised(name))} Position nicht bekannt ist"
+		if value = "adviser":     "{genitive(capitalised(name))} Position Studienberater/in am IMS ist"
+		if value = "erasmus":     "{genitive(capitalised(name))} Position Erasmus-Koordinator/in am IMS ist"
+		if value = "examination": "{genitive(capitalised(name))} Position Vorsitzende/r des Prüfungsausschusses am IMS ist"
+		if value = "gender":      "{genitive(capitalised(name))} Position Gleichstellungsbeauftragte/r am IMS ist"
+		if value = "phd":         "{genitive(capitalised(name))} Position Doktorand/in am IMS ist"
+		if value = "postdoc":     "{genitive(capitalised(name))} Position Postdoktorand/in am IMS ist"
+		if value = "professor":   "{genitive(capitalised(name))} Position Professor/in am IMS ist"
+		if value = "senate":      "{genitive(capitalised(name))} Position Akademischer Oberrat ist"
+
+
+#----------System Recommendation/Inform---------------#
+
+	# all keywords are informable slots
+
+# -----------------Only Name Slot----------------------#
+
+template inform_byname(name)
+	"Es gibt {Akk_indef_gender(name.gender)} namens {capitalised(name)}. Was möchtest du über {Akk_pers_pron(name.gender)} wissen?"
+
+	if name = "none": "Es tut mir Leid, ich konnte die von dir angegebene Person nicht finden."
+
+template inform_byname(name, *slots)
+	"{for_entry(slots, "info_active", ", ", " und ", name.gender, name, "false")}."
+	
+	special_case name = "none"
+		"Es tut mir Leid, es gibt keine Lehrkraft am IMS, {for_entry(slots, "info_passive", ", ", " und ", "who")}."
+
+
+# --------------System InformByAlternatives-------------#
+
+template inform_alternatives(name, *slots)
+	
+	"{for_entry(slots, "info_active", ", ", " und ", name.gender, name, "true")}."
+
+	special_case name = "none"
+		"Es tut mir Leid, es gibt leider keine andere Lehrkraft am IMS, die den Angaben entspricht."
+
+
+#------------System Confirm--------------#
+
+template confirm(): "Erzähle mir mehr über die Person, nach der du suchst."
+
+template confirm(name, *slots)
+	if name = "none"
+		"Okay, du suchst also nach einer Lehrkraft, {for_entry(slots, "info_passive", ", ", " und ", "who")}, richtig?"
+
+
+# ------------System RequestMore--------#
+# System Requestable:
+
+template reqmore(): "Kann ich dir mit noch etwas behilflich sein?"
+
+template reqmore(department)
+	if department = "dontcare"
+		"Möchtest du, dass ich nach einer Lehrkraft suche, die irgendeinem Lehrstuhl am IMS angehört?"
+
+template reqmore(position)
+	if position = "dontcare"
+		"Möchtest du, dass ich nach einer Lehrkraft suche, die irgendeine Position inne hat?"
+
+
+#-----------System Select----------------#
+
+template select(*slot)
+	"Tut mir Leid, suchst du nach einer Lehrkraft, {for_entry(slot, "info_or_dontcare_list", "", "")}?"
+
+function info_or_dontcare_list(slot, value_list)
+	"{for(value_list, "info_or_dontcare", ", ", " oder ", slot)}"
+
+function info_or_dontcare(value, slot)
+	"{info_passive(slot, value, "who")}"
+	if value = "dontcare": "ist dir das egal"

@@ -1,0 +1,442 @@
+----
+Group HCP
+----
+1
+----
+Find a module within the "Core Computational Linguistics" catalogue which is offered in the summer semester.
+Once you have found the module, ask the system how many credit points the module yields, whether it is related to speech,
+and about the responsible lecturer. If the systems asks you any other question, reply that you don't care.
+----
+catalogue = core
+turn = sose
+----
+ects
+responsible
+speech
+----
+
+
+----
+Group HCP
+----
+2
+----
+Find a module which is related to linguistics and taught by Prof. Dr. Jonas Kuhn.
+Once you found the module, ask the system whether the module is part of the "Core Computational Linguistics" catalogue
+and whether it is about semantics. If the system asks you any other question, reply that you don't care.
+----
+responsible = univ.-prof. dr. jonas kuhn
+linguistics = true
+----
+catalogue
+semantics
+----
+
+
+----
+Group HCP
+----
+3
+----
+Find a module which is offered in the winter semester, which is related to linguistics, and taught by Dr. Roman Klinger.
+Once you have found the module, ask the system how many credit points the module will yield and to which catalogue it belongs.
+If the system asks you any other question, reply that you don't care.
+----
+turn = wise
+responsible = dr. roman klinger
+linguistics = true
+----
+ects
+catalogue
+----
+
+
+----
+Group HCP
+----
+4
+----
+Find a module wich comprises 8 hours per week and belongs to the "Compulsory" catalogue.
+Once you have found the module, ask the system about the responsible lecturer, about the amount of credit points the module will yield
+and in which semester it is offered. If the system asks you any other question, reply that you don't care.
+----
+sws = 8
+catalogue = compulsory
+----
+responsible
+ects
+turn
+----
+
+
+----
+Group HCP
+----
+5
+----
+Find a module which belongs to the "Applied NLP" catalogue and is taught by Prof. Dr. Sebastian Pado.
+Once you have found the module, ask the system whether the module is related to speech, linguistics, deep learning
+and syntax. If the system asks you any other question, reply that you don't care.
+----
+responsible = univ.-prof. dr. sebastian pado
+catalogue = applied
+----
+speech
+linguistics
+deep_learning
+syntax
+----
+
+
+----
+Group HCP
+----
+6
+----
+Find a module which is worth 6 ects and which is related to semantics and linguistics.
+Once you have found the module, ask the system about the responsible lecturer and to which
+catalogue the module belongs. If the system asks you any other question, reply that you don't care.
+----
+ects = 6
+semantics = true
+linguistics = true
+----
+responsible
+catalogue
+----
+
+
+----
+Group HCP
+----
+7
+----
+Find a module which is offered during the winter semester and is taught by Prof. Dr. Ngoc Thang Vu.
+Once you have found the module, ask the system whether the module is related to deep learning and cognitive science
+and to which catalogue it belongs. If the system asks you any other question, reply that you don't care.
+----
+turn = wise
+responsible = univ.-prof. dr. ngoc thang vu
+----
+deep_learning
+cognitive_science
+catalogue
+----
+
+
+----
+Group HCP
+----
+8
+----
+Find a module which is worth 3 credit points, which belongs to the "Speech" catalogue and is related to speech.
+Once you have found the module, ask the system in which semester it is offered and about the responsible lecturer.
+If the system asks you any other question, reply that you don't care.
+----
+ects = 3
+catalogue = speech
+speech = true
+----
+turn
+responsible
+----
+
+
+----
+Group HCP
+----
+9
+----
+Find a module which if offered within the summer and winter semester, which comprises 0 hours per week, and which belongs
+to the "Compulsory" catalogue.
+Once you have found the module, ask the system about the number of credit points it yields.
+If the system asks you any other question, reply that you don't care.
+----
+turn = both
+sws = 0
+catalogue = compulsory
+----
+ects
+----
+
+
+----
+Group HCP
+----
+10
+----
+Find a module which is about statistics and syntax and which is further related to linguistics.
+Once you have found the module, ask the systems about the amount of credits points it yields, in which semester
+it is offered and about the responsible lecturer. If the system asks you any other question, reply that you don't care.
+----
+statistics = true
+syntax = true
+linguistics = true
+----
+ects
+turn
+responsible
+----
+
+
+----
+Group HCP
+----
+11
+----
+Find a module which is neither related to deep learning, nor cognitive science, but to applied nlp.
+Once you have found the module, ask the system about the number of credit points it yields, how many hours per week
+it comprises and about the responsible lecturer. If the system asks you any other question, reply that you don't care.
+----
+deep_learning = false
+cognitive_science = false
+applied_nlp = true
+----
+ects
+sws
+responsible
+----
+
+
+----
+Group HCP
+----
+12
+----
+Find a module which is neither related to applied nlp, nor to programming or statistics, but to semantics.
+Once you have found the module, ask the system to which catalogue the module belongs and how many ects it yields.
+If the system asks you any other question, reply that you don't care.
+----
+applied_nlp = false
+programming = false
+statistics = false
+semantics = true
+----
+catalogue
+ects
+----
+
+
+----
+Group HCP
+----
+13
+----
+Find a module which is related to applied nlp and statistics and which is offered in the summer semester.
+Once you have found the module, ask the system about the amount of credit points the course yields and about the
+responsible lecturer. If the system asks you any other question, reply that you don't care.
+----
+applied_nlp = true
+statistics = true
+turn = sose
+----
+ects
+responsible
+----
+
+
+----
+Group HCP
+----
+14
+----
+Find a module which belongs to the "Core Computational Linguistics" catalogue, which is worth 6 ects, and which is
+not related to speech. Once you have found the module, ask the system whether the module is further related to linguistics and
+cognitive science. If the system asks you any other question, reply that you don't care.
+----
+catalogue = core
+ects = 6
+speech = false
+----
+linguistics
+cognitive_science
+----
+
+
+----
+Group HCP
+----
+15
+----
+Find a module which is offered in the winter semester, which yields 6 credit points, and is taught by Dr. Roman Klinger.
+Once you have found the module, ask the system to which catalogue the module belongs.
+If the system asks you any other question, reply that you don't care.
+----
+turn = wise
+responsible = dr. roman klinger
+ects = 6
+----
+catalogue
+----
+
+
+----
+Group HCP
+----
+16
+----
+Find a module which belongs to the catalogue "Other", which comprises 2 hours per week, and is worth 6 credit points.
+Once you have found the module, ask the system whether it is related to programming and linguistics.
+If the system asks you any other question, reply that you don't care.
+----
+catalogue = other
+ects = 6
+sws = 2
+----
+programming
+linguistics
+----
+
+
+----
+Group HCP
+----
+17
+----
+Find a module which is worth 3 credit points and is taught by Dr. Wolfgang Wokurek.
+Once you have found the module, ask the system in which semester the module is offered.
+If the systems ask you any other question, reply that you don't care.
+----
+ects = 3
+responsible = dr. wolfgang wokurek
+----
+turn
+----
+
+
+----
+Group HCP
+----
+18
+----
+Find a module which is offered in the summer semester and belongs to the "Compulsory" catalogue.
+Once you have found the module, ask the system about the amount of credit points the module yields.
+If the systems asks you any other question, reply that you don't care.
+----
+turn = sose
+catalogue = compulsory
+----
+ects
+----
+
+
+----
+Group HCP
+----
+19
+----
+Find a module which is offered in the winter semester, belongs to the "Compulsory" catalogue and yields 9 credit points.
+Once you have found the module, ask the system how many hours per week the module comprises.
+If the systems asks you any other question, reply that you don't care.
+----
+turn = wise
+catalogue = compulsory
+ects = 9
+----
+sws
+----
+
+
+----
+Group HCP
+----
+20
+----
+Find a module which is worth 6 credit points and which is taught by Prof. Dr. Uwe Reyle.
+Once you have found the module, ask the system in which semester the course is offered and to which catalogue it belongs.
+If the system asks you any other question, reply that you don't care.
+----
+responsible = apl. prof. dr. uwe reyle
+ects = 6
+----
+turn
+catalogue
+----
+
+
+----
+Group HCP
+----
+21
+----
+Find a module which is worth 6 credit points and which is related to programming.
+Once you have found the module, ask the system about the responsible lecturer and to which catalogue the module belongs.
+If the system asks you any other question, reply that you don't care.
+----
+programming = true
+ects = 6
+----
+catalogue
+responsible
+----
+
+
+----
+Group HCP
+----
+22
+----
+Find a module which is both, related to speech and linguistics, but not to cognitive science.
+Once you have found the module, ask the system how many hours per week the module comprises and in which semester
+it is offered. If the system asks you any other question, reply that you don't care.
+----
+speech = true
+linguistics = true
+cognitive_science = false
+----
+turn
+sws
+----
+
+
+----
+Group HCP
+----
+23
+----
+Find a module which is worth 3 credit points, which is taught by Prof. Dr. Jonas Kuhn, and which is related to semantics.
+Once you have found the module, ask the system in which semester it is offered. If the system asks you any other question, reply that you don't care.
+----
+ects = 3
+responsible = univ.-prof. dr. jonas kuhn
+semantics = true
+----
+turn
+----
+
+
+----
+Group HCP
+----
+24
+----
+Find a module which is about deep learning and machine learning, which is related to speech and which is worth 3 credit points.
+Once you have found the module, ask the system about the responsible lecturer.
+If the system asks you any other question, reply that you don't care.
+----
+machine_learning = true
+deep_learning = true
+speech = true
+ects = 3
+----
+responsible
+----
+
+
+----
+Group HCP
+----
+25
+----
+Find a module which belongs to the "Applied NLP" catalogue, which is not related to speech, but to machine learning and statistics.
+Once you have found the module, ask the system about the number of credit points the module yields and in which semester it is offered.
+If the system asks you any other question, reply that you don't care.
+----
+catalogue = applied
+speech = false
+machine_learning = true
+statistics = true
+----
+turn
+ects
+----
