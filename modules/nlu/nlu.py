@@ -32,18 +32,8 @@ from utils.beliefstate import BeliefState
 from utils.common import Language
 
 
-def get_root_dir() -> str:
-    """
-    returns the relative path of diasys/adviser
-
-    Returns {str} -
-
-    """
-    head_location = os.path.realpath(os.curdir)
-    end = head_location.find('adviser')
-    return os.path.join(head_location[:end], 'adviser')
-
-# TODO: Add language recognition / selection
+def get_root_dir():
+    return os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 
 class HandcraftedNLU(Module):

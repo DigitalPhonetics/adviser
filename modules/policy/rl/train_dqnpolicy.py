@@ -30,9 +30,7 @@ import argparse
 
 
 def get_root_dir():
-    head_location = os.path.realpath(os.curdir)
-    end = head_location.find('adviser')
-    return os.path.join(head_location[:end], 'adviser')
+    return os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 sys.path.append(get_root_dir())
 
 

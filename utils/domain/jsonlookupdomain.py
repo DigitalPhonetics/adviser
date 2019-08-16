@@ -17,6 +17,7 @@
 #
 ###############################################################################
 
+
 import json
 import sqlite3
 import os
@@ -24,7 +25,7 @@ from typing import List, Iterable
 import string
 from io import StringIO
 
-from utils.domain.domain import Domain
+from utils.domain import Domain
 
 
 class JSONLookupDomain(Domain):
@@ -71,10 +72,9 @@ class JSONLookupDomain(Domain):
 
 
     def _get_root_dir(self):
-        """ Returns the path to the top-level directory diasys/adviser """
-        head_location = os.path.realpath(os.curdir)
-        end = head_location.find('adviser')
-        return os.path.join(head_location[:end], 'adviser')
+        """ Returns the path to the root directory """
+        return os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 
 
     def _sqllite_dict_factory(self, cursor, row):

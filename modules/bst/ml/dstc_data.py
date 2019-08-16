@@ -17,6 +17,7 @@
 #
 ###############################################################################
 
+
 import os
 import json
 import sys
@@ -26,11 +27,10 @@ import re
 import jsonpickle
 import copy
 import random
+import spacy
 
 def get_root_dir():
-    head_location = os.path.realpath(os.curdir)
-    end = head_location.find('adviser')
-    return os.path.join(head_location[:end], 'adviser')
+    return os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 sys.path.append(get_root_dir())
 
 import torch
@@ -38,7 +38,6 @@ from torch.utils.data import Dataset, DataLoader
 import torch.nn.utils.rnn as rnn
 from utils.domain.jsonlookupdomain import JSONLookupDomain
 
-import spacy
 try:
     nlp = spacy.load('en_core_web_sm')
 except:

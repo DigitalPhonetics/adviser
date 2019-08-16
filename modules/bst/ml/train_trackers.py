@@ -21,6 +21,10 @@ import os
 import sys
 import argparse
 
+def get_root_dir():
+    return os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+sys.path.append(get_root_dir())
+
 import torch
 import torch.autograd as autograd
 import torch.nn as nn
@@ -28,12 +32,6 @@ import torch.nn.functional as F
 import torch.optim as optim
 
 from tensorboardX import SummaryWriter
-
-def get_root_dir():
-    head_location = os.path.realpath(os.curdir)
-    end = head_location.find('adviser')
-    return os.path.join(head_location[:end], 'adviser')
-sys.path.append(get_root_dir())
 
 from modules.bst.ml.dstc_data import User, System, DialogTurn, Dialog, DSTC2Data
 from modules.bst.ml.batch_provider import BatchProvider

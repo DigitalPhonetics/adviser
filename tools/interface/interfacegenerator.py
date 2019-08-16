@@ -20,12 +20,14 @@
 import importlib.util
 import sys
 import os
-adviser_dir = os.path.realpath("../../")
-sys.path.append(adviser_dir)
 import inspect
 import xml.etree.ElementTree as ET 
 from xml.dom import minidom
 import glob
+
+def get_root_dir():
+    return os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(get_root_dir())
 
 from modules.module import Module
 
@@ -76,7 +78,7 @@ def write_module_interfacedesc_xml(class_name, class_type):
 if __name__ == "__main__":
     classes = set()
     # only check modules directory as some of the python files will be executed once they get imported
-    for file in glob.glob(os.path.join(adviser_dir, "**", "*.py"), recursive=True):
+    for file in glob.glob(os.path.join(get_root_dir(), "**", "*.py"), recursive=True):
         # iterate over all python modules
         modname = os.path.splitext(os.path.basename(file))[0]
         if modname != '__init__':
