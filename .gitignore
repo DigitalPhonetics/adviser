@@ -1,3 +1,6 @@
+# vs code ignores
+.vscode
+
 # Python ignores
 
 # Byte-compiled / optimized / DLL files

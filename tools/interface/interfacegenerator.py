@@ -85,9 +85,13 @@ if __name__ == "__main__":
             spec = importlib.util.spec_from_file_location(file, file)
             mod = importlib.util.module_from_spec(spec)
             sys.modules[spec.name] = mod
-            spec.loader.exec_module(mod)
+            try:
+                spec.loader.exec_module(mod)
+                classes.update(set(inspect.getmembers(mod, inspect.isclass)))
+            except BaseException as e:
+                # catch exceptions
+                print(f"\033[1;39mWARNING: Module '{modname}' raised the following error:\n   {e}\033[0;0m")
             # mod = __import__(modname)
-            classes.update(set(inspect.getmembers(mod, inspect.isclass)))
     classes = {name:value for name, value in classes} # get unique keys
 
     for class_name, class_type in classes.items():
