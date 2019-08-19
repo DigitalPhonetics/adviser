@@ -17,6 +17,8 @@
 #
 ###############################################################################
 
+__version__ = "1.0"
+
 import shutil
 import copy
 import os
@@ -203,10 +205,17 @@ if __name__ == "__main__":
     if not os.path.isfile(args.database):
         print("The supplied database does not exist. Please make sure to provide a proper path.")
         exit(1)
+    
+    print(f"\n\033[1;37mWelcome to the ontology creation tool v{__version__}!\n\nThis tool will help you to create an ontology from a database.\nSelected options are marked with a filled blue circle.\n\033[0;0m")
+    
     # create database object and extract information
     db = Database(args.database)
-    
-    print("\n\033[1;34mThis tool will help you to create an ontology file from a databse.\nSelected options are marked with a filled blue circle.\n\n\033[0;0m")
+
+    if not db.get_tables():
+        # there are no tables in the database
+        print("Error: The given database is empty. Please add at least one table.")
+        exit(1)
+
     ask_questions = True
     while ask_questions:
         # ask questions
@@ -231,6 +240,9 @@ if __name__ == "__main__":
     # get domain and remove unnecessary elements from the dict
     domain = answers['domain']
     del answers['domain'], answers['table']
+    # remove binary list if empty
+    if not answers['binary']:
+        del answers['binary']
 
     # ask user about filename
     filename_ont = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../resources/databases/', domain + '-rules.json'))
