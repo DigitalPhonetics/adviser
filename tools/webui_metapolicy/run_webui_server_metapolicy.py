@@ -30,10 +30,9 @@ from flask_jwt_extended import JWTManager
 from flask_cors import CORS, cross_origin
 
 
-head_location = os.path.realpath(os.curdir)
-end = head_location.find('adviser')
-head_location = head_location[:end]
-sys.path.append(head_location + "/adviser")
+def get_root_dir():
+    return os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(get_root_dir())
 
 from utils.beliefstate import BeliefState
 from dialogsystem import DialogSystem
