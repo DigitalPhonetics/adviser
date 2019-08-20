@@ -46,7 +46,7 @@ def init_random(seed: int = None):
 
     if seed is None:
         tmp_random = numpy.random.RandomState(None)
-        GLOBAL_SEED = tmp_random.randint(2**32-1)
+        GLOBAL_SEED = tmp_random.randint(2**32-1, dtype='uint32')
     else:
         GLOBAL_SEED = seed
 
