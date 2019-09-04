@@ -291,9 +291,7 @@ class BeliefState:
         # check if matching db entities could be discriminated by more
         # information from user
         discriminable = False
-        if len(db_matches) < 2:
-            discriminable = True
-        else:
+        if len(db_matches) > 1:
             dontcare_slots = set(candidates.keys()) - set(constraints.keys())
             informable_slots = self.domain.get_informable_slots() - set(self.domain.get_primary_key())
             for informable_slot in informable_slots:

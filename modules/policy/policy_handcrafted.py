@@ -90,8 +90,13 @@ class HandcraftedPolicy(Module):
         self.prev_sys_act = sys_act
         self._check_for_gen_actions(user_acts)
 
+        # do nothing on the first turn --LV
+        if user_acts is None and self.turn == 0:
+            sys_act = SysAct()
+            sys_act.type = SysActionType.Welcome
+            return sys_act
         # if there is no user act, and it's not the first turn, this is bad
-        if not self.act_types_lst and self.turn > 0:
+        elif not self.act_types_lst and self.turn > 0:
             # if not self.is_user_act and self.turn > 0:
             sys_act = SysAct()
             sys_act.type = SysActionType.Bad
@@ -300,14 +305,8 @@ class HandcraftedPolicy(Module):
         --LV
         """
         method = self._get_method(belief_state)
-        # do nothing on the first turn --LV
-        if self.last_action is None and self.turn == 0:
-            sys_act = SysAct()
-            sys_act.type = SysActionType.Welcome
-            return sys_act
-
         # Assuming this happens only because domain is not actually active --LV
-        elif method == 'none':
+        if method == 'none':
             sys_act = SysAct()
             sys_act.type = SysActionType.Bad
             return sys_act

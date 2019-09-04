@@ -20,4 +20,3 @@
 from .policy_handcrafted import HandcraftedPolicy
 from .rl.dqnpolicy import DQNPolicy
 from .evaluation import PolicyEvaluator
-from .mechanical_turk import MechanicalTurk

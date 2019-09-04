@@ -19,3 +19,4 @@
 
 from .console import ConsoleInput, ConsoleOutput
 from .gui import GuiInput, GuiOutput, Feedback, TaskDescription
+from .mechanical_turk import MechanicalTurk

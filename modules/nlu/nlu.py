@@ -465,9 +465,9 @@ class HandcraftedNLU(Module):
             self.user_acts.append(user_act)
 
 
-    def forward(self, dialog_graph: DialogSystem, user_utterance: str = None, sys_act: SysAct =
-    None,
-                beliefstate: BeliefState = None, **kwargs) -> dict(user_acts=List[UserAct]):
+    def forward(self, dialog_graph: DialogSystem, user_utterance: str = None,
+        sys_act: SysAct = None, beliefstate: BeliefState = None, **kwargs: dict)\
+        -> dict(user_acts=List[UserAct]):
 
         """
         Responsible for detecting user acts with their respective slot-values from the user
@@ -482,9 +482,8 @@ class HandcraftedNLU(Module):
             **kwargs - dictionary passed through modules
 
         Returns:
-
-            {'user_acts': self.user_acts} - a dictionary with the key "user_acts" and the value
-                                            is a list of UserAct
+            dict of str: UserAct - a dictionary with the key "user_acts" and the value
+                                            containing a list of user actions
         """
 
         first_turn = dialog_graph.num_turns == 0 if dialog_graph is not None else False

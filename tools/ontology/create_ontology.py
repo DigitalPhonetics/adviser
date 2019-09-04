@@ -17,7 +17,7 @@
 #
 ###############################################################################
 
-__version__ = "1.0"
+__version__ = "1.0.1"
 
 import shutil
 import copy
@@ -199,7 +199,8 @@ def run_questions(db: Database):
 if __name__ == "__main__":
     sys.tracebacklimit = 0
     parser = argparse.ArgumentParser()
-    parser.add_argument("database", type=str, help="path to the database from which the ontology will be created")
+    parser.add_argument('database', type=str, help='path to the database from which the ontology will be created')
+    parser.add_argument('-V', '--version', action='version', version='%(prog)s {version}'.format(version=__version__))
     args = parser.parse_args()
 
     if not os.path.isfile(args.database):
