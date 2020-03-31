@@ -29,7 +29,7 @@ Once you have the code locally navigate to the top level directory, where you wi
 virtual environment from the top level directory, as shown below, followed by installing the necessary packages.
 
 
-1. Make sure you have virtualenv installed by executing
+1. (You need to have pip, or pip3) Make sure you have virtualenv installed by executing
 
 .. code-block:: bash
 
@@ -48,19 +48,19 @@ new terminal session)
 
     source <path-to-env>/bin/activate
 
-4. Install the required packages
-
-.. code-block:: bash
-
-    pip install -r requirements.txt
-
-5. To make sure your installation is working, navigate to the adviser folder:
+4. Navigate to the adviser folder
 
 .. code-block:: bash
 
     cd adviser
 
-and execute
+5. Install the required packages
+
+.. code-block:: bash
+
+    pip install -r requirements.txt
+
+and, to make sure your installation is working, execute
 
 .. code-block:: bash
 
