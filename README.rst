@@ -1,4 +1,8 @@
-Please see the `documentation <https://digitalphonetics.github.io/adviser/>`_ for more details.
+  Please see the `documentation <https://digitalphonetics.github.io/adviser/>`_ for more details.
+
+New Version
+===========
+There will be more information about the new version of Adviser soon. Stay tuned!
 
 Installation
 ============
