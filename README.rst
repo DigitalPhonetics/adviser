@@ -16,7 +16,7 @@ Note that this method has some disadvantages (you'll only be able to run basic t
 Cloning the repository (recommended)
 ------------------------------------
 
-If `Git` is installed on your machine, you may instead clone the repository by enterind in a terminal window:
+If `Git` is installed on your machine, you may instead clone the repository by entering in a terminal window:
 
 .. code-block:: bash
 
