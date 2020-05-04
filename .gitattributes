@@ -1,0 +1,8 @@
+*.fst filter=lfs diff=lfs merge=lfs -text
+*.mdl filter=lfs diff=lfs merge=lfs -text
+*.bin filter=lfs diff=lfs merge=lfs -text
+*.pkl filter=lfs diff=lfs merge=lfs -text
+*.joblib filter=lfs diff=lfs merge=lfs -text
+*.dat filter=lfs diff=lfs merge=lfs -text
+*.avg.best filter=lfs diff=lfs merge=lfs -text
+adviser/resources/**/*.pt filter=lfs diff=lfs merge=lfs -text
