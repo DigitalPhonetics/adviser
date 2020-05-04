@@ -20,7 +20,7 @@
 """This module provides the necessary classes for a system action."""
 
 from enum import Enum
-from typing import Dict
+from typing import Dict, List
 
 
 class SysActionType(Enum):
@@ -39,19 +39,17 @@ class SysActionType(Enum):
 
 
 class SysAct(object):
-    """
-    The class for a system action as used in the dialog.
 
-    Args:
-        act_type (SysActionType): The type of the system action.
-        slot_values (Dict['str', List['str']]): A mapping of ``slot -> value`` to which the system
-        action refers depending on the action type - might be ``None``. Default: ``None``.
+    def __init__(self, act_type: SysActionType = None, slot_values: Dict[str, List[str]] = None):
+        """
+        The class for a system action as used in the dialog.
 
-    .. todo:: ``value`` might be actually a list?
+        Args:
+            act_type (SysActionType): The type of the system action.
+            slot_values (Dict[str, List[str]]): A mapping of ``slot -> value`` to which the system
+                action refers depending on the action type - might be ``None``.
 
-    """
-
-    def __init__(self, act_type: SysActionType = None, slot_values: Dict['str', 'str'] = None):
+        """
         self.type = act_type
         self.slot_values = slot_values if slot_values is not None else {}
 
@@ -82,7 +80,7 @@ class SysAct(object):
         """ Return all values for slot
 
         Returns:
-            A list of values for slot or an empy list if there was no value
+            Dict[str, List[str]]: A list of values for slot or an empy list if there was no value
             specified for the given slot
         """
         if slot not in self.slot_values:

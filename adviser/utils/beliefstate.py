@@ -118,7 +118,6 @@ class BeliefState:
         then the slot will not be added to the result at all.
 
         Args:
-            beliefstate: beliefstate dict
             consider_NONE: If True, slots where **NONE** values have the
                            highest probability will not be added to the result.
                            If False, slots where **NONE** values have the
@@ -129,8 +128,8 @@ class BeliefState:
             turn_idx: index for accessing the belief state history (default = -1: use last turn)
 
         Returns:
-            A dict with mapping from slots to a list (if max_results > 1) or
-            a float (if max_results == 1) of values containing the slots which
+            Union(Dict[str, List[str]], Dict[str, str]): A dict with mapping from slots to a list of values (if max_results > 1) or
+            a value (if max_results == 1) containing the slots which
             have at least one value whose probability exceeds the specified
             threshold.
         """
@@ -156,19 +155,18 @@ class BeliefState:
         then the slot will not be added to the result at all.
 
         Args:
-            beliefstate: beliefstate dict
             consider_NONE: If True, slots where **NONE** values have the
                            highest probability will not be added to the result.
                            If False, slots where **NONE** values have the
                            highest probability will look for the best value !=
                            **NONE**.
-            threshold: minimum probability to be accepted to the
-            max_results: return at most #max_results best values per slot
+            threshold: minimum probability to be accepted
+            max_results: return at most `max_results` best values per slot
             turn_idx: index for accessing the belief state history (default = -1: use last turn)
 
         Returns:
-            A dict with mapping from slots to a list (if max_results > 1) or
-            a float (if max_results == 1) of values containing the slots which
+            Union(Dict[str, List[str]], Dict[str, str]): A dict with mapping from slots to a list of values (if max_results > 1) or
+            a value (if max_results == 1) containing the slots which
             have at least one value whose probability exceeds the specified
             threshold.
         """

@@ -41,23 +41,23 @@ class UserActionType(Enum):
 
 
 class UserAct(object):
-    """
-    The class for a user action as used in the dialog.
-
-    Args:
-        text (str): A textual representation of the user action.
-        act_type (UserActionType): The type of the user action.
-        slot (str): The slot to which the user action refers - might be ``None`` depending on the
-            user action. Default: ``None``.
-        value (str): The value to which the user action refers - might be ``None`` depending on the
-            user action. Default: ``None``.
-        score (float): A value from 0. (not important) to 1. (important) indicating how important
-            the information is for the belief state. Default: ``1.0``.
-
-    """
-
     def __init__(self, text: str = "", act_type: UserActionType = None, slot: str = None,
                  value: str = None, score: float = 1.0):
+        """
+        The class for a user action as used in the dialog.
+
+        Args:
+            text (str): A textual representation of the user action.
+            act_type (UserActionType): The type of the user action.
+            slot (str): The slot to which the user action refers - might be ``None`` depending on the
+                user action. Default: ``None``.
+            value (str): The value to which the user action refers - might be ``None`` depending on the
+                user action. Default: ``None``.
+            score (float): A value from 0 (not important) to 1 (important) indicating how important
+                the information is for the belief state. Default: ``1.0``.
+
+        """
+        
         self.text = text
         self.type = act_type
         self.slot = slot

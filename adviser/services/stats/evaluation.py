@@ -61,8 +61,8 @@ class ObjectiveReachedEvaluator(object):
             logging (bool): whether or not the evaluation results should be logged
 
         Returns:
-            Reward - the final reward (0 (unsuccessful) or 20 (successful))
-            Success - True or false
+            float: Reward - the final reward (0 (unsuccessful) or 20 (successful))
+            bool: Success
         """
 
         requests = sim_goal.requests
