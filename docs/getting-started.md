@@ -65,4 +65,4 @@ ds.shutdown()
 ```
 
 To run this code, execute `python mydiasys.py`.
-You can try e.g. utterances like `I want information about a Digital Phoentics lecturer` and continue the dialog from there.
+You can try e.g. utterances like `I want information about a Digital Phonetics lecturer` and continue the dialog from there.
