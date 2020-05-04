@@ -1,0 +1,1524 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="https://digitalphonetics.github.io/adviser/tutorials/dialogsystem/" rel="canonical"/>
+<link href="../../assets/images/favicon.png" rel="shortcut icon"/>
+<meta content="mkdocs-1.1, mkdocs-material-5.1.3" name="generator"/>
+<title>Dialog System - Adviser</title>
+<link href="../../assets/stylesheets/main.62d34fff.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+<link href="../../custom.css" rel="stylesheet"/>
+</head>
+<body dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#task-oriented-dialog-systems-with-adviser-20">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header-nav md-grid">
+<a aria-label="Adviser" class="md-header-nav__button md-logo" href="https://digitalphonetics.github.io/adviser/" title="Adviser">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z"></path></svg>
+</a>
+<label class="md-header-nav__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"></path></svg>
+</label>
+<div class="md-header-nav__title" data-md-component="header-title">
+<div class="md-header-nav__ellipsis">
+<span class="md-header-nav__topic md-ellipsis">
+            Adviser
+          </span>
+<span class="md-header-nav__topic md-ellipsis">
+            
+              Dialog System
+            
+          </span>
+</div>
+</div>
+<label class="md-header-nav__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" data-md-state="active" name="query" placeholder="Search" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
+</label>
+<button aria-label="Clear" class="md-search__icon md-icon" data-md-component="search-reset" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path></svg>
+</button>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header-nav__source">
+<a class="md-source" href="https://github.com/DigitalPhonetics/adviser/" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Adviser" class="md-nav__button md-logo" href="https://digitalphonetics.github.io/adviser/" title="Adviser">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z"></path></svg>
+</a>
+    Adviser
+  </label>
+<div class="md-nav__source">
+<a class="md-source" href="https://github.com/DigitalPhonetics/adviser/" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../.." title="Home">
+      Home
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started/" title="Getting Started">
+      Getting Started
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" id="nav-3" type="checkbox"/>
+<label class="md-nav__link" for="nav-3">
+      Reference
+      <span class="md-nav__icon md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path></svg>
+</span>
+</label>
+<nav aria-label="Reference" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-3">
+<span class="md-nav__icon md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
+</span>
+        Reference
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/services/" title="Services">
+      Services
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/examples/" title="Examples">
+      Examples
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/resources/" title="Resources">
+      Resources
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/utils/" title="Utils">
+      Utils
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/tools/" title="Tools">
+      Tools
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="nav-4" id="nav-4" type="checkbox"/>
+<label class="md-nav__link" for="nav-4">
+      Tutorials
+      <span class="md-nav__icon md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path></svg>
+</span>
+</label>
+<nav aria-label="Tutorials" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-4">
+<span class="md-nav__icon md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
+</span>
+        Tutorials
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../introduction/" title="Introduction">
+      Introduction
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../services/" title="Services">
+      Services
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+        Dialog System
+        <span class="md-nav__icon md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z"></path></svg>
+</span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./" title="Dialog System">
+      Dialog System
+    </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
+</span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#domains-ontologies-and-databasesapis">
+    Domains, Ontologies, and Databases/APIs
+  </a>
+<nav aria-label="Domains, Ontologies, and Databases/APIs" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#databasesapis">
+    Databases/APIs
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ontology">
+    Ontology
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-domain-class">
+    The Domain Class
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#topics-and-domains">
+    Topics and Domains
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#automatic-speech-recognition-asr">
+    Automatic Speech Recognition (ASR)
+  </a>
+<nav aria-label="Automatic Speech Recognition (ASR)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#using-the-speech-recognition-module">
+    Using the Speech Recognition Module
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rule-based-natural-language-understanding-nlu">
+    Rule-based Natural Language Understanding (NLU)
+  </a>
+<nav aria-label="Rule-based Natural Language Understanding (NLU)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#semantic-representation-of-user-actions">
+    Semantic representation of user actions
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#specifying-rules">
+    Specifying rules
+  </a>
+<nav aria-label="Specifying rules" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-general-syntax">
+    1 General syntax
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-commands">
+    2 Commands
+  </a>
+<nav aria-label="2 Commands" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#21-rule">
+    2.1 Rule
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#22-regular-expression">
+    2.2 Regular Expression
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#23-exceptions">
+    2.3 Exceptions
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#24-additions">
+    2.4 Additions
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#25-functions">
+    2.5 Functions
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-shortcuts-and-syntax-simplification">
+    3 Shortcuts and syntax simplification
+  </a>
+<nav aria-label="3 Shortcuts and syntax simplification" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#31-comments-and-empty-lines">
+    3.1 Comments and empty lines
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#32-tabs">
+    3.2 Tabs
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#33-automatic-insertion-of-the-regex-keyword">
+    3.3 Automatic insertion of the regex keyword
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#34-colons">
+    3.4 Colons
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-nlu-module">
+    The NLU module
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rule-based-belief-state-tracker-bst">
+    Rule-based Belief State Tracker (BST)
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#policy">
+    Policy
+  </a>
+<nav aria-label="Policy" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rule-based-policy">
+    Rule-based Policy
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#reinforcement-learning-policy">
+    Reinforcement Learning Policy
+  </a>
+<nav aria-label="Reinforcement Learning Policy" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-reinforcement-learning">
+    Why reinforcement Learning
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rl-in-the-context-of-dialog-policy">
+    RL in the Context of Dialog Policy
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#user-simulator">
+    User Simulator
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#evaluation">
+    Evaluation
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#training-a-reinforcement-learning-policy">
+    Training a reinforcement learning policy
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#handcrafted-natural-language-generation-nlg">
+    Handcrafted Natural Language Generation (NLG)
+  </a>
+<nav aria-label="Handcrafted Natural Language Generation (NLG)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#types-of-templates">
+    Types of templates
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#text-to-speech-tts">
+    Text to Speech (TTS)
+  </a>
+<nav aria-label="Text to Speech (TTS)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cleaning-up-tts-output">
+    Cleaning up TTS output
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#chatting-with-the-dialog-system">
+    Chatting with the dialog system
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#check-your-understanding-optional">
+    Check Your Understanding (Optional)
+  </a>
+<nav aria-label="Check Your Understanding (Optional)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#run-a-dialog-system">
+    Run a Dialog System
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-a-basic-nlu">
+    Create a basic NLU
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#update-the-nlg">
+    Update the NLG
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#test-out-your-new-system">
+    Test out your new system
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../advanced/" title="Advanced">
+      Advanced
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../faq/" title="FAQ">
+      FAQ
+    </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
+</span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#domains-ontologies-and-databasesapis">
+    Domains, Ontologies, and Databases/APIs
+  </a>
+<nav aria-label="Domains, Ontologies, and Databases/APIs" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#databasesapis">
+    Databases/APIs
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ontology">
+    Ontology
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-domain-class">
+    The Domain Class
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#topics-and-domains">
+    Topics and Domains
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#automatic-speech-recognition-asr">
+    Automatic Speech Recognition (ASR)
+  </a>
+<nav aria-label="Automatic Speech Recognition (ASR)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#using-the-speech-recognition-module">
+    Using the Speech Recognition Module
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rule-based-natural-language-understanding-nlu">
+    Rule-based Natural Language Understanding (NLU)
+  </a>
+<nav aria-label="Rule-based Natural Language Understanding (NLU)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#semantic-representation-of-user-actions">
+    Semantic representation of user actions
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#specifying-rules">
+    Specifying rules
+  </a>
+<nav aria-label="Specifying rules" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-general-syntax">
+    1 General syntax
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-commands">
+    2 Commands
+  </a>
+<nav aria-label="2 Commands" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#21-rule">
+    2.1 Rule
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#22-regular-expression">
+    2.2 Regular Expression
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#23-exceptions">
+    2.3 Exceptions
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#24-additions">
+    2.4 Additions
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#25-functions">
+    2.5 Functions
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-shortcuts-and-syntax-simplification">
+    3 Shortcuts and syntax simplification
+  </a>
+<nav aria-label="3 Shortcuts and syntax simplification" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#31-comments-and-empty-lines">
+    3.1 Comments and empty lines
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#32-tabs">
+    3.2 Tabs
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#33-automatic-insertion-of-the-regex-keyword">
+    3.3 Automatic insertion of the regex keyword
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#34-colons">
+    3.4 Colons
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-nlu-module">
+    The NLU module
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rule-based-belief-state-tracker-bst">
+    Rule-based Belief State Tracker (BST)
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#policy">
+    Policy
+  </a>
+<nav aria-label="Policy" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rule-based-policy">
+    Rule-based Policy
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#reinforcement-learning-policy">
+    Reinforcement Learning Policy
+  </a>
+<nav aria-label="Reinforcement Learning Policy" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-reinforcement-learning">
+    Why reinforcement Learning
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rl-in-the-context-of-dialog-policy">
+    RL in the Context of Dialog Policy
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#user-simulator">
+    User Simulator
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#evaluation">
+    Evaluation
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#training-a-reinforcement-learning-policy">
+    Training a reinforcement learning policy
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#handcrafted-natural-language-generation-nlg">
+    Handcrafted Natural Language Generation (NLG)
+  </a>
+<nav aria-label="Handcrafted Natural Language Generation (NLG)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#types-of-templates">
+    Types of templates
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#text-to-speech-tts">
+    Text to Speech (TTS)
+  </a>
+<nav aria-label="Text to Speech (TTS)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cleaning-up-tts-output">
+    Cleaning up TTS output
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#chatting-with-the-dialog-system">
+    Chatting with the dialog system
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#check-your-understanding-optional">
+    Check Your Understanding (Optional)
+  </a>
+<nav aria-label="Check Your Understanding (Optional)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#run-a-dialog-system">
+    Run a Dialog System
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-a-basic-nlu">
+    Create a basic NLU
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#update-the-nlg">
+    Update the NLG
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#test-out-your-new-system">
+    Test out your new system
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/DigitalPhonetics/adviser/edit/master/docs/tutorials/dialogsystem/index.md" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"></path></svg>
+</a>
+<div class="admonition todo">
+<p class="admonition-title">Todo</p>
+<ul>
+<li>Add link to notebook</li>
+</ul>
+</div>
+<h1 id="task-oriented-dialog-systems-with-adviser-20">Task Oriented Dialog Systems with ADVISER 2.0</h1>
+<p>Already we have seen a little bit how services operate and the basic modules needed to make a dialog system. In this tutorial, we will introduce service based implementations of these modules which come as part of the ADVISER 2.0 toolkit.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># FIRST SET UP ENVIRONMENT</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">'../..'</span><span class="p">))</span>
+
+<span class="kn">from</span> <span class="nn">utils.topics</span> <span class="kn">import</span> <span class="n">Topic</span>
+<span class="kn">from</span> <span class="nn">services.service</span> <span class="kn">import</span> <span class="n">Service</span><span class="p">,</span> <span class="n">PublishSubscribe</span><span class="p">,</span> <span class="n">RemoteService</span>
+
+<span class="kn">from</span> <span class="nn">utils.domain.domain</span> <span class="kn">import</span> <span class="n">Domain</span>
+<span class="kn">from</span> <span class="nn">utils.domain.jsonlookupdomain</span> <span class="kn">import</span> <span class="n">JSONLookupDomain</span>
+<span class="kn">from</span> <span class="nn">utils.logger</span> <span class="kn">import</span> <span class="n">DiasysLogger</span><span class="p">,</span> <span class="n">LogLevel</span>
+
+<span class="kn">from</span> <span class="nn">services.hci</span> <span class="kn">import</span> <span class="n">ConsoleInput</span><span class="p">,</span> <span class="n">ConsoleOutput</span>
+<span class="kn">from</span> <span class="nn">services.nlu</span> <span class="kn">import</span> <span class="n">HandcraftedNLU</span>
+<span class="kn">from</span> <span class="nn">services.bst</span> <span class="kn">import</span> <span class="n">HandcraftedBST</span>
+<span class="kn">from</span> <span class="nn">services.policy</span> <span class="kn">import</span> <span class="n">HandcraftedPolicy</span>
+<span class="kn">from</span> <span class="nn">services.nlg</span> <span class="kn">import</span> <span class="n">HandcraftedNLG</span>
+<span class="kn">from</span> <span class="nn">services.domain_tracker</span> <span class="kn">import</span> <span class="n">DomainTracker</span>
+
+<span class="kn">from</span> <span class="nn">services.service</span> <span class="kn">import</span> <span class="n">DialogSystem</span>
+
+<span class="kn">from</span> <span class="nn">tensorboardX</span> <span class="kn">import</span> <span class="n">SummaryWriter</span>
+<span class="kn">from</span> <span class="nn">services.policy.rl.experience_buffer</span> <span class="kn">import</span> <span class="n">NaivePrioritizedBuffer</span>
+<span class="kn">from</span> <span class="nn">services.simulator</span> <span class="kn">import</span> <span class="n">HandcraftedUserSimulator</span>
+<span class="kn">from</span> <span class="nn">services.policy</span> <span class="kn">import</span> <span class="n">DQNPolicy</span>
+<span class="kn">from</span> <span class="nn">services.stats.evaluation</span> <span class="kn">import</span> <span class="n">PolicyEvaluator</span>
+</code></pre></div>
+<h2 id="domains-ontologies-and-databasesapis">Domains, Ontologies, and Databases/APIs</h2>
+<p>Since this is a tutorial about task-oriented dialog systems, we need to introduce the concept of a domain here.
+A domain is a limited topic of conversation, e.g. weather, lecturers, or restaurants. In the context of the ADVISER 2.0 toolkit, a domain is defined by an ontology - which describes the types of entities which can be discussed in a domain, their properties, and which properties the user and system can ask after - and a database which can be queried by the system to anser user requests.</p>
+<h3 id="databasesapis">Databases/APIs</h3>
+<p>When we discuss task oriented dialog systems in this tutorial, we primarly mean systems where the user is trying to find an appropriate entity and/or information about a given entity's properties. For example, a user is trying to find the best superhero to save their city and once they find one, they want to know their last known location. To enable this, however, the system needs access to a database (or web API) which stores this kind of information.  In the rest of this tutorial, we will work under the assumption that our dialog systems have access to an SQLite database which contains all relevant information for a domain.</p>
+<h3 id="ontology">Ontology</h3>
+<p>Ontologies are responsible for defining what things (entities and their properties) can be discussed in a given domain (topic).
+Below is an example ontology for a superhero domain. The <em>entities</em> in this domain are superheroes, and their properties include things such as <em>name</em>, <em>primary_uniform_color</em>, <em>main_superpower</em>, <em>last_known_location</em>.
+These properties are then split into three (overlapping) categories:
+* <strong>informables:</strong> Properties the user can tell the system to help accomplish their goal
+    * eg. constraints to help them find the right superhero for their job
+* <strong>requestables:</strong> Properties the user can ask the system about to find out more information about an entity
+    * eg. "what is their secret identity?" something that only makes sense after an entity has been suggested
+* <strong>system requestables:</strong> Properties the system can ask the user for to help it figure out what entity best fills the user's goal</p>
+<p>The general properties (loyalty, name, etc.) are called slots, and the specific instances of a slot ("Avengers", "Aqua Man", etc.) are called values. As one of the ontology's main purposes is to support in natural language understanding and a user will only provide values for <em>informable</em> slots, these are the only values which must be listed in the ontology.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+    <span class="s2">"informable"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"loyality"</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">"Avengers"</span><span class="p">,</span>
+            <span class="s2">"Justice League"</span><span class="p">,</span>
+            <span class="s2">"Guardians of the Galaxy"</span><span class="p">,</span>
+             <span class="o">...</span>
+        <span class="p">],</span>
+        <span class="s2">"main_superpower"</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">"Claws"</span><span class="p">,</span>
+            <span class="s2">"Gadgets"</span><span class="p">,</span>
+            <span class="s2">"Magic"</span><span class="p">,</span>
+             <span class="o">...</span>
+        <span class="p">],</span>
+        <span class="s2">"name"</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">"Aqua Man"</span><span class="p">,</span>
+            <span class="s2">"Batman"</span><span class="p">,</span>
+            <span class="s2">"Black Widow"</span><span class="p">,</span>
+             <span class="o">...</span>
+        <span class="p">],</span>
+        <span class="s2">"primary_uniform_color"</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">"Black"</span><span class="p">,</span>
+            <span class="s2">"Blue"</span><span class="p">,</span>
+            <span class="s2">"Yellow"</span><span class="p">,</span>
+             <span class="o">...</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="s2">"key"</span><span class="p">:</span> <span class="s2">"name"</span><span class="p">,</span>
+    <span class="s2">"requestable"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"name"</span><span class="p">,</span>
+        <span class="s2">"primary_uniform_color"</span><span class="p">,</span>
+        <span class="s2">"main_superpower"</span><span class="p">,</span>
+        <span class="s2">"last_known_location"</span><span class="p">,</span>
+        <span class="s2">"loyality"</span><span class="p">,</span>
+        <span class="s2">"description"</span><span class="p">,</span>
+        <span class="s2">"real_name"</span>
+    <span class="p">],</span>
+    <span class="s2">"system_requestable"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"primary_uniform_color"</span><span class="p">,</span>
+        <span class="s2">"main_superpower"</span><span class="p">,</span>
+        <span class="s2">"loyality"</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="codehilite"><pre><span></span><code><span class="err">{'informable': {'loyality': ['Avengers',</span>
+<span class="err">   'Justice League',</span>
+<span class="err">   'Guardians of the Galaxy',</span>
+<span class="err">   Ellipsis],</span>
+<span class="err">  'main_superpower': ['Claws', 'Gadgets', 'Magic', Ellipsis],</span>
+<span class="err">  'name': ['Aqua Man', 'Batman', 'Black Widow', Ellipsis],</span>
+<span class="err">  'primary_uniform_color': ['Black', 'Blue', 'Yellow', Ellipsis]},</span>
+<span class="err"> 'key': 'name',</span>
+<span class="err"> 'requestable': ['name',</span>
+<span class="err">  'primary_uniform_color',</span>
+<span class="err">  'main_superpower',</span>
+<span class="err">  'last_known_location',</span>
+<span class="err">  'loyality',</span>
+<span class="err">  'description',</span>
+<span class="err">  'real_name'],</span>
+<span class="err"> 'system_requestable': ['primary_uniform_color',</span>
+<span class="err">  'main_superpower',</span>
+<span class="err">  'loyality']}</span>
+</code></pre></div>
+<p>This information is useful to e.g. NLU and Policy:</p>
+<ul>
+<li>A regular expression based NLU can match known values from the ontology against user input<ul>
+<li>e.g. is <code>italian</code> in the user input or a synonym defined in the NLU?<ul>
+<li>if so, this could be an inform act for the slot food</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>A policy can construct actions based on the slots<ul>
+<li>e.g. slot food is requestable and informable:<ul>
+<li><code>inform_food</code></li>
+<li><code>request_food</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="the-domain-class">The Domain Class</h3>
+<p>In the ADVISER 2.0 Toolkit, domains are subclasses of <code>utils.domain.domain.Domain</code>.
+The <code>Domain</code> class provides an abstract interface for connecting to the ontology and database associated with a domain e.g. the weather domain would provide means to contact a WebAPI for querying with user-specified constraints like <code>location, day,...</code> or could provide access to the ontology so the system would know what system requestable slots existed in the weather domain.</p>
+<p>In thins domain, rather than working with the abstract Domain class, we will primarily be using the class <code>JSONLookupDomain</code>, a subclass which provides querying functionality for an <code>SQLite-Database</code> (found in <code>resources/databases</code>) and an  access to an ontology file (found in <code>resources/ontologies</code>) in JSON-format.</p>
+<p><strong>Example:</strong></p>
+<p>Let's create an example domain. For this we'll work with a domain called <code>superhero</code> which allows users to find the correct superhero for whatever problem is at hand. As mentioned domains require an ontology and a database to define them, therefore as we instantiate a new Domain, we will pass both of these is as files. If the ontology and database file names follow the following format:
+* <code>ontologies/{domain_name}.json</code>
+* <code>databasees/{domain_name}.db</code>
+then only the <code>domain_name</code> is necessary to pass to the <code>JSONLookupDomain</code> object to instantiate it as shown below:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Here we can instantiate the domain with just the name string since the paths to our ontology</span>
+<span class="c1"># and database files follow the correct pattern</span>
+<span class="n">super_domain</span> <span class="o">=</span> <span class="n">JSONLookupDomain</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"superhero"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="topics-and-domains">Topics and Domains</h3>
+<p>If you're providing domain-objects (or, equivalently, domain name strings) to a <code>Service</code> constructor, all subscribed and published topics for this service will implicitly append the domain name to allow for multi domain dialog systems. The exact reasons for this will be explained in more depth in the <em>mutlidomain</em> section of the next tutorial.</p>
+<p>Let's alter our <code>ConcatenateService</code> to accept a domain name:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">ConcatenateServiceWithDomain</span><span class="p">(</span><span class="n">Service</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"mydomain"</span><span class="p">):</span>
+        <span class="sd">""" NEW: domain name! """</span>
+        <span class="n">Service</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">)</span>
+
+    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">"A"</span><span class="p">,</span> <span class="s2">"B"</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">"C"</span><span class="p">,</span> <span class="s2">"D"</span><span class="p">])</span>
+    <span class="k">def</span> <span class="nf">concatenate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span><span class="n">D</span><span class="o">=</span><span class="nb">str</span><span class="p">):</span>
+        <span class="sd">""" NOTE: This function did not change at all """</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"CONCATENATING "</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="s2">"AND "</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="s2">" "</span> <span class="o">+</span> <span class="n">B</span>
+        <span class="k">if</span> <span class="n">A</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">'D'</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span>  <span class="p">{</span><span class="s1">'C'</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+</code></pre></div>
+<p>If we would run the dialog system example above again, replacing the old <code>ConcatenateService</code> with the new <code>ConcatenateServiceWithDomain</code>, we would observe no more prints from it and also no more messages to topics <code>C</code> and <code>D</code>.
+This is because the toics for <code>ConcatenateServiceWithDomain</code> were internally remapped to:
+* <code>A</code> -&gt; <code>A/mydomain</code>
+* <code>B</code> -&gt; <code>B/mydomain</code>
+* <code>C</code> -&gt; <code>C/mydomain</code>
+* <code>D</code> -&gt; <code>D/mydomain</code></p>
+<p>Subscribers perform <em>prefix-based topic matching</em>, that means in this case:
+* <code>A/mydomain</code>is NOT a prefix of <code>A</code> - no messages are received when publishing to <code>A</code> (or <code>B</code> or any other topic here)
+* same argument holds for <code>B</code></p>
+<p>However: if <code>concatenate</code> would be called, we would see output by <code>PrintService</code>! This is because
+* <code>concatenate</code> publishes to <code>C/mydomain</code> and <code>PrintService</code> subscribes to <code>C</code>
+    * <code>C</code> is a prefix of <code>C/mydomain</code>! 
+* same argument holds for <code>D</code></p>
+<p>If you provide all your services with the same domain, you're not going to experience any problems and do nothave to worry about these internal details in any way. However, in case you want to 
+* go multidomain (see next tutorial)
+* combine domain-agnostic with domain-aware services (eg. a console input module and an NLU module)
+* change routing behaviour of our provided services without subclassing them and overwriting the respective functions
+the <code>Service</code> constructor offers a way to overwrite topics on instantiation:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Service</span><span class="p">:</span>
+    <span class="fm">__init__</span><span class="p">(</span><span class="n">domain</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Domain</span><span class="p">]</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span> <span class="n">sub_topic_domains</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{},</span> <span class="n">pub_topic_domains</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{},</span> <span class="o">...</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li><code>sub_topic_domains</code> is a mapping for overwriting subscriber topics<ul>
+<li><code>key</code>: the original topic as given in the <code>PublishSubscribe</code>-decorator</li>
+<li><code>value</code>: the domain name to append<ul>
+<li>if <code>len(value) &gt; 0</code>: the value will be appended to the subscribed topic and a slash: <code>key/value</code></li>
+<li>if <code>len(value) == 0</code>: empty domain, subscribed topic will be simply: <code>key</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>pub_topic_domains</code> works analogously</li>
+</ul>
+<p>So, if we change our constructor as follows:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">ConcatenateServiceWithDomain</span><span class="p">(</span><span class="n">Service</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"mydomain"</span><span class="p">,</span> 
+                       <span class="n">sub_topic_domains</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'A'</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>
+                                            <span class="s1">'B'</span><span class="p">:</span> <span class="s1">''</span><span class="p">}):</span>
+        <span class="sd">""" NEW: domain name! """</span>
+        <span class="n">Service</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">)</span>
+
+    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">"A"</span><span class="p">,</span> <span class="s2">"B"</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">"C"</span><span class="p">,</span> <span class="s2">"D"</span><span class="p">])</span>
+    <span class="k">def</span> <span class="nf">concatenate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span><span class="n">D</span><span class="o">=</span><span class="nb">str</span><span class="p">):</span>
+        <span class="sd">""" NOTE: This function did not change at all """</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"CONCATENATING "</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="s2">"AND "</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="s2">" "</span> <span class="o">+</span> <span class="n">B</span>
+        <span class="k">if</span> <span class="n">A</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">'D'</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span>  <span class="p">{</span><span class="s1">'C'</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+</code></pre></div>
+<p>everything will work again, meaning we will observe prints and published messages to <code>C</code> and <code>D</code> again, because we explicitly overwrite the appended domain with the empty string
+* <code>A/mydomain</code> -&gt; <code>A</code>
+* <code>B/mydomain</code> -&gt; <code>B</code></p>
+<p>Another way to alter topics is to append domain strings manually in the return dictionary of any <code>Publish/Subscribe</code> function (Note: <em>This only works, if you didn't provide a domain (or domain name) to the service base class constructor</em>.):
+You may append any domain string to the dictionary keys, seperated by a slash: <code>/</code>.</p>
+<p>We could e.g. alter our <code>ConcatenateService</code> class:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">ConcatenateService</span><span class="p">(</span><span class="n">Service</span><span class="p">):</span>
+
+    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">"A"</span><span class="p">,</span> <span class="s2">"B"</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">"C"</span><span class="p">,</span> <span class="s2">"D"</span><span class="p">])</span>
+    <span class="k">def</span> <span class="nf">concatenate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span><span class="n">D</span><span class="o">=</span><span class="nb">str</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"CONCATENATING "</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="s2">"AND "</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="s2">" "</span> <span class="o">+</span> <span class="n">B</span>
+        <span class="k">if</span> <span class="n">A</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">'D/domain1'</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span>  <span class="p">{</span><span class="s1">'C/domain2'</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+</code></pre></div>
+<p>Now, our <code>ConcatenateService</code> gets all messages for topics starting with <code>A</code> and <code>B</code> (and independent of their domain) again, like in our very first <code>ConcatenateService</code> example.
+But, on the publishing side, we're now publishing to two different domains, <code>domain1</code> and <code>domain2</code>, by appending these domain names explicitly after the topic followed by the topic-domain-seperator: <code>C/domain2</code> and <code>D/domain1</code>.</p>
+<p>Equipped with these insights into the inner workings of the message routing mechanism, we can evolve our tutorial system to a multi-domain dialog system in the following chapter.</p>
+<h2 id="automatic-speech-recognition-asr">Automatic Speech Recognition (ASR)</h2>
+<p>To support spoken dialog systems, the ADVISER 2.0 toolkit provides an ASR module which converts spoken user utterances to text. In the current implementation, we provide the end-to-end ASR model for English language based on Transformer neural network architecture, however the exact ASR system can be swapped out to support other languages or architectures. We use the end-to-end speech processing toolkit <a href="https://arxiv.org/abs/1804.00015">ESPnet</a> and the IMS-speech English multi-dataset <a href="https://arxiv.org/abs/1908.04743">recipe</a>. The system was trained on LibriSpeech, Switchboard, TED-LIUM\~3, AMI, WSJ, Common\~Voice\~3, SWC, VoxForge, and M-AILABS datasets. The output of the ASR model is a sequence of subword units, which include single characters as well as combinations of several characters, making the model lexicon independent and thus able to handle unseen words. </p>
+<h3 id="using-the-speech-recognition-module">Using the Speech Recognition Module</h3>
+<p>To use the ASR module, provided in the ADVISER 2.0 toolkit, requires three classes:
+* <code>SpeechRecorder</code>: responsible for recording the user input
+* <code>SpeechInputFeatureExtracter</code>: responsible for feature extraction from recorded input
+* <code>SpeechInputDecoder</code>: responsible for converting input features to subword units</p>
+<p>The functionality is broken up in this way to allow other modules, such as the emotion recognition and backchanneling modules which will be seen in Tutorial Four, to also make use of the data extracted at each step.</p>
+<p><strong>Example:</strong></p>
+<p>To create instances of each of these three classes, see the code below</p>
+<p><strong>NOTE:</strong> This only works if you have installed the requirements for the multimodal system (they are large, so this is not recommended if you will only be working with text)</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">services.hci.speech</span> <span class="kn">import</span> <span class="n">SpeechInputDecoder</span>
+<span class="kn">from</span> <span class="nn">services.hci.speech</span> <span class="kn">import</span> <span class="n">SpeechInputFeatureExtractor</span>
+<span class="kn">from</span> <span class="nn">services.hci.speech</span> <span class="kn">import</span> <span class="n">SpeechRecorder</span>
+
+<span class="n">conversation_log_dir</span> <span class="o">=</span> <span class="s2">"tutorial_logs"</span>
+<span class="n">use_cuda</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">recorder</span> <span class="o">=</span> <span class="n">SpeechRecorder</span><span class="p">(</span><span class="n">conversation_log_dir</span><span class="o">=</span><span class="n">conversation_log_dir</span><span class="p">)</span>
+<span class="n">speech_in_feature_extractor</span> <span class="o">=</span> <span class="n">SpeechInputFeatureExtractor</span><span class="p">()</span>
+<span class="n">speech_in_decoder</span> <span class="o">=</span> <span class="n">SpeechInputDecoder</span><span class="p">(</span><span class="n">conversation_log_dir</span><span class="o">=</span><span class="n">conversation_log_dir</span><span class="p">,</span> <span class="n">use_cuda</span><span class="o">=</span><span class="n">use_cuda</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="rule-based-natural-language-understanding-nlu">Rule-based Natural Language Understanding (NLU)</h2>
+<h3 id="semantic-representation-of-user-actions">Semantic representation of user actions</h3>
+<p>The NLU module is responsible for mapping natural language user input to a machine readable semantic frame representation. In this case the semantic frame is composed of up to three parts:
+* <font color="red"><i><b>intent</b></i></font>: which determines what type of action the user wants to perform (eg. "hello", "inform", "request", etc.)
+* <font color="purple"><i><b>slot</b></i></font>: type of entity property the user is talking about (eg. "name", "super_power", etc.)
+* <font color="blue"><i><b>value</b></i></font>: exact value of the entity property (eg. "Superman", "super strength", etc.)</p>
+<p>For example the following utterances could be mapped to to the following intents:
+* "Hello" $\rightarrow$ <font color="red"> <i><b>hello</b></i></font>()
+* "I want a superhero who wears blue" $\rightarrow$ <font color="red"> <i><b>inform</b></i></font>(<font color="purple"><i><b>primary_uniform_color</b></i></font>=<font color="blue"> <i><b>"blue"</b></i></font>)
+* "What is the hero's secret identity? and their team affiliation?" $\rightarrow$ <font color="red"><i><b>request</b></i></font>(<font color="purple"><i><b>secret_identity</b></i></font>), <font color="red"><i><b>request</b></i></font>(<font color="purple"><i><b>loyalty</b></i></font>)</p>
+<p>Slots and values are defined in the ontology, but the intents which the system currently expects are found in the file <code>utils/useract.py</code> and listed here below:
+* <code>Inform</code>: user provides system with new constraints (eg. "speed" as a super power)
+* <code>NegativeInform</code>: user tells system new negative constraint (eg. "not speed" as a super power)
+* <code>Request</code>: user asks system for value of a slot (eg. "what is the super power?")
+* <code>Hello</code>: user greets system
+* <code>Bye</code>: user ends session
+* <code>Thanks</code>: user thanks system
+* <code>Confirm</code>: user confirms system utterance (eg. "yes, I do want super speed")
+* <code>Deny</code>: user denies system utterance (eg. "No, I do not want super speed")
+* <code>RequestAlternatives</code>: user asks for other entities that meet their constraints besides the one the system recommended (eg. "is there anyone else besides the Flash?")
+* <code>Bad</code>: user utterance couldn't be parsed to any other act
+* <code>SelectDomain</code>: only needed for multidomain systems, user says keyword associated with starting the domain </p>
+<p>These intents can be broken down into two sections: General and Domain-Specific. General acts are those like "Hello" and "Bye" which do not have slots or values associated with them and their regexes remain the same regardless of the domain.</p>
+<h3 id="specifying-rules">Specifying rules</h3>
+<p>In order to understand the user input, one can specify a list of possible natural language realisations for each user act. For example, the user act <code>hello()</code> could be expressed by saying <i>Hello</i>, <i>Hi</i> or <i>Hey</i>.
+A common way of specifying these rules computationally is to create regular expressions. For example, the dialogue agent could recognise the user act <code>hello()</code> if the user input string matches the regular expression <code>(hello|hi|hey)</code>.</p>
+<p>However, it would be time-consuming and messy to write a list of natural language realisations for all possible combinations of intent, slot and value.
+Therefore, we created a new syntax which allows you to reduce the number of rules by creating functions so that you only need to write a rule once and can simply apply it to all needed slots/values. In the following subsections, we present the most important parts of this syntax.</p>
+<h4 id="1-general-syntax">1 General syntax</h4>
+<p>The syntax uses keywords and indentation to create a nested command structure. This means that each line represents one command and each command starts with a keyword identifying the command type. Commands have a "block level" which is represented by their number of leading spaces (Level 0: 0 spaces, Level 1: 4 spaces, Level 2: 8 spaces, ...).</p>
+<p>Rule and function declaration commands are Level 0 commands. Any other commands can be inserted at any level &gt;0 and are automatically added to their "parent" command. A parent command is the last command on the current level -1. In the following example, Command2 is added to Command1, Command4 is added to Command3 and Command5 is added to Command4.</p>
+<div class="codehilite"><pre><span></span><code><span class="err">Command1 arguments</span>
+<span class="err">    Command2 arguments</span>
+<span class="err">Command3 arguments</span>
+<span class="err">    Command4 arguments</span>
+<span class="err">        Command5 arguments</span>
+</code></pre></div>
+<h4 id="2-commands">2 Commands</h4>
+<p>Currently, the ADVISER NLU syntax provides five possible commands. Each command individually defines what its arguments have to look like and what kind of child commands it allows. This section will show how to use the commands.</p>
+<h5 id="21-rule">2.1 Rule</h5>
+<p>The <code>rule</code> command specifies a mapping from a regular expression to a specific intent (user act). The command itself consists of the keyword "rule" and a description of the user act as <code>intent()</code> for user acts which do not contain slots (e.g. <code>hello()</code>, <code>bye()</code>) or <code>intent(slot)</code> for user acts with a slot (e.g. <code>inform(primary_uniform_color)</code>. The <code>regex</code> command can later be used as a child command to add information about the user utterances accepted and the slot's value.</p>
+<p>Regarding the child commands, a rule can have an infinite amount of child commands. These include the regular expressions for each intent and below those, any exceptions and additions that need to be specified. Exceptions are checked in the order of their appearance.</p>
+<p><strong>Note:</strong> General user acts (those which do not take slots or values as input) are not autogenerated. If you want to edit these, you may do so directly in the file <code>resources/nlu_regexes/GeneralRules.json</code>, however be careful as this file is currently shared across all domains.</p>
+<h5 id="22-regular-expression">2.2 Regular Expression</h5>
+<p>The <code>regex</code> command specifies a regular expression should map to the user act specified in the current rule block. RegEx commands consist of the keyword "regex" and a string wrapped by double quotes. They are usually added as child commands to rules, functions, exceptions and additions.</p>
+<p>The following example shows a valid rule specification, which matches to either "hero" or "superhero" and both the American and British spellings of the word "color".</p>
+<div class="codehilite"><pre><span></span><code><span class="err">rule request(primary_uniform_color)</span>
+<span class="err">    regex "what is the( super)?hero's uniform colo(u)?r\?"</span>
+</code></pre></div>
+<p>It is also possible to add multiple regular expressions to rule in order to account for more varied user utterances without making the regular expressions too complicated.</p>
+<div class="codehilite"><pre><span></span><code><span class="err">rule request(primary_uniform_color)</span>
+<span class="err">    regex "what is the( super)? hero's uniform colo(u)?r\?"</span>
+<span class="err">    regex "what is the colo(u)?r of the( super)? hero's uniform\?"</span>
+<span class="err">    regex "which colo(u)?r does the( super)? hero wear\?"</span>
+</code></pre></div>
+<p>For user acts such as <code>inform</code>, we also need to have access to the slot's value. The value can be accessed in the regular expression using curly braces.</p>
+<div class="codehilite"><pre><span></span><code><span class="err">rule inform(primary_uniform_color)</span>
+<span class="err">    regex "the colo(u)?r should be {primary_uniform_color}"</span>
+</code></pre></div>
+<p>This way, we can specify one rule for each value of primary_uniform_color. For example, if the user types <em>the colour should be green</em>, the system detects the user act <code>inform(primary_uniform_color=green)</code>.</p>
+<p>Note: RegEx commands cannot take any child commands.</p>
+<h5 id="23-exceptions">2.3 Exceptions</h5>
+<p>Exceptions can be called inside a rule command/function to override the default messages. Exceptions consist of the keyword "if" and take a constraint as an argument. A constraint can currently only match the pattern <code>variable = "string"</code>. Exceptions particularly make sense in cases where you might prefer to use a synonym rather than the exact value in the database. For example, if a database stores colors by hexadecimal code, the user cannot be expected to know the code for each color. Therefore, we could add an exception using the common name for the color, so that instead of expecting colors in hexadecimal, the system will only recognize the common name for the color.</p>
+<div class="codehilite"><pre><span></span><code><span class="err">rule inform(primary_uniform_color)</span>
+<span class="err">    regex "the colo(u)?r should be {primary_uniform_color}"</span>
+<span class="err">    if primary_uniform_color = "#ff11bb"</span>
+<span class="err">        regex "the colo(u)?r should be pink"</span>
+</code></pre></div>
+<p><strong>Note</strong>: Exception commands can take the same child commands as rule commands.</p>
+<h5 id="24-additions">2.4 Additions</h5>
+<p>Additions work very similar to exceptions. The only differences are that "add_if" is used as the keyword and that the messages of the addition command do not override the regexes of the parent command, but instead add possible regexes to the existing ones, this is in particularly well suited to adding synonyms. In the following example, we allow the user to also say <em>cyan</em> or <em>blue</em> as a way to map to the <code>primary_uniform_color</code> <em>blue</em>.</p>
+<div class="codehilite"><pre><span></span><code><span class="err">rule inform(primary_uniform_color)</span>
+<span class="err">    regex "(the colo(u)?r|) should be {primary_uniform_color}"</span>
+<span class="err">    if primary_uniform_color = "#ff11bb"</span>
+<span class="err">        regex "the colo(u)?r should be pink"</span>
+<span class="err">    add_if primary_uniform_color = "blue"</span>
+<span class="err">        regex "the colo(u)?r should be cyan"</span>
+</code></pre></div>
+<p><strong>Note:</strong> Addition commands can take the same child commands as rule commands.</p>
+<h5 id="25-functions">2.5 Functions</h5>
+<p>Functions are similar to rules. They can take an arbitrary number of parameters and return a regular expression (or normal string). The function command consists of the keyword "function" and the function description using the pattern <code>function_name(argument_one, argument_two)</code>. Functions are particularly useful to improve the structure of your files. In the previous example, we have added <em>cyan</em> to be a synonym of <em>blue</em>. If we want to add synonyms for all colours, we would have to list all possible regexes for all possible synonyms which would result in a huge number of lines and would be quite a mess. Instead, we can specify a function which lists all synonymous colour strings for each possible colour value centrally at one point in the file and whenever we want to use synonyms, we can simply call this function:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">color_synonym</span><span class="p">(</span>generic_color<span class="p">)</span><span class="w"></span>
+<span class="w">    </span># <span class="n">the</span> <span class="n">color</span> <span class="n">itself</span> <span class="n">is</span> <span class="n">almost</span> <span class="n">always</span> <span class="n">a</span> <span class="n">synonym</span>
+    <span class="n">regex</span> <span class="s">"{generic_color}"</span>
+    # <span class="s">'add_if'</span> <span class="n">adds</span> <span class="n">regular</span> <span class="n">expressions</span> <span class="n">to</span> <span class="n">the</span> <span class="n">existing</span> <span class="nb">ones</span> <span class="p">(</span><span class="n">see</span> <span class="n">above</span><span class="p">)</span>
+    <span class="n">add_if</span> <span class="s">generic_color</span> <span class="s">=</span> <span class="s">"red"</span>
+        <span class="n">regex</span> <span class="s">"maroon"</span>
+    <span class="n">add_if</span> <span class="s">generic_color</span> <span class="s">=</span> <span class="s">"green"</span>
+        <span class="n">regex</span> <span class="s">"lime(</span> <span class="s">green)?"</span>
+        <span class="n">regex</span> <span class="s">"olive(</span> <span class="s">green)?"</span>
+        <span class="n">regex</span> <span class="s">"neon</span> <span class="s">green"</span>
+    <span class="n">add_if</span> <span class="s">generic_color</span> <span class="s">=</span> <span class="s">"blue"</span>
+        <span class="n">regex</span> <span class="s">"cyan"</span>
+        <span class="n">regex</span> <span class="s">"turquoise"</span>
+    # <span class="s">'if'</span> <span class="n">overwrites</span> <span class="p">(</span>!<span class="p">)</span> <span class="n">existing</span> <span class="n">regular</span> <span class="n">expressions</span>
+    <span class="n">if</span> <span class="s">generic_color</span> <span class="s">=</span> <span class="s">"#ff11bb"</span>
+        <span class="s">"pink"</span>
+        <span class="s">"magenta"</span>
+</code></pre></div>
+<p>The inform rule would then be simplified to:</p>
+<div class="codehilite"><pre><span></span><code><span class="err">rule inform(color)</span>
+<span class="err">    "(the colo(u)?r|it) should be {color_synonym(color)}"</span>
+</code></pre></div>
+<p><strong>Note:</strong> Function commands can take the same child commands as rule commands.</p>
+<h4 id="3-shortcuts-and-syntax-simplification">3 Shortcuts and syntax simplification</h4>
+<p>The examples in the previous section show the ADVISER NLU syntax, as it is read by the interpreter. For simplifications and for a better overview, we allow some simplifications and shortcuts. In a preprocessing step, the simplified template is automatically transformed into a valid syntax.</p>
+<h5 id="31-comments-and-empty-lines">3.1 Comments and empty lines</h5>
+<p>While the original syntax requires one command per line, in the preprocessing step, empty lines and lines that start with a hashtag (#) are removed from the template file. Please note that non-leading hashtags are not recognised as comments currently.</p>
+<h5 id="32-tabs">3.2 Tabs</h5>
+<p>The original syntax requires four spaces per block level. Alternatively, you can also use a tab instead, since all tabs are replaced by four spaces in the preprocessing step.</p>
+<h5 id="33-automatic-insertion-of-the-regex-keyword">3.3 Automatic insertion of the regex keyword</h5>
+<p>Regexes do not necessarily need to be marked via the regex keyword. For all lines that start with double quotes, a regex keyword is automatically inserted at the beginning of the line in the preprocessing step.</p>
+<p>Example:</p>
+<div class="codehilite"><pre><span></span><code><span class="err">rule request(primary_uniform_color)</span>
+<span class="err">    "what is the( super)? hero's uniform colo(u)?r\?"</span>
+</code></pre></div>
+<h5 id="34-colons">3.4 Colons</h5>
+<p>A neater version of the example in 3.3 would be the following example:</p>
+<div class="codehilite"><pre><span></span><code><span class="err">rule request(primary_uniform_color): "what is the( super)? hero's uniform colo(u)?r\?"</span>
+</code></pre></div>
+<p>To allow this syntax, the preprocessor interprets everything coming after a colon (that’s not wrapped by double quotes) as a new child command and moves it to the next line with the respective block level + 1. This way, the above example and the example from 3.3 are exactly the same after preprocessing.</p>
+<h3 id="the-nlu-module">The NLU module</h3>
+<p>ADVISER's NLU module makes use of NLU files which specify the regular expressions with the previously presented syntax.
+The pipeline for creating the NLU is the following:</p>
+<ol>
+<li>Make sure you have created a <a href="#domains">domain</a>.</li>
+<li>Write your NLU file using the custom syntax (see above), name it <code>{domain_name}.nlu</code> and place it in the folder <code>resources/nlu_regexes</code>.</li>
+<li>Execute the script <code>gen_regexes.py</code> in the folder <code>tools/regextemplates</code> like this: <br/> <code>python3 tools/regextemplates/gen_regexes.py {domain_name} {domain_name}</code> <br/> Example: <code>python3 tools/regextemplates/gen_regexes.py superhero superhero</code> <br/></li>
+<li>Check that the tool has created the files <code>{domain_name}InformRules.json</code> for <code>inform</code> acts and <code>{domain_name}RequestRules.json</code> for <code>request</code> acts inside the <code>resources/nlu_regexes</code> folder.</li>
+<li>Once you have all these files, you can use the <code>HandcraftedNLU</code> module in <code>services/nlu</code> by simply passing your domain object in the constructor.</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">utils.domain.jsonlookupdomain</span> <span class="kn">import</span> <span class="n">JSONLookupDomain</span>
+<span class="kn">from</span> <span class="nn">services.nlu.nlu</span> <span class="kn">import</span> <span class="n">HandcraftedNLU</span>
+<span class="n">domain</span> <span class="o">=</span> <span class="n">JSONLookupDomain</span><span class="p">(</span><span class="s1">'superhero'</span><span class="p">)</span>
+<span class="n">nlu</span> <span class="o">=</span> <span class="n">HandcraftedNLU</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">)</span>
+</code></pre></div>
+<p>You can type some exemplary messages and see which user acts are recognised by the NLU, when you are done, type "bye" to exit the loop:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">user_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">'&gt;&gt;&gt; '</span><span class="p">)</span>
+<span class="k">while</span> <span class="n">user_input</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">''</span><span class="p">,</span> <span class="s1">'exit'</span><span class="p">,</span> <span class="s1">'bye'</span><span class="p">,</span> <span class="s1">'goodbye'</span><span class="p">):</span>
+    <span class="n">user_acts</span> <span class="o">=</span> <span class="n">nlu</span><span class="o">.</span><span class="n">extract_user_acts</span><span class="p">(</span><span class="n">user_input</span><span class="p">)[</span><span class="s1">'user_acts'</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">repr</span><span class="p">(</span><span class="n">user_act</span><span class="p">)</span> <span class="k">for</span> <span class="n">user_act</span> <span class="ow">in</span> <span class="n">user_acts</span><span class="p">]))</span>
+    <span class="n">user_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">'&gt;&gt;&gt; '</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="rule-based-belief-state-tracker-bst">Rule-based Belief State Tracker (BST)</h2>
+<p>The BST maintains a representation of the current dialog state. It is responsible for tracking the constraints a user provides over the course of a dialog and their probabilities, recording any requests from the current turn, tracking the types of user acts in the current turn, and registering the number of database matches for the given constraints. In the ADVISER 2.0 Toolkit, this state is built up over the course of the dialog as the user expresses more constraints. Probabilities for each constraint are determined by the NLU and are not currently further processed. An example of the beliefstate for the second turn in a dialog about IMS Courses can be seen below.</p>
+<p><code>{'user_acts': {&lt;UserActionType.Inform: 'inform'&gt;}
+  'informs': {'bachelor': {'true': 1.0 }
+     'turn': {'sose': 1.0 }
+     'ects': {'6': 1.0 }
+  }
+  'requests': {}
+  'num_matches': 4
+  'discriminable': True }</code></p>
+<p>As mentioned previously the beliefstate is built up over time. Therfore there are currently only three entries in the <code>informs</code> dictionary as up to this point the user has only provided three constraints. Each constraint has a probability of 1.0 because neither the NLU nor BST have complex rules for handling ambiguous user utterances, but this is an area we may look to improve in the future. </p>
+<p><strong>Example:</strong></p>
+<p>Instantiating a rules based BST is as simple as running the code below</p>
+<div class="codehilite"><pre><span></span><code><span class="n">bst</span> <span class="o">=</span> <span class="n">HandcraftedBST</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="policy">Policy</h2>
+<h3 id="rule-based-policy">Rule-based Policy</h3>
+<p>The policy is responsible for determining the system's next action. In ADVISER 2.0, we provide two implementations of a rule-based policy (one designed to work with a database and one designed to work with an API backend). Both follow a similar decision flow. Since we focus here on task oriented dialog systems, the policy tries to help a user fulfill their goal as quickly as possible. </p>
+<p>A simplified version of a the decision making process in a rules based policy can be seen below:</p>
+<p><img height="75%" src="policy_flow.png" width="75%"/></p>
+<p>On each turn, the policy is capable of choosing one next action, these actions include:</p>
+<ul>
+<li><code>Welcome</code>: greet the user</li>
+<li><code>InformByName</code>: tell the user some new information</li>
+<li><code>InformByAlternatives</code>: provide the user an alternative entity</li>
+<li><code>Request</code>: ask the user for more information</li>
+<li><code>Select</code>: ask the user to select between a given set of choices</li>
+<li><code>RequestMore</code>: ask the user if they need more help</li>
+<li><code>Bad</code>: inform the user their last utterance couldn't be parsed</li>
+<li><code>Bye</code>: end the dialog</li>
+</ul>
+<p>As seen in the above diagram, the policy first works to handle general (non-domain specific) user actions. It then queries the database and only asks the user for more information if there are too many entries and asking for more information will help narrow down results. In the actual policy the decisions are a bit more nuanced, but the graphic gives the general idea of the types of rules required for a rules-based policy.</p>
+<p><strong>Example:</strong></p>
+<p>Instantiating a rules-based policy can be done with the code below:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">policy</span> <span class="o">=</span> <span class="n">HandcraftedPolicy</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="reinforcement-learning-policy">Reinforcement Learning Policy</h3>
+<h4 id="why-reinforcement-learning">Why reinforcement Learning</h4>
+<p>Developing handcrafted policies can be quite time consuming and have difficulties adapting to unseen scenarios. Therefore a machine learning approach can be preferable. In this type of scenario, training a machine learning agent would circumvent needing to hard code a rule for every edge case scenario. Unfortunately this type of approach normally requires a lot of data to train the policy. Especially for new domains, this kind of data just does not exist, which is where reinforcement learning comes in. </p>
+<p>The basic idea behind reinforcement learning is that an agent has a certain set of actions which it can take and is placed in a certain environment (which it may either know in advance or must learn as it explores). The agent then tries out the different actions it can take, each action altering the state (or the agent's perception of the environment) and generating a reward. In this way, the agent learns how to navigate through it's environment and find the path which yields the highest reward. This process is shown in the graph below.</p>
+<p><img height="55%" src="rl_loop.png" width="55%"/></p>
+<p>As mentioned before, as an input the agent receives the current state and reward and it uses these to choose what it thinks the next best action will be. This action results in a new state and a new reward.</p>
+<h4 id="rl-in-the-context-of-dialog-policy">RL in the Context of Dialog Policy</h4>
+<p>In the context of dialog systems, the RL agent is the dialog policy and the actions it can take are defined by the <code>SysActs</code>. The environment is a user (simulated or real) and the state is represented by the beliefstate. The reward for each action backpropagates and is inversely proportional to the number of turns it took to complete the dialog + a fixed reward for dialogs where a user was able to fulfill their goal.</p>
+<p><img height="55%" src="dialog_rl_loop.png" width="55%"/></p>
+<p>In ADVISER 2.0, the RL policy is implemented using deep reinforcement learning. Similar to the <a href="https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf">Deep Q-learning algorithm</a>, an action-value function is approximated by a neural  network  which outputs a value for each possible system action, given the vectorised representation of a turn’s beliefstate as input. The exact action set is defined in the class <code>RLPolicy</code> where a set of base actions templates is defined with slot names from the ontology e.g. if you have a slot <code>food</code> in your ontology, it will create actions like <code>inform#food</code>, <code>request#food</code> and <code>select#food</code> which are used to inform a user about a certain type of food, to request the food type from the user or to let the user choose between multiple food types. These action templates are the initial output of the reinforcement learning policy, 
+which then get expanded using beliefstate and database information.</p>
+<p>For more information on the architecture see the ADVISER <a href="https://www.aclweb.org/anthology/P19-3016.pdf">paper</a>.</p>
+<p><strong>Example:</strong></p>
+<p>As there are so many parameters for the RL policy, instantiating it requires slightly more code than instantiating other modules. To instantiate an RL policy with the parameters used in the ADVISER paper, see the code below:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Allows you to track training progress using tensorboard</span>
+<span class="n">summary_writer</span> <span class="o">=</span> <span class="n">SummaryWriter</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">'logs'</span><span class="p">,</span> <span class="s2">"tutorial"</span><span class="p">))</span>
+
+<span class="c1"># logs summary statistics for each train/test epoch</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">DiasysLogger</span><span class="p">(</span><span class="n">console_log_lvl</span><span class="o">=</span><span class="n">LogLevel</span><span class="o">.</span><span class="n">RESULTS</span><span class="p">,</span> <span class="n">file_log_lvl</span><span class="o">=</span><span class="n">LogLevel</span><span class="o">.</span><span class="n">DIALOGS</span><span class="p">)</span>
+
+<span class="c1"># Create RL policy instance with parameters used in ADVISER paper</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">DQNPolicy</span><span class="p">(</span>
+    <span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span> <span class="n">eps_start</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">gradient_clipping</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span>
+    <span class="n">buffer_cls</span><span class="o">=</span><span class="n">NaivePrioritizedBuffer</span><span class="p">,</span> <span class="n">replay_buffer_size</span><span class="o">=</span><span class="mi">8192</span><span class="p">,</span> <span class="n">shared_layer_sizes</span><span class="o">=</span><span class="p">[</span><span class="mi">256</span><span class="p">],</span>
+    <span class="n">train_dialogs</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">target_update_rate</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">training_frequency</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">,</span>
+    <span class="n">summary_writer</span><span class="o">=</span><span class="n">summary_writer</span><span class="p">)</span>
+</code></pre></div>
+<div class="codehilite"><pre><span></span><code><span class="n">logger</span><span class="o">:</span> <span class="n">state</span> <span class="n">space</span> <span class="n">dim</span><span class="o">:</span> <span class="mi">74</span>
+<span class="n">logger</span><span class="o">:</span> <span class="n">action</span> <span class="n">space</span> <span class="n">dim</span><span class="o">:</span> <span class="mi">9</span>
+<span class="n">logger</span><span class="o">:</span> <span class="n">Gradient</span> <span class="n">Clipping</span><span class="o">:</span> <span class="mf">5.0</span>
+<span class="n">logger</span><span class="o">:</span> <span class="n">Architecture</span><span class="o">:</span> <span class="n">Dueling</span>
+<span class="n">logger</span><span class="o">:</span> <span class="n">Update</span><span class="o">:</span> <span class="n">Double</span>
+  <span class="n">REPLAY</span> <span class="n">MEMORY</span><span class="o">:</span> <span class="n">NAIVE</span> <span class="n">Prioritized</span>
+<span class="n">ARCHITECTURE</span><span class="o">:</span> <span class="n">Dueling</span>
+</code></pre></div>
+<h3 id="user-simulator">User Simulator</h3>
+<p>To train a reinforcement learning (RL) policy, it is often useful to use a simulated user instead of an actual one at least in the beginning. Simulations, while seldom accurate representations of real users, are substantially more patient. That is, to train or evaluate a dialog policy, thousands of dialogs are required. Having a real human sit through this many dialogs would be very expensive and tedious, especially since at the beginning of training, an RL policy will produce utterly nonsensical dialogs. In comparison, a simulated user is very cheap, will not be bored or annoyed, and can be called whenever you are ready to train or test a dialog. After initial training has been performed with a simulation, it is possible to conduct further training with human users. </p>
+<p>Since a user simulator is an important part of the training process for an RL policy, the next question becomes how to create one. In the ADVISER 2.0 Toolkit, we use an agenda based user simulator based off of <a href="http://mi.eng.cam.ac.uk/~sjy/papers/stwy07.pdf">work by Schatzmann et al.</a>. The basic function of the simulator can be seen in the graphic below:</p>
+<p><img height="75%" src="user_sim.png" width="75%"/></p>
+<p>To start a dialog, the user simulator will randomly generate a goal (shown in gray in panel 1). This goal will include all of the constraints (informs) the user wants to provide and all of the questions (requests) they will want to ask. Then this goal will be transformed into a series of user actions and placed in the action stack. On each turn after that, the user simulator will receive a system action as input and need to respond to it (panel 2) Here the user response is hardcoded in a similar way to the handcrafted policy. Any new actions generated to respond to the system will be placed at the top of the stack. Then a random number of actions between one and n will popped from the top of the stack and given out as the user acts for that turn. </p>
+<p>In addition to the hardcoded response for each type of system act, the user simulator's behavior is also controlled by configuration parameters. These control behavior such as the maximum number of actions the user takes per turn (default 3), and whether user goals should be possible to fulfill or if it doesn't matter. These additional parameters are stored in an external configuration file.</p>
+<p><strong>Example:</strong></p>
+<p>To create an instance of user simulator see below:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">user_sim</span> <span class="o">=</span> <span class="n">HandcraftedUserSimulator</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="evaluation">Evaluation</h3>
+<p>In order to train an RL policy, in addition to a user simulator, we need a reward signal. That is where the evaluation module comes in. There are two evaluation classes which are important to consider. The first one is teh <code>ObjectiveReachedEvaluator</code> which provides the reward signal to the RL policy. The second is the <code>PolicyEvaluator</code> which tracks the percent of successful dialogs, average reward, and average turn number for an epoch. As a note, while the <code>ObjectiveReachedEvaluator</code> is already part of the <code>RLPolicy</code> class, to log statistics, you need to explicitely add the <code>PolicyEvaluator</code> to the dialog graph.</p>
+<p>As a default, a reward of -1 for every turn is assigned to encourage the policy to keep dialogs as short as possible. For every dialog where the user goal is fulfilled, a reward of 20 is given.</p>
+<p><strong>Example:</strong></p>
+<p>A <code>PolicyEvaluator</code> can be created with the code below:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">evaluator</span> <span class="o">=</span> <span class="n">PolicyEvaluator</span><span class="p">(</span>
+    <span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">,</span> <span class="n">use_tensorboard</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">experiment_name</span><span class="o">=</span><span class="s2">"tutorial"</span><span class="p">,</span>
+    <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">,</span> <span class="n">summary_writer</span><span class="o">=</span><span class="n">summary_writer</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="training-a-reinforcement-learning-policy">Training a reinforcement learning policy</h3>
+<p>Now that we have a user simulator and an evaluator, we can start using them to train our RL policy. This requires configuring the dialog graph slightly differently. Rather than the graph we saw in Tutorial One, we will only use the beliefstate tracker, RL Policy and a user simulator (optionally an evaluator as well to log statistics). This new graph can be seen below:</p>
+<p><img align="center" src="rl_train_loop.png" width="350"/></p>
+<p>To initialize training and evaluation, a random seed is generally used to set initial parameters. For the sake of reproducibility, it is recommended to store this seed along with the results so that in the future, you can initialize all random generators used in your pipeline with it. If you run the system twice with the same seed, you should get exactly the same results and dialogs.</p>
+<p>To train the system, a dialog graph is created with all necessary modules, then for the number of training epochs desired, dialogs are carried out and evaluated. During each training epoch, weights are updated for the RL policy and during each testing epoch, the success rate and length of dialogs are evaluated and recorded. The number of dialogs per epoch and the number of epochs can be determined by the user. As a note, when evaluating the overall performance of an RL policy, it is important to run the train/test loop multiple times with different random seeds to make sure that a good performance is not simply because of a good random seed. </p>
+<p><strong>Example:</strong></p>
+<p>Example training and evaluation code (warning takes some time to run):</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># SET CONSTANTS</span>
+<span class="n">TRAIN_EPOCHS</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">TRAIN_EPISODES</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">EVAL_EPISODES</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">MAX_TURNS</span> <span class="o">=</span> <span class="mi">25</span>
+
+<span class="c1"># Choose how many repeated trials</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">common</span><span class="o">.</span><span class="n">init_random</span><span class="p">()</span>  <span class="c1"># add seed here as a parameter to the init_random if wanted</span>
+
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">DialogSystem</span><span class="p">(</span><span class="n">services</span><span class="o">=</span><span class="p">[</span><span class="n">user_sim</span><span class="p">,</span> <span class="n">bst</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">],</span> <span class="n">protocol</span><span class="o">=</span><span class="s1">'tcp'</span><span class="p">)</span>
+
+    <span class="c1"># Start train/eval loop</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TRAIN_EPOCHS</span><span class="p">):</span>
+        <span class="c1"># START TRAIN EPOCH</span>
+        <span class="n">evaluator</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+        <span class="n">policy</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+        <span class="n">evaluator</span><span class="o">.</span><span class="n">start_epoch</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">episode</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TRAIN_EPISODES</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">episode</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">"DIALOG"</span><span class="p">,</span> <span class="n">episode</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">dialog_turn</span><span class="p">(</span><span class="s2">"</span><span class="se">\n\n</span><span class="s2">!!!!!!!!!!!!!!!! NEW DIALOG !!!!!!!!!!!!!!!!!!!!!!!!!!!!</span><span class="se">\n\n</span><span class="s2">"</span><span class="p">)</span>
+            <span class="n">ds</span><span class="o">.</span><span class="n">run_dialog</span><span class="p">(</span><span class="n">start_signals</span><span class="o">=</span><span class="p">{</span><span class="sa">f</span><span class="s1">'user_acts/</span><span class="si">{</span><span class="n">domain</span><span class="o">.</span><span class="n">get_domain_name</span><span class="p">()</span><span class="si">}</span><span class="s1">'</span><span class="p">:</span> <span class="p">[]})</span>
+        <span class="n">evaluator</span><span class="o">.</span><span class="n">end_epoch</span><span class="p">()</span>
+
+        <span class="c1"># START EVAL EPOCH</span>
+        <span class="n">evaluator</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="n">policy</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="n">evaluator</span><span class="o">.</span><span class="n">start_epoch</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">episode</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">EVAL_EPISODES</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">dialog_turn</span><span class="p">(</span><span class="s2">"</span><span class="se">\n\n</span><span class="s2">!!!!!!!!!!!!!!!! NEW DIALOG !!!!!!!!!!!!!!!!!!!!!!!!!!!!</span><span class="se">\n\n</span><span class="s2">"</span><span class="p">)</span>
+            <span class="n">ds</span><span class="o">.</span><span class="n">run_dialog</span><span class="p">(</span><span class="n">start_signals</span><span class="o">=</span><span class="p">{</span><span class="sa">f</span><span class="s1">'user_acts/</span><span class="si">{</span><span class="n">domain</span><span class="o">.</span><span class="n">get_domain_name</span><span class="p">()</span><span class="si">}</span><span class="s1">'</span><span class="p">:</span> <span class="p">[]})</span>
+        <span class="n">evaluator</span><span class="o">.</span><span class="n">end_epoch</span><span class="p">()</span>
+    <span class="n">policy</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="n">ds</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="handcrafted-natural-language-generation-nlg">Handcrafted Natural Language Generation (NLG)</h2>
+<p>To transform system acts into natural language utterances, ADVISER 2.0 uses handcrafted templates. Although machine learning generated output can have more breadth of expression, using templates guarentees that all system utterances will be grammatic and sensical. Using templates additionally allows dialog systems for new domains to be created even when there is not sufficient data for those domains to train a machine learning based NLG.</p>
+<p>In ADVISER 2.0, rather than mapping every sys_act, slot, value combination to an individual utterance, templates  are  used  to generalize this process by  specifying placeholders for a system act's slots and/or values. An example of this can be seen below:</p>
+<p><code>inform(name={X}, ects={Y}) → "The course {X} is worth {Y} ECTS."</code></p>
+<p>During  the dialog, the system iterates through the templates and chooses the first one for which the system act fits the template's signature. </p>
+<h3 id="types-of-templates">Types of templates</h3>
+<p>Under adviser/resources/templates the handcrafted templates are stored in text files. The templates have the format where the left side represents the system act and the right side represents the natural language utterance. Variables are used instead of concrete slot values so that the templates can be reused as much as possbile. Each file is divided into several sections, we add examples:</p>
+<ul>
+<li>
+<p>Templates for system general acts</p>
+<ul>
+<li><code>template hello(): "Welcome to the IMS courses chat bot. How may I help you?"</code></li>
+</ul>
+</li>
+<li>
+<p>Templates for system requests</p>
+<ul>
+<li><code>template request(lang): "In which language shall the course be held?"</code></li>
+</ul>
+</li>
+<li>
+<p>Methods for system informs</p>
+</li>
+</ul>
+<p><code>function info(slot, value)
+    if slot = "ects": "is worth {value} ECTS"
+    if slot = "turn"
+        if value = "sose": "is offered in the summer semester"
+        if value = "wise": "is offered in the winter semester"</code></p>
+<ul>
+<li>
+<p>Templates for system informs</p>
+<ul>
+<li><code>template inform_byname(name): "I found the course {name}. What do you want to know about it?"</code></li>
+<li><code>template inform_byname(name, turn): "The course {name} {info("turn", turn)}."</code></li>
+</ul>
+</li>
+<li>
+<p>Similarly, templates for system confirm, request more and select are included.</p>
+</li>
+</ul>
+<p><strong>Example:</strong></p>
+<p>If system act is: <code>inform(name='computational linguistics team laboratory', turn='wise')</code></p>
+<p>The NLG output will be: <code>"The course computational linguistics team laboratory is offered in the winter semester."</code></p>
+<p>Notes:</p>
+<ul>
+<li>Each domain has a ist own YourDomainNameMessages.nlg file</li>
+<li>No python script needs to be modified (domain independent)</li>
+</ul>
+<p><strong>Example:</strong>
+The code to create an NLG service for the superhero domain is shown below:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">nlg</span> <span class="o">=</span> <span class="n">HandcraftedNLG</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="text-to-speech-tts">Text to Speech (TTS)</h2>
+<p>The TTS module is an options module which converts the text natural language output to speech. In the ADVISER 2.0 toolkit, this is done using the <a href="https://arxiv.org/abs/1910.10909">ESPnet-TTS toolkit</a>, which is an extension of the ESPnet toolkit mentioned in the ASR section. We use FastSpeech as a synthesis model, which provides substantially faster voice generation. Additionally, we are able to provide a "cleaner" file to optimize the synthesizer for abbreviations, such as <em>Prof., Univ., IMS, NLP, ECTS,</em> and <em>PhD</em>, as well as for German proper names, such as street names. These optimizations can be easily extended by adding additional words and pronunciation mappings to <code>services/speech/cleaners.py</code>.</p>
+<p><strong>Example:</strong></p>
+<p>Similar to how the ASR module also required a <code>SpeechInputRecorder</code> module, the TTS module also requires a <code>SpeechOutputPlayer</code> in order for the user to be able to hear the generated sound file. The <code>SpeechOutputPlayer</code> and <code>SpeechOutputGenerator</code> can be instantiated with the code below.</p>
+<p><strong>NOTE:</strong> This code will only work if you have installed the requirements for the multimodal dialog system (they are large, so this is not recommended if you will only be working with text)</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">services.hci.speech</span> <span class="kn">import</span> <span class="n">SpeechOutputGenerator</span>
+<span class="kn">from</span> <span class="nn">services.hci.speech</span> <span class="kn">import</span> <span class="n">SpeechOutputPlayer</span>
+
+<span class="c1"># (GPU: 0.4 s/per utterance, CPU: 11 s/per utterance)</span>
+<span class="n">speech_out_generator</span> <span class="o">=</span> <span class="n">SpeechOutputGenerator</span><span class="p">(</span><span class="n">use_cuda</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> 
+
+<span class="n">speech_out_player</span> <span class="o">=</span> <span class="n">SpeechOutputPlayer</span><span class="p">(</span><span class="n">conversation_log_dir</span><span class="o">=</span><span class="n">conversation_log_dir</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="cleaning-up-tts-output">Cleaning up TTS output</h3>
+<p>To improve the speech generation, we also provide a file <code>servicse/hci/speech/cleaners.py</code> which allows you to manually correct pronunciation of words. This allows you to provide either phonetic transcriptions for acronyms, abbreviations, and foreign words or pronunciation patterns for things such as email addresses or telephone numbers. One of the methods from this file is shown below.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">expand_abbreviations</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Preprocesses a text to turn abbreviations into forms that the TTS can pronounce properly</span>
+
+<span class="sd">    text (string): Text to be preprocessed</span>
+<span class="sd">    """</span>
+    <span class="k">for</span> <span class="n">regex</span><span class="p">,</span> <span class="n">replacement</span> <span class="ow">in</span> <span class="n">_abbreviations</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">replacement</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">text</span>
+
+
+<span class="c1"># List of (word, replacement) pairs for acronym or special words:</span>
+<span class="n">_acronym</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">' a '</span><span class="p">,</span> <span class="s1">' ae '</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">' s '</span><span class="p">,</span> <span class="s1">' eh s, '</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'array'</span><span class="p">,</span> <span class="s1">'ER RAY'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'API'</span><span class="p">,</span> <span class="s1">'AE P I'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'distributional'</span><span class="p">,</span> <span class="s1">'distributionall'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'ECTS'</span><span class="p">,</span> <span class="s1">'E C T EH S,'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'Erasmus'</span><span class="p">,</span> <span class="s1">'E RAS MOUS'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'ID'</span><span class="p">,</span> <span class="s1">'I D'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'IMS'</span><span class="p">,</span> <span class="s1">'I M EH S'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'NLP'</span><span class="p">,</span> <span class="s1">'N L P'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'PhD'</span><span class="p">,</span> <span class="s1">'P h D'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'PWR 05B'</span><span class="p">,</span> <span class="s1">'Pfaffen vaald ring five B, '</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'psycholinguistics'</span><span class="p">,</span> <span class="s1">'psycho linguistics'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'stuttgart'</span><span class="p">,</span> <span class="s1">'stu gart'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'Stuttgart'</span><span class="p">,</span> <span class="s1">'Stu gart'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'vegan'</span><span class="p">,</span> <span class="s1">'viygan'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'Vegan'</span><span class="p">,</span> <span class="s1">'Viygan'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'ImsLecturers'</span><span class="p">,</span> <span class="s1">'I M EH S Lecturers'</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'imsLecturers'</span><span class="p">,</span> <span class="s1">'I M EH S Lecturers'</span><span class="p">),</span>
+<span class="p">]</span>
+</code></pre></div>
+<h2 id="chatting-with-the-dialog-system">Chatting with the dialog system</h2>
+<p>There are two main ways to interact with an ADVISER 2.0 dialog system: 1) by typing input and reading system output from the terminal or 2) by speaking to the system and receiving audio responses. Since we've already taken a quick look at a spoken dialog system, let's quickly discuss a text based one.</p>
+<p>In short, a text based system is much simpler. Instead of needing multiple modules for input/output, the text based system just needs <code>ConsoleInput</code> and <code>ConsoleOutput</code>. When these are added to the dialog system, the system utterances will appear on the terminal and the user can give their response by typing and pressing enter to end an utterance.</p>
+<p><strong>Example:</strong> </p>
+<p>An example of a dialog system constructed this way can be seen below. </p>
+<p><strong>NOTE:</strong> There is a problem with the user input in Jupyter Notebook. To try the code out, copy the code below to a new file in the <code>adviser</code> folder and run it from the dialog system</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Importing everything we need for a dialog system</span>
+<span class="kn">from</span> <span class="nn">utils.domain.jsonlookupdomain</span> <span class="kn">import</span> <span class="n">JSONLookupDomain</span>
+<span class="kn">from</span> <span class="nn">utils.logger</span> <span class="kn">import</span> <span class="n">DiasysLogger</span><span class="p">,</span> <span class="n">LogLevel</span>
+
+<span class="kn">from</span> <span class="nn">services.hci</span> <span class="kn">import</span> <span class="n">ConsoleInput</span><span class="p">,</span> <span class="n">ConsoleOutput</span>
+<span class="kn">from</span> <span class="nn">services.nlu</span> <span class="kn">import</span> <span class="n">HandcraftedNLU</span>
+<span class="kn">from</span> <span class="nn">services.bst</span> <span class="kn">import</span> <span class="n">HandcraftedBST</span>
+<span class="kn">from</span> <span class="nn">services.policy</span> <span class="kn">import</span> <span class="n">HandcraftedPolicy</span>
+<span class="kn">from</span> <span class="nn">services.nlg</span> <span class="kn">import</span> <span class="n">HandcraftedNLG</span>
+<span class="kn">from</span> <span class="nn">services.domain_tracker</span> <span class="kn">import</span> <span class="n">DomainTracker</span>
+
+<span class="kn">from</span> <span class="nn">services.service</span> <span class="kn">import</span> <span class="n">DialogSystem</span>
+
+<span class="c1"># create domain</span>
+<span class="n">super_domain</span> <span class="o">=</span> <span class="n">JSONLookupDomain</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"superhero"</span><span class="p">)</span>
+
+<span class="c1"># create domain specific modules</span>
+<span class="n">nlu</span> <span class="o">=</span> <span class="n">HandcraftedNLU</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
+<span class="n">bst</span> <span class="o">=</span> <span class="n">HandcraftedBST</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">HandcraftedPolicy</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
+<span class="n">nlg</span> <span class="o">=</span> <span class="n">HandcraftedNLG</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
+<span class="n">d_tracker</span> <span class="o">=</span> <span class="n">DomainTracker</span><span class="p">(</span><span class="n">domains</span><span class="o">=</span><span class="p">[</span><span class="n">super_domain</span><span class="p">])</span>
+
+<span class="c1"># Input modules (just allow access to terminal for text based dialog)</span>
+<span class="n">user_in</span> <span class="o">=</span> <span class="n">ConsoleInput</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span>
+<span class="n">user_out</span> <span class="o">=</span> <span class="n">ConsoleOutput</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">DiasysLogger</span><span class="p">(</span><span class="n">console_log_lvl</span><span class="o">=</span><span class="n">LogLevel</span><span class="o">.</span><span class="n">DIALOGS</span><span class="p">)</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">DialogSystem</span><span class="p">(</span><span class="n">services</span><span class="o">=</span><span class="p">[</span><span class="n">d_tracker</span><span class="p">,</span> <span class="n">user_in</span><span class="p">,</span> <span class="n">user_out</span><span class="p">,</span> <span class="n">nlu</span><span class="p">,</span> <span class="n">bst</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">nlg</span><span class="p">],</span> <span class="n">debug_logger</span><span class="o">=</span><span class="n">logger</span><span class="p">)</span>
+
+<span class="n">error_free</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">is_error_free_messaging_pipeline</span><span class="p">()</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">error_free</span><span class="p">:</span>
+    <span class="n">ds</span><span class="o">.</span><span class="n">print_inconsistencies</span><span class="p">()</span>
+
+<span class="n">ds</span><span class="o">.</span><span class="n">draw_system_graph</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'system'</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># start dialog</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">ds</span><span class="o">.</span><span class="n">run_dialog</span><span class="p">({</span><span class="s1">'gen_user_utterance'</span><span class="p">:</span> <span class="s2">""</span><span class="p">})</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="check-your-understanding-optional">Check Your Understanding (Optional)<a class="anchor" id="exercise"></a></h2>
+<p>Now that you have read how each of the basic modules provided by the ADVISER 2.0 Toolkit works, let's actually test it out. </p>
+<h3 id="run-a-dialog-system">Run a Dialog System</h3>
+<ol>
+<li>There should be a program in the tutorials folder called <code>tutorial_chat.py</code> All the modules you will need are already imported, but you will need to follow the comments and create a dialog system for yourself.</li>
+</ol>
+<h3 id="create-a-basic-nlu">Create a basic NLU</h3>
+<ol>
+<li>Right now we have provided a very simple <code>.nlu</code> file for the superhero domain. Try adding more synonyms/more regexes to the rules in <code>superhero.nlu</code> so that it can capture more realistic user utterances.</li>
+</ol>
+<h3 id="update-the-nlg">Update the NLG</h3>
+<ol>
+<li>Try adding some more NLG templates to the superhero domain, or updating existing ones to sound more natural (the file is located in the <code>resources/nlg_templates</code> folder).</li>
+</ol>
+<h3 id="test-out-your-new-system">Test out your new system</h3>
+<ol>
+<li>Once you are satisfied with your NLU and NLG files, test out the system again. Make sure you remembered to recomile the regexes first though!</li>
+</ol>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-nav">
+<nav aria-label="Footer" class="md-footer-nav__inner md-grid">
+<a class="md-footer-nav__link md-footer-nav__link--prev" href="../services/" rel="prev" title="Services">
+<div class="md-footer-nav__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
+</div>
+<div class="md-footer-nav__title">
+<div class="md-ellipsis">
+<span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Services
+              </div>
+</div>
+</a>
+<a class="md-footer-nav__link md-footer-nav__link--next" href="../advanced/" rel="next" title="Advanced">
+<div class="md-footer-nav__title">
+<div class="md-ellipsis">
+<span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Advanced
+              </div>
+</div>
+<div class="md-footer-nav__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+</div>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+          Material for MkDocs
+        </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<script src="../../assets/javascripts/vendor.f81b9e8b.min.js"></script>
+<script src="../../assets/javascripts/bundle.23546af0.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+<script>
+        app = initialize({
+          base: "../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.58d22e8e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+</body>
+</html>

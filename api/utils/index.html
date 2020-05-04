@@ -1,0 +1,3383 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="https://digitalphonetics.github.io/adviser/api/utils/" rel="canonical"/>
+<link href="../../assets/images/favicon.png" rel="shortcut icon"/>
+<meta content="mkdocs-1.1, mkdocs-material-5.1.3" name="generator"/>
+<title>Utils - Adviser</title>
+<link href="../../assets/stylesheets/main.62d34fff.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+<link href="../../custom.css" rel="stylesheet"/>
+</head>
+<body dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#utils">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header-nav md-grid">
+<a aria-label="Adviser" class="md-header-nav__button md-logo" href="https://digitalphonetics.github.io/adviser/" title="Adviser">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z"></path></svg>
+</a>
+<label class="md-header-nav__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"></path></svg>
+</label>
+<div class="md-header-nav__title" data-md-component="header-title">
+<div class="md-header-nav__ellipsis">
+<span class="md-header-nav__topic md-ellipsis">
+            Adviser
+          </span>
+<span class="md-header-nav__topic md-ellipsis">
+            
+              Utils
+            
+          </span>
+</div>
+</div>
+<label class="md-header-nav__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" data-md-state="active" name="query" placeholder="Search" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
+</label>
+<button aria-label="Clear" class="md-search__icon md-icon" data-md-component="search-reset" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path></svg>
+</button>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header-nav__source">
+<a class="md-source" href="https://github.com/DigitalPhonetics/adviser/" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Adviser" class="md-nav__button md-logo" href="https://digitalphonetics.github.io/adviser/" title="Adviser">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z"></path></svg>
+</a>
+    Adviser
+  </label>
+<div class="md-nav__source">
+<a class="md-source" href="https://github.com/DigitalPhonetics/adviser/" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../.." title="Home">
+      Home
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started/" title="Getting Started">
+      Getting Started
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="nav-3" id="nav-3" type="checkbox"/>
+<label class="md-nav__link" for="nav-3">
+      Reference
+      <span class="md-nav__icon md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path></svg>
+</span>
+</label>
+<nav aria-label="Reference" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-3">
+<span class="md-nav__icon md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
+</span>
+        Reference
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../services/" title="Services">
+      Services
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../examples/" title="Examples">
+      Examples
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../resources/" title="Resources">
+      Resources
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+        Utils
+        <span class="md-nav__icon md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z"></path></svg>
+</span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./" title="Utils">
+      Utils
+    </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
+</span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils">
+    utils
+  </a>
+<nav aria-label="utils" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#modules">
+    Modules
+  </a>
+<nav aria-label="Modules" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.beliefstate">
+    beliefstate
+  </a>
+<nav aria-label="beliefstate" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#classes">
+    Classes
+  </a>
+<nav aria-label="Classes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.beliefstate.BeliefState">
+    BeliefState
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.common">
+    common
+  </a>
+<nav aria-label="common" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#classes_1">
+    Classes
+  </a>
+<nav aria-label="Classes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.common.Language">
+    Language
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#functions">
+    Functions
+  </a>
+<nav aria-label="Functions" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.common.init_random">
+    init_random()
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.domain">
+    domain
+  </a>
+<nav aria-label="domain" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#modules_1">
+    Modules
+  </a>
+<nav aria-label="Modules" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.domain.domain">
+    domain
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.domain.jsonlookupdomain">
+    jsonlookupdomain
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.domain.lookupdomain">
+    lookupdomain
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.logger">
+    logger
+  </a>
+<nav aria-label="logger" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#classes_2">
+    Classes
+  </a>
+<nav aria-label="Classes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.logger.DiasysLogger">
+    DiasysLogger
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.logger.LogLevel">
+    LogLevel
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.logger.MultilineFormatter">
+    MultilineFormatter
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#functions_1">
+    Functions
+  </a>
+<nav aria-label="Functions" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.logger.exception_logging_hook">
+    exception_logging_hook()
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.sysact">
+    sysact
+  </a>
+<nav aria-label="sysact" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#classes_3">
+    Classes
+  </a>
+<nav aria-label="Classes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.sysact.SysAct">
+    SysAct
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.sysact.SysActionType">
+    SysActionType
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.useract">
+    useract
+  </a>
+<nav aria-label="useract" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#classes_4">
+    Classes
+  </a>
+<nav aria-label="Classes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.useract.UserAct">
+    UserAct
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.useract.UserActionType">
+    UserActionType
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.userstate">
+    userstate
+  </a>
+<nav aria-label="userstate" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#classes_5">
+    Classes
+  </a>
+<nav aria-label="Classes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.userstate.EmotionType">
+    EmotionType
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.userstate.EngagementType">
+    EngagementType
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.userstate.UserState">
+    UserState
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tools/" title="Tools">
+      Tools
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" id="nav-4" type="checkbox"/>
+<label class="md-nav__link" for="nav-4">
+      Tutorials
+      <span class="md-nav__icon md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path></svg>
+</span>
+</label>
+<nav aria-label="Tutorials" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="nav-4">
+<span class="md-nav__icon md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
+</span>
+        Tutorials
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/introduction/" title="Introduction">
+      Introduction
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/services/" title="Services">
+      Services
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/dialogsystem/" title="Dialog System">
+      Dialog System
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/advanced/" title="Advanced">
+      Advanced
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../faq/" title="FAQ">
+      FAQ
+    </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
+</span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils">
+    utils
+  </a>
+<nav aria-label="utils" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#modules">
+    Modules
+  </a>
+<nav aria-label="Modules" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.beliefstate">
+    beliefstate
+  </a>
+<nav aria-label="beliefstate" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#classes">
+    Classes
+  </a>
+<nav aria-label="Classes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.beliefstate.BeliefState">
+    BeliefState
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.common">
+    common
+  </a>
+<nav aria-label="common" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#classes_1">
+    Classes
+  </a>
+<nav aria-label="Classes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.common.Language">
+    Language
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#functions">
+    Functions
+  </a>
+<nav aria-label="Functions" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.common.init_random">
+    init_random()
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.domain">
+    domain
+  </a>
+<nav aria-label="domain" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#modules_1">
+    Modules
+  </a>
+<nav aria-label="Modules" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.domain.domain">
+    domain
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.domain.jsonlookupdomain">
+    jsonlookupdomain
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.domain.lookupdomain">
+    lookupdomain
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.logger">
+    logger
+  </a>
+<nav aria-label="logger" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#classes_2">
+    Classes
+  </a>
+<nav aria-label="Classes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.logger.DiasysLogger">
+    DiasysLogger
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.logger.LogLevel">
+    LogLevel
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.logger.MultilineFormatter">
+    MultilineFormatter
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#functions_1">
+    Functions
+  </a>
+<nav aria-label="Functions" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.logger.exception_logging_hook">
+    exception_logging_hook()
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.sysact">
+    sysact
+  </a>
+<nav aria-label="sysact" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#classes_3">
+    Classes
+  </a>
+<nav aria-label="Classes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.sysact.SysAct">
+    SysAct
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.sysact.SysActionType">
+    SysActionType
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.useract">
+    useract
+  </a>
+<nav aria-label="useract" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#classes_4">
+    Classes
+  </a>
+<nav aria-label="Classes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.useract.UserAct">
+    UserAct
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.useract.UserActionType">
+    UserActionType
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.userstate">
+    userstate
+  </a>
+<nav aria-label="userstate" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#classes_5">
+    Classes
+  </a>
+<nav aria-label="Classes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.userstate.EmotionType">
+    EmotionType
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.userstate.EngagementType">
+    EngagementType
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adviser.utils.userstate.UserState">
+    UserState
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/DigitalPhonetics/adviser/edit/master/docs/api/utils.md" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"></path></svg>
+</a>
+<h1 id="utils">Utils</h1>
+<div class="doc doc-object doc-module">
+<h2 class="doc doc-heading" id="adviser.utils">
+<code>adviser.utils</code>
+<span class="doc doc-properties">
+<small class="doc doc-property doc-property-special"><code>special</code></small>
+</span>
+</h2>
+<div class="doc doc-contents first">
+<div class="doc doc-children">
+<h3 id="modules">Modules</h3>
+<div class="doc doc-object doc-module">
+<h4 class="doc doc-heading" id="adviser.utils.beliefstate">
+<code>adviser.utils.beliefstate</code>
+</h4>
+<div class="doc doc-contents">
+<p>This module provides the BeliefState class. </p>
+<div class="doc doc-children">
+<h5 id="classes">Classes</h5>
+<div class="doc doc-object doc-class">
+<h6 class="doc doc-heading" id="adviser.utils.beliefstate.BeliefState">
+<code>adviser.utils.beliefstate.BeliefState</code>
+</h6>
+<div class="doc doc-contents">
+<p>A representation of the belief state, can be accessed like a dictionary.</p>
+<p>Includes information on:
+    * current set of UserActTypes
+    * informs to date (dictionary where key is slot and value is {value: probaility})
+    * requests for the current turn
+    * number of db matches for given constraints
+    * if the db matches can further be split</p>
+<div class="doc doc-children">
+<h7>Methods</h7>
+<div class="doc doc-object doc-method">
+<h8 class="doc doc-heading" data-toc-label="get_most_probable_inf_beliefs()" id="adviser.utils.beliefstate.BeliefState.get_most_probable_inf_beliefs">
+<code class="highlight language-python">
+adviser.utils.beliefstate.BeliefState.get_most_probable_inf_beliefs<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">consider_NONE</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">max_results</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">turn_idx</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> </code>
+</h8>
+<div class="doc doc-contents">
+<p>Extract the most probable value for each system requestable slot</p>
+<p>If the most probable value for a slot does not exceed the threshold,
+then the slot will not be added to the result at all.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>beliefstate</code></td>
+<td><code></code></td>
+<td>
+<p>beliefstate dict</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>consider_NONE</code></td>
+<td><code>bool</code></td>
+<td>
+<p>If True, slots where <strong>NONE</strong> values have the
+           highest probability will not be added to the result.
+           If False, slots where <strong>NONE</strong> values have the
+           highest probability will look for the best value !=
+           <strong>NONE</strong>.</p>
+</td>
+<td><code>True</code></td>
+</tr>
+<tr>
+<td><code>threshold</code></td>
+<td><code>float</code></td>
+<td>
+<p>minimum probability to be accepted to the</p>
+</td>
+<td><code>0.7</code></td>
+</tr>
+<tr>
+<td><code>max_results</code></td>
+<td><code>int</code></td>
+<td>
+<p>return at most #max_results best values per slot</p>
+</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td><code>turn_idx</code></td>
+<td><code>int</code></td>
+<td>
+<p>index for accessing the belief state history (default = -1: use last turn)</p>
+</td>
+<td><code>-1</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code></code></td>
+<td>
+<p>A dict with mapping from slots to a list (if max_results &gt; 1) or
+a float (if max_results == 1) of values containing the slots which
+have at least one value whose probability exceeds the specified
+threshold.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/beliefstate.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">get_most_probable_inf_beliefs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">consider_NONE</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.7</span><span class="p">,</span>
+                                  <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">turn_idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">""" Extract the most probable value for each system requestable slot</span>
+
+<span class="sd">    If the most probable value for a slot does not exceed the threshold,</span>
+<span class="sd">    then the slot will not be added to the result at all.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        beliefstate: beliefstate dict</span>
+<span class="sd">        consider_NONE: If True, slots where **NONE** values have the</span>
+<span class="sd">                       highest probability will not be added to the result.</span>
+<span class="sd">                       If False, slots where **NONE** values have the</span>
+<span class="sd">                       highest probability will look for the best value !=</span>
+<span class="sd">                       **NONE**.</span>
+<span class="sd">        threshold: minimum probability to be accepted to the</span>
+<span class="sd">        max_results: return at most #max_results best values per slot</span>
+<span class="sd">        turn_idx: index for accessing the belief state history (default = -1: use last turn)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A dict with mapping from slots to a list (if max_results &gt; 1) or</span>
+<span class="sd">        a float (if max_results == 1) of values containing the slots which</span>
+<span class="sd">        have at least one value whose probability exceeds the specified</span>
+<span class="sd">        threshold.</span>
+<span class="sd">    """</span>
+
+    <span class="c1"># TODO: consider_NONE what does this even mean for the new beliefstate?</span>
+
+    <span class="n">candidates</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">informs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_history</span><span class="p">[</span><span class="n">turn_idx</span><span class="p">][</span><span class="s2">"informs"</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">slot</span> <span class="ow">in</span> <span class="n">informs</span><span class="p">:</span>
+        <span class="c1"># sort by belief</span>
+        <span class="n">sorted_slot_cands</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">informs</span><span class="p">[</span><span class="n">slot</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">kv</span><span class="p">:</span> <span class="n">kv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># restrict result count to specified maximum</span>
+        <span class="n">filtered_slot_cands</span> <span class="o">=</span> <span class="n">sorted_slot_cands</span><span class="p">[:</span><span class="n">max_results</span><span class="p">]</span>
+        <span class="c1"># threshold by probabilities</span>
+        <span class="n">filtered_slot_cands</span> <span class="o">=</span> <span class="p">[</span><span class="n">slot_cand</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">slot_cand</span> <span class="ow">in</span> <span class="n">filtered_slot_cands</span>
+                               <span class="k">if</span> <span class="n">slot_cand</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered_slot_cands</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># append results if any remain after filtering</span>
+            <span class="k">if</span> <span class="n">max_results</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="c1"># only float</span>
+                <span class="n">candidates</span><span class="p">[</span><span class="n">slot</span><span class="p">]</span> <span class="o">=</span> <span class="n">filtered_slot_cands</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># list</span>
+                <span class="n">candidates</span><span class="p">[</span><span class="n">slot</span><span class="p">]</span> <span class="o">=</span> <span class="n">filtered_slot_cands</span>
+    <span class="k">return</span> <span class="n">candidates</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h8 class="doc doc-heading" data-toc-label="get_most_probable_slot_beliefs()" id="adviser.utils.beliefstate.BeliefState.get_most_probable_slot_beliefs">
+<code class="highlight language-python">
+adviser.utils.beliefstate.BeliefState.get_most_probable_slot_beliefs<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">consider_NONE</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">max_results</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">turn_idx</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> </code>
+</h8>
+<div class="doc doc-contents">
+<p>Extract the most probable value for each system requestable slot</p>
+<p>If the most probable value for a slot does not exceed the threshold,
+then the slot will not be added to the result at all.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>beliefstate</code></td>
+<td><code></code></td>
+<td>
+<p>beliefstate dict</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>consider_NONE</code></td>
+<td><code>bool</code></td>
+<td>
+<p>If True, slots where <strong>NONE</strong> values have the
+           highest probability will not be added to the result.
+           If False, slots where <strong>NONE</strong> values have the
+           highest probability will look for the best value !=
+           <strong>NONE</strong>.</p>
+</td>
+<td><code>True</code></td>
+</tr>
+<tr>
+<td><code>threshold</code></td>
+<td><code>float</code></td>
+<td>
+<p>minimum probability to be accepted to the</p>
+</td>
+<td><code>0.7</code></td>
+</tr>
+<tr>
+<td><code>max_results</code></td>
+<td><code>int</code></td>
+<td>
+<p>return at most #max_results best values per slot</p>
+</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td><code>turn_idx</code></td>
+<td><code>int</code></td>
+<td>
+<p>index for accessing the belief state history (default = -1: use last turn)</p>
+</td>
+<td><code>-1</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code></code></td>
+<td>
+<p>A dict with mapping from slots to a list (if max_results &gt; 1) or
+a float (if max_results == 1) of values containing the slots which
+have at least one value whose probability exceeds the specified
+threshold.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/beliefstate.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">get_most_probable_slot_beliefs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">consider_NONE</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                                   <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.7</span><span class="p">,</span>
+                                   <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">turn_idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">""" Extract the most probable value for each system requestable slot</span>
+
+<span class="sd">    If the most probable value for a slot does not exceed the threshold,</span>
+<span class="sd">    then the slot will not be added to the result at all.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        beliefstate: beliefstate dict</span>
+<span class="sd">        consider_NONE: If True, slots where **NONE** values have the</span>
+<span class="sd">                       highest probability will not be added to the result.</span>
+<span class="sd">                       If False, slots where **NONE** values have the</span>
+<span class="sd">                       highest probability will look for the best value !=</span>
+<span class="sd">                       **NONE**.</span>
+<span class="sd">        threshold: minimum probability to be accepted to the</span>
+<span class="sd">        max_results: return at most #max_results best values per slot</span>
+<span class="sd">        turn_idx: index for accessing the belief state history (default = -1: use last turn)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A dict with mapping from slots to a list (if max_results &gt; 1) or</span>
+<span class="sd">        a float (if max_results == 1) of values containing the slots which</span>
+<span class="sd">        have at least one value whose probability exceeds the specified</span>
+<span class="sd">        threshold.</span>
+<span class="sd">    """</span>
+
+    <span class="c1"># TODO: consider_NONE what does this even mean for the new beliefstate?</span>
+
+    <span class="n">informs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_history</span><span class="p">[</span><span class="n">turn_idx</span><span class="p">][</span><span class="s2">"informs"</span><span class="p">]</span>
+    <span class="n">candidates</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">slot</span> <span class="ow">in</span> <span class="n">informs</span><span class="p">:</span>
+        <span class="n">sorted_slot_cands</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">informs</span><span class="p">[</span><span class="n">slot</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">kv</span><span class="p">:</span> <span class="n">kv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># restrict result count to specified maximum</span>
+        <span class="n">filtered_slot_cands</span> <span class="o">=</span> <span class="n">sorted_slot_cands</span><span class="p">[:</span><span class="n">max_results</span><span class="p">]</span>
+        <span class="c1"># threshold by probabilities</span>
+        <span class="n">filtered_slot_cands</span> <span class="o">=</span> <span class="p">[</span><span class="n">slot_cand</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">slot_cand</span> <span class="ow">in</span> <span class="n">filtered_slot_cands</span>
+                               <span class="k">if</span> <span class="n">slot_cand</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">candidates</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h8 class="doc doc-heading" data-toc-label="get_num_dbmatches()" id="adviser.utils.beliefstate.BeliefState.get_num_dbmatches">
+<code class="highlight language-python">
+adviser.utils.beliefstate.BeliefState.get_num_dbmatches<span class="p">(</span><span class="bp">self</span><span class="p">)</span> </code>
+</h8>
+<div class="doc doc-contents">
+<p>Updates the belief state's entry for the number of database matches given the
+constraints in the current turn.</p>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/beliefstate.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">get_num_dbmatches</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">""" Updates the belief state's entry for the number of database matches given the</span>
+<span class="sd">        constraints in the current turn.</span>
+<span class="sd">    """</span>
+
+    <span class="c1"># check how many db entities match the current constraints</span>
+    <span class="n">candidates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_most_probable_inf_beliefs</span><span class="p">(</span><span class="n">consider_NONE</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+                                                    <span class="n">max_results</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">constraints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remove_dontcare_slots</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span>
+    <span class="n">db_matches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">find_entities</span><span class="p">(</span><span class="n">constraints</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">get_informable_slots</span><span class="p">())</span>
+    <span class="n">num_matches</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">db_matches</span><span class="p">)</span>
+
+    <span class="c1"># check if matching db entities could be discriminated by more</span>
+    <span class="c1"># information from user</span>
+    <span class="n">discriminable</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">db_matches</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">dontcare_slots</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">candidates</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">constraints</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">informable_slots</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">get_informable_slots</span><span class="p">())</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">get_primary_key</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">informable_slot</span> <span class="ow">in</span> <span class="n">informable_slots</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">informable_slot</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dontcare_slots</span><span class="p">:</span>
+                <span class="c1"># this slot could be used to gather more information</span>
+                <span class="n">db_values_for_slot</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">db_match</span> <span class="ow">in</span> <span class="n">db_matches</span><span class="p">:</span>
+                    <span class="n">db_values_for_slot</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">db_match</span><span class="p">[</span><span class="n">informable_slot</span><span class="p">])</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">db_values_for_slot</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="c1"># at least 2 different values for slot</span>
+                    <span class="c1"># -&gt;can use this slot to differentiate between entities</span>
+                    <span class="n">discriminable</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">break</span>
+    <span class="k">return</span> <span class="n">num_matches</span><span class="p">,</span> <span class="n">discriminable</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h8 class="doc doc-heading" data-toc-label="get_requested_slots()" id="adviser.utils.beliefstate.BeliefState.get_requested_slots">
+<code class="highlight language-python">
+adviser.utils.beliefstate.BeliefState.get_requested_slots<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">turn_idx</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> </code>
+</h8>
+<div class="doc doc-contents">
+<p>Returns the slots requested by the user</p>
+<p>TODO: consider including some belief probability for requests</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>turn_idx</code></td>
+<td><code>int</code></td>
+<td>
+<p>index for accessing the belief state history (default = -1: use last turn)</p>
+</td>
+<td><code>-1</code></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/beliefstate.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">get_requested_slots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">turn_idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">""" Returns the slots requested by the user</span>
+
+<span class="sd">    TODO: consider including some belief probability for requests</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        turn_idx: index for accessing the belief state history (default = -1: use last turn)</span>
+<span class="sd">    """</span>
+
+    <span class="n">candidates</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">req_slot</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_history</span><span class="p">[</span><span class="n">turn_idx</span><span class="p">][</span><span class="s1">'requests'</span><span class="p">]:</span>
+        <span class="n">candidates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">req_slot</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">candidates</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h8 class="doc doc-heading" data-toc-label="start_new_turn()" id="adviser.utils.beliefstate.BeliefState.start_new_turn">
+<code class="highlight language-python">
+adviser.utils.beliefstate.BeliefState.start_new_turn<span class="p">(</span><span class="bp">self</span><span class="p">)</span> </code>
+</h8>
+<div class="doc doc-contents">
+<p>ONLY to be called by the belief state tracker at the begin of each turn,
+to ensure the correct history can be accessed correctly by other modules</p>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/beliefstate.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>85
+86
+87
+88
+89
+90
+91
+92</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">start_new_turn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    ONLY to be called by the belief state tracker at the begin of each turn,</span>
+<span class="sd">    to ensure the correct history can be accessed correctly by other modules</span>
+<span class="sd">    """</span>
+
+    <span class="c1"># copy last turn's dict</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_history</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-module">
+<h4 class="doc doc-heading" id="adviser.utils.common">
+<code>adviser.utils.common</code>
+</h4>
+<div class="doc doc-contents">
+<p>This modules provides a method to seed commonly used random generators.</p>
+<div class="doc doc-children">
+<h5 id="classes_1">Classes</h5>
+<div class="doc doc-object doc-class">
+<h6 class="doc doc-heading" id="adviser.utils.common.Language">
+<code>adviser.utils.common.Language</code>
+</h6>
+<div class="doc doc-contents">
+<p>Set of recognized languaged</p>
+<div class="doc doc-children">
+</div>
+</div>
+</div>
+<h5 id="functions">Functions</h5>
+<div class="doc doc-object doc-function">
+<h6 class="doc doc-heading" id="adviser.utils.common.init_random">
+<code class="highlight language-python">
+adviser.utils.common.init_random<span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> </code>
+</h6>
+<div class="doc doc-contents">
+<p>Initializes the random generators to allow seeding.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>seed</code></td>
+<td><code>int</code></td>
+<td>
+<p>The seed used for all random generators.</p>
+</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/common.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">init_random</span><span class="p">(</span><span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Initializes the random generators to allow seeding.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        seed (int): The seed used for all random generators.</span>
+
+<span class="sd">    """</span>
+    <span class="k">global</span> <span class="n">GLOBAL_SEED</span>  <span class="c1"># pylint: disable=global-statement</span>
+    <span class="k">if</span> <span class="n">GLOBAL_SEED</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">tmp_random</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">GLOBAL_SEED</span> <span class="o">=</span> <span class="n">tmp_random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">32</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'uint32'</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">GLOBAL_SEED</span> <span class="o">=</span> <span class="n">seed</span>
+
+    <span class="c1"># initialize random generators</span>
+    <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">GLOBAL_SEED</span><span class="p">)</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">GLOBAL_SEED</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># try to load torch and initialize random generator if available</span>
+        <span class="kn">import</span> <span class="nn">torch</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">manual_seed_all</span><span class="p">(</span><span class="n">GLOBAL_SEED</span><span class="p">)</span>  <span class="c1"># gpu</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">GLOBAL_SEED</span><span class="p">)</span>  <span class="c1"># cpu</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># try to load tensorflow and initialize random generator if available</span>
+        <span class="kn">import</span> <span class="nn">tensorflow</span>
+        <span class="n">tensorflow</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_random_seed</span><span class="p">(</span><span class="n">GLOBAL_SEED</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># check whether all calls to torch.* use the same random generator (i.e. same instance)</span>
+    <span class="c1"># works in a short test -- MS</span>
+    <span class="c1"># print(torch.initial_seed())</span>
+
+    <span class="c1"># logger.info("Seed is {:d}".format(GLOBAL_SEED))</span>
+    <span class="k">return</span> <span class="n">GLOBAL_SEED</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-module">
+<h4 class="doc doc-heading" id="adviser.utils.domain">
+<code>adviser.utils.domain</code>
+<span class="doc doc-properties">
+<small class="doc doc-property doc-property-special"><code>special</code></small>
+</span>
+</h4>
+<div class="doc doc-contents">
+<div class="doc doc-children">
+<h5 id="modules_1">Modules</h5>
+<div class="doc doc-object doc-module">
+<h6 class="doc doc-heading" id="adviser.utils.domain.domain">
+<code>adviser.utils.domain.domain</code>
+</h6>
+<div class="doc doc-contents">
+<div class="doc doc-children">
+<h7>Classes</h7>
+<div class="doc doc-object doc-class">
+<h8 class="doc doc-heading" data-toc-label="Domain" id="adviser.utils.domain.domain.Domain">
+<code>adviser.utils.domain.domain.Domain</code>
+</h8>
+<div class="doc doc-contents">
+<p>Abstract class for linking a domain with a data access method.</p>
+<div class="codehilite">
+<pre><span></span><code><span class="err">   Derive from this class if you need to implement a domain with a not yet</span>
+<span class="err">   supported data backend, otherwise choose a fitting existing child class.</span>
+</code></pre>
+</div>
+<div class="doc doc-children">
+<h9>Methods</h9>
+<div class="doc doc-object doc-method">
+<h0 class="doc doc-heading" data-toc-label="find_entities()" id="adviser.utils.domain.domain.Domain.find_entities">
+<code class="highlight language-python">
+adviser.utils.domain.domain.Domain.find_entities<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraints</span><span class="p">)</span> </code>
+</h0>
+<div class="doc doc-contents">
+<p>Returns all entities from the data backend that meet the constraints.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>constraints</code></td>
+<td><code>dict</code></td>
+<td>
+<p>slot-value mapping of constraints</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<p>IMPORTANT: This function must be overridden!</p>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/domain/domain.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>38
+39
+40
+41
+42
+43
+44
+45
+46</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">find_entities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraints</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="sd">""" Returns all entities from the data backend that meet the constraints.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        constraints (dict): slot-value mapping of constraints</span>
+
+<span class="sd">    IMPORTANT: This function must be overridden!</span>
+<span class="sd">    """</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h0 class="doc doc-heading" data-toc-label="get_domain_name()" id="adviser.utils.domain.domain.Domain.get_domain_name">
+<code class="highlight language-python">
+adviser.utils.domain.domain.Domain.get_domain_name<span class="p">(</span><span class="bp">self</span><span class="p">)</span> </code>
+</h0>
+<div class="doc doc-contents">
+<p>Return the domain name of the current ontology.</p>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>str</code></td>
+<td>
+<p>object:</p>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/domain/domain.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>30
+31
+32
+33
+34
+35
+36</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">get_domain_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">""" Return the domain name of the current ontology.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        object:</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-module">
+<h6 class="doc doc-heading" id="adviser.utils.domain.jsonlookupdomain">
+<code>adviser.utils.domain.jsonlookupdomain</code>
+</h6>
+<div class="doc doc-contents">
+<div class="doc doc-children">
+<h7>Classes</h7>
+<div class="doc doc-object doc-class">
+<h8 class="doc doc-heading" data-toc-label="JSONLookupDomain" id="adviser.utils.domain.jsonlookupdomain.JSONLookupDomain">
+<code>adviser.utils.domain.jsonlookupdomain.JSONLookupDomain</code>
+</h8>
+<div class="doc doc-contents">
+<p>Abstract class for linking a domain based on a JSON-ontology with a database
+      access method (sqllite).</p>
+<div class="doc doc-children">
+<h9>Methods</h9>
+<div class="doc doc-object doc-method">
+<h0 class="doc doc-heading" data-toc-label="__init__()" id="adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.__init__">
+<code class="highlight language-python">
+adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.__init__<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">json_ontology_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sqllite_db_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> </code>
+<span class="doc doc-properties">
+<small class="doc doc-property doc-property-special"><code>special</code></small>
+</span>
+</h0>
+<div class="doc doc-contents">
+<p>Loads the ontology from a json file and the data from a sqllite
+    database.</p>
+<div class="codehilite">
+<pre><span></span><code><span class="err">To create a new domain using this format, inherit from this class</span>
+<span class="err">and overwrite the _get_domain_name_()-method to return your</span>
+<span class="err">domain's name.</span>
+</code></pre>
+</div>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td><code>str</code></td>
+<td>
+<p>the domain's name used as an identifier</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>json_ontology_file</code></td>
+<td><code>str</code></td>
+<td>
+<p>relative path to the ontology file
+                (from the top-level adviser directory, e.g. resources/ontologies)</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>sqllite_db_file</code></td>
+<td><code>str</code></td>
+<td>
+<p>relative path to the database file
+                (from the top-level adviser directory, e.g. resources/databases)</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>display_name</code></td>
+<td><code>str</code></td>
+<td>
+<p>the domain's name as it appears on the screen
+                (e.g. containing whitespaces)</p>
+</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/domain/jsonlookupdomain.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">json_ontology_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">sqllite_db_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> \
+             <span class="n">display_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">""" Loads the ontology from a json file and the data from a sqllite</span>
+<span class="sd">        database.</span>
+
+<span class="sd">        To create a new domain using this format, inherit from this class</span>
+<span class="sd">        and overwrite the _get_domain_name_()-method to return your</span>
+<span class="sd">        domain's name.</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        name (str): the domain's name used as an identifier</span>
+<span class="sd">        json_ontology_file (str): relative path to the ontology file</span>
+<span class="sd">                            (from the top-level adviser directory, e.g. resources/ontologies)</span>
+<span class="sd">        sqllite_db_file (str): relative path to the database file</span>
+<span class="sd">                            (from the top-level adviser directory, e.g. resources/databases)</span>
+<span class="sd">        display_name (str): the domain's name as it appears on the screen</span>
+<span class="sd">                            (e.g. containing whitespaces)</span>
+<span class="sd">    """</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">JSONLookupDomain</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="n">root_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_root_dir</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sqllite_db_file</span> <span class="o">=</span> <span class="n">sqllite_db_file</span>
+    <span class="c1"># make sure to set default values in case of None</span>
+    <span class="n">json_ontology_file</span> <span class="o">=</span> <span class="n">json_ontology_file</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">'resources'</span><span class="p">,</span> <span class="s1">'ontologies'</span><span class="p">,</span>
+                                                            <span class="n">name</span> <span class="o">+</span> <span class="s1">'.json'</span><span class="p">)</span>
+    <span class="n">sqllite_db_file</span> <span class="o">=</span> <span class="n">sqllite_db_file</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">'resources'</span><span class="p">,</span> <span class="s1">'databases'</span><span class="p">,</span>
+                                                      <span class="n">name</span> <span class="o">+</span> <span class="s1">'.db'</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">ontology_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">root_dir</span> <span class="o">+</span> <span class="s1">'/'</span> <span class="o">+</span> <span class="n">json_ontology_file</span><span class="p">))</span>
+    <span class="c1"># load database</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_db_to_memory</span><span class="p">(</span><span class="n">root_dir</span> <span class="o">+</span> <span class="s1">'/'</span> <span class="o">+</span> <span class="n">sqllite_db_file</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">display_name</span> <span class="o">=</span> <span class="n">display_name</span> <span class="k">if</span> <span class="n">display_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">name</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h0 class="doc doc-heading" data-toc-label="find_entities()" id="adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.find_entities">
+<code class="highlight language-python">
+adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.find_entities<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraints</span><span class="p">,</span> <span class="n">requested_slots</span><span class="o">=&lt;</span><span class="n">tuple_iterator</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f15a3664c90</span><span class="o">&gt;</span><span class="p">)</span> </code>
+</h0>
+<div class="doc doc-contents">
+<p>Returns all entities from the data backend that meet the constraints, with values for
+    the primary key and the system requestable slots (and optional slots, specifyable
+    via requested_slots).</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>constraints</code></td>
+<td><code>dict</code></td>
+<td>
+<p>Slot-value mapping of constraints.
+                If empty, all entities in the database will be returned.</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>requested_slots</code></td>
+<td><code>Iterable</code></td>
+<td>
+<p>list of slots that should be returned in addition to the
+                        system requestable slots and the primary key</p>
+</td>
+<td><code>&lt;tuple_iterator object at 0x7f15a3664c90&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/domain/jsonlookupdomain.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">find_entities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraints</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">requested_slots</span><span class="p">:</span> <span class="n">Iterable</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(())):</span>
+    <span class="sd">""" Returns all entities from the data backend that meet the constraints, with values for</span>
+<span class="sd">        the primary key and the system requestable slots (and optional slots, specifyable</span>
+<span class="sd">        via requested_slots).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        constraints (dict): Slot-value mapping of constraints.</span>
+<span class="sd">                            If empty, all entities in the database will be returned.</span>
+<span class="sd">        requested_slots (Iterable): list of slots that should be returned in addition to the</span>
+<span class="sd">                                    system requestable slots and the primary key</span>
+
+<span class="sd">    """</span>
+    <span class="c1"># values for name and all system requestable slots</span>
+    <span class="n">select_clause</span> <span class="o">=</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_primary_key</span><span class="p">()])</span> <span class="o">|</span>
+                              <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_system_requestable_slots</span><span class="p">())</span> <span class="o">|</span>
+                              <span class="nb">set</span><span class="p">(</span><span class="n">requested_slots</span><span class="p">))</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s2">"SELECT </span><span class="si">{}</span><span class="s2"> FROM </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">select_clause</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_domain_name</span><span class="p">())</span>
+    <span class="n">constraints</span> <span class="o">=</span> <span class="p">{</span><span class="n">slot</span><span class="p">:</span> <span class="n">value</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s2">"''"</span><span class="p">)</span> <span class="k">for</span> <span class="n">slot</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">constraints</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                   <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">'dontcare'</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">constraints</span><span class="p">:</span>
+        <span class="n">query</span> <span class="o">+=</span> <span class="s1">' WHERE '</span> <span class="o">+</span> <span class="s1">' AND '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"</span><span class="si">{}</span><span class="s2">='</span><span class="si">{}</span><span class="s2">' COLLATE NOCASE"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+                                          <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">constraints</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">query_db</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h0 class="doc doc-heading" data-toc-label="find_info_about_entity()" id="adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.find_info_about_entity">
+<code class="highlight language-python">
+adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.find_info_about_entity<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">,</span> <span class="n">requested_slots</span><span class="p">)</span> </code>
+</h0>
+<div class="doc doc-contents">
+<p>Returns the values (stored in the data backend) of the specified slots for the
+    specified entity.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>entity_id</code></td>
+<td><code>str</code></td>
+<td>
+<p>primary key value of the entity</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>requested_slots</code></td>
+<td><code>Iterable</code></td>
+<td>
+<p>slot-value mapping of constraints</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/domain/jsonlookupdomain.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">find_info_about_entity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">,</span> <span class="n">requested_slots</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">):</span>
+    <span class="sd">""" Returns the values (stored in the data backend) of the specified slots for the</span>
+<span class="sd">        specified entity.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        entity_id (str): primary key value of the entity</span>
+<span class="sd">        requested_slots (dict): slot-value mapping of constraints</span>
+
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">requested_slots</span><span class="p">:</span>
+        <span class="n">select_clause</span> <span class="o">=</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">requested_slots</span><span class="p">))</span>
+    <span class="c1"># If the user hasn't specified any slots we don't know what they want so we give everything</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">select_clause</span> <span class="o">=</span> <span class="s2">"*"</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s1">'SELECT </span><span class="si">{}</span><span class="s1"> FROM </span><span class="si">{}</span><span class="s1"> WHERE </span><span class="si">{}</span><span class="s1">="</span><span class="si">{}</span><span class="s1">";'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">select_clause</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_domain_name</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_primary_key</span><span class="p">(),</span> <span class="n">entity_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">query_db</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h0 class="doc doc-heading" data-toc-label="get_informable_slots()" id="adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.get_informable_slots">
+<code class="highlight language-python">
+adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.get_informable_slots<span class="p">(</span><span class="bp">self</span><span class="p">)</span> </code>
+</h0>
+<div class="doc doc-contents">
+<p>Returns a list of all informable slots. </p>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/domain/jsonlookupdomain.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>187
+188
+189</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">get_informable_slots</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">""" Returns a list of all informable slots. """</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ontology_json</span><span class="p">[</span><span class="s1">'informable'</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h0 class="doc doc-heading" data-toc-label="get_possible_values()" id="adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.get_possible_values">
+<code class="highlight language-python">
+adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.get_possible_values<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">)</span> </code>
+</h0>
+<div class="doc doc-contents">
+<p>Returns all possible values for an informable slot</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>slot</code></td>
+<td><code>str</code></td>
+<td>
+<p>name of the slot</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>List[str]</code></td>
+<td>
+<p>a list of strings, each string representing one possible value for
+the specified slot.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/domain/jsonlookupdomain.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">get_possible_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">""" Returns all possible values for an informable slot</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        slot (str): name of the slot</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        a list of strings, each string representing one possible value for</span>
+<span class="sd">        the specified slot.</span>
+<span class="sd">     """</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ontology_json</span><span class="p">[</span><span class="s1">'informable'</span><span class="p">][</span><span class="n">slot</span><span class="p">]</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h0 class="doc doc-heading" data-toc-label="get_primary_key()" id="adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.get_primary_key">
+<code class="highlight language-python">
+adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.get_primary_key<span class="p">(</span><span class="bp">self</span><span class="p">)</span> </code>
+</h0>
+<div class="doc doc-contents">
+<p>Returns the name of a column in the associated database which can be used to uniquely
+distinguish between database entities.
+Could be e.g. the name of a restaurant, an ID, ... </p>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/domain/jsonlookupdomain.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>203
+204
+205
+206
+207</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">get_primary_key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">""" Returns the name of a column in the associated database which can be used to uniquely</span>
+<span class="sd">        distinguish between database entities.</span>
+<span class="sd">        Could be e.g. the name of a restaurant, an ID, ... """</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ontology_json</span><span class="p">[</span><span class="s1">'key'</span><span class="p">]</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h0 class="doc doc-heading" data-toc-label="get_requestable_slots()" id="adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.get_requestable_slots">
+<code class="highlight language-python">
+adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.get_requestable_slots<span class="p">(</span><span class="bp">self</span><span class="p">)</span> </code>
+</h0>
+<div class="doc doc-contents">
+<p>Returns a list of all slots requestable by the user. </p>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/domain/jsonlookupdomain.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>179
+180
+181</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">get_requestable_slots</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">""" Returns a list of all slots requestable by the user. """</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ontology_json</span><span class="p">[</span><span class="s1">'requestable'</span><span class="p">]</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h0 class="doc doc-heading" data-toc-label="get_system_requestable_slots()" id="adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.get_system_requestable_slots">
+<code class="highlight language-python">
+adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.get_system_requestable_slots<span class="p">(</span><span class="bp">self</span><span class="p">)</span> </code>
+</h0>
+<div class="doc doc-contents">
+<p>Returns a list of all slots requestable by the system. </p>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/domain/jsonlookupdomain.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>183
+184
+185</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">get_system_requestable_slots</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">""" Returns a list of all slots requestable by the system. """</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ontology_json</span><span class="p">[</span><span class="s1">'system_requestable'</span><span class="p">]</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h0 class="doc doc-heading" data-toc-label="query_db()" id="adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.query_db">
+<code class="highlight language-python">
+adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.query_db<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query_str</span><span class="p">)</span> </code>
+</h0>
+<div class="doc doc-contents">
+<p>Function for querying the sqlite3 db</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>query_str</code></td>
+<td><code>string</code></td>
+<td>
+<p>sqlite3 query style string</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(iterable)</code></td>
+<td>
+<p>rows of the query response set</p>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/domain/jsonlookupdomain.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">query_db</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query_str</span><span class="p">):</span>
+    <span class="sd">""" Function for querying the sqlite3 db</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        query_str (string): sqlite3 query style string</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">        (iterable): rows of the query response set</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="s2">"db"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">:</span>
+        <span class="n">root_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_root_dir</span><span class="p">()</span>
+        <span class="n">sqllite_db_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sqllite_db_file</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="s1">'resources'</span><span class="p">,</span> <span class="s1">'databases'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">'.db'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_db_to_memory</span><span class="p">(</span><span class="n">root_dir</span> <span class="o">+</span> <span class="s1">'/'</span> <span class="o">+</span> <span class="n">sqllite_db_file</span><span class="p">)</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query_str</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">res</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-module">
+<h6 class="doc doc-heading" id="adviser.utils.domain.lookupdomain">
+<code>adviser.utils.domain.lookupdomain</code>
+</h6>
+<div class="doc doc-contents">
+<div class="doc doc-children">
+<h7>Classes</h7>
+<div class="doc doc-object doc-class">
+<h8 class="doc doc-heading" data-toc-label="LookupDomain" id="adviser.utils.domain.lookupdomain.LookupDomain">
+<code>adviser.utils.domain.lookupdomain.LookupDomain</code>
+</h8>
+<div class="doc doc-contents">
+<p>Abstract class for linking a domain with a data access method.</p>
+<div class="codehilite">
+<pre><span></span><code><span class="err">   Derive from this class if you need to implement a domain with a not yet</span>
+<span class="err">   supported data backend, otherwise choose a fitting existing child class.</span>
+</code></pre>
+</div>
+<div class="doc doc-children">
+<h9>Methods</h9>
+<div class="doc doc-object doc-method">
+<h0 class="doc doc-heading" data-toc-label="find_entities()" id="adviser.utils.domain.lookupdomain.LookupDomain.find_entities">
+<code class="highlight language-python">
+adviser.utils.domain.lookupdomain.LookupDomain.find_entities<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraints</span><span class="p">,</span> <span class="n">requested_slots</span><span class="o">=&lt;</span><span class="n">tuple_iterator</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f15a3674910</span><span class="o">&gt;</span><span class="p">)</span> </code>
+</h0>
+<div class="doc doc-contents">
+<p>Returns all entities from the data backend that meet the constraints.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>constraints</code></td>
+<td><code>dict</code></td>
+<td>
+<p>slot-value mapping of constraints</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<p>IMPORTANT: This function must be overridden!</p>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/domain/lookupdomain.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>33
+34
+35
+36
+37
+38
+39
+40
+41</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">find_entities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraints</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">requested_slots</span><span class="p">:</span> <span class="n">Iterable</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(())):</span>
+    <span class="sd">""" Returns all entities from the data backend that meet the constraints.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        constraints (dict): slot-value mapping of constraints</span>
+
+<span class="sd">    IMPORTANT: This function must be overridden!</span>
+<span class="sd">    """</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h0 class="doc doc-heading" data-toc-label="find_info_about_entity()" id="adviser.utils.domain.lookupdomain.LookupDomain.find_info_about_entity">
+<code class="highlight language-python">
+adviser.utils.domain.lookupdomain.LookupDomain.find_info_about_entity<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">,</span> <span class="n">requested_slots</span><span class="p">)</span> </code>
+</h0>
+<div class="doc doc-contents">
+<p>Returns the values (stored in the data backend) of the specified slots for the
+    specified entity.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>entity_id</code></td>
+<td><code>str</code></td>
+<td>
+<p>primary key value of the entity</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>requested_slots</code></td>
+<td><code>Iterable</code></td>
+<td>
+<p>slot-value mapping of constraints</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/domain/lookupdomain.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>43
+44
+45
+46
+47
+48
+49
+50
+51</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">find_info_about_entity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">,</span> <span class="n">requested_slots</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">):</span>
+    <span class="sd">""" Returns the values (stored in the data backend) of the specified slots for the</span>
+<span class="sd">        specified entity.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        entity_id (str): primary key value of the entity</span>
+<span class="sd">        requested_slots (dict): slot-value mapping of constraints</span>
+<span class="sd">    """</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h0 class="doc doc-heading" data-toc-label="get_informable_slots()" id="adviser.utils.domain.lookupdomain.LookupDomain.get_informable_slots">
+<code class="highlight language-python">
+adviser.utils.domain.lookupdomain.LookupDomain.get_informable_slots<span class="p">(</span><span class="bp">self</span><span class="p">)</span> </code>
+</h0>
+<div class="doc doc-contents">
+<p>Returns a list of all informable slots. </p>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/domain/lookupdomain.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>64
+65
+66</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">get_informable_slots</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">""" Returns a list of all informable slots. """</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h0 class="doc doc-heading" data-toc-label="get_mandatory_slots()" id="adviser.utils.domain.lookupdomain.LookupDomain.get_mandatory_slots">
+<code class="highlight language-python">
+adviser.utils.domain.lookupdomain.LookupDomain.get_mandatory_slots<span class="p">(</span><span class="bp">self</span><span class="p">)</span> </code>
+</h0>
+<div class="doc doc-contents">
+<p>Returns a list of all mandatory slots. </p>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/domain/lookupdomain.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>68
+69
+70</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">get_mandatory_slots</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">""" Returns a list of all mandatory slots. """</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h0 class="doc doc-heading" data-toc-label="get_possible_values()" id="adviser.utils.domain.lookupdomain.LookupDomain.get_possible_values">
+<code class="highlight language-python">
+adviser.utils.domain.lookupdomain.LookupDomain.get_possible_values<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">)</span> </code>
+</h0>
+<div class="doc doc-contents">
+<p>Returns all possible values for an informable slot</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>slot</code></td>
+<td><code>str</code></td>
+<td>
+<p>name of the slot</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>List[str]</code></td>
+<td>
+<p>a list of strings, each string representing one possible value for
+the specified slot.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/domain/lookupdomain.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">get_possible_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">""" Returns all possible values for an informable slot</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        slot (str): name of the slot</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        a list of strings, each string representing one possible value for</span>
+<span class="sd">        the specified slot.</span>
+<span class="sd">     """</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h0 class="doc doc-heading" data-toc-label="get_primary_key()" id="adviser.utils.domain.lookupdomain.LookupDomain.get_primary_key">
+<code class="highlight language-python">
+adviser.utils.domain.lookupdomain.LookupDomain.get_primary_key<span class="p">(</span><span class="bp">self</span><span class="p">)</span> </code>
+</h0>
+<div class="doc doc-contents">
+<p>Returns the slot name that will be used as the 'name' of an entry </p>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/domain/lookupdomain.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>96
+97
+98</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">get_primary_key</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">""" Returns the slot name that will be used as the 'name' of an entry """</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h0 class="doc doc-heading" data-toc-label="get_requestable_slots()" id="adviser.utils.domain.lookupdomain.LookupDomain.get_requestable_slots">
+<code class="highlight language-python">
+adviser.utils.domain.lookupdomain.LookupDomain.get_requestable_slots<span class="p">(</span><span class="bp">self</span><span class="p">)</span> </code>
+</h0>
+<div class="doc doc-contents">
+<p>Returns a list of all slots requestable by the user. </p>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/domain/lookupdomain.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>56
+57
+58</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">get_requestable_slots</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">""" Returns a list of all slots requestable by the user. """</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h0 class="doc doc-heading" data-toc-label="get_system_requestable_slots()" id="adviser.utils.domain.lookupdomain.LookupDomain.get_system_requestable_slots">
+<code class="highlight language-python">
+adviser.utils.domain.lookupdomain.LookupDomain.get_system_requestable_slots<span class="p">(</span><span class="bp">self</span><span class="p">)</span> </code>
+</h0>
+<div class="doc doc-contents">
+<p>Returns a list of all slots requestable by the system. </p>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/domain/lookupdomain.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>60
+61
+62</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">get_system_requestable_slots</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">""" Returns a list of all slots requestable by the system. """</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-module">
+<h4 class="doc doc-heading" id="adviser.utils.logger">
+<code>adviser.utils.logger</code>
+</h4>
+<div class="doc doc-contents">
+<p>This module provides a logger for configurable output on different levels. </p>
+<div class="doc doc-children">
+<h5 id="classes_2">Classes</h5>
+<div class="doc doc-object doc-class">
+<h6 class="doc doc-heading" id="adviser.utils.logger.DiasysLogger">
+<code>adviser.utils.logger.DiasysLogger</code>
+</h6>
+<div class="doc doc-contents">
+<p>Logger class.</p>
+<div class="codehilite">
+<pre><span></span><code><span class="n">This</span> <span class="k">class</span> <span class="n">enables</span> <span class="n">logging</span> <span class="k">to</span> <span class="k">both</span> <span class="n">a</span> <span class="n">logfile</span> <span class="k">and</span> <span class="n">the</span> <span class="n">console</span> <span class="k">with</span> <span class="n">different</span>
+<span class="n">information</span> <span class="n">levels</span><span class="p">.</span>
+<span class="n">It</span> <span class="n">also</span> <span class="n">provides</span> <span class="n">logging</span> <span class="n">methods</span> <span class="k">for</span> <span class="n">the</span> <span class="n">newly</span> <span class="n">introduced</span> <span class="n">information</span>
+<span class="n">levels</span> <span class="p">(</span><span class="n">LogLevel</span><span class="p">.</span><span class="n">DIALOGS</span> <span class="k">and</span> <span class="n">LogLevel</span><span class="p">.</span><span class="n">RESULTS</span><span class="p">).</span>
+
+<span class="k">If</span> <span class="n">file_level</span> <span class="k">is</span> <span class="k">set</span> <span class="k">to</span> <span class="n">LogLevel</span><span class="p">.</span><span class="k">NONE</span><span class="p">,</span> <span class="k">no</span> <span class="n">log</span> <span class="n">file</span> <span class="n">will</span> <span class="n">be</span> <span class="n">created</span><span class="p">.</span>
+<span class="n">Otherwise</span><span class="p">,</span> <span class="n">the</span> <span class="k">output</span> <span class="n">directory</span> <span class="n">can</span> <span class="n">be</span> <span class="n">configured</span> <span class="k">by</span> <span class="n">setting</span> <span class="n">log_folder</span><span class="p">.</span>
+</code></pre>
+</div>
+<div class="doc doc-children">
+<h7>Methods</h7>
+<div class="doc doc-object doc-method">
+<h8 class="doc doc-heading" data-toc-label="dialog_turn()" id="adviser.utils.logger.DiasysLogger.dialog_turn">
+<code class="highlight language-python">
+adviser.utils.logger.DiasysLogger.dialog_turn<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">dialog_act</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> </code>
+</h8>
+<div class="doc doc-contents">
+<p>Logs a turn of a dialog </p>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/logger.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>113
+114
+115
+116
+117
+118
+119</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">dialog_turn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dialog_act</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">""" Logs a turn of a dialog """</span>
+
+    <span class="n">log_msg</span> <span class="o">=</span> <span class="n">msg</span>
+    <span class="k">if</span> <span class="n">dialog_act</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">log_msg</span> <span class="o">+=</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">  "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dialog_act</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">LogLevel</span><span class="o">.</span><span class="n">DIALOGS</span><span class="p">),</span> <span class="n">log_msg</span><span class="p">)</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h8 class="doc doc-heading" data-toc-label="result()" id="adviser.utils.logger.DiasysLogger.result">
+<code class="highlight language-python">
+adviser.utils.logger.DiasysLogger.result<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span> </code>
+</h8>
+<div class="doc doc-contents">
+<p>Logs the result of a dialog </p>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/logger.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>108
+109
+110
+111</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="sd">""" Logs the result of a dialog """</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">LogLevel</span><span class="o">.</span><span class="n">RESULTS</span><span class="p">),</span> <span class="n">msg</span><span class="p">)</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-class">
+<h6 class="doc doc-heading" id="adviser.utils.logger.LogLevel">
+<code>adviser.utils.logger.LogLevel</code>
+</h6>
+<div class="doc doc-contents">
+<p>The available levels for the logger. </p>
+<div class="doc doc-children">
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-class">
+<h6 class="doc doc-heading" id="adviser.utils.logger.MultilineFormatter">
+<code>adviser.utils.logger.MultilineFormatter</code>
+</h6>
+<div class="doc doc-contents">
+<p>A formatter for the logger taking care of multiline messages. </p>
+<div class="doc doc-children">
+<h7>Methods</h7>
+<div class="doc doc-object doc-method">
+<h8 class="doc doc-heading" data-toc-label="format()" id="adviser.utils.logger.MultilineFormatter.format">
+<code class="highlight language-python">
+adviser.utils.logger.MultilineFormatter.format<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span> </code>
+</h8>
+<div class="doc doc-contents">
+<p>Format the specified record as text.</p>
+<p>The record's attribute dictionary is used as the operand to a
+string formatting operation which yields the returned string.
+Before formatting the dictionary, a couple of preparatory steps
+are carried out. The message attribute of the record is computed
+using LogRecord.getMessage(). If the formatting string uses the
+time (as determined by a call to usesTime(), formatTime() is
+called to format the event time. If there is exception information,
+it is formatted using formatException() and appended to the message.</p>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/logger.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">LogRecord</span><span class="p">):</span>
+    <span class="n">save_msg</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">msg</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s2">""</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">save_msg</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="n">idx</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">+=</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+        <span class="n">record</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">line</span>
+        <span class="n">output</span> <span class="o">+=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+    <span class="n">record</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">save_msg</span>
+    <span class="n">record</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">output</span>
+    <span class="k">return</span> <span class="n">output</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+</div>
+</div>
+</div>
+<h5 id="functions_1">Functions</h5>
+<div class="doc doc-object doc-function">
+<h6 class="doc doc-heading" id="adviser.utils.logger.exception_logging_hook">
+<code class="highlight language-python">
+adviser.utils.logger.exception_logging_hook<span class="p">(</span><span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">exc_traceback</span><span class="p">)</span> </code>
+</h6>
+<div class="doc doc-contents">
+<p>Used as a hook to log exceptions. </p>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/logger.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>43
+44
+45
+46</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">exception_logging_hook</span><span class="p">(</span><span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">exc_traceback</span><span class="p">):</span>
+    <span class="sd">""" Used as a hook to log exceptions. """</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">'adviser'</span><span class="p">)</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">"Uncaught exception"</span><span class="p">,</span>
+                                       <span class="n">exc_info</span><span class="o">=</span><span class="p">(</span><span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">exc_traceback</span><span class="p">))</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-module">
+<h4 class="doc doc-heading" id="adviser.utils.sysact">
+<code>adviser.utils.sysact</code>
+</h4>
+<div class="doc doc-contents">
+<p>This module provides the necessary classes for a system action.</p>
+<div class="doc doc-children">
+<h5 id="classes_3">Classes</h5>
+<div class="doc doc-object doc-class">
+<h6 class="doc doc-heading" id="adviser.utils.sysact.SysAct">
+<code>adviser.utils.sysact.SysAct</code>
+</h6>
+<div class="doc doc-contents">
+<p>The class for a system action as used in the dialog.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>act_type</code></td>
+<td><code>SysActionType</code></td>
+<td>
+<p>The type of the system action.</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>slot_values</code></td>
+<td><code>Dict['str', List['str']]</code></td>
+<td>
+<p>A mapping of <code>slot -&gt; value</code> to which the system</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>action</code></td>
+<td><code>refers depending on the action type - might be ``None``. Default</code></td>
+<td>
+<p><code>None</code>.</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<p>.. todo:: <code>value</code> might be actually a list?</p>
+<div class="doc doc-children">
+<h7>Methods</h7>
+<div class="doc doc-object doc-method">
+<h8 class="doc doc-heading" data-toc-label="add_value()" id="adviser.utils.sysact.SysAct.add_value">
+<code class="highlight language-python">
+adviser.utils.sysact.SysAct.add_value<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> </code>
+</h8>
+<div class="doc doc-contents">
+<p>Add a value (or just a slot, if value=None) to the system act </p>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/sysact.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>74
+75
+76
+77
+78
+79</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">add_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">""" Add a value (or just a slot, if value=None) to the system act """</span>
+    <span class="k">if</span> <span class="n">slot</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">slot_values</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slot_values</span><span class="p">[</span><span class="n">slot</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slot_values</span><span class="p">[</span><span class="n">slot</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h8 class="doc doc-heading" data-toc-label="get_values()" id="adviser.utils.sysact.SysAct.get_values">
+<code class="highlight language-python">
+adviser.utils.sysact.SysAct.get_values<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">)</span> </code>
+</h8>
+<div class="doc doc-contents">
+<p>Return all values for slot</p>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code></code></td>
+<td>
+<p>A list of values for slot or an empy list if there was no value
+specified for the given slot</p>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/sysact.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">get_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slot</span><span class="p">):</span>
+    <span class="sd">""" Return all values for slot</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A list of values for slot or an empy list if there was no value</span>
+<span class="sd">        specified for the given slot</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">slot</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">slot_values</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">slot_values</span><span class="p">[</span><span class="n">slot</span><span class="p">]</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-class">
+<h6 class="doc doc-heading" id="adviser.utils.sysact.SysActionType">
+<code>adviser.utils.sysact.SysActionType</code>
+</h6>
+<div class="doc doc-contents">
+<p>The type for a system action as used in :class:<code>SystemAct</code>.</p>
+<div class="doc doc-children">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-module">
+<h4 class="doc doc-heading" id="adviser.utils.useract">
+<code>adviser.utils.useract</code>
+</h4>
+<div class="doc doc-contents">
+<p>This module provides the necessary classes for a user action.</p>
+<div class="doc doc-children">
+<h5 id="classes_4">Classes</h5>
+<div class="doc doc-object doc-class">
+<h6 class="doc doc-heading" id="adviser.utils.useract.UserAct">
+<code>adviser.utils.useract.UserAct</code>
+</h6>
+<div class="doc doc-contents">
+<p>The class for a user action as used in the dialog.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text</code></td>
+<td><code>str</code></td>
+<td>
+<p>A textual representation of the user action.</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>act_type</code></td>
+<td><code>UserActionType</code></td>
+<td>
+<p>The type of the user action.</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>slot</code></td>
+<td><code>str</code></td>
+<td>
+<p>The slot to which the user action refers - might be <code>None</code> depending on the
+user action. Default: <code>None</code>.</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td><code>str</code></td>
+<td>
+<p>The value to which the user action refers - might be <code>None</code> depending on the
+user action. Default: <code>None</code>.</p>
+</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>score</code></td>
+<td><code>float</code></td>
+<td>
+<p>A value from 0. (not important) to 1. (important) indicating how important
+the information is for the belief state. Default: <code>1.0</code>.</p>
+</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<div class="doc doc-children">
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-class">
+<h6 class="doc doc-heading" id="adviser.utils.useract.UserActionType">
+<code>adviser.utils.useract.UserActionType</code>
+</h6>
+<div class="doc doc-contents">
+<p>The type for a user action as used in :class:<code>UserAct</code>.</p>
+<div class="doc doc-children">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-module">
+<h4 class="doc doc-heading" id="adviser.utils.userstate">
+<code>adviser.utils.userstate</code>
+</h4>
+<div class="doc doc-contents">
+<p>This module provides the UserState class. </p>
+<div class="doc doc-children">
+<h5 id="classes_5">Classes</h5>
+<div class="doc doc-object doc-class">
+<h6 class="doc doc-heading" id="adviser.utils.userstate.EmotionType">
+<code>adviser.utils.userstate.EmotionType</code>
+</h6>
+<div class="doc doc-contents">
+<p>The type for a user emotion as used in :class:<code>UserState</code>.</p>
+<div class="doc doc-children">
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-class">
+<h6 class="doc doc-heading" id="adviser.utils.userstate.EngagementType">
+<code>adviser.utils.userstate.EngagementType</code>
+</h6>
+<div class="doc doc-contents">
+<p>The type for a user engagement as used in :class:<code>UserState</code>.</p>
+<div class="doc doc-children">
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-class">
+<h6 class="doc doc-heading" id="adviser.utils.userstate.UserState">
+<code>adviser.utils.userstate.UserState</code>
+</h6>
+<div class="doc doc-contents">
+<p>The representation of a user state.
+Can be accessed like a dictionary</p>
+<div class="doc doc-children">
+<h7>Methods</h7>
+<div class="doc doc-object doc-method">
+<h8 class="doc doc-heading" data-toc-label="start_new_turn()" id="adviser.utils.userstate.UserState.start_new_turn">
+<code class="highlight language-python">
+adviser.utils.userstate.UserState.start_new_turn<span class="p">(</span><span class="bp">self</span><span class="p">)</span> </code>
+</h8>
+<div class="doc doc-contents">
+<p>ONLY to be called by the user state tracker at the begin of each turn,
+to ensure the correct history can be accessed correctly by other modules</p>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/userstate.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>73
+74
+75
+76
+77
+78
+79
+80</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">start_new_turn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    ONLY to be called by the user state tracker at the begin of each turn,</span>
+<span class="sd">    to ensure the correct history can be accessed correctly by other modules</span>
+<span class="sd">    """</span>
+
+    <span class="c1"># copy last turn's dict</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_history</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-nav">
+<nav aria-label="Footer" class="md-footer-nav__inner md-grid">
+<a class="md-footer-nav__link md-footer-nav__link--prev" href="../resources/" rel="prev" title="Resources">
+<div class="md-footer-nav__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
+</div>
+<div class="md-footer-nav__title">
+<div class="md-ellipsis">
+<span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Resources
+              </div>
+</div>
+</a>
+<a class="md-footer-nav__link md-footer-nav__link--next" href="../tools/" rel="next" title="Tools">
+<div class="md-footer-nav__title">
+<div class="md-ellipsis">
+<span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Tools
+              </div>
+</div>
+<div class="md-footer-nav__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+</div>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+          Material for MkDocs
+        </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<script src="../../assets/javascripts/vendor.f81b9e8b.min.js"></script>
+<script src="../../assets/javascripts/bundle.23546af0.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+<script>
+        app = initialize({
+          base: "../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.58d22e8e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+</body>
+</html>
