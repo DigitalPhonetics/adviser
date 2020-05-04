@@ -75,8 +75,8 @@ and, to make sure your installation is working, execute
 6. If you want to use multimodal functionallity, execute
 
 .. code-block:: bash
-    git lfs pull
 
+    git lfs pull
 
 
 Support
