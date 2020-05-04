@@ -2,7 +2,7 @@
 
 New Version
 ===========
-There will be more information about the new version of Adviser soon. Stay tuned!
+Adviser 2.0 is released! 
 
 Installation
 ============
@@ -62,16 +62,22 @@ new terminal session)
 
 .. code-block:: bash
 
-    pip install -r requirements.txt
+    pip install -r requirements_base.txt 
+ 
+(or requirements_multimodal.txt if you want to use ASR / TTS)
 
 and, to make sure your installation is working, execute
 
 .. code-block:: bash
 
-    python run_chat.py --domain courses
+    python run_chat.py lecturers
 
-6. Select a language by entering `english` or `german`, then chat with ADvISER. To end your
-conversation, type `bye`.
+6. If you want to use multimodal functionallity, execute
+
+.. code-block:: bash
+    git lfs pull
+
+
 
 Support
 =======
