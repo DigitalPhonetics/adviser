@@ -81,7 +81,7 @@ and, to make sure your installation is working, execute
 
 Support
 =======
-You can ask questions by sending emails to <adviser-support@ims.uni-stuttgart.de>.
+You can ask questions by sending emails to adviser-support@ims.uni-stuttgart.de.
 
 You can also post bug reports and feature requests in GitHub issues.
 
