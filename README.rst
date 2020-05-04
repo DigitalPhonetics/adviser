@@ -74,7 +74,7 @@ and, to make sure your installation is working, execute
 
     python run_chat.py lecturers
     
-You can type text to chat with the system (confirm your utterance by pressing the ``Enter``-Key once) or type ``bye`` (followed by pressing the ``Enter`-Key once) to end the conversation.
+You can type text to chat with the system (confirm your utterance by pressing the ``Enter``-Key once) or type ``bye`` (followed by pressing the ``Enter``-Key once) to end the conversation.
 
 To see more of the available options, run
 
