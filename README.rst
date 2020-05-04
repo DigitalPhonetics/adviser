@@ -10,13 +10,13 @@ Installation
 Downloading the code
 --------------------
 
-If you are not familiar with `Git`, just download the zip file available in the ``Clone or Download``. Then unzip and enter the main folder.
+If `Git` is not installated on your machine, just download the Adviser 2.0 file available in ``relases`` section. Then unzip and navigate to the main folder.
+Note that this method has some disadvantages (you'll only be able to run basic text-to-text terminal conversations).
 
+Cloning the repository (recommended)
+------------------------------------
 
-Cloning the repository
------------------------
-
-If you feel comfortable with `Git`, you may instead clone the repository.
+If `Git` is installed on your machine, you may instead clone the repository by enterind in a terminal window:
 
 .. code-block:: bash
 
@@ -28,12 +28,12 @@ Install requirements with pip
 
 ADvISER needs to be executed in a Python3 environment.
 
-Once you have the code locally navigate to the top level directory, where you will find the file
-`requirements.txt`, which lists all modules you need to run ADvISER. We suggest to create a
+Once you obtained the code, navigate to its top level directory where you will find the file
+`requirements_base.txt`, which lists all modules you need to run a basic text-to-text version of ADvISER. We suggest to create a
 virtual environment from the top level directory, as shown below, followed by installing the necessary packages.
 
 
-1. (You need to have pip, or pip3) Make sure you have virtualenv installed by executing
+1. (Requires pip or pip3) Make sure you have virtualenv installed by executing
 
 .. code-block:: bash
 
@@ -52,31 +52,36 @@ new terminal session)
 
     source <path-to-env>/bin/activate
 
-4. Navigate to the adviser folder
-
-.. code-block:: bash
-
-    cd adviser
-
-5. Install the required packages
+4. Install the required packages
 
 .. code-block:: bash
 
     pip install -r requirements_base.txt 
  
-(or requirements_multimodal.txt if you want to use ASR / TTS)
+(NOTE: or requirements_multimodal.txt if you want to use ASR / TTS)
+
+
+5. Navigate to the adviser folder
+
+.. code-block:: bash
+
+    cd adviser
 
 and, to make sure your installation is working, execute
 
 .. code-block:: bash
 
     python run_chat.py lecturers
+    
+ You can type text to chat with the system (confirm your utterance by pressing the `Enter`-Key once) or type `bye` (followed by pressing the `Enter`-Key once) to end the conversation.
 
-6. If you want to use multimodal functionallity, execute
+6. OPTIONAL: If you want to use multimodal functionallity, e.g. ASR / TTS/ ..., execute
 
 .. code-block:: bash
 
     git lfs pull
+    
+ NOTE: this also requires you to install `requirements_multimodal.txt` in `step 4`.
 
 
 Support
