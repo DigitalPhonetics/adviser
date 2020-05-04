@@ -1,6 +1,7 @@
 mkdocs==1.1
 mkdocs-material==5.1.4
 mkdocstrings==0.11.0
+pymdown-extensions==7.1
 dlib
 imutils
 argcomplete==1.11.1
