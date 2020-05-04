@@ -1,0 +1,37 @@
+{
+    "vegan": {
+        "false": "^(?=.*(vegan))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*(vegan))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "vegetarian": {
+        "false": "^(?=.*(vegetarian|veggi))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*(vegetarian|veggi))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "fish": {
+        "false": "^(?=.*(fish))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*(fish))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "pork": {
+        "false": "^(?=.*(pork))(?=.*(n't|not|do(es)?nt|(are|is)nt)).*$",
+        "true": "^(?=.*(pork))(?=^(?:(?!(n't|not|do(es)?nt|(are|is)nt)).)*$).*$"
+    },
+    "day": {
+        "today": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\btoday\\b)|(today|now)|(\\btoday\\b)|(today|now)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\btoday\\b)|(today|now)( (please|and))*",
+        "tomorrow": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\btomorrow\\b)|(tomorrow)|(\\btomorrow\\b)|(tomorrow)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\btomorrow\\b)|(tomorrow)( (please|and))*",
+        "monday": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bmonday\\b)|(monday)|(\\bmonday\\b)|(monday)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bmonday\\b)|(monday)( (please|and))*",
+        "tuesday": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\btuesday\\b)|(tuesday)|(\\btuesday\\b)|(tuesday)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\btuesday\\b)|(tuesday)( (please|and))*",
+        "wednesday": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bwednesday\\b)|(wednesday)|(\\bwednesday\\b)|(wednesday)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bwednesday\\b)|(wednesday)( (please|and))*",
+        "thursday": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bthursday\\b)|(thursday)|(\\bthursday\\b)|(thursday)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bthursday\\b)|(thursday)( (please|and))*",
+        "friday": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bfriday\\b)|(friday)|(\\bfriday\\b)|(friday)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bfriday\\b)|(friday)( (please|and))*"
+    },
+    "type": {
+        "starter": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\b(starter|appetizer)\\b)|(\\b(starter|appetizer)\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\b(starter|appetizer)\\b)( (please|and))*",
+        "buffet": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bbuffet\\b)|(\\bbuffet\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bbuffet\\b)( (please|and))*",
+        "main_dish": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bmain dish\\b)|(\\bmain dish\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bmain dish\\b)( (please|and))*",
+        "side_dish": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bside dish\\b)|(\\bside dish\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bside dish\\b)( (please|and))*",
+        "dessert": "(\\\\b|^| )(what about|want|have|need|looking for|used for)( a(n)?)* (\\bdessert\\b)|(\\bdessert\\b)( ((would|seems to) be (good|nice)($|[^\\?]$)|seems (good|nice)($|[^\\?]$)))|( |^)(\\bdessert\\b)( (please|and))*"
+    },
+    "domain_active": {
+        "true": "(\\b|^| )(I want a (mensa|food))"
+    }
+}

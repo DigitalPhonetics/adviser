@@ -1,0 +1,3 @@
+# Resources
+
+::: adviser.resources

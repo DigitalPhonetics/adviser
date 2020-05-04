@@ -1,0 +1,90 @@
+# ---------------NEW RULES - SUPERHERO MESSAGES-------------------------
+
+template welcomemsg(): "Welcome to the SuperherO Support (SOS)  chat bot. How may I help you?"
+template welcomemsg(help): "Sorry, I cannot understand you. Please tell me again what you are looking for."
+template welcomemsg(more) : "Can I help you with anything else?"
+template bad() : "Sorry I am a bit confused; please tell me again what you are looking for."
+template closingmsg() : "Thank you, goodbye."
+
+# System Requests
+
+template request(primary_uniform_color): "What should be the primary color of the superhero's uniform?"
+template request(main_superpower): "What should the supherhero's main power be?"
+template request(loyality): "With which organisation should the superhero be working?"
+
+# Rules for System Inform
+
+function info(slot, value, name)
+	if slot = "loyality": "works with the following organisation: \"{value}\""
+	if slot = "description": "has the following description: \"{value}\""
+	if slot = "main_superpower": "uses \"{value}\""
+	if slot = "primary_uniform_color": "wears a uniform with \"{value}\" as main color"
+
+# -------------------------Only Name Slot-----------------------------------#
+
+template inform_byname(name)
+	"There is a superhero called {name}. What do you want to know about them?"
+
+	special_case name = "none"
+		"I’m sorry, I could not find this superhero."
+
+
+template inform_alternatives(name)
+	"There is another superhero called {name}. What do you want to know about them?"
+
+	special_case name = "none"
+		"I'm sorry, I couldn't find another superhero."
+
+
+#------------------------ Name Slot + Slots----------------------------------#
+
+template inform_byname(name, *slots)
+	"The superhero called {name} {for_entry(slots, "info", ", they ", " and they ", name)}."
+	
+	special_case name = "none"
+		"There is no such superhero who {for_entry(slots, "info", ", ", " and ", name)}."
+
+template inform_alternatives(name, *slots)
+	"The superhero {name} also {for_entry(slots, "info", ", they ", " and they ", name)}."
+	
+	special_case name = "none"
+		"There is no other course which also {for_entry(slots, "info", ", ", " and ", name)}."
+
+
+# ----------------------------System Confirm----------------------------------#
+
+template confirm()
+	"Please tell me more about the superhero you are looking for."
+template confirm(name, *slots)
+	if name = "none"
+		"Let me confirm, you are looking for a superhero who {for_entry(slots, "info", ", ", " and ", name)}, right?"
+template confirm(*slots)
+	"Let me confirm, you are looking for a superhero who {for_entry(slots, "info", ", ", " and ", "none")}, right?"
+
+
+# ---------------------------System RequestMore------------------------------#
+
+template reqmore()
+	"Can I help you with anything else?"
+
+template reqmore(primary_uniform_color)
+	if primary_uniform_color = "dontcare"
+		"Would you like me to look for a superhero wearing any uniform color?"
+template reqmore(main_superpower)
+	if main_superpower = "dontcare"
+		"Would you like me to look for a superhero using any kind of superpower?"
+template reqmore(loyality)
+	if loyality = "dontcare"
+		"Would you like me to look for a superhero associated with any organisation?"
+
+# ---------------------------System Select----------------------------------#
+
+template select(*slot)
+	"Sorry, would you like to have a superhero {for_entry(slot, "info_or_dontcare_list", "", "")}?"
+
+function info_or_dontcare_list(slot, value_list)
+	"{for(value_list, "info_or_dontcare", ", ", " or ", slot)}"
+
+function info_or_dontcare(value, slot)
+	"which {info(slot, value, "none")}"
+	special_case value = "dontcare": "you don't care"

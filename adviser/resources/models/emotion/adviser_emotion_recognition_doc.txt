@@ -1,0 +1,53 @@
+The following commands and data were used to create the baseline models:
+
+bash run_mlp_tuning.sh
+and
+bash run_crema-d_tuning.sh
+
+# Find best results wrt. training and dev UAR (not just take the highest Dev accuracy, but inspect train acc. as well to detect overfitting or particularly poor training performance)
+# => prefer models where the gap between train and dev is not very large
+
+### FULL MSP-IMPROV DATA ### (but with old normalization scheme)
+grep -B1 Dev mlp_msp-improv_category_*_early*
+mlp_msp-improv_category_100,100_audiovisual_earlyStopping.log-Training accuracy: 0.7763703362505757, UAR: 0.7000861754564853
+mlp_msp-improv_category_100,100_audiovisual_earlyStopping.log:Dev accuracy: 0.6749539594843462, UAR: 0.5838233806146632
+
+grep -B1 Dev mlp_msp-improv_arousal_*_early*
+mlp_msp-improv_arousal_50,50,50_audiovisual_earlyStopping.log-Training accuracy: 0.7772350817583351, UAR: 0.6273060746796472
+mlp_msp-improv_arousal_50,50,50_audiovisual_earlyStopping.log:Dev accuracy: 0.7198641765704584, UAR: 0.5538966202644011
+
+grep -B1 Dev mlp_msp-improv_valence_*_early*
+mlp_msp-improv_valence_200,200_audiovisual_earlyStopping.log-Training accuracy: 0.8165215544701635, UAR: 0.6801892703018968
+mlp_msp-improv_valence_200,200_audiovisual_earlyStopping.log:Dev accuracy: 0.7215619694397284, UAR: 0.5482747343955076
+############################
+
+
+### SMALL SUBSET OF MSP (only target sentences) ### (new normalization)
+### Important note: the arousal and valence mapping into three classes is done differently for the small subset, with the thresholds 2.5 and 3.5 instead of 2 and 4 (see baseline.py) ###
+grep -B1 Dev *target*arousal*
+mlp_msp-improv_target_sent_arousal_200_audiovisual.log-Training accuracy: 0.8674971687429218, UAR: 0.8488774968307808
+mlp_msp-improv_target_sent_arousal_200_audiovisual.log:Dev accuracy: 0.7373737373737373, UAR: 0.775271002710027
+
+grep -B1 Dev *target*category*
+mlp_msp-improv_target_sent_category_100_audiovisual.log-Training accuracy: 0.8096926713947991, UAR: 0.786606293067297
+mlp_msp-improv_target_sent_category_100_audiovisual.log:Dev accuracy: 0.6914893617021277, UAR: 0.6820967023172906
+
+grep -B1 Dev *target*valence*
+mlp_msp-improv_target_sent_valence_200_audiovisual.log-Training accuracy: 0.7734994337485843, UAR: 0.749370334885839
+mlp_msp-improv_target_sent_valence_200_audiovisual.log:Dev accuracy: 0.6262626262626263, UAR: 0.5841148053424269
+############################
+
+
+### CREMA-D DATASET (only categorical emotion labels) ###
+grep -B1 Dev *audio.log
+mlp_crema-d_category_50,50_audio.log-Training accuracy: 0.8003897550111359, UAR: 0.7582606243080374
+mlp_crema-d_category_50,50_audio.log:Dev accuracy: 0.6925, UAR: 0.6553134484439622
+
+grep -B1 Dev *_visual.log
+mlp_crema-d_category_50,50,50_visual.log-Training accuracy: 0.8173719376391982, UAR: 0.7750683983813839
+mlp_crema-d_category_50,50,50_visual.log:Dev accuracy: 0.7125, UAR: 0.6554439045357571
+
+grep -B1 Dev *audiovisual.log
+mlp_crema-d_category_50,100,50_audiovisual.log-Training accuracy: 0.8891982182628062, UAR: 0.8536073403001364
+mlp_crema-d_category_50,100,50_audiovisual.log:Dev accuracy: 0.835, UAR: 0.7901079424237183
+############################

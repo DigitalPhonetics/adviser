@@ -1,0 +1,82 @@
+{
+    "discourseAct": [
+        "ack",
+        "hello",
+        "none",
+        "silence",
+        "thanks",
+        "bad"
+    ],
+    "informable": {
+        "loyalty": [
+            "Avengers",
+            "Defenders",
+            "Guardians of the Galaxy",
+            "He works best alone",
+            "Justice League",
+            "Teen Titans",
+            "The Order",
+            "X-Men"
+        ],
+        "main_superpower": [
+            "Claws",
+            "Gadgets",
+            "Magic",
+            "Martial Arts",
+            "Robot Suit",
+            "Speed",
+            "Strength",
+            "Telekinesis",
+            "Water"
+        ],
+        "name": [
+            "Aqua Man",
+            "Batman",
+            "Black Widow",
+            "Captain America",
+            "Captain Marvel",
+            "Daredevil",
+            "Dr. Strange",
+            "Gamora",
+            "Iron Man",
+            "Phoenix",
+            "Raven",
+            "Superman",
+            "The Flash",
+            "Wolverine",
+            "Wonder Women"
+        ],
+        "primary_uniform_color": [
+            "Black",
+            "Blue",
+            "None",
+            "Purple",
+            "Red",
+            "Yellow"
+        ]
+    },
+    "key": "name",
+    "method": [
+        "none",
+        "byconstraints",
+        "byprimarykey",
+        "finished",
+        "byalternatives",
+        "restart"
+    ],
+    "requestable": [
+        "name",
+        "primary_uniform_color",
+        "main_superpower",
+        "last_known_location",
+        "loyalty",
+        "description",
+        "real_name"
+    ],
+    "system_requestable": [
+        "primary_uniform_color",
+        "main_superpower",
+        "loyalty"
+    ],
+    "keyword": "superhero"
+}

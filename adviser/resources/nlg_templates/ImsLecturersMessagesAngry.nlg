@@ -1,0 +1,123 @@
+
+# ---------------NEW RULES - IMS LECTURER MESSAGES-------------------------
+
+template welcomemsg(): "Welcome to the IMS lecturer chat bot. How may I help you?"
+template welcomemsg(help): "I apologize for the inconvenience I caused. Would you be so kind and let me know again what you are looking for?"
+template welcomemsg(more) : "Thank you for using this system. Is there anything else I can help you with?"
+template bad() : "As much as I would love to help, I am a bit confused; would you be so kind as to let me know again what you are looking for?"
+# repeat() : "Could you please repeat that?"
+template closingmsg() : "Goodbye and thank you for using this system. Have a wonderful day!"
+
+#--------------System Requests---------------#
+# System Requestable Keywords:
+	# 2 department
+	# 7 position
+
+template request(department): "Excuse me, to which chair offered at the IMS shall the lecturer belong?"
+template request(position): "Excuse me, which position does the lecturer hold at the IMS (e.g. study adviser)?"
+
+
+# --------- Helper Functions -------- #
+
+function genitive(name)
+	"{genitive_s(name)}"
+	if name = "who": "whose"
+
+function obj_pron(gender)
+	if gender = "female": "her"
+	if gender = "male":   "him"
+
+function capitalised(name)
+	"{name.cap_name}"
+	if name = "who": "who"
+
+
+# ----------- RULES --------------- #
+
+function info(slot, value, name)
+	if slot = "office_hours": "{genitive(capitalised(name))} office hours take place {value}"
+	if slot = "mail": "{genitive(capitalised(name))} e-mail address is {value}"
+	if slot = "phone": "{genitive(capitalised(name))} phone number is {value}"
+	if slot = "room": "{genitive(capitalised(name))} office is in room {value}"
+
+	if slot = "department"
+		if value = "na":          "{genitive(capitalised(name))} chair is unknown"
+		if value = "phonetics":   "{capitalised(name)} belongs to the chair 'Digital Phonetics'"
+		if value = "theory":      "{capitalised(name)} belongs to the chair 'Theoretical Computational Linguistics'"
+		if value = "foundations": "{capitalised(name)} belongs to the chair 'Foundations of Computational Linguistics'"
+		if value = "external":    "{capitalised(name)} belongs to a chair outside the IMS"
+
+	if slot = "position"
+		if value = "na":          "{genitive(capitalised(name))} position is unknown"
+		if value = "adviser":     "{capitalised(name)} is the study adviser at the IMS"
+		if value = "erasmus":     "{capitalised(name)} is the Erasmus coordinator at the IMS"
+		if value = "examination": "{capitalised(name)} is the Chairman of the Audit Committee at the IMS"
+		if value = "gender":      "{capitalised(name)} is the Equal Opportunities Officer at the IMS"
+		if value = "phd":         "{capitalised(name)} is a PhD student at the IMS"
+		if value = "postdoc":     "{capitalised(name)} is a Postdoc at the IMS"
+		if value = "professor":   "{capitalised(name)} is a Professor at the IMS"
+		if value = "senate":      "{capitalised(name)} is the Academic Council"
+
+
+#----------System Recommendation/Inform---------------#
+
+	# all keywords are informable slots
+
+# -----------------Only Name Slot----------------------#
+
+template inform(name)
+	"There is a lecturer named {capitalised(name)}. Is there anything you would like to know about {obj_pron(name.gender)} that I can help you with?"
+
+	if name = "none": "Unfortunately, I was not able to find the lecturer you specified. I apologize for the inconvenience."
+
+template inform(name, *slots)
+	"{for_entry(slots, "info", ", ", " and ", name)}."
+	
+	special_case name = "none"
+		"Unfortunately, there is no such lecturer {for_entry(slots, "info", ", ", " and ", "who")}."
+
+template inform_byname(name)
+	"There is a lecturer named {capitalised(name)}. What do you want to know about {obj_pron(name.gender)}? I am happy to help with your request."
+
+	if name = "none": "I’m sorry, I could not find the lecturer you specified."
+
+template inform_byname(name, *slots)
+	"{for_entry(slots, "info", ", ", " and ", name)}."
+	
+	special_case name = "none"
+		"Unfortunately, there is no such lecturer {for_entry(slots, "info", ", ", " and ", "who")}."
+
+
+#------------System Confirm--------------#
+
+template confirm(): "Would you be so kind and let me know more about the lecturer you are looking for."
+
+template confirm(name, *slots)
+	if name = "none"
+		"Please, let me confirm, you are looking for a lecturer {for_entry(slots, "info", ", ", " and ", "who")}. Is that correct?"
+
+# ------------System RequestMore--------#
+# System Requestable:
+
+template reqmore(): "I there anything else I can help you with?"
+
+template reqmore(department)
+	if department = "dontcare"
+		"I apologize for the inconvenience. Would you like me to look for a lecturer belonging to any chair at the IMS?"
+
+template reqmore(position)
+	if position = "dontcare"
+		"I apologize for the inconvenience. Would you like me to look for a lecturer holding any position?"
+
+
+#-----------System Select----------------#
+
+template select(*slot)
+	"Excuse me, are you looking for a lecturer {for_entry(slot, "info_or_dontcare_list", "", "")}?"
+
+function info_or_dontcare_list(slot, value_list)
+	"{for(value_list, "info_or_dontcare", ", ", " or ", slot)}"
+
+function info_or_dontcare(value, slot)
+	"{info(slot, value, "who")}"
+	if value = "dontcare": "you don't care"

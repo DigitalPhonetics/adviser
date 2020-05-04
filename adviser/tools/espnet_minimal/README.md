@@ -1,0 +1,2 @@
+# Purpose:
+This folder holds parts from the ESPNet toolkit for end to end language processing. Since the toolkit is very big and has a lot of functionality for training/using things such as TTS-synthesis, voice style transfer, ASR, machine translation, speech translation, but we only use a small part, we decided not have the whole thing as a dependency, but rather include the code snippets we use for deploying ASR and TTS models.

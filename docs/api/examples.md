@@ -1,0 +1,3 @@
+# Examples
+
+::: adviser.examples

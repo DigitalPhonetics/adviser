@@ -1,0 +1,108 @@
+
+template welcomemsg(): "Welcome to the Mensa API chat bot. How may I help you?"
+template welcomemsg(help): "As much as I would love to help, I was not able to understand you. Please tell me again what you are looking for."
+template welcomemsg(more) : "Thank you for using this system. May I help you with anything else?"
+template bad() : "As much as I would love to help, I am a bit confused. Please tell me again what you are looking for."
+# repeat() : "Would you please repeat that?"
+template closingmsg() : "Thank you for contacting me. Have a wonderful day!"
+
+template request(day): "May I ask, on which day would you like to go the mensa?"
+template request(type): "May I ask, what type of meal are you looking for?"
+template request(vegan): "Would you prefer the meal to be vegan?"
+template request(vegetarian): "Would you prefer the meal to be vegeterian?"
+template request(fish): "May I ask, would you like the meal to contain fish?"
+template request(pork): "May I ask, would you like the meal to contain pork?"
+
+
+# --------- Helper Functions -------- #
+
+function on(day)
+	"on {day}"
+	if day = "today": "today"
+	if day = "tomorrow": "tomorrow"
+
+function either_or(boolean, if_true, if_false)
+	if boolean = "true": "{if_true}"
+	if boolean = "false": "{if_false}"
+
+function full_meal_type(short_meal_type)
+	if short_meal_type = "starter": "a starter"
+	if short_meal_type = "buffet": "from the buffet"
+	if short_meal_type = "main_dish": "a main dish"
+	if short_meal_type = "side_dish": "a side dish"
+	if short_meal_type = "dessert": "a dessert"
+
+
+# ----------- RULES --------------- #
+
+function info(slot, value)
+	if slot = "name": "is called {value}"
+	if slot = "price": "costs {value}"
+	if slot = "allergens": "has the allergens [{value}]"
+	if slot = "day": "is served {on(value)}"
+	if slot = "type": "is {full_meal_type(value)}"
+	if slot = "vegan": "{either_or(value, "is", "isn't")} vegan"
+	if slot = "vegetarian": "{either_or(value, "is", "isn't")} vegetarian"
+	if slot = "fish": "{either_or(value, "contains", "doesn't contain")} fish"
+	if slot = "pork": "{either_or(value, "contains", "doesn't contain")} pork"
+
+
+#----------System Recommendation/Inform---------------#
+
+	# all keywords are informable slots
+
+# -----------------Only Name Slot----------------------#
+
+template inform(artificial_id)
+	if name = "none": "As much as I would love to help, I was not able to find such a meal."
+
+template inform(artificial_id, name, *slots)
+	"The meal {name} {for_entry(slots, "info", ", ", " and ")}."
+
+template inform(artificial_id, *slots)
+	if artificial_id = "none"
+		"As much as I would love to help, there is no such meal which {for_entry(slots, "info", ", ", " and ")}."
+
+template inform_byname(artificial_id)
+	if name = "none": "I’m sorry to tell you that I was not able to find such a meal."
+
+template inform_byname(artificial_id, name, *slots)
+	"The meal {name} {for_entry(slots, "info", ", ", " and ")}."
+
+template inform_byname(artificial_id, *slots)
+	if artificial_id = "none"
+		"As much as I would love to help, there is no such meal which {for_entry(slots, "info", ", ", " and ")}."
+
+template inform_alternatives(artificial_id, name, *slots)
+	"The meal {name} also {for_entry(slots, "info", ", it ", " and it ")}."
+
+template inform_byname(artificial_id, *slots)
+	if artificial_id = "none"
+		"Unfortunately, there is no other meal which also {for_entry(slots, "info", ", ", " and ")}."
+
+
+#------------System Confirm--------------#
+
+template confirm(): "Would you please tell me more about the meal you are looking for."
+
+template confirm(artificial_id, *slots)
+	if name = "none"
+		"From what I understand, you are looking for a meal which {for_entry(slots, "info", ", ", " and ")}. Is that correct?"
+
+# ------------System RequestMore--------#
+# System Requestable:
+
+template reqmore(): "Is there anything else I can help you with?"
+
+
+#-----------System Select----------------#
+
+template select(*slot)
+	"Excuse me, are you looking for a meal which {for_entry(slot, "info_or_dontcare_list", "", "")}?"
+
+function info_or_dontcare_list(slot, value_list)
+	"{for(value_list, "info_or_dontcare", ", ", " or ", slot)}"
+
+function info_or_dontcare(value, slot)
+	"{info(slot, value)}"
+	if value = "dontcare": "you don't care"

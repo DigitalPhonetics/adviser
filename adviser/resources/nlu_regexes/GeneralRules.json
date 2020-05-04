@@ -1,0 +1,11 @@
+{
+    "hello": "(\\b|^| )(hi|hello|howdy|hey)(\\b|$| )",
+    "bye": "(\\b|^| )(bye(-)?(bye)?|good(-)?bye|that'?s? (is )*all)(\\s|$| |\\.)",
+    "deny": "((\\b|^| )(n(o)?|wrong|incorrect|error|nope)|(not (true|correct|right)))(\\s)?$",
+    "affirm": "((yes|yeah|(\\b|^)ok\\b|(\\b|^)OK|okay|sure|^y$|(\\b|^)yep(\\b|$)|(that('?s| is) )?(?<!not )(?<!no )(right|correct|confirm)))(\\s)?$",
+    "thanks": "(?=.*(^( )?)(((great|good|awesome|nice|cool) )?((that((')?s| (is|was)) (very )?helpful) )?(thank|thank(s| you)( (very|so) much)?)( (that((')?s| (is|was)) (very )?helpful))?|((great|good|awesome|nice|cool) )?(that((')?s| (is|was)) (very )?helpful)|(great|good|awesome|nice|cool))(( )*))(?=^(?:(?!bye).)*$).*$",
+    "repeat": "(\\b|^| )(repeat( that| it)?|say( that | it) again|(again))",
+    "reqalts": "(\\b|^| )((something|anything) else)|(different( one)*)|(another one)|(alternatives*)|(other options*)|((don'*t|do not) (want|like) (that|this)( one)*)",
+    "dontcare": "(anything(?! else)|((any$|any kind)|(i )*(don'?t|do not) (care|know|mind))($|(?! (a?bout|of|what))|( (a?bout|of|what) (type|kind)(?! of))| a?bout (that|this))|(any(thing)? (is )*(fine|ok\\b|okay|will do))($| and| but)|(it )?(doesn'?t|does not) matter)+",
+    "req_everything": "(\\b|^| )(((say|tell( me)?)|(want|need) to know)( everything)? about)"
+}

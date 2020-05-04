@@ -1,0 +1,182 @@
+
+# ---------------NEW RULES - IMS COURSE MESSAGES-------------------------
+
+template welcomemsg(): "Welcome to the IMS courses chat bot. How may I help you?"
+template welcomemsg(help): "Sorry, I cannot understand you. Please tell me again what you are looking for."
+template welcomemsg(more) : "Can I help you with anything else?"
+template bad() : "Sorry I am a bit confused; please tell me again what you are looking for."
+# repeat() : "Could you please repeat that?"
+template closingmsg() : "Thank you, goodbye."
+
+# System Requests
+
+# General Course Information
+# System Requestable Keywords: 1, 2, 7, 12, 14, 16, 30, 35 
+# (Binary slots: 1, 2, 3, 5, 8, 10, 14, 15, 16, 20, 21, 23, 24, 25, 26, 29, 30, 31, 33, 36)
+
+template request(ects)
+	"How many credit points shall the course yield?"
+template request(lang)
+	"In which language shall the course be held?"
+template request(turn)
+	"In which semester shall the course be offered?"
+template request(bachelor)
+	"Shall the course belong to the bachelor programme?"
+template request(master)
+	"Shall the course belong to the master programme?"
+template request(applied_nlp)
+	"Shall the course be related to applied NLP?"
+template request(linguistics)
+	"Shall the course be related to linguistics?"
+template request(speech)
+	"Shall the course be related to speech?"
+
+# ----------- RULES --------------- #
+# Rules for System Inform
+# Informable slots: All (1-36), except: 6, 9, 27, 28 34 (User requestable: 1-36)
+# (Binary slots: 1, 2, 3, 5, 8, 10, 14, 15, 16, 20, 21, 23, 24, 25, 26, 29, 30, 31, 33, 36)
+
+function info(slot, value, name)
+	# binary slots either are or are NOT something
+	if slot = "applied_nlp": "is {either_or(value, "", "not ")}related to applied NLP"
+	if slot = "bachelor": "is {either_or(value, "", "not ")}offered in the bachelor's programme"
+	if slot = "cognitive_science": "is {either_or(value, "", "not ")}about cognitive science"
+	if slot = "deep_learning": "is {either_or(value, "", "not ")}about deep learning"
+	if slot = "elective": "is {either_or(value, "", "not ")}an elective course"
+	if slot = "extendable": "{either_or(value, "can", "cannot")} be extended to 6 ECTS"
+	if slot = "linguistics": "is {either_or(value, "", "not ")}related to linguistics"
+	if slot = "machine_learning": "is {either_or(value, "", "not ")}about machine learning"
+	if slot = "master": "is {either_or(value, "", "not ")}a master's course"
+	if slot = "obligatory_attendance": "has {either_or(value, "", "no ")}obligatory attendance"
+	if slot = "oral_exam": "requires {either_or(value, "an", "no")} oral exam"
+	if slot = "participation_limit": "has {either_or(value, "a", "no")} participation limit"
+	if slot = "presentation": "requires {either_or(value, "a", "no")} presentation"
+	if slot = "programming": "is {either_or(value, "", "not ")}about programming"
+	if slot = "project": "requires {either_or(value, "a", "no")} project"
+	if slot = "report": "requires {either_or(value, "a", "no")} report"
+	if slot = "semantics": "is {either_or(value, "", "not ")}about semantics"
+	if slot = "speech": "is {either_or(value, "", "not ")}related to speech"
+	if slot = "statistics": "is {either_or(value, "", "not ")}about statistics"
+	if slot = "syntax": "is {either_or(value, "", "not ")}about syntax"
+	if slot = "written_exam": "requires {either_or(value, "a", "no")} written exam"
+
+	# textual slots
+	if slot = "description": "has the following description: \"{value}\""
+	if slot = "ects": "is worth {value} ECTS"
+	if slot = "examination_style": "has the following examination requirements: \"{value}\""
+	if slot = "id": "is assigned to the ID {value}"
+	if slot = "lecturer": "is taught by {capitalise_lecturer(name, value)}"
+	if slot = "module_id": "is part of the module with ID {value}"
+	if slot = "module_name": "is assigned to the module {value}"
+	if slot = "requirements": "requires the following prerequisites: \"{value}\""
+	if slot = "room": "takes place in room {value}"
+	if slot = "sws": "comprises {value} hours per week"
+	if slot = "time_slot": "takes place on {value}"
+
+	# other set slots
+	if slot = "course_type"
+		if value = "se": "is a seminar course"
+		if value = "ue": "is a practical course"
+		if value = "vo": "is a lecture"
+		if value = "vu": "is a lecture with exercises"
+	if slot = "lang"
+		if value = "de": "is offered in German"
+		if value = "en": "is offered in English"
+	if slot = "turn"
+		if value = "sose": "is offered in the summer semester"
+		if value = "wise": "is offered in the winter semester"
+
+function either_or(boolean, if_true, if_false)
+	if boolean = "true": "{if_true}"
+	if boolean = "false": "{if_false}"
+
+function capitalise_lecturer(name, lecturer)
+	"{name.cap_lecturer}"
+	if name = "none": "{lecturer}"
+
+
+# --------------------System Recommendation/Inform--------------------------#
+
+# -------------------------Only Name Slot-----------------------------------#
+
+template inform_byname(name)
+	"There is a course called {name}. What do you want to know about it?"
+
+	special_case name = "none"
+		"I’m sorry, I could not find this course."
+
+
+template inform_alternatives(name)
+	"There is another course {name}. What do you want to know about it?"
+
+	special_case name = "none"
+		"I'm sorry, I couldn't find another course."
+
+
+# --------All System Informable Slots (1-36), except: 6, 9, 27, 28 34-------#
+
+#------------------------ Name Slot + Slots----------------------------------#
+
+template inform_byname(name, *slots)
+	"The course {name} {for_entry(slots, "info", ", it ", " and it ", name)}."
+	
+	special_case name = "none"
+		"There is no such course which {for_entry(slots, "info", ", ", " and ", name)}."
+
+template inform_alternatives(name, *slots)
+	"The course {name} also {for_entry(slots, "info", ", it ", " and it ", name)}."
+	
+	special_case name = "none"
+		"There is no other course which also {for_entry(slots, "info", ", ", " and ", name)}."
+
+
+# ----------------------------System Confirm----------------------------------#
+
+template confirm()
+	"Please tell me more about the course you are looking for."
+template confirm(name, *slots)
+	if name = "none"
+		"Let me confirm, you are looking for a course which {for_entry(slots, "info", ", ", " and ", name)}, right?"
+template confirm(*slots)
+	"Let me confirm, you are looking for a course which {for_entry(slots, "info", ", ", " and ", "none")}, right?"
+
+
+# ---------------------------System RequestMore------------------------------#
+
+template reqmore()
+	"Can I help you with anything else?"
+
+template reqmore(ects)
+	if ects = "dontcare"
+		"Would you like me to look for a course yielding any number of credit points?"
+template reqmore(lang)
+	if lang = "dontcare"
+		"Would you like me to look for a course offered in any kind of language?"
+template reqmore(turn)
+	if turn = "dontcare"
+		"Would you like me to look for a course offered in any semester?"
+template reqmore(bachelor):
+	if bachelor = "dontcare"
+		"Would you like me to look for a course offered in any degree programme?"
+template reqmore(master)
+	if master = "dontcare"
+		"Would you like me to look for a course offered in any degree programme?"
+template reqmore(course_type)
+	if course_type = "dontcare"
+		"Would you like me to look for a course of any type?"
+template reqmore(lecturer)
+	if lecturer = "dontcare"
+		"Would you like me to look for a course which is taught by any lecturer?"
+
+
+# ---------------------------System Select----------------------------------#
+
+template select(*slot)
+	"Sorry, would you like to have a course {for_entry(slot, "info_or_dontcare_list", "", "")}?"
+
+function info_or_dontcare_list(slot, value_list)
+	"{for(value_list, "info_or_dontcare", ", ", " or ", slot)}"
+
+function info_or_dontcare(value, slot)
+	"which {info(slot, value, "none")}"
+	special_case value = "dontcare": "you don't care"

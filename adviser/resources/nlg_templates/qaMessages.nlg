@@ -1,0 +1,111 @@
+template welcomemsg(): "Welcome to ADVISER's world knowledge question answering agent. What do you want to know?"
+template bad() : "Sorry, I couldn't find out what you are talking about; please tell me again what you want to know."
+template closingmsg() : "Thank you, goodbye."
+template inform_byname(answer): "{answer}"
+
+
+# incomplete list of more detailed answers which could be used in the future
+
+template inform_byname(subject, predicate, object)
+	# by default, just give the technical details
+	"Subject: '{subject}', Predicate: {predicate}, Object: '{object}'"
+
+	if predicate = "P6"
+		"{object} is the head of government in {subject}."
+		special_case object = "unknown": "I couldn't find a person who is {subject}'s head of government."
+		special_case subject = "unknown": "I'm sorry, I don't know in which country {object} is the head of government."
+
+	if predicate = "P16"
+		"The highway system of '{subject}' is '{object}'."
+		special_case subject = "unknown": "I couldn't find a highway which is part of '{object}'."
+		special_case object = "unknown": "I'm sorry, I don't know the highway system of '{subject}'."
+
+	if predicate = "P17"
+		"{subject}'s associated country is {object}."
+		special_case subject = "unknown": "I couldn't find an item being associated with {object}."
+		special_case object = "unknown": "I'm sorry, I don't know which country is associated with {subject}."
+
+	if predicate = "P19"
+		"{subject} was born in {object}."
+		special_case subject = "unknown": "I couldn't find a person born in {object}."
+		special_case object = "unknown": "I'm sorry, I don't know where {subject} was born."
+
+	if predicate = "P20"
+		"{subject} died in {object}."
+		special_case subject = "unknown": "I couldn't find a person which died in {object}."
+		special_case object = "unknown": "I'm sorry, I don't know where {subject} died."
+
+	if predicate = "P21"
+		"{genitive_s(subject)} gender is {object}."
+		special_case subject = "unknown": "I couldn't find a {object} person."
+		special_case object = "unknown": "I'm sorry, I don't know {genitive_s(subject)} gender."
+
+	if predicate = "P22"
+		"{subject}'s father is {object}."
+		special_case subject = "unknown": "I couldn't find any children of {object}."
+		special_case object = "unknown": "I'm sorry, I don't know who {subject}'s father is."
+
+	if predicate = "P25"
+		"{subject}'s mother is {object}."
+		special_case subject = "unknown": "I couldn't find any children of {object}."
+		special_case object = "unknown": "I'm sorry, I don't know who {subject}'s mother is."
+
+	if predicate = "P26"
+		"{subject}'s spouse is {object}."
+		special_case subject = "unknown": "I couldn't find a spouse of {object}."
+		special_case object = "unknown": "I'm sorry, I don't know who the spouse of {subject} is."
+
+	if predicate = "P27"
+		"{subject} is from {object}."
+		special_case subject = "unknown": "I couldn't find a person being from {object}."
+		special_case object = "unknown": "I'm sorry, I don't know which country {subject} is from."
+
+	if predicate = "P30"
+		"{subject}'s associated continent is {object}."
+		special_case subject = "unknown": "I couldn't find an item being associated with the continent {object}."
+		special_case object = "unknown": "I'm sorry, I don't know which continent is associated with {subject}."
+
+	if predicate = "P106"
+		"{subject} is employed as {object}."
+		special_case subject = "unknown": "I couldn't find a person being employed as {object}."
+		special_case object = "unknown": "I'm sorry, I don't know as what {subject} is employed."
+
+	if predicate = "P108"
+		"{subject} is employed by {object}."
+		special_case subject = "unknown": "I couldn't find a person being employed by {object}."
+		special_case object = "unknown": "I'm sorry, I don't know who employs {subject}."
+
+	if predicate = "P276"
+		"{subject} is located at {object}."
+		special_case subject = "unknown": "I couldn't find anything or anyone being located at {object}."
+		special_case object = "unknown": "I'm sorry. I don't know {genitive_s(subject)} relation."
+
+	if predicate = "P2936"
+		"The language used in {subject} is {object}."
+		special_case subject = "unknown": "I couldn't find anything which uses {object} as language."
+		special_case object = "unknown": "I'm sorry, I don't know the language used by {subject}."
+
+	if predicate = "P361"
+		"{subject} is part of {object}."
+		special_case subject = "unknown": "I couldn't find anything being part of {object}."
+		special_case object = "unknown": "I'm sorry, I don't know what {subject} is part of."
+
+	if predicate = "P527"
+		"{subject} comprises {object}."
+		special_case subject = "unknown": "I couldn't find anything comprising {object}."
+		special_case object = "unknown": "I'm sorry, I don't know what comprises {subject}."
+
+	if predicate = "P580"
+		"{genitive_s(subject)} start time is {object}."
+		special_case object = "unknown": "I'm sorry, I don't know the start time of {subject}."
+
+	if predicate = "P921"
+		"{subject} is about the topic {object}."
+		special_case subject = "unknown": "I couldn't find anything which is about the topic {object}."
+		special_case object = "unknown": "I'm sorry, I don't know what {subject} is about."
+
+	# template:
+	if predicate = "P???"
+		"{subject} ? {object}."
+		special_case subject = "unknown": "I couldn't find ? {object}."
+		special_case object = "unknown": "I'm sorry, I don't know ? {subject} ?."
