@@ -12774,10 +12774,10 @@ adviser.services.stats.evaluation.ObjectiveReachedEvaluator.get_final_reward<spa
 </thead>
 <tbody>
 <tr>
-<td><code></code></td>
+<td><code>float</code></td>
 <td>
 <p>Reward - the final reward (0 (unsuccessful) or 20 (successful))
-Success - True or false</p>
+bool: Success</p>
 </td>
 </tr>
 </tbody>
@@ -12843,8 +12843,8 @@ Success - True or false</p>
 <span class="sd">        logging (bool): whether or not the evaluation results should be logged</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Reward - the final reward (0 (unsuccessful) or 20 (successful))</span>
-<span class="sd">        Success - True or false</span>
+<span class="sd">        float: Reward - the final reward (0 (unsuccessful) or 20 (successful))</span>
+<span class="sd">        bool: Success</span>
 <span class="sd">    """</span>
 
     <span class="n">requests</span> <span class="o">=</span> <span class="n">sim_goal</span><span class="o">.</span><span class="n">requests</span>

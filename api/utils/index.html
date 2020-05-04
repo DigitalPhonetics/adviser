@@ -799,14 +799,6 @@ then the slot will not be added to the result at all.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>beliefstate</code></td>
-<td><code></code></td>
-<td>
-<p>beliefstate dict</p>
-</td>
-<td><em>required</em></td>
-</tr>
-<tr>
 <td><code>consider_NONE</code></td>
 <td><code>bool</code></td>
 <td>
@@ -822,7 +814,7 @@ then the slot will not be added to the result at all.</p>
 <td><code>threshold</code></td>
 <td><code>float</code></td>
 <td>
-<p>minimum probability to be accepted to the</p>
+<p>minimum probability to be accepted</p>
 </td>
 <td><code>0.7</code></td>
 </tr>
@@ -830,7 +822,7 @@ then the slot will not be added to the result at all.</p>
 <td><code>max_results</code></td>
 <td><code>int</code></td>
 <td>
-<p>return at most #max_results best values per slot</p>
+<p>return at most <code>max_results</code> best values per slot</p>
 </td>
 <td><code>1</code></td>
 </tr>
@@ -854,10 +846,10 @@ then the slot will not be added to the result at all.</p>
 </thead>
 <tbody>
 <tr>
-<td><code></code></td>
+<td><code>Union(Dict[str, List[str]], Dict[str, str])</code></td>
 <td>
-<p>A dict with mapping from slots to a list (if max_results &gt; 1) or
-a float (if max_results == 1) of values containing the slots which
+<p>A dict with mapping from slots to a list of values (if max_results &gt; 1) or
+a value (if max_results == 1) containing the slots which
 have at least one value whose probability exceeds the specified
 threshold.</p>
 </td>
@@ -870,7 +862,8 @@ threshold.</p>
 <tr>
 <td class="linenos">
 <div class="linenodiv">
-<pre><span></span>151
+<pre><span></span>150
+151
 152
 153
 154
@@ -913,9 +906,7 @@ threshold.</p>
 191
 192
 193
-194
-195
-196</pre>
+194</pre>
 </div>
 </td>
 <td class="code">
@@ -928,19 +919,18 @@ threshold.</p>
 <span class="sd">    then the slot will not be added to the result at all.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        beliefstate: beliefstate dict</span>
 <span class="sd">        consider_NONE: If True, slots where **NONE** values have the</span>
 <span class="sd">                       highest probability will not be added to the result.</span>
 <span class="sd">                       If False, slots where **NONE** values have the</span>
 <span class="sd">                       highest probability will look for the best value !=</span>
 <span class="sd">                       **NONE**.</span>
-<span class="sd">        threshold: minimum probability to be accepted to the</span>
-<span class="sd">        max_results: return at most #max_results best values per slot</span>
+<span class="sd">        threshold: minimum probability to be accepted</span>
+<span class="sd">        max_results: return at most `max_results` best values per slot</span>
 <span class="sd">        turn_idx: index for accessing the belief state history (default = -1: use last turn)</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        A dict with mapping from slots to a list (if max_results &gt; 1) or</span>
-<span class="sd">        a float (if max_results == 1) of values containing the slots which</span>
+<span class="sd">        Union(Dict[str, List[str]], Dict[str, str]): A dict with mapping from slots to a list of values (if max_results &gt; 1) or</span>
+<span class="sd">        a value (if max_results == 1) containing the slots which</span>
 <span class="sd">        have at least one value whose probability exceeds the specified</span>
 <span class="sd">        threshold.</span>
 <span class="sd">    """</span>
@@ -995,14 +985,6 @@ then the slot will not be added to the result at all.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>beliefstate</code></td>
-<td><code></code></td>
-<td>
-<p>beliefstate dict</p>
-</td>
-<td><em>required</em></td>
-</tr>
-<tr>
 <td><code>consider_NONE</code></td>
 <td><code>bool</code></td>
 <td>
@@ -1050,10 +1032,10 @@ then the slot will not be added to the result at all.</p>
 </thead>
 <tbody>
 <tr>
-<td><code></code></td>
+<td><code>Union(Dict[str, List[str]], Dict[str, str])</code></td>
 <td>
-<p>A dict with mapping from slots to a list (if max_results &gt; 1) or
-a float (if max_results == 1) of values containing the slots which
+<p>A dict with mapping from slots to a list of values (if max_results &gt; 1) or
+a value (if max_results == 1) containing the slots which
 have at least one value whose probability exceeds the specified
 threshold.</p>
 </td>
@@ -1102,8 +1084,7 @@ threshold.</p>
 145
 146
 147
-148
-149</pre>
+148</pre>
 </div>
 </td>
 <td class="code">
@@ -1117,7 +1098,6 @@ threshold.</p>
 <span class="sd">    then the slot will not be added to the result at all.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        beliefstate: beliefstate dict</span>
 <span class="sd">        consider_NONE: If True, slots where **NONE** values have the</span>
 <span class="sd">                       highest probability will not be added to the result.</span>
 <span class="sd">                       If False, slots where **NONE** values have the</span>
@@ -1128,8 +1108,8 @@ threshold.</p>
 <span class="sd">        turn_idx: index for accessing the belief state history (default = -1: use last turn)</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        A dict with mapping from slots to a list (if max_results &gt; 1) or</span>
-<span class="sd">        a float (if max_results == 1) of values containing the slots which</span>
+<span class="sd">        Union(Dict[str, List[str]], Dict[str, str]): A dict with mapping from slots to a list of values (if max_results &gt; 1) or</span>
+<span class="sd">        a value (if max_results == 1) containing the slots which</span>
 <span class="sd">        have at least one value whose probability exceeds the specified</span>
 <span class="sd">        threshold.</span>
 <span class="sd">    """</span>
@@ -1168,7 +1148,9 @@ constraints in the current turn.</p>
 <tr>
 <td class="linenos">
 <div class="linenodiv">
-<pre><span></span>218
+<pre><span></span>216
+217
+218
 219
 220
 221
@@ -1195,9 +1177,7 @@ constraints in the current turn.</p>
 242
 243
 244
-245
-246
-247</pre>
+245</pre>
 </div>
 </td>
 <td class="code">
@@ -1275,7 +1255,9 @@ adviser.utils.beliefstate.BeliefState.get_requested_slots<span class="p">(</span
 <tr>
 <td class="linenos">
 <div class="linenodiv">
-<pre><span></span>198
+<pre><span></span>196
+197
+198
 199
 200
 201
@@ -1285,9 +1267,7 @@ adviser.utils.beliefstate.BeliefState.get_requested_slots<span class="p">(</span
 205
 206
 207
-208
-209
-210</pre>
+208</pre>
 </div>
 </td>
 <td class="code">
@@ -1840,7 +1820,7 @@ adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.__init__<span class="p">(
 <div class="doc doc-object doc-method">
 <h0 class="doc doc-heading" data-toc-label="find_entities()" id="adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.find_entities">
 <code class="highlight language-python">
-adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.find_entities<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraints</span><span class="p">,</span> <span class="n">requested_slots</span><span class="o">=&lt;</span><span class="n">tuple_iterator</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f0cc5e65890</span><span class="o">&gt;</span><span class="p">)</span> </code>
+adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.find_entities<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraints</span><span class="p">,</span> <span class="n">requested_slots</span><span class="o">=&lt;</span><span class="n">tuple_iterator</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7fa30c773a50</span><span class="o">&gt;</span><span class="p">)</span> </code>
 </h0>
 <div class="doc doc-contents">
 <p>Returns all entities from the data backend that meet the constraints, with values for
@@ -1873,7 +1853,7 @@ adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.find_entities<span class=
 <p>list of slots that should be returned in addition to the
                         system requestable slots and the primary key</p>
 </td>
-<td><code>&lt;tuple_iterator object at 0x7f0cc5e65890&gt;</code></td>
+<td><code>&lt;tuple_iterator object at 0x7fa30c773a50&gt;</code></td>
 </tr>
 </tbody>
 </table>
@@ -2374,7 +2354,7 @@ adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.query_db<span class="p">(
 <div class="doc doc-object doc-method">
 <h0 class="doc doc-heading" data-toc-label="find_entities()" id="adviser.utils.domain.lookupdomain.LookupDomain.find_entities">
 <code class="highlight language-python">
-adviser.utils.domain.lookupdomain.LookupDomain.find_entities<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraints</span><span class="p">,</span> <span class="n">requested_slots</span><span class="o">=&lt;</span><span class="n">tuple_iterator</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f0cc5e76550</span><span class="o">&gt;</span><span class="p">)</span> </code>
+adviser.utils.domain.lookupdomain.LookupDomain.find_entities<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraints</span><span class="p">,</span> <span class="n">requested_slots</span><span class="o">=&lt;</span><span class="n">tuple_iterator</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7fa30c786710</span><span class="o">&gt;</span><span class="p">)</span> </code>
 </h0>
 <div class="doc doc-contents">
 <p>Returns all entities from the data backend that meet the constraints.</p>
@@ -2986,6 +2966,17 @@ adviser.utils.logger.exception_logging_hook<span class="p">(</span><span class="
 <code>adviser.utils.sysact.SysAct</code>
 </h6>
 <div class="doc doc-contents">
+<div class="doc doc-children">
+<h7>Methods</h7>
+<div class="doc doc-object doc-method">
+<h8 class="doc doc-heading" data-toc-label="__init__()" id="adviser.utils.sysact.SysAct.__init__">
+<code class="highlight language-python">
+adviser.utils.sysact.SysAct.__init__<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">act_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">slot_values</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> </code>
+<span class="doc doc-properties">
+<small class="doc doc-property doc-property-special"><code>special</code></small>
+</span>
+</h8>
+<div class="doc doc-contents">
 <p>The class for a system action as used in the dialog.</p>
 <p><strong>Parameters:</strong></p>
 <table>
@@ -3004,29 +2995,61 @@ adviser.utils.logger.exception_logging_hook<span class="p">(</span><span class="
 <td>
 <p>The type of the system action.</p>
 </td>
-<td><em>required</em></td>
+<td><code>None</code></td>
 </tr>
 <tr>
 <td><code>slot_values</code></td>
-<td><code>Dict['str', List['str']]</code></td>
+<td><code>Dict[str, List[str]]</code></td>
 <td>
-<p>A mapping of <code>slot -&gt; value</code> to which the system</p>
+<p>A mapping of <code>slot -&gt; value</code> to which the system
+action refers depending on the action type - might be <code>None</code>.</p>
 </td>
-<td><em>required</em></td>
-</tr>
-<tr>
-<td><code>action</code></td>
-<td><code>refers depending on the action type - might be ``None``. Default</code></td>
-<td>
-<p><code>None</code>.</p>
-</td>
-<td><em>required</em></td>
+<td><code>None</code></td>
 </tr>
 </tbody>
 </table>
-<p>.. todo:: <code>value</code> might be actually a list?</p>
-<div class="doc doc-children">
-<h7>Methods</h7>
+<details class="quote">
+<summary>Source code in <code>adviser/utils/sysact.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">act_type</span><span class="p">:</span> <span class="n">SysActionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">slot_values</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    The class for a system action as used in the dialog.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        act_type (SysActionType): The type of the system action.</span>
+<span class="sd">        slot_values (Dict[str, List[str]]): A mapping of ``slot -&gt; value`` to which the system</span>
+<span class="sd">            action refers depending on the action type - might be ``None``.</span>
+
+<span class="sd">    """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">act_type</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">slot_values</span> <span class="o">=</span> <span class="n">slot_values</span> <span class="k">if</span> <span class="n">slot_values</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
 <div class="doc doc-object doc-method">
 <h8 class="doc doc-heading" data-toc-label="add_value()" id="adviser.utils.sysact.SysAct.add_value">
 <code class="highlight language-python">
@@ -3040,12 +3063,12 @@ adviser.utils.sysact.SysAct.add_value<span class="p">(</span><span class="bp">se
 <tr>
 <td class="linenos">
 <div class="linenodiv">
-<pre><span></span>74
+<pre><span></span>72
+73
+74
 75
 76
-77
-78
-79</pre>
+77</pre>
 </div>
 </td>
 <td class="code">
@@ -3081,7 +3104,7 @@ adviser.utils.sysact.SysAct.get_values<span class="p">(</span><span class="bp">s
 </thead>
 <tbody>
 <tr>
-<td><code></code></td>
+<td><code>Dict[str, List[str]]</code></td>
 <td>
 <p>A list of values for slot or an empy list if there was no value
 specified for the given slot</p>
@@ -3095,7 +3118,9 @@ specified for the given slot</p>
 <tr>
 <td class="linenos">
 <div class="linenodiv">
-<pre><span></span>81
+<pre><span></span>79
+80
+81
 82
 83
 84
@@ -3103,9 +3128,7 @@ specified for the given slot</p>
 86
 87
 88
-89
-90
-91</pre>
+89</pre>
 </div>
 </td>
 <td class="code">
@@ -3114,7 +3137,7 @@ specified for the given slot</p>
     <span class="sd">""" Return all values for slot</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        A list of values for slot or an empy list if there was no value</span>
+<span class="sd">        Dict[str, List[str]]: A list of values for slot or an empy list if there was no value</span>
 <span class="sd">        specified for the given slot</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="n">slot</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">slot_values</span><span class="p">:</span>
@@ -3158,6 +3181,17 @@ specified for the given slot</p>
 <code>adviser.utils.useract.UserAct</code>
 </h6>
 <div class="doc doc-contents">
+<div class="doc doc-children">
+<h7>Methods</h7>
+<div class="doc doc-object doc-method">
+<h8 class="doc doc-heading" data-toc-label="__init__()" id="adviser.utils.useract.UserAct.__init__">
+<code class="highlight language-python">
+adviser.utils.useract.UserAct.__init__<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span> <span class="n">act_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">slot</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">score</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span> </code>
+<span class="doc doc-properties">
+<small class="doc doc-property doc-property-special"><code>special</code></small>
+</span>
+</h8>
+<div class="doc doc-contents">
 <p>The class for a user action as used in the dialog.</p>
 <p><strong>Parameters:</strong></p>
 <table>
@@ -3176,7 +3210,7 @@ specified for the given slot</p>
 <td>
 <p>A textual representation of the user action.</p>
 </td>
-<td><em>required</em></td>
+<td><code>''</code></td>
 </tr>
 <tr>
 <td><code>act_type</code></td>
@@ -3184,7 +3218,7 @@ specified for the given slot</p>
 <td>
 <p>The type of the user action.</p>
 </td>
-<td><em>required</em></td>
+<td><code>None</code></td>
 </tr>
 <tr>
 <td><code>slot</code></td>
@@ -3193,7 +3227,7 @@ specified for the given slot</p>
 <p>The slot to which the user action refers - might be <code>None</code> depending on the
 user action. Default: <code>None</code>.</p>
 </td>
-<td><em>required</em></td>
+<td><code>None</code></td>
 </tr>
 <tr>
 <td><code>value</code></td>
@@ -3202,20 +3236,81 @@ user action. Default: <code>None</code>.</p>
 <p>The value to which the user action refers - might be <code>None</code> depending on the
 user action. Default: <code>None</code>.</p>
 </td>
-<td><em>required</em></td>
+<td><code>None</code></td>
 </tr>
 <tr>
 <td><code>score</code></td>
 <td><code>float</code></td>
 <td>
-<p>A value from 0. (not important) to 1. (important) indicating how important
+<p>A value from 0 (not important) to 1 (important) indicating how important
 the information is for the belief state. Default: <code>1.0</code>.</p>
 </td>
-<td><em>required</em></td>
+<td><code>1.0</code></td>
 </tr>
 </tbody>
 </table>
-<div class="doc doc-children">
+<details class="quote">
+<summary>Source code in <code>adviser/utils/useract.py</code></summary>
+<table class="highlighttable">
+<tr>
+<td class="linenos">
+<div class="linenodiv">
+<pre><span></span>44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65</pre>
+</div>
+</td>
+<td class="code">
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span> <span class="n">act_type</span><span class="p">:</span> <span class="n">UserActionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">slot</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">value</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">score</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    The class for a user action as used in the dialog.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text (str): A textual representation of the user action.</span>
+<span class="sd">        act_type (UserActionType): The type of the user action.</span>
+<span class="sd">        slot (str): The slot to which the user action refers - might be ``None`` depending on the</span>
+<span class="sd">            user action. Default: ``None``.</span>
+<span class="sd">        value (str): The value to which the user action refers - might be ``None`` depending on the</span>
+<span class="sd">            user action. Default: ``None``.</span>
+<span class="sd">        score (float): A value from 0 (not important) to 1 (important) indicating how important</span>
+<span class="sd">            the information is for the belief state. Default: ``1.0``.</span>
+
+<span class="sd">    """</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">act_type</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">slot</span> <span class="o">=</span> <span class="n">slot</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="n">score</span>
+</code></pre>
+</div>
+</td>
+</tr>
+</table>
+</details>
+</div>
+</div>
 </div>
 </div>
 </div>
