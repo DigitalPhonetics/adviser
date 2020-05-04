@@ -69,19 +69,21 @@ new terminal session)
 
 and, to make sure your installation is working, execute
 
+
 .. code-block:: bash
 
     python run_chat.py lecturers
     
- You can type text to chat with the system (confirm your utterance by pressing the `Enter`-Key once) or type `bye` (followed by pressing the `Enter`-Key once) to end the conversation.
+You can type text to chat with the system (confirm your utterance by pressing the `Enter`-Key once) or type `bye` (followed by pressing the `Enter`-Key once) to end the conversation.
+
 
 6. OPTIONAL: If you want to use multimodal functionallity, e.g. ASR / TTS/ ..., execute
 
 .. code-block:: bash
 
     git lfs pull
-    
- NOTE: this also requires you to install `requirements_multimodal.txt` in `step 4`.
+   
+NOTE: this also requires you to install `requirements_multimodal.txt` in `step 4`.
 
 
 Support
