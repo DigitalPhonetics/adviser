@@ -1,6 +1,5 @@
-!!! todo
-    - Add link to notebook
-    
+> You can find the Jupyter Notebook in [our GitHub repository](https://github.com/DigitalPhonetics/adviser/blob/master/adviser/tutorials/03_adviser/3_intro_to_adviser.ipynb).
+
 # Task Oriented Dialog Systems with ADVISER 2.0
 
 Already we have seen a little bit how services operate and the basic modules needed to make a dialog system. In this tutorial, we will introduce service based implementations of these modules which come as part of the ADVISER 2.0 toolkit.

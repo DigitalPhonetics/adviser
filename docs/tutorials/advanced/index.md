@@ -1,6 +1,5 @@
-!!! todo
-    - Add link to notebook
-    
+> You can find the Jupyter Notebook in [our GitHub repository](https://github.com/DigitalPhonetics/adviser/blob/master/adviser/tutorials/04_adviser_advanced_topics/4_tutorial_advanced_topics.ipynb).
+
 # Advanced Topics With ADVISER 2.0
 
 Now that you have covered how to work with the existing core services of the ADVISER 2.0 Toolkit, let's discuss some of the more advanced features, such as running a distributed system, emotion detection, how create a new domain, and how to add new services

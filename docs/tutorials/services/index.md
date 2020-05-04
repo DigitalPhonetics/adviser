@@ -1,6 +1,5 @@
-!!! todo
-    - Add link to notebook
-    
+> You can find the Jupyter Notebook in [our GitHub repository](https://github.com/DigitalPhonetics/adviser/blob/master/adviser/tutorials/02_services/2_tutorial_services.ipynb).
+
 # Introduction to ADVISER 2.0 Services
 
 In this tutorial, we will discuss Services which are the backbone of the ADVISER 2.0 toolkit and allow for the creation of multi-modal dialog systems.

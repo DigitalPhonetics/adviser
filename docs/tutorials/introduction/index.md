@@ -1,6 +1,5 @@
-!!! todo
-    - Add link to notebook
-    
+> You can find the Jupyter Notebook in [our GitHub repository](https://github.com/DigitalPhonetics/adviser/blob/master/adviser/tutorials/01_dialog_systems/1_tutorial_intro_dialog_systems.ipynb).
+
 # Introduction to Dialog Systems
     
 ## Dialog Systems

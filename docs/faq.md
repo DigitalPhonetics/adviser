@@ -1,44 +1,38 @@
 # FAQ
 
-## Who contributed to ADvISER?
-!!! todo
-    Add missing members
+<!-- ## General Information -->
 
+## Who contributed to ADvISER?
+- Chia-Yu Li
 - Daniel Ortega
 - Dirk Väth
+- Florian Lux
 - Gianna Weber
 - Lindsey Vanderlyn
 - Maximilian Schmidt
+- Michael Neumann
 - Moritz Völkel
+- Pavel Denisov
+- Sabrina Jenne
 - Zorica Kacarevic
 - Ngoc Thang Vu
 
 ## How shall I cite ADvISER
+Please see [here](/#how-to-cite).
 
-!!! todo
-    Add links
+## Who can I contact in case of problems or questions?
+You can ask questions by sending emails to <adviser-support@ims.uni-stuttgart.de>.
 
-Please see here.
-Who can I contact in case of problems or questions?
-
-You can ask questions by sending emails to adviser-support@ims.uni-stuttgart.de
-
-You can also post bug reports and feature requests (only) in GitHub issues. Make sure to read our guidelines first.
+You can also post bug reports and feature requests in GitHub issues.
 
 
 ## Can I contribute to the project?
+You can post bug reports and feature requests in GitHub issues. You can find the code to ADvISER in [our Git repository](https://github.com/DigitalPhonetics/adviser).
 
-!!! todo
-    Add links
-
-You can post bug reports and feature requests in GitHub issues. You can find the code to ADvISER in our Git repository.
-
-Information about the download can be found here.
-
-
-<!-- ##System Specific Information -->
+<!-- ## System Specific Information -->
 
 ## What are the main features of the system’s framework?
+
 !!! todo
     Update/Add image
 
@@ -83,20 +77,22 @@ _images/sds.png
 * **low**
 
 ## Which domains are currently supported by ADvISER?
-!!! todo
-    Update domains
-
 ADvISER currently supports the following domains:
 
-IMS Lecturers
-
+=== "IMS Lecturers"
     Providing information about lecturers teaching at the IMS (for privacy reasons, our database includes fictive information about lecturers and related contact information, however, it serves as an example for a real-world application).
 
-IMS Courses
+=== "Weather"
+    Providing information about the weather.
 
-    Providing information about courses offered at the IMS, e.g. course content, requirements, or locational information.
+=== "Mensa"
+    Providing information about the menu at the dining hall of the University of Stuttgart.
+
+=== "World Knowledge QA"
+    Providing information about common world knowledge.
 
 ## Can ADvISER be extended by new modules?
+
 !!! todo
     Add link
 

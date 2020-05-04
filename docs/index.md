@@ -1,9 +1,7 @@
 # Home
 
 ## Introduction
-
-!!! todo
-    Add introduction
+We present ADVISER - an open-source, multi-domain dialog system toolkit that enables the development of multi-modal (incorporating speech, text and vision) and socially-engaged (e.g. emotion recognition, engagement level prediction and backchanneling) conversational agents. The Python based implementation of our toolkit is flexible, easy to use, and easy to extend not only for technically experienced users, such as machine learning researchers, but also for less technically experienced users, such as linguists or cognitive scientists, thereby providing a flexible platform for collaborative research.
 
 ## Guiding Principles
 
@@ -33,14 +31,11 @@ You can also post bug reports and feature requests in GitHub issues.
 ## How To Cite
 If you use or reimplement any of this source code, please cite the following paper:
 
-!!! todo
-    Update reference
-
 ```bibtex
 @InProceedings{
-title =     {ADVISER: A Toolkit for DevelopingMulti-modal,Multi-domainandSocially-engagedConversational Agents},
-author =    {Daniel Ortega and Dirk V{\"{a}}th and Gianna Weber and Lindsey Vanderlyn and Maximilian Schmidt and Moritz V{\"{o}}lkel and Zorica Karacevic and Ngoc Thang Vu},
-booktitle = {Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics (ACL 2019) - System Demonstrations},
+title =     {ADVISER: A Toolkit for Developing Multi-modal, Multi-domain and Socially-engaged Conversational Agents},
+author =    {Chia-Yu Li and Daniel Ortega and Dirk V{\"{a}}th and Florian Lux and Lindsey Vanderlyn and Maximilian Schmidt and Michael Neumann and Moritz V{\"{o}}lkel and Pavel Denisov and Sabrina Jenne and Zorica Karacevic and Ngoc Thang Vu},
+booktitle = {Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics (ACL 2020) - System Demonstrations},
 publisher = {Association for Computational Linguistics},
 location =  {Seattle, Washington, USA},
 year =      {2020}

@@ -24,6 +24,7 @@ markdown_extensions:
   # - smarty
   - codehilite
   - admonition
+  - pymdownx.tabbed
 
 plugins:
   - search
@@ -32,7 +33,12 @@ plugins:
       handlers:
         python:
           rendering:
-            show_source: true
+            show_source: true,
+            show_root_toc_entry: false,
+            show_root_heading: false,
+            show_object_full_path: true,
+            show_root_full_path: false,
+            show_category_heading: true
       watch:
         - adviser
 

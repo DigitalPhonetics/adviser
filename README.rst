@@ -81,9 +81,9 @@ and, to make sure your installation is working, execute
 
 Support
 =======
-You can ask questions by sending emails to adviser-support@ims.uni-stuttgart.de
+You can ask questions by sending emails to <adviser-support@ims.uni-stuttgart.de>.
 
-You can also post bug reports and feature requests (only) in GitHub issues. Make sure to read our guidelines first.
+You can also post bug reports and feature requests in GitHub issues.
 
 .. _home:how_to_cite:
 
@@ -93,14 +93,14 @@ If you use or reimplement any of this source code, please cite the following pap
 
 .. code-block:: bibtex
 
-   @InProceedings{adviser19,
-   title =     {ADVISER: A Dialog System Framework for Education & Research},
-   author =    {Daniel Ortega and Dirk V{\"{a}}th and Gianna Weber and Lindsey Vanderlyn and Maximilian Schmidt and Moritz V{\"{o}}lkel and Zorica Karacevic and Ngoc Thang Vu},
-   booktitle = {Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics (ACL 2019) - System Demonstrations},
-   publisher = {Association for Computational Linguistics},
-   location =  {Florence, Italy},
-   year =      {2019}
-   }
+   @InProceedings{
+    title =     {ADVISER: A Toolkit for Developing Multi-modal, Multi-domain and Socially-engaged Conversational Agents},
+    author =    {Chia-Yu Li and Daniel Ortega and Dirk V{\"{a}}th and Florian Lux and Lindsey Vanderlyn and Maximilian Schmidt and Michael Neumann and Moritz V{\"{o}}lkel and Pavel Denisov and Sabrina Jenne and Zorica Karacevic and Ngoc Thang Vu},
+    booktitle = {Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics (ACL 2020) - System Demonstrations},
+    publisher = {Association for Computational Linguistics},
+    location =  {Seattle, Washington, USA},
+    year =      {2020}
+    }
 
 License
 =======
