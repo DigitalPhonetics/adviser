@@ -1,3 +1,4 @@
+chainer==7.4.0
 mkdocs==1.1
 mkdocs-material==5.1.4
 mkdocstrings==0.11.0
