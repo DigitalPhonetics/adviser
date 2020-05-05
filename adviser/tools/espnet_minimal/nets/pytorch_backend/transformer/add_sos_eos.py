@@ -4,22 +4,23 @@
 # Copyright 2019 Shigeki Karita
 #  Apache 2.0  (http://www.apache.org/licenses/LICENSE-2.0)
 
-"""Unility funcitons for Transformer."""
+"""Unility functions for Transformer."""
 
 import torch
 
 
 def add_sos_eos(ys_pad, sos, eos, ignore_id):
-    """Add <sos> and <eos> labels.
+    """
+    Add `<sos>` and `<eos>` labels.
 
-    :param torch.Tensor ys_pad: batch of padded target sequences (B, Lmax)
-    :param int sos: index of <sos>
-    :param int eos: index of <eeos>
-    :param int ignore_id: index of padding
-    :return: padded tensor (B, Lmax)
-    :rtype: torch.Tensor
-    :return: padded tensor (B, Lmax)
-    :rtype: torch.Tensor
+    Arguments:
+        ys_pad (torch.Tensor): batch of padded target sequences (B, Lmax)
+        sos (int): index of `<sos>`
+        eos (int): index of `<eos>`
+        ignore_id (int): index of padding
+
+    Returns:
+        torch.Tensor: padded tensor (B, Lmax)
     """
     from tools.espnet_minimal import pad_list
     _sos = ys_pad.new([sos])

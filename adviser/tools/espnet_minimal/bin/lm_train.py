@@ -17,7 +17,8 @@ import sys
 import configargparse
 import numpy as np
 
-from tools.espnet_minimal.nets.lm_interface import dynamic_import_lm
+# TODO package tools.espnet_minimal.nets.lm_interface does not exist
+# from tools.espnet_minimal.nets.lm_interface import dynamic_import_lm
 
 
 # NOTE: you need this func to generate our sphinx doc

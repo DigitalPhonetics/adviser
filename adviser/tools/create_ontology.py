@@ -25,20 +25,22 @@ import os
 import shutil
 import sqlite3
 import sys
+import importlib
 
-from PyInquirer import prompt
+from PyInquirer import prompt, style_from_dict, Token
 
-# modify sys path to load package from site-packages
-sys_path_backup = sys.path[:]
-sys.path = []
-for path in sys_path_backup:
-    if 'site-packages' in path:
-        sys.path.append(path)
-
-# NOTE do all imports from examples in this block!
-from examples import custom_style_2
-
-sys.path = sys_path_backup
+# taken from the examples package from PyInquirer: https://github.com/CITGuru/PyInquirer/blob/master/examples/__init__.py
+# (this way the examples package does not interfere with our examples sub-package)
+custom_style_2 = style_from_dict({
+    Token.Separator: '#6C6C6C',
+    Token.QuestionMark: '#FF9D00 bold',
+    #Token.Selected: '',  # default
+    Token.Selected: '#5F819D',
+    Token.Pointer: '#FF9D00 bold',
+    Token.Instruction: '',  # default
+    Token.Answer: '#5F819D bold',
+    Token.Question: '',
+})
 
 
 class DatabaseTable(object):

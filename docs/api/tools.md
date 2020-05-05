@@ -1,3 +1,3 @@
 # Tools
 
-<!-- ::: adviser.tools -->
+::: adviser.tools

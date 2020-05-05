@@ -8,7 +8,6 @@ nav:
 - Reference:
   - Services: api/services.md
   - Examples: api/examples.md
-  - Resources: api/resources.md
   - Utils: api/utils.md
   - Tools: api/tools.md
 - Tutorials:

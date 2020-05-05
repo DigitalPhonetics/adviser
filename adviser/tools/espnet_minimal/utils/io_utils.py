@@ -8,7 +8,8 @@ import kaldiio
 import numpy as np
 import soundfile
 
-from tools.espnet_minimal.transform.transformation import Transformation
+# TODO package tools.espnet_minimal.transform does not exist
+# from tools.espnet_minimal.transform.transformation import Transformation
 
 
 class LoadInputsAndTargets(object):
