@@ -32,12 +32,13 @@ plugins:
   - search
   - mkdocstrings:
       default_handler: python
-      # handlers:
-      #   python:
+      handlers:
+        python:
           # selection:
           #   filters:
           #     - "!^python$"
-          # rendering:
+          rendering:
+            show_if_no_docstring: true
             # show_source: true,
             # show_root_toc_entry: false,
             # show_root_heading: false,
