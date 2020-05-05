@@ -26,16 +26,15 @@ from utils.domain.jsonlookupdomain import JSONLookupDomain
 
 
 class Constraint(object):
-    """
-    The class for a constraint as used in the goal.
-
-    Args:
-        slot (str): The slot.
-        value (str): The value.
-
-    """
-
     def __init__(self, slot, value):
+        """
+        The class for a constraint as used in the goal.
+
+        Args:
+            slot (str): The slot.
+            value (str): The value.
+
+        """
         self.slot = slot
         self.value = value
 
@@ -64,27 +63,26 @@ class Constraint(object):
 
 
 class Goal(object):
-    """
-    The class representing a goal, therefore containing requests and constraints.
-
-    Args:
-        domain (Domain): The domain for which the goal will be instantiated.
-        It will only work within this domain.
-        parameters (dict): The parameters for the goal defined by a key=value mapping: 'MinVenues'
-        (int) allows to set a minimum number of venues which fulfill the constraints of the goal,
-        'MinConstraints' (int) and 'MaxConstraints' (int) set the minimum and maximum amount of
-        constraints respectively, 'MinRequests' (int) and 'MaxRequests' (int) set the minimum and
-        maximum amount of requests respectively and 'Reachable' (float) allows to specify how many
-        (in percent) of all generated goals are definitely fulfillable (i.e. there exists a venue
-        for the current goal) or not (doesn't have to be fulfillable). Although the parameter
-        'Reachable' equals 1.0 implicitly states that 'MinVenues' equals 1 or more, the
-        implementation looks different, is more efficient and takes all goals into consideration
-        (since 'Reachable' is a float (percentage of generated goals)). On the other hand, setting
-        'MinVenues' to any number bigger than 0 forces every goal to be fulfillable.
-
-    """
-
     def __init__(self, domain: JSONLookupDomain, parameters=None):
+        """
+        The class representing a goal, therefore containing requests and constraints.
+
+        Args:
+            domain (JSONLookupDomain): The domain for which the goal will be instantiated.
+                It will only work within this domain.
+            parameters (dict): The parameters for the goal defined by a key=value mapping: 'MinVenues'
+                (int) allows to set a minimum number of venues which fulfill the constraints of the goal,
+                'MinConstraints' (int) and 'MaxConstraints' (int) set the minimum and maximum amount of
+                constraints respectively, 'MinRequests' (int) and 'MaxRequests' (int) set the minimum and
+                maximum amount of requests respectively and 'Reachable' (float) allows to specify how many
+                (in percent) of all generated goals are definitely fulfillable (i.e. there exists a venue
+                for the current goal) or not (doesn't have to be fulfillable). Although the parameter
+                'Reachable' equals 1.0 implicitly states that 'MinVenues' equals 1 or more, the
+                implementation looks different, is more efficient and takes all goals into consideration
+                (since 'Reachable' is a float (percentage of generated goals)). On the other hand, setting
+                'MinVenues' to any number bigger than 0 forces every goal to be fulfillable.
+
+        """
         self.domain = domain
         self.parameters = parameters or {}
 
@@ -113,17 +111,17 @@ class Goal(object):
         self.excluded_inf_slot_values = {}
         self.missing_informs = []
 
-    def init(self, random_goal=True, constraints=None, requests=None):
+    def init(self, random_goal=True, constraints=None, requests=None) -> None:
         """
         Initializes a goal randomly OR using the given constraints and requests.
 
         Args:
             random_goal (bool): If True, a goal will be drawn randomly from available constraints
-            and requests (considering the parameters given in the constructor, if any). However if
-            constraints and requests are given and both don't equal None, this parameter is
-            considered as False. If False, the given constraints and requests are used.
+                and requests (considering the parameters given in the constructor, if any). However if
+                constraints and requests are given and both don't equal None, this parameter is
+                considered as False. If False, the given constraints and requests are used.
             constraints (List[Constraint]): The constraints which will be used for the goal.
-            requests (dict): The requests which will be used for the goal.
+            requests (Dict[str, Union[None,str]]): The requests which will be used for the goal.
 
         """
         # reset goal
@@ -330,7 +328,8 @@ class Goal(object):
         Returns:
             bool: True if values match, False otherwise.
 
-        .. seealso:: :func:`is_inconsistent_constraint()`
+        !!! seealso "See Also"
+            [`is_inconsistent_constraint`][adviser.services.simulator.goal.Goal.is_inconsistent_constraint]
 
         """
         for _constraint in self.constraints:

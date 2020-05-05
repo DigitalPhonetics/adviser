@@ -19,4 +19,4 @@
 
 from .console import ConsoleInput, ConsoleOutput
 
-__all__ = ["ConsoleInput", "ConsoleOutput"]
+__all__ = [ConsoleInput, ConsoleOutput]

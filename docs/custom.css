@@ -1,7 +1,11 @@
 div.doc-contents:not(.first) {
-  padding-left: 10px;
+  padding-left: 25px;
   border-left: 4px solid rgba(230, 230, 230);
   margin-bottom: 80px;
+}
+
+.md-typeset h5 {
+	text-transform: none;
 }
 
 :root {
@@ -13,12 +17,12 @@ div.doc-contents:not(.first) {
 	--md-default-bg-color--light: hsla(0, 0%, 100%, 0.7);
 	--md-default-bg-color--lighter: hsla(0, 0%, 100%, 0.3);
 	--md-default-bg-color--lightest: hsla(0, 0%, 100%, 0.12);
-	--md-primary-fg-color: rgb(64, 119, 181);
+	--md-primary-fg-color: rgb(49, 110, 146);
 	--md-primary-fg-color--light: hsla(230deg, 44%, 64%, 1);
 	--md-primary-fg-color--dark: hsla(232deg, 54%, 41%, 1);
 	--md-primary-bg-color: var(--md-default-bg-color);
 	--md-primary-bg-color--light: var(--md-default-bg-color--light);
-	--md-accent-fg-color: hsla(231deg, 99%, 66%, 1);
+	--md-accent-fg-color: rgb(75, 168, 221);
 	--md-accent-fg-color--transparent: hsla(231deg, 99%, 66%, 0.1);
 	--md-accent-bg-color: var(--md-default-bg-color);
 	--md-accent-bg-color--light: var(--md-default-bg-color--light);

@@ -856,8 +856,7 @@ class Agenda(object):
         no need to add all constraints from the goal to the agenda apart from the initialisation.
 
         Args:
-            goal (Goal): The current goal of the (simulated) user for which actions will be pushed to the
-            agenda.
+            goal (Goal): The current goal of the (simulated) user for which actions will be pushed to the agenda.
 
         """
 

@@ -50,11 +50,11 @@ class UserAct(object):
             text (str): A textual representation of the user action.
             act_type (UserActionType): The type of the user action.
             slot (str): The slot to which the user action refers - might be ``None`` depending on the
-                user action. Default: ``None``.
+                user action.
             value (str): The value to which the user action refers - might be ``None`` depending on the
-                user action. Default: ``None``.
+                user action.
             score (float): A value from 0 (not important) to 1 (important) indicating how important
-                the information is for the belief state. Default: ``1.0``.
+                the information is for the belief state.
 
         """
         

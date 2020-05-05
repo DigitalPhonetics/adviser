@@ -998,7 +998,7 @@ class DialogSystem:
             print(f"  topic: '{topic}', published in services: {warnings[topic]}")
         print(ENDC)
 
-    def is_error_free_messaging_pipeline(self):
+    def is_error_free_messaging_pipeline(self) -> bool:
         """ Checks the current messaging pipeline for potential errors.
 
         (Potential) Errors are defined in this context as subscribed topics without publishers.

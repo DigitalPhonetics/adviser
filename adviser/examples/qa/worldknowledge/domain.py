@@ -28,18 +28,26 @@ def get_root_dir():
     return os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 class WorldKnowledgeDomain(LookupDomain):
-    """Question answering domain for the world knowledge domain.
+    """
+    Question answering for the world knowledge domain.
+    
+    Todo:
+        Attribute docstrings currently not considered by mkdocstrings -> write plugin?
 
     Attributes:
-        artificial_id_counter (int): pseudo identifier for each entry
-        name_lex (Dict[str->str]): lexicon for matching topic's names to their KG entity
+        - artificial_id_counter (int): pseudo identifier for each entry
+        - name_lex (Dict[str,str]): lexicon for matching topic's names to their KG entity
     """
 
     def __init__(self):
         """Calls super class' constructor and loads name lexicon"""
+
         LookupDomain.__init__(self, 'CSQA', 'World Knowledge')
-        self.artificial_id_counter = 1
+
+        self.artificial_id_counter = 1 #int: lexicon for matching topic's names to their KG entity
+
         self.name_lex = self._init_name_lexicon()
+        """Dict[str,str]: lexicon for matching topic's names to their KG entity."""
 
     def _init_name_lexicon(self):
         with open(os.path.join(get_root_dir(), 'resources', 'ontologies', 'qa', 'name_dict.json')) as f:
@@ -85,7 +93,7 @@ class WorldKnowledgeDomain(LookupDomain):
         data = r.json()
         return [res['itemLabel']['value'] for res in data['results'] ['bindings']]
 
-    def find_entities(self, constraints: dict, requested_slots: Iterable = iter(())):
+    def find_entities(self, constraints: dict):
         """ Returns all entities from the data backend that meet the constraints.
 
         Args:

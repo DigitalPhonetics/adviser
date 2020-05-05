@@ -31,7 +31,8 @@ from utils.topics import Topic
 
 
 class ConsoleInput(Service):
-    """Gets the user utterance from the console.
+    """
+    Gets the user utterance from the console.
 
     Waits for the built-in input function to return a non-empty text.
     """

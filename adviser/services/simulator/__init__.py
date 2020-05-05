@@ -20,4 +20,5 @@
 """This package contains the handcrafted user simulatod and related services."""
 
 from .simulator import HandcraftedUserSimulator
-from.emotion_simulator import EmotionSimulator
+from .emotion_simulator import EmotionSimulator
+from .goal import Goal
