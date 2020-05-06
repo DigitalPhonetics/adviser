@@ -1,3 +1,7 @@
+video {
+    object-fit: cover;
+}
+
 /* Indentation. */
 div.doc-contents:not(.first) {
 	padding-left: 25px;

@@ -3,6 +3,14 @@
 ## Introduction
 We present ADVISER - an open-source, multi-domain dialog system toolkit that enables the development of multi-modal (incorporating speech, text and vision) and socially-engaged (e.g. emotion recognition, engagement level prediction and backchanneling) conversational agents. The Python based implementation of our toolkit is flexible, easy to use, and easy to extend not only for technically experienced users, such as machine learning researchers, but also for less technically experienced users, such as linguists or cognitive scientists, thereby providing a flexible platform for collaborative research.
 
+<!-- blank line -->
+<figure class="video_container">
+  <video controls="true" allowfullscreen="true" preload="auto" data-setup="{'techOrder': ['html5']}">
+    <source src="https://bwsyncandshare.kit.edu/s/NFXDjYngtAeiSQY/download" type="video/mp4" />
+  </video>
+</figure>
+<!-- blank line -->
+
 ## Guiding Principles
 
 ### Modularity

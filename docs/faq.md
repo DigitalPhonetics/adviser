@@ -32,11 +32,7 @@ You can post bug reports and feature requests in GitHub issues. You can find the
 <!-- ## System Specific Information -->
 
 ## What are the main features of the system’s framework?
-
-!!! todo
-    Update/Add image
-
-_images/sds.png
+<img src="/img/system_overview.svg" width="80%" />
 
 ## Which User Actions and System Actions are currently supported by the system?
 
@@ -92,8 +88,4 @@ ADvISER currently supports the following domains:
     Providing information about common world knowledge.
 
 ## Can ADvISER be extended by new modules?
-
-!!! todo
-    Add link
-
-Please see here.
+Please follow our [advanced tutorial](/tutorials/advanced).
