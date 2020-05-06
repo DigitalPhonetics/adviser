@@ -22,8 +22,8 @@ If `Git` is installed on your machine, you may instead clone the repository by e
 
     git clone https://github.com/DigitalPhonetics/adviser.git
 
-Base Requirements
------------------
+System Library Requirements
+---------------------------
 
 If you want to make use of the function ``services.Service.service.draw_system_graph``,
 you will need to install the ``graphviz`` library via your system's package manager.
@@ -39,8 +39,8 @@ On Mac, you will need to install homebrew by executing:
 
 and then calling ``brew install graphviz``.
 
-Install requirements with pip
-------------------------------
+Install python requirements with pip
+------------------------------------
 
 ADvISER needs to be executed in a Python3 environment.
 
