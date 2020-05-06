@@ -27,6 +27,7 @@ Base Requirements
 
 If you want to make use of the function ``services.Service.service.draw_system_graph``,
 you will need to install the ``graphviz`` library via your system's package manager.
+If you can't install it (no sufficient user rights), don't use this function in your scripts.
 
 On Ubuntu e.g.:
 
