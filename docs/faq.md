@@ -32,7 +32,7 @@ You can post bug reports and feature requests in GitHub issues. You can find the
 <!-- ## System Specific Information -->
 
 ## What are the main features of the system’s framework?
-<img src="/img/system_overview.svg" width="80%" />
+<img src="../img/system_overview.svg" width="80%" />
 
 ## Which User Actions and System Actions are currently supported by the system?
 
