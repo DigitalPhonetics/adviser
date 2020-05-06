@@ -22,6 +22,21 @@ If `Git` is installed on your machine, you may instead clone the repository by e
 
     git clone https://github.com/DigitalPhonetics/adviser.git
 
+Base Requirements
+-----------------
+
+If you want to make use of the function ``services.Service.service.draw_system_graph``,
+you will need to install the ``graphviz`` library via your system's package manager.
+
+On Ubuntu e.g.:
+
+``sudo apt-get install graphviz``
+
+On Mac, you will need to install homebrew by executing:
+
+``/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"``
+
+and then calling ``brew install graphviz``.
 
 Install requirements with pip
 ------------------------------
