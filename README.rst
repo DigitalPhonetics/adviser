@@ -39,6 +39,8 @@ On Mac, you will need to install homebrew by executing:
 
 and then calling ``brew install graphviz``.
 
+For other OS please see https://graphviz.gitlab.io/download/.
+
 Install python requirements with pip
 ------------------------------------
 
