@@ -134,8 +134,6 @@ class BeliefState:
             threshold.
         """
 
-        # TODO: consider_NONE what does this even mean for the new beliefstate?
-
         informs = self._history[turn_idx]["informs"]
         candidates = []
         if slot in informs:
@@ -171,8 +169,6 @@ class BeliefState:
             threshold.
         """
 
-        # TODO: consider_NONE what does this even mean for the new beliefstate?
-
         candidates = {}
         informs = self._history[turn_idx]["informs"]
         for slot in informs:
@@ -195,8 +191,6 @@ class BeliefState:
 
     def get_requested_slots(self, turn_idx: int = -1):
         """ Returns the slots requested by the user
-
-        TODO: consider including some belief probability for requests
 
         Args:
             turn_idx: index for accessing the belief state history (default = -1: use last turn)

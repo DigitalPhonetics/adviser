@@ -50,7 +50,7 @@ class SpeechOutputGenerator(Service):
             domain (Domain): Needed for Service, no meaning here
             identifier (string): Needed for Service
             use_cuda (boolean): Whether or not to perform computations on GPU. Highly recommended if available
-            sub_topic_domains: Needed for Service TODO: (<-- is it really or can we get rid of it?)
+            sub_topic_domains: see `services.service.Service` constructor for more details
         """
         Service.__init__(self, domain=domain, identifier=identifier, sub_topic_domains=sub_topic_domains)
         self.models_directory = os.path.join(get_root_dir(), "resources", "models", "speech")

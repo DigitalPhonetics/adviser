@@ -107,7 +107,6 @@ class RLPolicy(object):
                         "inform_alternatives",
                         "reqmore"]
         # TODO badaction
-        # NOTE repeat not supported by user simulator
         for req_slot in self.domain.get_system_requestable_slots():
             self.actions.append('request#' + req_slot)
             self.actions.append('confirm#' + req_slot)
@@ -483,8 +482,6 @@ class RLPolicy(object):
         elif self.logger:
             self.logger.warning("RL POLICY: system action not supported: " +
                                 action_name)
-        # TODO restart: not supported by former systems
-        # -> check if user simulator supports this
 
         return None
 
@@ -525,9 +522,6 @@ class RLPolicy(object):
         """ Call this function after a turn is done by the system """
 
         self.last_sys_act = self.expand_system_action(sys_act_idx, beliefstate)
-        # TODO COMPATIBILITY TO FORMER SYSTEM'S USER SIMULATOR AND NLG CURRENTLY - REMOVE LATER
-        # if self.last_sys_act.type == SysActionType.InformByName:
-        #     self.last_sys_act.type = SysActionType.Inform
         if self.logger:
             self.logger.dialog_turn("system action > " + str(self.last_sys_act))
         self._update_system_belief(beliefstate, self.last_sys_act)

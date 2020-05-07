@@ -118,9 +118,7 @@ class HandcraftedBST(Service):
                 user_acts (list[UserAct]): the list of user acts to use to update the belief state
 
         """
-        # TODO: should requests have a score at all? For now I'm leaving that out, but might be
-        # worth revisiting later
-
+        
         # reset any offers if the user informs any new information
         if self.domain.get_primary_key() in self.bs['informs'] \
                 and UserActionType.Inform in self.bs["user_acts"]:

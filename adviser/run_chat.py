@@ -155,7 +155,6 @@ if __name__ == "__main__":
     parser.add_argument('--cuda', action='store_true', help="enable cuda (currently only for asr/tts)")
     parser.add_argument('--privacy', action='store_true',
                         help="enable random mutations of the recorded voice to mask speaker identity", default=False)
-    # TODO install pip requirements only when needed
     # TODO option for remote services
     # TODO option for video
     # TODO option for multiple consecutive dialogs 
@@ -234,7 +233,7 @@ if __name__ == "__main__":
 
     # run dialog(s)
     try:
-        for _ in range(num_dialogs):  # TODO specify number of dialogs in args
+        for _ in range(num_dialogs):  
             ds.run_dialog({'gen_user_utterance': ""})
         # free resources
         ds.shutdown()
