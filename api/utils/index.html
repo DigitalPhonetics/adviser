@@ -1808,7 +1808,9 @@ threshold.</p>
 <tr>
 <td class="linenos">
 <div class="linenodiv">
-<pre><span></span>150
+<pre><span></span>148
+149
+150
 151
 152
 153
@@ -1848,11 +1850,7 @@ threshold.</p>
 187
 188
 189
-190
-191
-192
-193
-194</pre>
+190</pre>
 </div>
 </td>
 <td class="code">
@@ -1880,8 +1878,6 @@ threshold.</p>
 <span class="sd">        have at least one value whose probability exceeds the specified</span>
 <span class="sd">        threshold.</span>
 <span class="sd">    """</span>
-
-    <span class="c1"># TODO: consider_NONE what does this even mean for the new beliefstate?</span>
 
     <span class="n">candidates</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">informs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_history</span><span class="p">[</span><span class="n">turn_idx</span><span class="p">][</span><span class="s2">"informs"</span><span class="p">]</span>
@@ -2028,9 +2024,7 @@ threshold.</p>
 143
 144
 145
-146
-147
-148</pre>
+146</pre>
 </div>
 </td>
 <td class="code">
@@ -2059,8 +2053,6 @@ threshold.</p>
 <span class="sd">        have at least one value whose probability exceeds the specified</span>
 <span class="sd">        threshold.</span>
 <span class="sd">    """</span>
-
-    <span class="c1"># TODO: consider_NONE what does this even mean for the new beliefstate?</span>
 
     <span class="n">informs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_history</span><span class="p">[</span><span class="n">turn_idx</span><span class="p">][</span><span class="s2">"informs"</span><span class="p">]</span>
     <span class="n">candidates</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2094,7 +2086,13 @@ constraints in the current turn.</p>
 <tr>
 <td class="linenos">
 <div class="linenodiv">
-<pre><span></span>216
+<pre><span></span>210
+211
+212
+213
+214
+215
+216
 217
 218
 219
@@ -2117,13 +2115,7 @@ constraints in the current turn.</p>
 236
 237
 238
-239
-240
-241
-242
-243
-244
-245</pre>
+239</pre>
 </div>
 </td>
 <td class="code">
@@ -2173,7 +2165,6 @@ get_requested_slots<span class="p">(</span><span class="bp">self</span><span cla
 <a class="headerlink" href="#adviser.utils.beliefstate.BeliefState.get_requested_slots" title="Permanent link">¶</a></h4>
 <div class="doc doc-contents">
 <p>Returns the slots requested by the user</p>
-<p>TODO: consider including some belief probability for requests</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -2201,27 +2192,23 @@ get_requested_slots<span class="p">(</span><span class="bp">self</span><span cla
 <tr>
 <td class="linenos">
 <div class="linenodiv">
-<pre><span></span>196
+<pre><span></span>192
+193
+194
+195
+196
 197
 198
 199
 200
 201
-202
-203
-204
-205
-206
-207
-208</pre>
+202</pre>
 </div>
 </td>
 <td class="code">
 <div class="highlight">
 <pre><span></span><code><span class="k">def</span> <span class="nf">get_requested_slots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">turn_idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">""" Returns the slots requested by the user</span>
-
-<span class="sd">    TODO: consider including some belief probability for requests</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        turn_idx: index for accessing the belief state history (default = -1: use last turn)</span>
@@ -2934,7 +2921,7 @@ __init__<span class="p">(</span><span class="bp">self</span><span class="p">,</s
 <div class="doc doc-object doc-method">
 <h5 class="doc doc-heading" id="adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.find_entities">
 <code class="highlight language-python">
-find_entities<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraints</span><span class="p">,</span> <span class="n">requested_slots</span><span class="o">=&lt;</span><span class="n">tuple_iterator</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7fff23303310</span><span class="o">&gt;</span><span class="p">)</span> </code>
+find_entities<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraints</span><span class="p">,</span> <span class="n">requested_slots</span><span class="o">=&lt;</span><span class="n">tuple_iterator</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7fe563a39130</span><span class="o">&gt;</span><span class="p">)</span> </code>
 <a class="headerlink" href="#adviser.utils.domain.jsonlookupdomain.JSONLookupDomain.find_entities" title="Permanent link">¶</a></h5>
 <div class="doc doc-contents">
 <p>Returns all entities from the data backend that meet the constraints, with values for
@@ -2967,7 +2954,7 @@ find_entities<span class="p">(</span><span class="bp">self</span><span class="p"
 <p>list of slots that should be returned in addition to the
                         system requestable slots and the primary key</p>
 </td>
-<td><code>&lt;tuple_iterator object at 0x7fff23303310&gt;</code></td>
+<td><code>&lt;tuple_iterator object at 0x7fe563a39130&gt;</code></td>
 </tr>
 </tbody>
 </table>
@@ -3591,7 +3578,7 @@ __init__<span class="p">(</span><span class="bp">self</span><span class="p">,</s
 <div class="doc doc-object doc-method">
 <h5 class="doc doc-heading" id="adviser.utils.domain.lookupdomain.LookupDomain.find_entities">
 <code class="highlight language-python">
-find_entities<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraints</span><span class="p">,</span> <span class="n">requested_slots</span><span class="o">=&lt;</span><span class="n">tuple_iterator</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7fff233195b0</span><span class="o">&gt;</span><span class="p">)</span> </code>
+find_entities<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraints</span><span class="p">,</span> <span class="n">requested_slots</span><span class="o">=&lt;</span><span class="n">tuple_iterator</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7fe563a4b3d0</span><span class="o">&gt;</span><span class="p">)</span> </code>
 <a class="headerlink" href="#adviser.utils.domain.lookupdomain.LookupDomain.find_entities" title="Permanent link">¶</a></h5>
 <div class="doc doc-contents">
 <p>Returns all entities from the data backend that meet the constraints.</p>

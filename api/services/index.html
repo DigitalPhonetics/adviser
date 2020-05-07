@@ -7784,7 +7784,7 @@ __init__<span class="p">(</span><span class="bp">self</span><span class="p">,</s
 <td><code>sub_topic_domains</code></td>
 <td><code>Dict[str, str]</code></td>
 <td>
-<p>Needed for Service TODO: (&lt;-- is it really or can we get rid of it?)</p>
+<p>see <code>services.service.Service</code> constructor for more details</p>
 </td>
 <td><code>{}</code></td>
 </tr>
@@ -7869,7 +7869,7 @@ __init__<span class="p">(</span><span class="bp">self</span><span class="p">,</s
 <span class="sd">        domain (Domain): Needed for Service, no meaning here</span>
 <span class="sd">        identifier (string): Needed for Service</span>
 <span class="sd">        use_cuda (boolean): Whether or not to perform computations on GPU. Highly recommended if available</span>
-<span class="sd">        sub_topic_domains: Needed for Service TODO: (&lt;-- is it really or can we get rid of it?)</span>
+<span class="sd">        sub_topic_domains: see `services.service.Service` constructor for more details</span>
 <span class="sd">    """</span>
     <span class="n">Service</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="n">identifier</span><span class="p">,</span> <span class="n">sub_topic_domains</span><span class="o">=</span><span class="n">sub_topic_domains</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">models_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_root_dir</span><span class="p">(),</span> <span class="s2">"resources"</span><span class="p">,</span> <span class="s2">"models"</span><span class="p">,</span> <span class="s2">"speech"</span><span class="p">)</span>
@@ -15820,8 +15820,7 @@ buffers.</p>
 131
 132
 133
-134
-135</pre>
+134</pre>
 </div>
 </td>
 <td class="code">
@@ -15880,7 +15879,6 @@ buffers.</p>
                     <span class="s2">"inform_alternatives"</span><span class="p">,</span>
                     <span class="s2">"reqmore"</span><span class="p">]</span>
     <span class="c1"># TODO badaction</span>
-    <span class="c1"># NOTE repeat not supported by user simulator</span>
     <span class="k">for</span> <span class="n">req_slot</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">get_system_requestable_slots</span><span class="p">():</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'request#'</span> <span class="o">+</span> <span class="n">req_slot</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'confirm#'</span> <span class="o">+</span> <span class="n">req_slot</span><span class="p">)</span>
@@ -15927,9 +15925,9 @@ action_idx<span class="p">(</span><span class="bp">self</span><span class="p">,<
 <tr>
 <td class="linenos">
 <div class="linenodiv">
-<pre><span></span>141
-142
-143</pre>
+<pre><span></span>140
+141
+142</pre>
 </div>
 </td>
 <td class="code">
@@ -15958,9 +15956,9 @@ action_name<span class="p">(</span><span class="bp">self</span><span class="p">,
 <tr>
 <td class="linenos">
 <div class="linenodiv">
-<pre><span></span>137
-138
-139</pre>
+<pre><span></span>136
+137
+138</pre>
 </div>
 </td>
 <td class="code">
@@ -16027,7 +16025,8 @@ beliefstate_dict_to_vector<span class="p">(</span><span class="bp">self</span><s
 <tr>
 <td class="linenos">
 <div class="linenodiv">
-<pre><span></span>145
+<pre><span></span>144
+145
 146
 147
 148
@@ -16076,8 +16075,7 @@ beliefstate_dict_to_vector<span class="p">(</span><span class="bp">self</span><s
 191
 192
 193
-194
-195</pre>
+194</pre>
 </div>
 </td>
 <td class="code">
@@ -16154,17 +16152,17 @@ end_dialog<span class="p">(</span><span class="bp">self</span><span class="p">,<
 <tr>
 <td class="linenos">
 <div class="linenodiv">
-<pre><span></span>550
+<pre><span></span>544
+545
+546
+547
+548
+549
+550
 551
 552
 553
-554
-555
-556
-557
-558
-559
-560</pre>
+554</pre>
 </div>
 </td>
 <td class="code">
@@ -16201,7 +16199,8 @@ expand_system_action<span class="p">(</span><span class="bp">self</span><span cl
 <tr>
 <td class="linenos">
 <div class="linenodiv">
-<pre><span></span>462
+<pre><span></span>461
+462
 463
 464
 465
@@ -16225,10 +16224,7 @@ expand_system_action<span class="p">(</span><span class="bp">self</span><span cl
 483
 484
 485
-486
-487
-488
-489</pre>
+486</pre>
 </div>
 </td>
 <td class="code">
@@ -16257,8 +16253,6 @@ expand_system_action<span class="p">(</span><span class="bp">self</span><span cl
     <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"RL POLICY: system action not supported: "</span> <span class="o">+</span>
                             <span class="n">action_name</span><span class="p">)</span>
-    <span class="c1"># TODO restart: not supported by former systems</span>
-    <span class="c1"># -&gt; check if user simulator supports this</span>
 
     <span class="k">return</span> <span class="kc">None</span>
 </code></pre>
@@ -16282,7 +16276,10 @@ turn_end<span class="p">(</span><span class="bp">self</span><span class="p">,</s
 <tr>
 <td class="linenos">
 <div class="linenodiv">
-<pre><span></span>523
+<pre><span></span>520
+521
+522
+523
 524
 525
 526
@@ -16291,13 +16288,7 @@ turn_end<span class="p">(</span><span class="bp">self</span><span class="p">,</s
 529
 530
 531
-532
-533
-534
-535
-536
-537
-538</pre>
+532</pre>
 </div>
 </td>
 <td class="code">
@@ -16307,9 +16298,6 @@ turn_end<span class="p">(</span><span class="bp">self</span><span class="p">,</s
     <span class="sd">""" Call this function after a turn is done by the system """</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">last_sys_act</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand_system_action</span><span class="p">(</span><span class="n">sys_act_idx</span><span class="p">,</span> <span class="n">beliefstate</span><span class="p">)</span>
-    <span class="c1"># TODO COMPATIBILITY TO FORMER SYSTEM'S USER SIMULATOR AND NLG CURRENTLY - REMOVE LATER</span>
-    <span class="c1"># if self.last_sys_act.type == SysActionType.InformByName:</span>
-    <span class="c1">#     self.last_sys_act.type = SysActionType.Inform</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">dialog_turn</span><span class="p">(</span><span class="s2">"system action &gt; "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_sys_act</span><span class="p">))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_update_system_belief</span><span class="p">(</span><span class="n">beliefstate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_sys_act</span><span class="p">)</span>
