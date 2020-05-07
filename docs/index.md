@@ -24,9 +24,6 @@ Further, distributed systems are possible. Services are location-transparent and
 ### Transparency
 We provide a utility to draw the dialog graph, showing the information flow between services and any inconsistencies in publish/subscribe connections.
 
-!!! todo
-    Graphen einfügen?
-
 ### User-friendly at different levels
 technical users have the full flexibility to explore and extend the back-end; non-technical users can use the provided code base for building systems; students from different disciplines could easily learn the concepts and explore human machine interaction.
 
