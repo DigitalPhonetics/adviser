@@ -109,6 +109,13 @@ To see more of the available options, run
    
 NOTE: this also requires you to install ``requirements_multimodal.txt`` in ``step 4``.
 
+You can enable ASR / TTS by adding ``--asr`` and ``--tts`` to the command line options of ``run_chat.py`` (NOTE: for TTS, we recommend you run the code on a CUDA-enabled device and append ``--cuda`` to the command line options for drastic performance increase).
+
+7. OPTIONAL: If you want to run the demo with all services enabled, please make sure you executed step 6 and installed the  ``requirements_multimodal.txt``. Then, additional requirements must be compiled by yourself - follow the guide in ``tools/OpenFace/how_to_install.md`` for this.
+
+Then, try running 
+
+``python run_demo_multidomain.py``
 
 Support
 =======
