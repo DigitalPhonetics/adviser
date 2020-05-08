@@ -29,7 +29,6 @@ os.environ["CUDA_VISIBLE_DEVICES"] = gpu
 
 from services.service import PublishSubscribe
 from services.service import Service
-from services.hci.speech.FeatureExtractor import SpeechFeatureExtractor
 from services.backchannel.PytorchAcousticBackchanneler import PytorchAcousticBackchanneler
 
 
@@ -82,20 +81,21 @@ class AcousticBackchanneller(Service):
                 new_data.append(mfcc_features[r - input_height:r, :])
         return (new_data)
 
-    @PublishSubscribe(sub_topics=['mfcc_features'],
+    @PublishSubscribe(sub_topics=['mfcc'],
                       pub_topics=["predicted_BC"])
-    def backchannel_prediction(self, mfcc_features: np.array):
+    def backchannel_prediction(self, mfcc: np.array):
         """
         Service that receives the MFCC features from the user's speech.
         It preprocess and normalize them and makes the BC prediction.
 
         Args:
-            mfcc_features (numpy.array): MFCC features
+            mfcc_features (torch.tensor): MFCC features
 
         Returns:
             (dict): a dictionary with the key "predicted_BC" and the value of the BC type
         """
         # class_int_mapping = {0: b'no_bc', 1: b'assessment', 2: b'continuer'}
+        mfcc_features = mfcc.numpy()
         scaler = preprocessing.StandardScaler()
         mfcc_features = scaler.fit_transform(mfcc_features)
         input_splits = self.split_input_data(mfcc_features)
@@ -111,23 +111,3 @@ class AcousticBackchanneller(Service):
         else:
             return {'predicted_BC': 1 if 1 in prediction else 2}
 
-
-if __name__ == "__main__":
-    feat_extractor = SpeechFeatureExtractor()
-    backchanneller = AcousticBackchanneller()
-
-    i = 0
-    j = 0
-    with open('resources/tmp_audio_and_features/wav_files.txt') as f:
-        for file_name in f:
-            file_name = file_name.strip()
-            feats = feat_extractor.speech_to_mfcc(new_audio=file_name)
-            # scaler = preprocessing.StandardScaler()
-            # feats = scaler.fit_transform(feats)
-            BC = backchanneller.backchannel_prediction(mfcc_features=feats['mfcc_features'])
-            if BC['predicted_BC'] in [1,2] :
-                i+=1
-            else:
-                j+=1
-
-    print(i/(i+j))

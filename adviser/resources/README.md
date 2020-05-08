@@ -7,5 +7,3 @@ This folder contains resources required to run an Adviser 2 dialog system. These
 * `nlg_templates`: A folder containing the templates for turning system actions to natural language output for each domain
 * `nlu_regexes`: A folder containing the regexes for turning natural language input into system actions for each domain
 * `ontologies`: Folder containing JSON files which define the slots and values and which of these are user/system requestable/informable for each domain
-* `opensmile_config`: Feature configuration files for the openSMILE toolkit (used by the SpeechFeatureExtractor)
-* `tmp_audio_and_features`: A folder for storing temporary audio and feature files (used by the SpeechFeatureExtractor)

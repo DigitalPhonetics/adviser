@@ -58,9 +58,9 @@ def load_tts(use_cuda: bool, conversation_log_dir: str = None):
 
 def load_bachchannel():
     from services.backchannel import AcousticBackchanneller
-    from services.hci.speech.FeatureExtractor import SpeechFeatureExtractor
+    from services.hci.speech.SpeechInputFeatureExtractor import SpeechInputFeatureExtractor
     backchanneler = AcousticBackchanneller()
-    feat_extractor = SpeechFeatureExtractor()
+    feat_extractor = SpeechInputFeatureExtractor()
     return [backchanneler, feat_extractor]
 
 def load_gui():

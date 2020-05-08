@@ -78,7 +78,7 @@ class SpeechInputFeatureExtractor(Service):
         return {'mfcc': mfcc}
 
     @PublishSubscribe(sub_topics=["speech_in"], pub_topics=["fbank"])
-    def speech_to_mfcc(self, speech_in):
+    def speech_to_fbank(self, speech_in):
         """
         Extracts 23 filterbanks from input utterance.
 

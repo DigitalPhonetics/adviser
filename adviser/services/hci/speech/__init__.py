@@ -22,4 +22,3 @@ from .SpeechInputFeatureExtractor import SpeechInputFeatureExtractor
 from .SpeechOutputGenerator import SpeechOutputGenerator
 from .SpeechOutputPlayer import SpeechOutputPlayer
 from .SpeechRecorder import SpeechRecorder
-from .FeatureExtractor import SpeechFeatureExtractor
