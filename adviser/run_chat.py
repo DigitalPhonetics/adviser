@@ -58,10 +58,9 @@ def load_tts(use_cuda: bool, conversation_log_dir: str = None):
 
 def load_bachchannel():
     from services.backchannel import AcousticBackchanneller
-    from services.hci.speech.SpeechInputFeatureExtractor import SpeechInputFeatureExtractor
     backchanneler = AcousticBackchanneller()
-    feat_extractor = SpeechInputFeatureExtractor()
-    return [backchanneler, feat_extractor]
+    # note: SpeechInputFeatureExtractor already loaded by requirement "--ASR"
+    return [backchanneler]
 
 def load_gui():
     import subprocess
