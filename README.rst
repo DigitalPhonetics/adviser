@@ -1,4 +1,8 @@
-  Please see the `documentation <https://digitalphonetics.github.io/adviser/>`_ for more details.
+Documentation
+=============
+
+.. note::
+    Please see the `documentation <https://digitalphonetics.github.io/adviser/>`_ for more details.
 
 New Version
 ===========
