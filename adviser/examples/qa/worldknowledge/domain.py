@@ -28,12 +28,11 @@ def get_root_dir():
     return os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 class WorldKnowledgeDomain(LookupDomain):
+    # Attribute docstrings currently not considered by mkdocstrings -> write plugin?
+
     """
     Question answering for the world knowledge domain.
     
-    Todo:
-        Attribute docstrings currently not considered by mkdocstrings -> write plugin?
-
     Attributes:
         - artificial_id_counter (int): pseudo identifier for each entry
         - name_lex (Dict[str,str]): lexicon for matching topic's names to their KG entity

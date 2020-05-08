@@ -367,7 +367,6 @@ class Goal(object):
         Returns:
             bool: ``True`` if update was successful, i.e. the constraint ``slot`` is included in
             the goal, ``False`` otherwise.
-        .. todo:: think about always setting a value
 
         """
         for _constraint in self.constraints:
