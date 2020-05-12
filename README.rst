@@ -1,7 +1,7 @@
 Documentation
 =============
 
-Please see the `documentation <https://digitalphonetics.github.io/adviser/>`_ for more details.
+    Please see the `documentation <https://digitalphonetics.github.io/adviser/>`_ for more details.
 
 New Version
 ===========
