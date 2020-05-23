@@ -10,6 +10,8 @@ Adviser 2.0 is released!
 Installation
 ============
 
+Note: Adviser 2.0 is currently only tested on Linux and Mac.
+
 Downloading the code
 --------------------
 
