@@ -10,11 +10,13 @@
     * dlib (install via package manager)
     * OpenBLAS (install via package manager)
     * wget (install via package manager)
+    * libzmq (install via package manager, or follow https://github.com/zeromq/libzmq)
+    * cppzmq (included on ubuntu if you installed libzmq via 'sudo apt install libzmq3-dev', otherwise follow https://github.com/zeromq/cppzmq)
     * opencv-4.1.0 (install via package manager / dowload source from https://github.com/opencv/opencv/archive/4.1.0.zip)
         * together with opencv_contrib-4.1.0 (install via package manager / download source from https://github.com/opencv/opencv_contrib/archive/4.1.0.zip)
         * Tip for Mac homebrew users to obtain correct version:
             * activate your python virtual environment
-            * in your terminal, execute `brew edit opencv@`
+            * in your terminal, execute `brew edit opencv`
             * change the url in the line starting with `url "http://https://github.com/opencv/opencv/archive/..".` to `url "https://github.com/opencv/opencv/archive/4.1.0.tar.gz"`
             * change the line underneath starting with `sha256 "..."` to `sha256 "8f6e4ab393d81d72caae6e78bd0fd6956117ec9f006fba55fcdb88caf62989b7"`
             * scroll to the line `resource "contrib" do``
@@ -23,7 +25,7 @@
             * scroll down to the `args` section
             * change `-DWITH_QT=OFF` to `-DWITH_QT=ON`
             * add a new line with `-DBUILD_TBB=ON`
-            * in your terminal, execute `brew install opencv@` - this will install opencv-4.1.0 
+            * in your terminal, execute `brew install opencv` - this will install opencv-4.1.0 
             * update `tools/OpenFace/CMakeLists.txt`
                 * change line `find_package( OpenCV 4.0 REQUIRED COMPONENTS core imgproc calib3d highgui objdetect` to `find_package( OpenCV 4.0 REQUIRED COMPONENTS core imgproc calib3d highgui objdetect HINTS /usr/local/Cellar/opencv/4.1.0)` (or if your homebrew installs somewhere else, use this path instead for the `HINTS`)
     * qt4 (install via official installer / package manager)
@@ -43,23 +45,3 @@
     * verify installation by running `./tools/OpenFace/build/bin/FaceLandmarkVid -device 0` (or replace 0 with the desired camera device number)
 
 
-
-OLD - ignore
-<!-- OpenFace`
-* requirements`
-* mkdir build
-* cd build 
-* call CMake:
-   (Example config: fill in qt path, extra_modules_path):
-        cmake -D CMAKE_BUILD_TYPE=RELEASE \
-            -D WITH_TBB=ON \
-            -D WITH_V4L=ON \
-            -D OPENCV_SKIP_PYTHON_LOADER=ON \
-            -D CMAKE_PREFIX_PATH=/usr/local/opt/qt5 \
-            -D CMAKE_MODULE_PATH="$QT5PATH"/lib/cmake \
-            -D OPENCV_PYTHON3_INSTALL_PATH=~/.virtualenvs/OpenCV-"$cvVersion"-py3/lib/python3.7/site-packages \
-        -D WITH_QT=ON \
-        -D WITH_OPENGL=ON \
-        -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-4.1.0/modules \
-        -D BUILD_EXAMPLES=OFF ..
-* make -->
