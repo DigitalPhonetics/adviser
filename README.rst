@@ -1,9 +1,3 @@
-|release| |license|
-
-
-.. |release| image:: https://img.shields.io/github/v/release/digitalphonetics/adviser?sort=semver   :alt: GitHub release (latest SemVer)
-.. |license| image:: https://img.shields.io/github/license/digitalphonetics/adviser   :alt: GitHub
-
 Documentation
 =============
 
