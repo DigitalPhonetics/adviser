@@ -1,3 +1,5 @@
+wheel
+cython
 chainer==7.4.0
 dlib
 imutils

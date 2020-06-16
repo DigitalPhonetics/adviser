@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import socketIOClient from "socket.io-client";
 import ChatWindow from './components/chatwindow.js';
-import TurnInfoList from './components/turninfolist.js'
+// import TurnInfoList from './components/turninfolist.js'
 import UserStateWindow from './components/userstatewindow';
 
-import flag_en from './static/img_lang/british_flag.png';
-import flag_de from './static/img_lang/german_flag.png';
+//import flag_en from './static/img_lang/british_flag.png';
+// import flag_de from './static/img_lang/german_flag.png';
 
 // import './App.css';
 

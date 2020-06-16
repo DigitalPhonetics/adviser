@@ -23,7 +23,7 @@ class UserStateWindow extends Component {
     render() {
         return  <div className="UserStateWindow"> 
             {
-                this.state.userstate != false && <div className='slotvaluecontainer'>
+                this.state.userstate !== false && <div className='slotvaluecontainer'>
                             <div>Emotion:  {this.state.userstate['category']}</div><br/>
                             <div>
                                 <div>Angry: {this.state.userstate['cateogry_probabilities']["Angry"]}</div>
@@ -34,7 +34,7 @@ class UserStateWindow extends Component {
                         </div>
             } <br/>
             {
-                this.state.engagement != false && <div className='slotvaluecontainer'>
+                this.state.engagement !== false && <div className='slotvaluecontainer'>
                 Engagement: <div className={this.state.engagement}>{this.state.engagement}</div>
             </div>
             }

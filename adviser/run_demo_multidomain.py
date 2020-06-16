@@ -33,7 +33,6 @@ from services.domain_tracker.domain_tracker import DomainTracker
 from services.hci.console import ConsoleInput, ConsoleOutput
 from services.hci.speech import SpeechInputDecoder, SpeechInputFeatureExtractor, SpeechOutputGenerator
 from services.hci.speech import SpeechOutputPlayer, SpeechRecorder
-from services.hci.speech.FeatureExtractor import SpeechFeatureExtractor
 from services.hci.video.VideoInput import VideoInput
 from services.engagement.engagement_tracker import EngagementTracker
 from services.emotion.EmotionRecognition import EmotionRecognition
@@ -73,7 +72,6 @@ speech_in_decoder = SpeechInputDecoder(conversation_log_dir=conversation_log_dir
 # feature extraction
 d_tracker = DomainTracker(domains=[lecturers, weather, mensa], greet_on_first_turn=True)
 speech_in_feature_extractor = SpeechInputFeatureExtractor()
-speach_feats = SpeechFeatureExtractor()
 
 # feature processing
 engagement = EngagementTracker()
@@ -108,10 +106,10 @@ if not os.path.isdir(os.path.join(webui_folder, 'node_modules')):
     print(
         "ERROR: Could not install node dependencies. Make sure node and npm are installed on your machine and you have rights to install node modules via npm.")
     exit()
-# subprocess.Popen(["npm", "run", "start",  "--silent"], cwd=webui_folder) # NOTE: if you see no messages in the browser app, comment out this line 
-#                                                                          # and run `npm run start` from `tools/webui` before executing this script
+subprocess.Popen(["npm", "run", "start",  "--silent"], cwd=webui_folder) # NOTE: if you see no messages in the browser app, comment out this line 
+                                                                         # and run `npm run start` from `tools/webui` before executing this script
 guiserver_proc = subprocess.Popen(["python", "services/hci/gui.py"], stdout=subprocess.PIPE,
-                                  stderr=subprocess.STDOUT)
+                                   stderr=subprocess.STDOUT)
 webui = RemoteService(identifier="GUIServer")
 
 # mensa specific modules
@@ -136,7 +134,6 @@ ds = DialogSystem(
               backchanneler,
               webui,
               speech_in_feature_extractor,
-              speach_feats,
               speech_in_decoder,
               engagement,
               emotion,

@@ -71,12 +71,12 @@ class GUIServer(Service):
         return {Topic.DIALOG_END: message}
 
     @PublishSubscribe(sub_topics=['gen_user_utterance'])
-    def forward_message_to_react(self, gen_user_utterance: str = ""):
+    def forward_user_message_to_react(self, gen_user_utterance: str = ""):
         print("FWD to react", gen_user_utterance)
         self.socketio.emit('user_utterance', gen_user_utterance)
         
     @PublishSubscribe(sub_topics=['emotion'])
-    def forward_message_to_react(self, emotion = None):
+    def forward_emotion_message_to_react(self, emotion = None):
         print(f"Got emotion from dialog system: {emotion}")
         emotion["category"] = emotion["category"].value
         probs = emotion["cateogry_probabilities"]
@@ -86,7 +86,7 @@ class GUIServer(Service):
         self.socketio.emit('emotion', emotion)
 
     @PublishSubscribe(sub_topics=['engagement'])
-    def forward_message_to_react(self, engagement = None):
+    def forward_engagement_message_to_react(self, engagement = None):
         print(f"Got engagement from dialog system: {engagement}")
         self.socketio.emit('engagement', engagement.value)
 
@@ -98,7 +98,7 @@ class GUIServer(Service):
 
 
     @PublishSubscribe(sub_topics=['sys_utterance'])
-    def forward_message_to_react(self, sys_utterance = None):
+    def forward_sys_message_to_react(self, sys_utterance = None):
         print(f"Got message from dialog system: {sys_utterance}")
         self.socketio.emit('sys_utterance', sys_utterance)
         # socketio.send(sys_utterance)
