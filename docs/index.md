@@ -6,7 +6,8 @@ We present ADVISER - an open-source, multi-domain dialog system toolkit that ena
 <!-- blank line -->
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" preload="auto" data-setup="{'techOrder': ['html5']}">
-    <source src="https://bwsyncandshare.kit.edu/s/o7JJbi3Qm538oK5/download" type="video/mp4" />
+    <source src="https://opencms.uni-stuttgart.de/permalink/21b0d631-b162-11ea-bf44-000e0c3db68b.webm" type=video/webm;codecs="vp9,vorbis"" />
+    <source src="https://opencms.uni-stuttgart.de/permalink/211d48b9-b162-11ea-bf44-000e0c3db68b.webm" type=video/webm;codecs="vp8,vorbis"" />
   </video>
 </figure>
 <!-- blank line -->
