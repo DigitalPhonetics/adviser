@@ -6,7 +6,7 @@ We present ADVISER - an open-source, multi-domain dialog system toolkit that ena
 <!-- blank line -->
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" preload="auto" data-setup="{'techOrder': ['html5']}">
-    <source src="https://bwsyncandshare.kit.edu/s/NFXDjYngtAeiSQY/download" type="video/mp4" />
+    <source src="https://bwsyncandshare.kit.edu/s/o7JJbi3Qm538oK5/download" type="video/mp4" />
   </video>
 </figure>
 <!-- blank line -->
