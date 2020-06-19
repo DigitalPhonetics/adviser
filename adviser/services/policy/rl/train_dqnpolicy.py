@@ -84,7 +84,7 @@ def train(domain_name: str, log_to_file: bool, seed: int, train_epochs: int, tra
 
     error_free = ds.is_error_free_messaging_pipeline()
     if not error_free:
-        ds.print_local_inconsistencies()
+        ds.print_inconsistencies()
 
     for j in range(train_epochs):
         # START TRAIN EPOCH
