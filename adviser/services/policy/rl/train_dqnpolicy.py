@@ -62,6 +62,9 @@ def train(domain_name: str, log_to_file: bool, seed: int, train_epochs: int, tra
 
     file_log_lvl = LogLevel.DIALOGS if log_to_file else LogLevel.NONE
     logger = DiasysLogger(console_log_lvl=LogLevel.RESULTS, file_log_lvl=file_log_lvl)
+
+    summary_writer = SummaryWriter(log_dir='logs') if use_tensorboard else None
+    
     if buffer_classname == "prioritized":
         buffer_cls = NaivePrioritizedBuffer
     elif buffer_classname == "uniform":
@@ -76,9 +79,10 @@ def train(domain_name: str, log_to_file: bool, seed: int, train_epochs: int, tra
     policy = DQNPolicy(domain=domain, lr=lr, eps_start=eps_start,
                     gradient_clipping=grad_clipping, buffer_cls=buffer_cls,
                     replay_buffer_size=buffer_size, train_dialogs=train_dialogs,
-                    logger=logger)
+                    logger=logger, summary_writer=summary_writer)
     evaluator = PolicyEvaluator(domain=domain, use_tensorboard=use_tensorboard,
-                                experiment_name=domain_name, logger=logger)
+                                experiment_name=domain_name, logger=logger,
+                                summary_writer=summary_writer)
     ds = DialogSystem(services=[user, bst, policy, evaluator], protocol='tcp')
     # ds.draw_system_graph()
 
