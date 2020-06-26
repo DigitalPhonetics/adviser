@@ -116,7 +116,7 @@ def train(domain_name: str, log_to_file: bool, seed: int, train_epochs: int, tra
 
 if __name__ == "__main__":
     # possible test domains
-    domains = ['courses', 'lecturers']
+    domains = ['lecturers']
 
     # command line arguments
     parser = argparse.ArgumentParser()
