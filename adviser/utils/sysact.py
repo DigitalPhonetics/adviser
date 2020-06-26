@@ -69,18 +69,18 @@ class SysAct(object):
                     self._slot_value_dict_to_str(self.slot_values) + \
                     ')'
 
-    def add_value(self, slot, value=None):
+    def add_value(self, slot: str, value=None):
         """ Add a value (or just a slot, if value=None) to the system act """
         if slot not in self.slot_values:
             self.slot_values[slot] = []
         if value is not None:
             self.slot_values[slot].append(value)
 
-    def get_values(self, slot):
+    def get_values(self, slot) -> list:
         """ Return all values for slot
 
         Returns:
-            Dict[str, List[str]]: A list of values for slot or an empy list if there was no value
+            A list of values for slot or an empy list if there was no value
             specified for the given slot
         """
         if slot not in self.slot_values:
