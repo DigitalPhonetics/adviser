@@ -12,6 +12,7 @@ from utils.domain.jsonlookupdomain import JSONLookupDomain
 from services.policy import HandcraftedPolicy
 from services.bst import HandcraftedBST
 from services.simulator.goal import Goal
+from services.simulator.simulator import HandcraftedUserSimulator, Agenda
 
 
 pytest_plugins = ['conftest_superhero']
@@ -39,3 +40,13 @@ def bst(domain):
 @pytest.fixture
 def goal(domain):
     return Goal(domain)
+
+@pytest.fixture
+def agenda():
+    return Agenda()
+
+@pytest.fixture
+def simulator(domain):
+    simulator = HandcraftedUserSimulator(domain)
+    simulator.dialog_start()
+    return simulator

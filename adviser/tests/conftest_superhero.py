@@ -24,6 +24,11 @@ def constraintA():
 
 
 @pytest.fixture
+def constraintA_alt():
+    return {'slot': 'main_superpower', 'value': 'Claws'}
+
+
+@pytest.fixture
 def constraintB():
     return {'slot': 'primary_uniform_color', 'value': 'Black'}
 
