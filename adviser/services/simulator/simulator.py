@@ -274,7 +274,7 @@ class HandcraftedUserSimulator(Service):
         Args:
             sys_act (SysAct): the last system action        
         """
-        # same as inform
+        # same as inform by name
         if self.excluded_venues and self.goal.requests[self.domain.get_primary_key()] is None:
             self._receive_informbyname(sys_act)
         else:
@@ -340,9 +340,9 @@ class HandcraftedUserSimulator(Service):
             self._receive_request(sys_act)
         else:
             assert len(sys_act.slot_values.keys()) == 1, \
-                # NOTE: currently we support only one slot for select action,
-                # but this could be changed in the future
                 "There shall be only one slot in a select action."
+            # NOTE: currently we support only one slot for select action,
+            # but this could be changed in the future
                 
             slot = list(sys_act.slot_values.keys())[0]
             # inform about correct value with some probability
@@ -404,6 +404,7 @@ class HandcraftedUserSimulator(Service):
                     SysAct(act_type=SysActionType.Request, slot_values={slot: None}))
             else:
                 # system's confirm action
+                # NOTE SysActionType Confirm has single value only
                 self._receive_confirm(
                     SysAct(act_type=SysActionType.Confirm, slot_values={slot: [value]}))
 
@@ -647,18 +648,20 @@ class HandcraftedUserSimulator(Service):
         """
         Make sure that there are no unanswered requests/constraints that got turned into requests
         """
-        if not user_actions:
+        requests = [action for action in user_actions if action.type == UserActionType.Request]
+        
+        if not requests:
             # no requests -> system ignored nothing
             return [], []
-
-        requests = [action for action in user_actions if action.type == UserActionType.Request]
+        
         if sys_act.type in [SysActionType.InformByName]:
             requests = [request for request in requests if request.slot not in sys_act.slot_values]
 
         requests_alt = [action for action in user_actions if action.type == UserActionType.RequestAlternatives]
         if sys_act.type == SysActionType.InformByAlternatives:
             offer = sys_act.slot_values[self.domain.get_primary_key()]
-            if offer not in self.excluded_venues:  # and self.goal.requests[self.domain.get_primary_key()] is None:
+
+            if (set(offer) - set(self.excluded_venues)):  # and self.goal.requests[self.domain.get_primary_key()] is None:
                 requests_alt = []
 
         return requests, requests_alt

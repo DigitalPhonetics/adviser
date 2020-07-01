@@ -24,7 +24,7 @@ from typing import Dict, List
 
 
 class SysActionType(Enum):
-    """The type for a system action as used in :class:`SystemAct`."""
+    """The type for a system action as used in :class:`SysAct`."""
 
     Welcome = 'welcomemsg'
     InformByName = 'inform_byname'
