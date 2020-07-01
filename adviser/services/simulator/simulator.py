@@ -340,7 +340,10 @@ class HandcraftedUserSimulator(Service):
             self._receive_request(sys_act)
         else:
             assert len(sys_act.slot_values.keys()) == 1, \
+                # NOTE: currently we support only one slot for select action,
+                # but this could be changed in the future
                 "There shall be only one slot in a select action."
+                
             slot = list(sys_act.slot_values.keys())[0]
             # inform about correct value with some probability
             if common.random.random() < self.parameters['usermodel']['InformOnSelect']:
