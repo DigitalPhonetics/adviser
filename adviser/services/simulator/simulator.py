@@ -735,7 +735,7 @@ class Agenda(object):
         if num_actions < 0 or num_actions > len(self.stack):
             num_actions = len(self.stack)
 
-        return [self.stack.pop() for _ in range(0, num_actions)]
+        return [self.stack.pop() for _ in range(num_actions)]
 
     def clean(self, goal: Goal):
         """Cleans the agenda, i.e. makes sure that actions are consistent with goal and in the
@@ -795,7 +795,7 @@ class Agenda(object):
                 return True
         return False
 
-    def get_actions_of_type(self, act_type=UserActionType, consider_dontcare=True):
+    def get_actions_of_type(self, act_type: UserActionType, consider_dontcare: bool = True):
         """Get actions of a specific type from the agenda.
 
         Args:
