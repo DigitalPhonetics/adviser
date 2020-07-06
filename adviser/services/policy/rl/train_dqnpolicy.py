@@ -58,6 +58,7 @@ def train(domain_name: str, log_to_file: bool, seed: int, train_epochs: int, tra
         Training loop for the RL policy, for information on the parameters, look at the descriptions
         of commandline arguments in the "if main" below
     """
+    seed = seed if seed != -1 else None
     common.init_random(seed=seed)
 
     file_log_lvl = LogLevel.DIALOGS if log_to_file else LogLevel.NONE
@@ -128,7 +129,7 @@ if __name__ == "__main__":
                         help="log training and evaluation metrics to tensorboard")
 
     parser.add_argument("-rs", "--randomseed", default=12345, type=int,
-                        help="seed for random generator initialization")
+                        help="seed for random generator initialization; use -1 for a randomly generated seed")
 
     parser.add_argument("-e", "--epochs", default=8, type=int,
                         help="number of training and evaluation epochs")
