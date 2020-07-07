@@ -12,6 +12,9 @@ from utils.domain.jsonlookupdomain import JSONLookupDomain
 from services.policy import HandcraftedPolicy
 from services.bst import HandcraftedBST
 from services.simulator.goal import Goal
+from services.nlu.nlu import HandcraftedNLU
+from services.nlg.nlg import HandcraftedNLG
+
 
 
 pytest_plugins = ['conftest_superhero']
@@ -39,3 +42,13 @@ def bst(domain):
 @pytest.fixture
 def goal(domain):
     return Goal(domain)
+
+@pytest.fixture
+def nlu(domain):
+	nlu = HandcraftedNLU(domain)
+	return nlu
+
+@pytest.fixture
+def nlg(domain):
+    nlg = HandcraftedNLG(domain)
+    return nlg
