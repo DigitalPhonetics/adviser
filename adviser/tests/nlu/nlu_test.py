@@ -5,7 +5,6 @@ import pytest
 import re
 
 
-
 def get_root_dir():
     return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -14,6 +13,7 @@ from utils.useract import UserActionType, UserAct
 from utils.domain.jsonlookupdomain import JSONLookupDomain
 from services.nlu.nlu import HandcraftedNLU
 from utils.common import Language
+from utils.sysact import SysAct, SysActionType
 
 
 
@@ -66,7 +66,8 @@ def test_match_general_act_bye(nlu):
 	"""
 	nlu.user_acts = []
 	nlu._match_general_act(user_utterance="bye")
-	assert nlu.user_acts == [UserAct("hello", UserActionType.Bye, None, None, 1.0)]
+	expected_user_act = [UserAct("hello", UserActionType.Bye, None, None, 1.0)]
+	assert nlu.user_acts == expected_user_act
 
 
 
@@ -98,23 +99,25 @@ def test_match_general_act_dontcare_empty(nlu):
 	assert nlu.user_acts == []
 
 
-#@PublishSubscribe(sub_topics=["sys_state"])
-#def test_match_general_act_dontcare(nlu, policy, beliefstate):
-	"""
 
-	Tests if general act dontcare is matched properly
+def test_match_general_act_dontcare(nlu, domain):
+    """
 
-	Args:
-		nlu: NlU Object (given in conftest.py)
+    Tests if general act dontcare is matched properly
 
-	"""
-	#nlu.user_acts = []
-	#nlu.sys_act_info['last_act'] = beliefstate.sys_state['last_act']
-	#nlu.lastRequestSlot = "primary_uniform_color"
+    Args:
+        nlu: NlU Object (given in conftest.py)
 
-	#sys_act_info['last_act'].type = SysActionType.Request
-	#nlu._match_general_act(user_utterance="I dont care")
-	#assert nlu.user_acts == [UserAct()]
+    """
+    nlu.__init__(domain)
+    nlu.user_acts = []
+    nlu.sys_act_info['last_act'] = SysAct(act_type=SysActionType.Request, slot_values={"primary_uniform_color": []})
+
+    nlu.lastRequestSlot = "primary_uniform_color"
+
+    nlu._match_general_act(user_utterance="I dont care")
+    expected_user_act = UserAct("", act_type=UserActionType.Inform, slot='primary_uniform_color', value="dontcare", score=1.0)
+    assert nlu.user_acts[0] == expected_user_act
 
 
 
@@ -216,11 +219,7 @@ def test_solve_informable_values(nlu):
 	# TODO UNSURE WHAT AND HOW TO TEST SINCE FUNCTION IS USELESS, I.E. NEVER CALLED, AND CAN BE DELETED
 
 	"""
-	nlu.user_acts = []
-	informed_values = {'ects':'6'}
-
-	nlu._solve_informable_values()
-	assert nlu.user_acts == []
+	pass
 
 
 

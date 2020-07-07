@@ -13,7 +13,8 @@ from services.policy import HandcraftedPolicy
 from services.bst import HandcraftedBST
 from services.simulator.goal import Goal
 from services.nlu.nlu import HandcraftedNLU
-from services.nlg.nlg import HandcraftedNLG
+from services.nlg import HandcraftedNLG
+from services.nlg.affective_nlg import HandcraftedEmotionNLG
 
 from services.simulator.simulator import HandcraftedUserSimulator, Agenda
 
@@ -53,6 +54,11 @@ def nlu(domain):
 def nlg(domain):
     nlg = HandcraftedNLG(domain)
     return nlg
+
+@pytest.fixture
+def aff_nlg(domain):
+    aff_nlg = HandcraftedEmotionNLG(domain)
+    return aff_nlg
 
 def agenda():
     return Agenda()
