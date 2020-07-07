@@ -113,11 +113,11 @@ To see more of the available options, run
     python run_chat.py --help
 
 
-6. OPTIONAL: If you want to use multimodal functionallity, e.g. ASR / TTS/ ..., execute
+6. OPTIONAL: If you want to use multimodal functionallity, e.g. ASR / TTS/ ..., download the models via the script ``download_models.sh`` found in the top level folder
 
 .. code-block:: bash
 
-    git lfs pull
+    sh download_models.sh
    
 NOTE: this also requires you to install ``requirements_multimodal.txt`` in ``step 4``.
 
