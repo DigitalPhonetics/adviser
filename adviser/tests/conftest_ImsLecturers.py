@@ -7,7 +7,7 @@ def get_root_dir():
 
 sys.path.append(get_root_dir())
 
-# Parameters for the domain "superhero" that can be used in the tests. A constraint is a
+# Parameters for the domain "ImsLecturers" that can be used in the tests. A constraint is a
 # slot-value pair that should exist in this domain.
 
 
@@ -16,7 +16,7 @@ def domain_name():
     """
     The name of the domain.
     """
-    return 'superhero'
+    return 'ImsLecturers'
 
 
 @pytest.fixture
@@ -24,7 +24,7 @@ def primkey_constraint():
     """
     Constraint having the primary key of the domain as slot.
     """
-    return {'slot': 'name', 'value': 'Batman'}
+    return {'slot': 'name', 'value': 'george orwell'}
 
 
 @pytest.fixture
@@ -32,7 +32,7 @@ def constraintA():
     """
     Constraint for a system requestable slot.
     """
-    return {'slot': 'main_superpower', 'value': 'Magic'}
+    return {'slot': 'position', 'value': 'professor'}
 
 
 @pytest.fixture
@@ -40,7 +40,7 @@ def constraintA_alt():
     """
     Constraint with the same slot as constraintA, but a different value.
     """
-    return {'slot': 'main_superpower', 'value': 'Claws'}
+    return {'slot': 'position', 'value': 'adviser'}
 
 
 @pytest.fixture
@@ -48,7 +48,7 @@ def constraintB():
     """
     Constraint for a system requestable slot that is different to the slot in constraintA.
     """
-    return {'slot': 'primary_uniform_color', 'value': 'Black'}
+    return {'slot': 'department', 'value': 'foundations'}
 
 
 @pytest.fixture
@@ -57,7 +57,7 @@ def constraint_with_multiple_matches():
     Constraint for a system requestable slot. This constraint matches multiple entries in the
     database.
     """
-    return {'slot': 'main_superpower', 'value': 'Magic'}
+    return {'slot': 'position', 'value': 'professor'}
 
 
 @pytest.fixture
@@ -66,7 +66,7 @@ def constraint_with_single_match():
     Constraint for a system requestable slot. This constraint matches exactly one entry in the
     database.
     """
-    return {'slot': 'main_superpower', 'value': 'Claws'}
+    return {'slot': 'position', 'value': 'adviser'}
 
 
 @pytest.fixture
@@ -75,7 +75,7 @@ def constraint_with_no_match():
     Constraint for a system requestable slot. This constraint matches no entry in the database
     (i.e. the value is not one of the possible values for the slot).
     """
-    return {'slot': 'main_superpower', 'value': 'Fire'}
+    return {'slot': 'position', 'value': 'teacher'}
 
 
 @pytest.fixture
@@ -104,13 +104,14 @@ def entryA():
     One complete entry of the database.
     """
     return {
-        'name': 'Batman',
-        'primary_uniform_color': 'Black',
-        'main_superpower': 'Gadgets',
-        'last_known_location': 'Gotham City',
-        'loyalty': 'He works best alone',
-        'description': 'Some description.',
-        'real_name': 'Bruce Wane'}
+        'name': 'george orwell',
+        'department': 'phonetics',
+        'office_hours': 'Thu., 15:00-16:00',
+        'mail': 'contact@ims.uni-stuttgart.de',
+        'phone': '0711/123456',
+        'room': 'PWR 05B – 02.010',
+        'cap_name': 'George Orwell',
+        'gender': 'male'}
 
 
 @pytest.fixture
@@ -119,10 +120,12 @@ def entryB():
     One complete entry of the database that is different to entryA.
     """
     return {
-        'name': 'Superman',
-        'primary_uniform_color': 'Blue',
-        'main_superpower': 'Strength',
-        'last_known_location': 'Metropolis City',
-        'loyalty': 'Justice League',
-        'description': 'Some description.',
-        'real_name': 'Clark Kent'}
+        'name': 'dr. emily dickinson',
+        'department': 'na',
+        'office_hours': 'by appointment',
+        'mail': 'contact@ims.uni-stuttgart.de',
+        'phone': '0711/123456',
+        'room': 'PWR 05B – 01.006',
+        'cap_name': 'Dr. Emily Dickinson',
+        'gender': 'female'}
+

@@ -15,6 +15,7 @@ from services.simulator.goal import Goal
 from services.nlu.nlu import HandcraftedNLU
 from services.nlg.nlg import HandcraftedNLG
 
+from services.simulator.simulator import HandcraftedUserSimulator, Agenda
 
 
 pytest_plugins = ['conftest_superhero']
@@ -52,3 +53,12 @@ def nlu(domain):
 def nlg(domain):
     nlg = HandcraftedNLG(domain)
     return nlg
+
+def agenda():
+    return Agenda()
+
+@pytest.fixture
+def simulator(domain):
+    simulator = HandcraftedUserSimulator(domain)
+    simulator.dialog_start()
+    return simulator
