@@ -648,6 +648,10 @@ class HandcraftedUserSimulator(Service):
         """
         Make sure that there are no unanswered requests/constraints that got turned into requests
         """
+        if not user_actions:
+            # no user_actions -> system ignored nothing
+            return [], []
+
         requests = [action for action in user_actions if action.type == UserActionType.Request]
         
         if not requests:
