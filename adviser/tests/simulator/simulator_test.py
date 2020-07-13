@@ -272,11 +272,12 @@ def test_receive_with_ignored_alternative_requests(simulator, constraintA):
         constraintA (dict): an existing slot-value pair in the domain (given in
         conftest_<domain>.py)
     """
-    request = UserAct(act_type=UserActionType.RequestAlternatives, slot=constraintA['slot'])
-    simulator.last_user_actions = [request]
+    alt_request = UserAct(act_type=UserActionType.RequestAlternatives, slot=constraintA['slot'])
+    simulator.last_user_actions = [UserAct(act_type=UserActionType.Request, slot=constraintA[
+        'slot']), alt_request]
     simulator.receive(SysAct(act_type=SysActionType.InformByName))
-    assert simulator.agenda.stack[-1] == request
-    assert simulator.num_actions_next_turn == len([request])
+    assert simulator.agenda.stack[-1] == alt_request
+    assert simulator.num_actions_next_turn == len([alt_request])
     assert all(item.type != UserActionType.Request for item in simulator.agenda.stack)
 
 
@@ -737,7 +738,7 @@ def test_receive_confirmrequest_with_missing_values(simulator, constraintA):
         constraintA (dict): an existing slot-value pair in the domain (given in
         conftest_<domain>.py)
     """
-    sys_act = SysAct(act_type=SysActionType.ConfirmRequest, slot_values={constraintA['slot']: []})
+    sys_act = SysAct(act_type=SysActionType.ConfirmRequest, slot_values={constraintA['slot']: None})
     simulator.goal.constraints = [Constraint(constraintA['slot'], constraintA['value'])]
     simulator._receive_confirmrequest(sys_act)
     assert len(simulator.agenda) > 0
@@ -758,8 +759,8 @@ def test_receive_confirmrequest_with_filled_values(simulator, constraintA, const
         constraintA_alt (dict): as constraint A, but with an alternative value (given in
         conftest_<domain>.py)
     """
-    sys_act = SysAct(act_type=SysActionType.ConfirmRequest, slot_values={constraintA['slot']: [constraintA[
-                                                                                        'value']]})
+    sys_act = SysAct(act_type=SysActionType.ConfirmRequest, slot_values={constraintA['slot']: constraintA[
+                                                                                        'value']})
     simulator.goal.constraints = [Constraint(constraintA['slot'], constraintA['value'])]
     simulator.goal.requests = {constraintA_alt['slot']: constraintA_alt['value']}
     simulator._receive_confirmrequest(sys_act)
@@ -1283,11 +1284,13 @@ def test_check_system_ignored_request_for_informbyalternatives(simulator, constr
         primkey_constraint (dict): slot-value pair for a primary key constraint (given in
         conftest_<domain>.py)
     """
-    user_actions = [UserAct(act_type=UserActionType.RequestAlternatives, slot=constraintA['slot'])]
+    alt_request = UserAct(act_type=UserActionType.RequestAlternatives, slot=constraintA['slot'])
+    user_actions = [UserAct(act_type=UserActionType.Request, slot=constraintA['slot']),
+                    alt_request]
     sys_act = SysAct(act_type=SysActionType.InformByAlternatives, slot_values={
         primkey_constraint['slot']: [primkey_constraint['value']]})
     simulator.excluded_venues = [primkey_constraint['value']]
     res = simulator._check_system_ignored_request(user_actions, sys_act)
     assert type(res) == tuple
     assert len(res) == 2
-    assert res[1] == user_actions
+    assert res[1] == [alt_request]
