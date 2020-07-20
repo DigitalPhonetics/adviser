@@ -36,6 +36,7 @@ wheels/
 *.egg
 MANIFEST
 adviser_env/
+adviserenv/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -198,4 +199,7 @@ tools/opensmile-2.3.0/
 
 adviser/tools/opencv*
 adviser/tools/OpenFace
-adviser/tools/cppzmq
+adviser/tools/cppzmq*
+adviser/tools/dlib*
+adviser/tools/zeromq*
+adviser/tools/*.zip

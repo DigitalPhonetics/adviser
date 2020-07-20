@@ -75,7 +75,7 @@ class HandcraftedPolicy(Service):
         self.s_index = 0  # the index in current suggestions for the current system reccomendation
 
     @PublishSubscribe(sub_topics=["beliefstate"], pub_topics=["sys_act", "sys_state"])
-    def choose_sys_act(self, beliefstate: BeliefState = None) \
+    def choose_sys_act(self, beliefstate: BeliefState) \
             -> dict(sys_act=SysAct):
 
         """
@@ -103,6 +103,10 @@ class HandcraftedPolicy(Service):
             sys_state["last_act"] = sys_act
             return {'sys_act': sys_act, "sys_state": sys_state}
 
+        # Handles case where it was the first turn, but there are user acts
+        elif self.first_turn:
+            self.first_turn = False
+
         if self.turns >= self.max_turns:
             sys_act = SysAct()
             sys_act.type = SysActionType.Bye
@@ -125,10 +129,18 @@ class HandcraftedPolicy(Service):
             sys_act.type = SysActionType.RequestMore
         # If user only says hello, request a random slot to move dialog along
         elif UserActionType.Hello in beliefstate["user_acts"] or UserActionType.SelectDomain in beliefstate["user_acts"]:
-            sys_act = SysAct()
-            sys_act.type = SysActionType.Request
-            slot = self._get_open_slot(beliefstate)
-            sys_act.add_value(slot)
+            # as long as there are open slots, choose one randomly
+            if self._get_open_slot(beliefstate):
+                sys_act = SysAct()
+                sys_act.type = SysActionType.Request
+                slot = self._get_open_slot(beliefstate)
+                sys_act.add_value(slot)
+
+            # If there are no more open slots, ask the user if you can help with anything else since
+            # this can only happen in the case an offer has already been made --LV
+            else:
+                sys_act = SysAct()
+                sys_act.type = SysActionType.RequestMore
 
             # If we switch to the domain, start a new dialog
             if UserActionType.SelectDomain in beliefstate["user_acts"]:
