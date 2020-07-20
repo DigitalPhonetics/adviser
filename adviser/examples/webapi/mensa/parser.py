@@ -193,17 +193,6 @@ class MensaParser():
 
         """
 
-		headers = {
-			# 'User-Agent': 'Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:70.0) Gecko/20100101 Firefox/70.0',
-			# 'Accept': '*/*',
-			# 'Accept-Language': 'de,en-US;q=0.7,en;q=0.3',
-			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-			# 'X-Requested-With': 'XMLHttpRequest',
-			# 'Origin': 'http://sws2.maxmanager.xyz',
-			# 'Connection': 'keep-alive',
-			# 'Referer': 'http://sws2.maxmanager.xyz/',
-		}
-
 		date_str = date.strftime('%Y-%m-%d')
 		date_next_week_str = (date + datetime.timedelta(days=7)).strftime('%Y-%m-%d')
 
@@ -218,8 +207,8 @@ class MensaParser():
 		}
 
 		# issue post request
-		response = requests.post('http://sws2.maxmanager.xyz/inc/ajax-php_konnektor.inc.php',\
-			headers=headers, cookies={}, data=data)
+		response = requests.post('https://sws2.maxmanager.xyz/inc/ajax-php_konnektor.inc.php',\
+			headers={}, cookies={}, data=data)
 		tree = html.fromstring(response.content.decode(response.encoding))
 		meals = [self._parse_meal(meal, date.strftime('%A')) for meal in\
 			tree.xpath('//div[contains(@class, "splMeal")]')]
