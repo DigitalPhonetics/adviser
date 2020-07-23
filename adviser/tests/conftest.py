@@ -1,6 +1,6 @@
 import os
 import sys
-import argparse
+import json
 import pytest
 
 def get_root_dir():
@@ -25,6 +25,13 @@ pytest_plugins = ['conftest_superhero']
 @pytest.fixture
 def domain(domain_name):
     return JSONLookupDomain(domain_name)
+
+
+@pytest.fixture
+def ontology(domain_name):
+    return json.load(open(os.path.join(get_root_dir(), 'resources', 'ontologies',
+                                       domain_name + '.json')))
+
 
 @pytest.fixture
 def beliefstate(domain):
