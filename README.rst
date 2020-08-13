@@ -3,7 +3,7 @@
 .. |release| image:: https://img.shields.io/github/v/release/digitalphonetics/adviser?sort=semver
    :target: https://github.com/DigitalPhonetics/adviser/releases
 .. |license| image:: https://img.shields.io/github/license/digitalphonetics/adviser
-   :target: #
+   :target: #license
 .. |nbsp| unicode:: 0xA0
    :trim:
 
