@@ -99,6 +99,10 @@ class MensaDomain(LookupDomain):
     def get_mandatory_slots(self) -> List[str]:
         """ Returns a list of all mandatory slots. """
         return ['day']
+        
+    def get_default_inform_slots(self) -> List[str]:
+        """ Returns a list of all default Inform slots. """
+        return ['name']
 
     def get_possible_values(self, slot: str) -> List[str]:
         """ Returns all possible values for an informable slot
