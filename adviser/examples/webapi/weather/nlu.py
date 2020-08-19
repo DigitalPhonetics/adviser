@@ -84,10 +84,5 @@ class WeatherNLU(Service):
             if match:
                 user_acts.append(UserAct(user_utterance, UserActionType.Inform, 'location', match.group(1)))
 
-        # add request for temperature and description implicitly
-        if len(user_acts) > 0:
-            user_acts.append(UserAct(user_utterance, UserActionType.Request, 'temperature'))
-            user_acts.append(UserAct(user_utterance, UserActionType.Request, 'description'))
-
         self.debug_logger.dialog_turn("User Actions: %s" % str(user_acts))
         return {'user_acts': user_acts}

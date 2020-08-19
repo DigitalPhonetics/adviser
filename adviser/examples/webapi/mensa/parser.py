@@ -218,16 +218,16 @@ class MensaParser():
 
 		return meals
 
-	def _parse_meal(self, meal: str, day: str) -> Meal:
+	def _parse_meal(self, meal: html.HtmlElement, day: str) -> Meal:
 		"""Parse all necessary properties of a meal from html.
 		
 		Args:
-			meal: The string which will be parsed.
+			meal: The html.HtmlElement which will be parsed.
 			day: The day for which this meal is valid.
 		"""
 
 		# name
-		name = meal.xpath('./div[3]/text()')[0].strip()
+		name = meal.xpath('./div[1]/span/text()')[0].strip()
 		# price & quantity
 		div_price =\
 			meal.xpath('./div[4]/div[1]/text()[preceding-sibling::br or following-sibling::br]')

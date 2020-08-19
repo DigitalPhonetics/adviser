@@ -98,6 +98,10 @@ class WeatherDomain(LookupDomain):
     def get_mandatory_slots(self) -> List[str]:
         """ Returns a list of all mandatory slots. """
         return ['location', 'date']
+        
+    def get_default_inform_slots(self) -> List[str]:
+        """ Returns a list of all default Inform slots. """
+        return ['temperature', 'description']
 
     def get_possible_values(self, slot: str) -> List[str]:
         """ Returns all possible values for an informable slot

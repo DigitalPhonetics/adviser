@@ -78,9 +78,6 @@ class MensaNLU(HandcraftedNLU):
                 self.user_acts.append(UserAct(text=user_utterance if user_utterance else "",
                                               act_type=UserActionType.Bad))
 
-        # the name should always be mentioned by the system, so we mock a request for it
-        if self.user_acts:
-            self.user_acts.append(UserAct(user_utterance, UserActionType.Request, 'name'))
         self._assign_scores()
         result['user_acts'] = self.user_acts
         self.logger.dialog_turn("User Actions: %s" % str(self.user_acts))

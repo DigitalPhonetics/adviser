@@ -66,20 +66,20 @@ class LookupDomain(Domain):
         raise NotImplementedError
 
     def get_mandatory_slots(self) -> List[str]:
-        """ Returns a list of all mandatory slots. """
+        """Returns a list of all mandatory slots.
+        
+        Slots are called mandatory if their value is required by the system before it can even
+        generate a candidate list.
+        """
         raise NotImplementedError
 
-    """def has_fixed_number_of_values(self, slot: str) -> bool:
-        "#"" Returns whether or not the given slot has a fixed number of possible values
-
-        Arguments:
-            slot (str) -- name of the slot
-
-        Returns:
-            bool -- true if the given slot has a fixed number of possible
-        "#""
+    def get_default_inform_slots(self) -> List[str]:
+        """Returns a list of all default Inform slots.
+        
+        Default Inform slots are always added to (system) Inform actions, even if the user has not
+        implicitly asked for it. Note that these slots are different from the primary key slot.
+        """
         raise NotImplementedError
-    """
 
     def get_possible_values(self, slot: str) -> List[str]:
         """ Returns all possible values for an informable slot
