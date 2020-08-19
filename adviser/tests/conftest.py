@@ -19,7 +19,12 @@ from services.nlg.affective_nlg import HandcraftedEmotionNLG
 from services.simulator.simulator import HandcraftedUserSimulator, Agenda
 
 
-pytest_plugins = ['conftest_superhero']
+pytest_plugins = ['conftest_superhero', 'conftest_services']
+
+def pytest_configure(config):
+    config.addinivalue_line(
+        "markers", "terminate_topics: mark fixture to use a specific list of terminate topics"
+    )
 
 
 @pytest.fixture
