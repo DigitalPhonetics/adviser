@@ -482,6 +482,10 @@ class HandcraftedPolicy(Service):
             if self.domain_key not in keys:
                 name = self._get_name(belief_state)
                 sys_act.add_value(self.domain_key, name)
+            # Add default Inform slots
+            for slot in self.domain.get_default_inform_slots():
+                if slot not in sys_act.slot_values:
+                    sys_act.add_value(slot, result[slot])
         else:
             sys_act.add_value(self.domain_key, 'none')
 
@@ -550,6 +554,10 @@ class HandcraftedPolicy(Service):
                 self.current_suggestions.append(result)
             result = self.current_suggestions[0]
             sys_act.add_value(self.domain_key, result[self.domain_key])
+            # Add default Inform slots
+            for slot in self.domain.get_default_inform_slots():
+                if slot not in sys_act.slot_values:
+                    sys_act.add_value(slot, result[slot])
         else:
             sys_act.add_value(self.domain_key, 'none')
 

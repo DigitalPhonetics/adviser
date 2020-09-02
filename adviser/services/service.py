@@ -256,6 +256,8 @@ class Service:
         self._control_channel_sub.setsockopt(zmq.SUBSCRIBE, bytes(self._start_topic, encoding="ascii"))
         self._control_channel_sub.setsockopt(zmq.SUBSCRIBE, bytes(self._end_topic, encoding="ascii"))
         self._control_channel_sub.setsockopt(zmq.SUBSCRIBE, bytes(self._terminate_topic, encoding="ascii"))
+        self._control_channel_sub.setsockopt(zmq.SUBSCRIBE, bytes(self._train_topic, encoding="ascii"))
+        self._control_channel_sub.setsockopt(zmq.SUBSCRIBE, bytes(self._eval_topic, encoding="ascii"))
         self._control_channel_sub.connect(f"{self._protocol}://{self._host_addr}:{self._sub_port}")
 
         # setup sender for dialog system control message acknowledgements 
