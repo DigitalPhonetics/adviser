@@ -122,7 +122,7 @@ if __name__ == "__main__":
     # command line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--domain", required=False, choices=domains,
-                        help="restaurants | hotels | modules | courses | lecturers",
+                        help="lecturers",
                         default=domains[0])
     parser.add_argument("-lf", "--logtofile", action="store_true", help="log dialog to filesystem")
     parser.add_argument("-lt", "--logtensorboard", action="store_true",
@@ -159,9 +159,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     assert 0 <= args.epsilon <= 1, "exploration rate has to be between 0 and 1"
 
-    if args.domain == 'courses':
-        domain_name = 'ImsCourses'
-    elif args.domain == 'lecturers':
+    if args.domain == 'lecturers':
         domain_name = 'ImsLecturers'
 
     train(domain_name=domain_name, log_to_file=args.logtofile,
