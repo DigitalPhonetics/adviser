@@ -259,7 +259,7 @@ class PolicyEvaluator(Service):
             return {'num_dialogs': self.epoch_train_dialogs,
                     'turns': sum(self.train_turns) / self.epoch_train_dialogs,
                     'success': float(sum(self.train_success)) / self.epoch_train_dialogs,
-                    'reward': float(sum(self.eval_rewards)) / self.epoch_train_dialogs}
+                    'reward': float(sum(self.train_rewards)) / self.epoch_train_dialogs}
         else:
             return {'num_dialogs': self.epoch_eval_dialogs,
                     'turns': sum(self.eval_turns) / self.epoch_eval_dialogs,
