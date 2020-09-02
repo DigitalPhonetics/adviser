@@ -203,3 +203,6 @@ adviser/tools/cppzmq*
 adviser/tools/dlib*
 adviser/tools/zeromq*
 adviser/tools/*.zip
+
+# models
+adviser/resources/models
