@@ -42,7 +42,7 @@ prompt-toolkit==1.0.14
 protobuf==3.11.3
 PyAudio==0.2.11
 pycparser==2.20
-Pygments==2.6.1
+Pygments==2.7.4
 PyInquirer==1.0.3
 pynput==1.6.8
 pyobjc-core==6.2; platform_system == "Darwin"
