@@ -14,7 +14,7 @@ MarkupSafe==1.1.1
 numpy==1.18.3
 prompt-toolkit==1.0.14
 protobuf==3.11.3
-Pygments==2.6.1
+Pygments==2.7.4
 PyInquirer==1.0.3
 python-engineio==3.12.1
 python-socketio==4.5.1
