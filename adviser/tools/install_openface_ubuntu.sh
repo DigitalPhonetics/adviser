@@ -1,3 +1,4 @@
+#!/bin/bash
 # install dependencies & tools
 sudo apt-get install build-essential
 sudo apt-get install g++-8
