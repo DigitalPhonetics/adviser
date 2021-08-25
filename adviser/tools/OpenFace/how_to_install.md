@@ -1,6 +1,6 @@
 # How to install OpenFace (required by engagement tracking service)
 
-* IF YOU RUN UBUNTU (tested on 20.04), just go to the `adviser/tools/` folder and run `sh install_openface_ubuntu.txt`
+* IF YOU RUN UBUNTU (tested on 20.04), just go to the `adviser/tools/` folder and run `./install_openface_ubuntu.sh`
     * ignore the rest of this document, it should work at this point
 
 * IF YOU DON'T RUN UBUNTU, please try to follow this approximate guide
