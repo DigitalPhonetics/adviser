@@ -70,6 +70,9 @@ def load_gui():
     if not os.path.isdir(os.path.join(webui_folder, 'node_modules')):
         print("INFO: Couldn't find node dependencies - trying to install...")
         subprocess.run(["npm", "install"], cwd=webui_folder, capture_output=True)
+
+        print("INFO: updating npm ...")
+        subprocess.run(["npm", "update"], cwd=webui_folder, capture_output=True)
     if not os.path.isdir(os.path.join(webui_folder, 'node_modules')):
         print(
             "ERROR: Could not install node dependencies. Make sure node and npm are installed on your machine and you have rights to install node modules via npm.")
