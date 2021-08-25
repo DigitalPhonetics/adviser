@@ -61,8 +61,8 @@ class VideoInput(Service):
             ret, frame = self.cap.read()
             # Our operations on the frame come here
             if ret:
-                # rgb_img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                self.publish_img(rgb_img=frame)
+                rgb_img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                self.publish_img(rgb_img=rgb_img)
 
             end_time = datetime.datetime.now()
             time_diff = end_time - start_time
