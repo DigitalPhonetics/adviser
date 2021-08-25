@@ -60,7 +60,7 @@ class EngagementTracker(Service):
         self.openface_endpoint = ctx.socket(zmq.PAIR)
         self.openface_endpoint.bind(f"tcp://127.0.0.1:{self.openface_port}")
 
-        startExtraction = f"{os.path.join(get_root_dir(), 'tools/OpenFace/build/bin/FaceLandmarkVidZMQ')} -device {self.camera_id} -port 6004"    # todo config open face port
+        startExtraction = f"{os.path.join(get_root_dir(), 'tools/OpenFace/build/bin/FaceLandmarkVid')} -device {self.camera_id} -port 6004"    # todo config open face port
         self.p_openface = subprocess.Popen(startExtraction.split(), stdout=subprocess.PIPE)	# start OpenFace
         self.extracting = False
         self.extractor_thread = None
