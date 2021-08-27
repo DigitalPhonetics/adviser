@@ -231,7 +231,7 @@ class AgeGender(Service):
         ages, genders = self.request_inference(embeddings)
 
         self.logger.info(f"ages found: {ages}")
-        self.logger.info(f"genders found: {ages}")
+        self.logger.info(f"genders found: {genders}")
 
         return {'ages': ages, 'genders': genders}
 
