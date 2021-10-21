@@ -158,6 +158,9 @@ if __name__ == "__main__":
     # TODO option for video
     # TODO option for multiple consecutive dialogs 
     args = parser.parse_args()
+    # NOTE QA domain is currently disabled due to outdated dependencies
+    if 'qa' in args.domains:
+        raise NotImplementedError("The QA domain is currently disabled due to outdated dependencies (see https://github.com/DigitalPhonetics/adviser/issues/27).")
     if args.bc and not args.asr:
         parser.error("--bc: Backchannel requires ASR (--asr) option")
 
