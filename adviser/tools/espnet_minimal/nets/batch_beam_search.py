@@ -142,7 +142,7 @@ class BatchBeamSearch(BeamSearch):
             weighted_scores += self.weights[k] * scores[k]
         for k in self.part_scorers:
             weighted_scores[part_ids] += self.weights[k] * part_scores[k]
-        weighted_scores += running_hyps.score.unsqueeze(1)
+        weighted_scores += running_hyps.score.to(x.device).unsqueeze(1)
 
         # TODO(karita): do not use list. use batch instead
         # update hyps
