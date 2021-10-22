@@ -14,7 +14,7 @@
         * dlib (install via package manager)
         * OpenBLAS (install via package manager)
         * wget (install via package manager)
-        * libzmq (install via package manager, or follow https://github.com/zeromq/libzmq)
+        * libzmq (install via package manager, or follow https://github.com/zeromq/libzmq, MAC: `brew install zeromq)`
         * cppzmq (included on ubuntu if you installed libzmq via 'sudo apt install libzmq3-dev', otherwise follow https://github.com/zeromq/cppzmq)
         * opencv-4.1.0 (install via package manager / dowload source from https://github.com/opencv/opencv/archive/4.1.0.zip)
             * together with opencv_contrib-4.1.0 (install via package manager / download source from https://github.com/opencv/opencv_contrib/archive/4.1.0.zip)
@@ -45,7 +45,7 @@
         * `sh download_models.sh`
         * NOTE: the following paths assume `tools/OpenFace` as your current folder
         * check that `build/bin/model/patch_experts` contains `cen_patches_*.dat` files. If not, copy them from `lib/local/LandmarkDetector/model/patch_experts`
-        * copy `lib/local/3rdParty/OpenCV/classifiers` to `build/bin`
+        * copy `lib/3rdParty/OpenCV/classifiers` to `build/bin`
         * verify installation by running `./tools/OpenFace/build/bin/FaceLandmarkVid -device 0` (or replace 0 with the desired camera device number)
 
 
