@@ -1,11 +1,11 @@
 # install dependencies & tools
-sudo apt-get install build-essential
-sudo apt-get install g++-8
-sudo apt-get install cmake
-sudo apt-get install libopenblas-dev
-sudo apt-get install git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
-sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libdc1394-22-dev
-sudo apt-get install libboost-all-dev
+sudo apt-get install -y build-essential
+sudo apt-get install -y g++-8
+sudo apt-get install -y cmake
+sudo apt-get install -y libopenblas-dev
+sudo apt-get install -y git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
+sudo apt-get install -y python3-dev python3-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libdc1394-22-dev
+sudo apt-get install -y libboost-all-dev
 # get, compile + install opencv 4.1
 wget https://github.com/opencv/opencv/archive/4.1.0.zip
 unzip 4.1.0.zip
@@ -41,7 +41,7 @@ unzip v4.6.0.zip
 cd cppzmq-4.6.0/
 mkdir build
 cd build
-cmake ..
+cmake -DCPPZMQ_BUILD_TESTS=OFF ..
 sudo make -j4 install
 cd ../..
 # get openface, don't overwrite existing files, compile
@@ -50,7 +50,7 @@ wget https://github.com/TadasBaltrusaitis/OpenFace/archive/OpenFace_2.2.0.zip
 unzip OpenFace_2.2.0.zip
 cp -r -n OpenFace-OpenFace_2.2.0/* OpenFace
 rm -rf OpenFace-OpenFace_2.2.0
-rm OpenFace_2.2.0.zip 
+rm OpenFace_2.2.0.zip
 cd OpenFace
 mkdir build
 cd build
