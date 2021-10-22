@@ -104,6 +104,22 @@ class HandcraftedNLU(Service):
         self.language = Language.ENGLISH
         self._initialize()
 
+    def dialog_start(self) -> dict:
+        """
+        Sets the previous system act as None.
+        This function is called when the dialog starts
+
+        Returns:
+            Empty dictionary
+
+        """
+        self.sys_act_info = {
+            'last_act': None, 'lastInformedPrimKeyVal': None, 'lastRequestSlot': None}
+        self.user_acts = []
+        self.slots_informed = set()
+        self.slots_requested = set()
+        self.req_everything = False
+
     @PublishSubscribe(sub_topics=["user_utterance"], pub_topics=["user_acts"])
     def extract_user_acts(self, user_utterance: str = None) -> dict(user_acts=List[UserAct]):
 
@@ -135,6 +151,7 @@ class HandcraftedNLU(Service):
             self._match_domain_specific_act(user_utterance)
 
         self._solve_informable_values()
+
 
         # If nothing else has been matched, see if the user chose a domain; otherwise if it's
         # not the first turn, it's a bad act
@@ -387,17 +404,6 @@ class HandcraftedNLU(Service):
             # Since the user acts are matched, they get 1.0 as score
             self.user_acts[i].score = 1.0
 
-    def start_dialog(self) -> dict:
-        """
-        Sets the previous system act as None.
-        This function is called when the dialog starts
-
-        Returns:
-            Empty dictionary
-
-        """
-        self.sys_act_info = {
-            'last_act': None, 'lastInformedPrimKeyVal': None, 'lastRequestSlot': None}
 
     def _disambiguate_co_occurrence(self, beliefstate: BeliefState):
         # Check if there is user inform and request occur simultaneously for a binary slot

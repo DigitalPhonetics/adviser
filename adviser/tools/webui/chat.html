@@ -1,0 +1,176 @@
+<html>
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<!-- jquery -->
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+<style>
+    .footer
+    {
+        position: absolute;
+        bottom:30px;
+        left:0px;
+        right:0px;
+        height:50px;
+        margin-bottom:0px;
+        display: flex;
+    }
+    .messagebox
+    {
+        padding: 35px;
+        height: calc(100vh - 100px);
+        overflow-y: auto;
+    }
+    .speech-bubble-system {
+        position: relative;
+        background: #02beff;
+        border-radius: .4em;
+        text-align: left;
+        width: auto;
+        float: left;
+        clear: both;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        padding-bottom: 5px;
+    }
+    .speech-bubble-system:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 0;
+        height: 0;
+        border: 21px solid transparent;
+        border-right-color: #02beff;
+        border-left: 0;
+        border-top: 0;
+        margin-top: -10.5px;
+        margin-left: -21px;
+    }
+    .speech-bubble-user {
+        position: relative;
+        background: #eeeeee;
+        border-radius: .4em;
+        text-align: right;
+        float: right;
+        clear: both;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    .speech-bubble-user:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        width: 0;
+        height: 0;
+        border: 21px solid transparent;
+        border-left-color: #eeeeee;
+        border-right: 0;
+        border-top: 0;
+        margin-top: -10.5px;
+        margin-right: -21px;
+    }
+    .message {
+        padding: 5px;
+        color: black;
+    }
+    .system {
+        margin-left: 5px;
+        margin-right: 5px;
+        margin-top: 5px;
+        background: rgb(252, 252, 252);
+        border-radius: .4em;
+        padding: 5px;
+    }
+</style>
+
+<script>
+    var messages = [];
+    const socket = new WebSocket("ws://127.0.0.1:21512/ws");
+    socket.onmessage = (msg) => {
+        console.log('got message')
+        addSystemMessage([{content: msg.data}]);
+    }
+    socket.onopen = (event) => {
+        console.log('connected');
+        startDialog();
+    };
+
+    function startDialog() {
+        messages = [];
+        socket.send(JSON.stringify({
+            topic: "start_dialog",
+        }));
+        console.log('sent start_dialog');
+    }
+
+    function addUserMessage(query) {
+        /*
+        Adds a new messagebox to the message list
+
+        Args:
+            query (String): the user query
+        */
+        $("#messagelist").append(`
+            <div class="speech-bubble-user">
+                <div class="message">${query}</div>
+            </div>
+        `);
+    }
+
+    function addSystemMessage(msg_list) {
+        /*
+        Adds a new messagebox to the message list
+
+        Args:
+            qa_list (List[{question: str, answer: str}]): the user query
+        */
+        var sys_msg = '<div class="speech-bubble-system">'
+        msg_list.forEach((msg) => {
+            sys_msg += `<div class="system">
+				${JSON.parse(msg.content).msg}
+                </div>
+            `;
+        });
+        sys_msg += '</div></div>';
+        $("#messagelist").append(sys_msg);
+    }
+
+    function sendMessage(event) {
+        console.log('sending msg', socket);
+        let user_input = $("#userinput").val();
+        // send query, receive and render answer
+        addUserMessage(user_input);
+
+        socket.send(JSON.stringify({
+            topic: 'gen_user_utterance',
+            msg: user_input,
+        }));
+
+        $("#messagelist").animate({ scrollTop: $('#messagelist').prop("scrollHeight")}, 500); // scroll to newest message
+        $('#userinput').val(""); // reset text
+    }
+
+    function enterKeyDown(e) {
+        if(e.key === "Enter") {
+            sendMessage();
+        }
+    }
+</script>
+
+<body>
+    <div id="messagelist" class="messagebox"></div>
+    <div class="footer">
+        <input id="userinput" placeholder="Enter your message here" style="flex:1; display:block;" onkeydown="enterKeyDown(event)"/>
+        <button type="button" class="btn btn-primary" onclick="sendMessage(event)" style="background: #02beff; border: 0">Send</button>
+    </div>
+  
+</body>
+
+</html>

@@ -39,6 +39,9 @@ class BeliefState:
     def __init__(self, domain: JSONLookupDomain):
         self.domain = domain
         self._history = [self._init_beliefstate()]
+    
+    def dialog_start(self):
+        self._history = [self._init_beliefstate()]
 
     def __getitem__(self, val):  # for indexing
         # if used with numbers: int (e.g. state[-2]) or slice (e.g. state[3:6])

@@ -63,21 +63,8 @@ def load_bachchannel():
     return [backchanneler]
 
 def load_gui():
-    import subprocess
-    from services.service import RemoteService
-    # install node modules if missing
-    webui_folder = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "tools", "webui"))
-    if not os.path.isdir(os.path.join(webui_folder, 'node_modules')):
-        print("INFO: Couldn't find node dependencies - trying to install...")
-        subprocess.run(["npm", "install"], cwd=webui_folder, capture_output=True)
-    if not os.path.isdir(os.path.join(webui_folder, 'node_modules')):
-        print(
-            "ERROR: Could not install node dependencies. Make sure node and npm are installed on your machine and you have rights to install node modules via npm.")
-        exit()
-    guiserver_proc = subprocess.Popen(["python", "services/hci/gui.py"], stdout=subprocess.PIPE,
-                                      stderr=subprocess.STDOUT)
-    subprocess.Popen(["npm", "run", "start", "--silent"], cwd=webui_folder)
-    return RemoteService(identifier="GUIServer"), guiserver_proc
+    from services.hci.gui import GUIServer
+    return GUIServer()
 
 def load_nlg(backchannel: bool, domain = None):
     if backchannel:
@@ -164,7 +151,7 @@ if __name__ == "__main__":
     if args.bc and not args.asr:
         parser.error("--bc: Backchannel requires ASR (--asr) option")
 
-    num_dialogs = 1
+    num_dialogs = 100
     domains = []
     services = []
 
@@ -210,7 +197,7 @@ if __name__ == "__main__":
     # load HCI interfaces
     gui_server_prochandle = None
     if args.gui:
-        gui_service, gui_server_prochandle = load_gui()
+        gui_service= load_gui()
         services.append(gui_service)
         num_dialogs += 1  # FIXME: temporary workaround - server always sends 2 gen_user_utterances in the beginning
     else:
@@ -233,22 +220,42 @@ if __name__ == "__main__":
     if args.debug:
         ds.draw_system_graph()
 
-    # run dialog(s)
-    try:
-        for _ in range(num_dialogs):  
-            ds.run_dialog({'gen_user_utterance': ""})
-        # free resources
-        ds.shutdown()
-    except:
-        import traceback
 
-        print("##### EXCEPTION #####")
-        traceback.print_exc()
-        if gui_server_prochandle:
-            gui_server_prochandle.kill()
-    finally:
-        if gui_server_prochandle:
-            for line in gui_server_prochandle.stdout:
-                print(line.decode().strip())
-            for line in gui_server_prochandle.stderr:
-                print(line.decode().strip())
+    if args.gui:
+        # run dialogs in webui
+        import tornado
+        import tornado.websocket
+        import json
+        from utils.topics import Topic
+        class SimpleWebSocket(tornado.websocket.WebSocketHandler):
+            def open(self, *args):
+                gui_service.websocket = self
+        
+            def on_message(self, message):
+                data = json.loads(message)
+                # check token validity
+                topic = data['topic']
+                if topic == 'start_dialog':
+                    ds._start_dialog({"gen_user_utterance": ""})
+                elif topic == 'gen_user_utterance':
+                    gui_service.user_utterance(message=data['msg'])
+
+            def check_origin(self, *args, **kwargs):
+                # allow cross-origin
+                return True
+
+        app = tornado.web.Application([ (r"/ws", SimpleWebSocket)])
+        app.listen(21512)
+        tornado.ioloop.IOLoop.current().start()
+    else:
+        # run dialogs in terminal
+        try:
+            for _ in range(num_dialogs): 
+                ds.run_dialog({'gen_user_utterance': ""})
+            # free resources
+            ds.shutdown()
+        except:
+            import traceback
+
+            print("##### EXCEPTION #####")
+            traceback.print_exc()
