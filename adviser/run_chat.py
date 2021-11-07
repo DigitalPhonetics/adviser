@@ -115,8 +115,6 @@ def load_qa_domain():
     from examples.qa.worldknowledge.policyqa import QaPolicy
     from examples.qa.worldknowledge.multinlg import MultiNLG
     from services.service import DialogSystem
-    from utils.domain.jsonlookupdomain import JSONLookupDomain
-    from utils.logger import DiasysLogger, LogLevel
 
     domain = WorldKnowledgeDomain()
     qa_nlu = QuestionParser(domain=domain)
@@ -195,7 +193,6 @@ if __name__ == "__main__":
         services.extend(qa_services)
 
     # load HCI interfaces
-    gui_server_prochandle = None
     if args.gui:
         gui_service= load_gui()
         services.append(gui_service)
@@ -226,7 +223,6 @@ if __name__ == "__main__":
         import tornado
         import tornado.websocket
         import json
-        from utils.topics import Topic
         class SimpleWebSocket(tornado.websocket.WebSocketHandler):
             def open(self, *args):
                 gui_service.websocket = self

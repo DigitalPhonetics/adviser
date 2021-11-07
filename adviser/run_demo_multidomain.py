@@ -24,7 +24,10 @@ This module runs the demo with speech
 import os
 import subprocess
 
-from services.service import RemoteService
+
+import tornado
+import tornado.websocket
+import json
 from examples.webapi.mensa import MensaDomain, MensaNLU
 from examples.webapi.weather import WeatherNLU, WeatherNLG, WeatherDomain
 from services.policy.policy_api import HandcraftedPolicy as PolicyAPI
@@ -44,6 +47,7 @@ from services.nlg import HandcraftedEmotionNLG
 from services.nlu import HandcraftedNLU
 from services.policy import HandcraftedPolicy
 from services.policy.affective_policy import EmotionPolicy
+from services.hci.gui import GUIServer
 from services.service import DialogSystem
 from utils.domain.jsonlookupdomain import JSONLookupDomain
 from utils.logger import DiasysLogger, LogLevel
@@ -73,11 +77,6 @@ speech_in_decoder = SpeechInputDecoder(conversation_log_dir=conversation_log_dir
 d_tracker = DomainTracker(domains=[lecturers, weather, mensa], greet_on_first_turn=True)
 speech_in_feature_extractor = SpeechInputFeatureExtractor()
 
-# feature processing
-engagement = EngagementTracker()
-emotion = EmotionRecognition()
-ust = HandcraftedUST()
-affective_policy = EmotionPolicy()
 
 # lecturer specific modules
 lect_nlu = HandcraftedNLU(domain=lecturers)
@@ -96,21 +95,8 @@ weather_policy = PolicyAPI(domain=weather)
 
 backchanneler = AcousticBackchanneller()
 
-
-# install node modules if missing
-webui_folder = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "tools", "webui"))
-if not os.path.isdir(os.path.join(webui_folder, 'node_modules')):
-    print("INFO: Couldn't find node dependencies - trying to install...")
-    subprocess.run(["npm", "install"], cwd=webui_folder, capture_output=True)
-if not os.path.isdir(os.path.join(webui_folder, 'node_modules')):
-    print(
-        "ERROR: Could not install node dependencies. Make sure node and npm are installed on your machine and you have rights to install node modules via npm.")
-    exit()
-subprocess.Popen(["npm", "run", "start",  "--silent"], cwd=webui_folder) # NOTE: if you see no messages in the browser app, comment out this line 
-                                                                         # and run `npm run start` from `tools/webui` before executing this script
-guiserver_proc = subprocess.Popen(["python", "services/hci/gui.py"], stdout=subprocess.PIPE,
-                                   stderr=subprocess.STDOUT)
-webui = RemoteService(identifier="GUIServer")
+# gui module
+gui_service = GUIServer()
 
 # mensa specific modules
 mensa_nlu = MensaNLU(domain=mensa)
@@ -123,8 +109,16 @@ mensa_policy = PolicyAPI(domain=mensa)
 speech_out_generator = SpeechOutputGenerator(domain="", use_cuda=False)  # (GPU: 0.4 s/per utterance, CPU: 11 s/per utterance)
 speech_out_player = SpeechOutputPlayer(domain="", conversation_log_dir=conversation_log_dir)
 
-# start the recording listener
-recorder.start_recorder()
+
+# feature processing
+emotion = EmotionRecognition()
+ust = HandcraftedUST()
+affective_policy = EmotionPolicy()
+
+import time
+time.sleep(5)
+engagement = EngagementTracker()
+time.sleep(5)
 
 # create a dialogsystem from the modules
 ds = DialogSystem(
@@ -132,7 +126,7 @@ ds = DialogSystem(
               user_in,
               recorder,
               backchanneler,
-              webui,
+              gui_service,
               speech_in_feature_extractor,
               speech_in_decoder,
               engagement,
@@ -163,7 +157,25 @@ if not error_free:
     ds.print_inconsistencies()
 ds.draw_system_graph()
 
-# start dialog
-for _ in range(1):
-    ds.run_dialog({'gen_user_utterance': ""})
-ds.shutdown()
+# start the recording listener
+recorder.start_recorder()
+class SimpleWebSocket(tornado.websocket.WebSocketHandler):
+    def open(self, *args):
+        gui_service.websocket = self
+
+    def on_message(self, message):
+        data = json.loads(message)
+        # check token validity
+        topic = data['topic']
+        if topic == 'start_dialog':
+            ds._start_dialog({"gen_user_utterance": ""})
+        elif topic == 'gen_user_utterance':
+            gui_service.user_utterance(message=data['msg'])
+
+    def check_origin(self, *args, **kwargs):
+        # allow cross-origin
+        return True
+
+app = tornado.web.Application([ (r"/ws", SimpleWebSocket)])
+app.listen(21512)
+tornado.ioloop.IOLoop.current().start()
