@@ -1,8 +1,6 @@
 import asyncio
 import functools
 from multiprocessing import Queue, Process, Manager
-from message_codes import MessageCode
-from uri import URI
 import websockets
 import random
 from typing import Dict, Iterable, List, Tuple, Union
@@ -10,8 +8,9 @@ import json
 import traceback
 import logging
 import logging.handlers
-import sys
 
+from services.backend.message_codes import MessageCode
+from services.backend.uri import URI
 """
 Supported serialization formats:
 * JSON: yes -> wamp.2.json, UTF8 encoded payload
@@ -190,16 +189,16 @@ class Router:
 		except:
 			raise Exception(f"Published topic {topic} is not a valid uri")
 		self.logger.info(f'publishing {topic}')
-		
+
 		# forward es event to each subscriber
 		publication_id = random.randint(1, 2**53)
-		if topic in self.topic_subscribers:
-			for subscribe_topic in self.topic_subscribers:
-				if subscribe_topic.startswith(topic):
-					for sub_socket in self.topic_subscribers[subscribe_topic]:
-						self.logger.info(f"publishing to {topic}, {self.topic_subscribers[subscribe_topic]}")
-						msg = f"[{MessageCode.EVENT.value},{self.topic_to_subscription_id[topic]},{publication_id}" + ",{}" + serialized_msg[start_idx:]
-						asyncio.create_task(sub_socket.send(msg))
+		for subscribe_topic in self.topic_subscribers:
+			self.logger.info(f"{subscribe_topic}, {topic}")
+			if subscribe_topic.startswith(topic):
+				for sub_socket in self.topic_subscribers[subscribe_topic]:
+					self.logger.info(f"publishing to {subscribe_topic}, {self.topic_subscribers[subscribe_topic]}")
+					msg = f"[{MessageCode.EVENT.value},{self.topic_to_subscription_id[subscribe_topic]},{publication_id}" + ",{}" + serialized_msg[start_idx:]
+					asyncio.create_task(sub_socket.send(msg))
 
 
 	async def msg_loop(self, websocket: websockets.WebSocketServerProtocol, path: str, clients_to_connect: list):

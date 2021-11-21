@@ -104,7 +104,7 @@ class HandcraftedNLU(Service):
         self.language = Language.ENGLISH
         self._initialize()
 
-    def dialog_start(self) -> dict:
+    async def dialog_start(self) -> dict:
         """
         Sets the previous system act as None.
         This function is called when the dialog starts
@@ -136,6 +136,7 @@ class HandcraftedNLU(Service):
                                             containing a list of user actions
         """
         result = {}
+        self.logger.info("\n\n\n\n\n NLU \n\n\n\n\n")
 
         # Setting request everything to False at every turn
         self.req_everything = False
@@ -164,8 +165,8 @@ class HandcraftedNLU(Service):
                 self.user_acts.append(UserAct(text=user_utterance if user_utterance else "",
                                               act_type=UserActionType.Bad))
         self._assign_scores()
-        self.logger.dialog_turn("User Actions: %s" % str(self.user_acts))
-        result['user_acts'] = self.user_acts
+        self.logger.info("User Actions: %s" % str(self.user_acts))
+        result['user_acts'] = [act.toDict() for act in self.user_acts]
 
         return result
 
@@ -176,7 +177,7 @@ class HandcraftedNLU(Service):
         if "lastRequestSlot" in sys_state:
             self.sys_act_info['last_request'] = sys_state['lastRequestSlot']
         if "last_act" in sys_state:
-            self.sys_act_info['last_act'] = sys_state['last_act']
+            self.sys_act_info['last_act'] = SysAct.fromDict(sys_state['last_act'])
 
     def _match_general_act(self, user_utterance: str):
         """

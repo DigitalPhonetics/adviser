@@ -53,7 +53,7 @@ class HandcraftedUST(Service):
         self.us["emotion"] = emotion
         return {'userstate': self.us}
 
-    def dialog_start(self):
+    async def dialog_start(self):
         """
             Resets the user state so it is ready for a new dialog
         """

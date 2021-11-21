@@ -40,7 +40,7 @@ class BeliefState:
         self.domain = domain
         self._history = [self._init_beliefstate()]
     
-    def dialog_start(self):
+    async def dialog_start(self):
         self._history = [self._init_beliefstate()]
 
     def __getitem__(self, val):  # for indexing
@@ -64,6 +64,9 @@ class BeliefState:
 
     def __contains__(self, val):  # assume
         return val in self._history[-1]
+
+    def toDict(self):
+        return self._history[-1]
 
     def _recursive_repr(self, sub_dict, indent=0):
         # if isinstance(sub_dict, type(None)):
@@ -240,3 +243,4 @@ class BeliefState:
                         discriminable = True
                         break
         return num_matches, discriminable
+

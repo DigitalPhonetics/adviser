@@ -64,6 +64,14 @@ class UserAct(object):
         self.value = value
         self.score = score
 
+    def toDict(self):
+        return {"UserAct": {"text": self.text, "type": self.type.value, "slot": self.slot, "value": self.value, "score": self.score}}
+
+    @classmethod
+    def fromDict(self, dict_instance):
+        inner = dict_instance['UserAct']
+        return UserAct(text=inner['text'], act_type=UserActionType(inner['type']), slot=inner['slot'], value=inner['value'], score=inner['score'])
+
     def __repr__(self):
         return "UserAct(\"{}\", {}, {}, {}, {})".format(
             self.text, self.type, self.slot, self.value, self.score)

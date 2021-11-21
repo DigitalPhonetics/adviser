@@ -80,5 +80,5 @@ class MensaNLU(HandcraftedNLU):
 
         self._assign_scores()
         result['user_acts'] = self.user_acts
-        self.logger.dialog_turn("User Actions: %s" % str(self.user_acts))
+        self.logger.info("User Actions: %s" % str(self.user_acts))
         return result

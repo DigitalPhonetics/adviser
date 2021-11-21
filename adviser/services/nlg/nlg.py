@@ -50,10 +50,11 @@ class HandcraftedNLG(Service):
         language (Language): the language of the dialogue
     """
     def __init__(self, domain: Domain, template_file: str = None, sub_topic_domains: Dict[str, str] = {},
+                 pub_topic_domains: Dict[str, str] = {"sys_utterance": ""},
                  logger: DiasysLogger = DiasysLogger(), template_file_german: str = None,
                  language: Language = None):
         """Constructor mainly extracts methods and rules from the template file"""
-        Service.__init__(self, domain=domain, sub_topic_domains=sub_topic_domains)
+        Service.__init__(self, domain=domain, sub_topic_domains=sub_topic_domains, pub_topic_domains=pub_topic_domains)
 
         self.language = language if language else Language.ENGLISH
         self.template_english = template_file
@@ -78,7 +79,7 @@ class HandcraftedNLG(Service):
         Returns:
             dict: a dict containing the system utterance
         """
-        return {'sys_utterance': self.generate_system_utterance(sys_act)}
+        return {'sys_utterance': self.generate_system_utterance(SysAct.fromDict(sys_act))}
 
 
     def generate_system_utterance(self, sys_act: SysAct = None) -> str:
@@ -108,7 +109,7 @@ class HandcraftedNLG(Service):
             self.logger.info("System Action: " + str(sys_act.type)
                              + " - Slots: " + str(sys_act.slot_values))
 
-        # self.logger.dialog_turn("System Action: " + message)
+        # self.logger.info("System Action: " + message)
         return message
 
 

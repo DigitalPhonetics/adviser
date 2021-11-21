@@ -22,6 +22,7 @@ import math
 import os
 import sys
 import time
+from typing import Dict
 
 from services.service import PublishSubscribe
 from services.service import Service
@@ -46,7 +47,7 @@ class ConsoleInput(Service):
         # if self.language is None:
         #     self.language = self._set_language()
 
-    def dialog_start(self):
+    async def dialog_start(self):
         self.interaction_count = 0
 
     @PublishSubscribe(sub_topics=[Topic.DIALOG_END], pub_topics=["gen_user_utterance"])
@@ -60,6 +61,8 @@ class ConsoleInput(Service):
         Returns:
             dict: a dict containing the user utterance
         """
+
+        self.logger.info("\n\n\n\n\n\n CONSOLE IN \n\n\n\n\n\n")
         if dialog_end:
             return
 
@@ -128,6 +131,8 @@ class ConsoleOutput(Service):
         Raises:
             ValueError: if there is no system utterance to print
         """
+        self.logger.info("\n\n\n\n\n CONSOLE OUT \n\n\n\n\n\n")
+
         if sys_utterance is not None and sys_utterance != "":
             print("System: {}".format(sys_utterance))
         else:

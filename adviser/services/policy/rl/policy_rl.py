@@ -523,7 +523,7 @@ class RLPolicy(object):
 
         self.last_sys_act = self.expand_system_action(sys_act_idx, beliefstate)
         if self.logger:
-            self.logger.dialog_turn("system action > " + str(self.last_sys_act))
+            self.logger.info("system action > " + str(self.last_sys_act))
         self._update_system_belief(beliefstate, self.last_sys_act)
 
         turn_reward = self.evaluator.get_turn_reward()
@@ -538,7 +538,7 @@ class RLPolicy(object):
         hello_action.type = SysActionType.Welcome
         self.last_sys_act = hello_action
         if self.logger:
-            self.logger.dialog_turn("system action > " + str(hello_action))
+            self.logger.info("system action > " + str(hello_action))
         return {'sys_act': hello_action}
 
     def end_dialog(self, sim_goal: Goal):

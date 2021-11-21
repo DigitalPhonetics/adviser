@@ -65,7 +65,7 @@ class HandcraftedPolicy(Service):
         self.logger = logger
         self.max_turns = max_turns
 
-    def dialog_start(self):
+    async def dialog_start(self):
         """
             resets the policy after each dialog
         """
@@ -100,8 +100,8 @@ class HandcraftedPolicy(Service):
             self.first_turn = False
             sys_act = SysAct()
             sys_act.type = SysActionType.Welcome
-            sys_state["last_act"] = sys_act
-            return {'sys_act': sys_act, "sys_state": sys_state}
+            sys_state["last_act"] = sys_act.toDict()
+            return {'sys_act': sys_act.toDict(), "sys_state": sys_state}
 
         # Handles case where it was the first turn, but there are user acts
         elif self.first_turn:
@@ -110,8 +110,8 @@ class HandcraftedPolicy(Service):
         if self.turns >= self.max_turns:
             sys_act = SysAct()
             sys_act.type = SysActionType.Bye
-            sys_state["last_act"] = sys_act
-            return {'sys_act': sys_act, "sys_state": sys_state}
+            sys_state["last_act"] = sys_act.toDict()
+            return {'sys_act': sys_act.toDict(), "sys_state": sys_state}
 
         # removes hello and thanks if there are also domain specific actions
         self._remove_gen_actions(beliefstate)
@@ -150,10 +150,10 @@ class HandcraftedPolicy(Service):
         else:
             sys_act, sys_state = self._next_action(beliefstate)
         if self.logger:
-            self.logger.dialog_turn("System Action: " + str(sys_act))
+            self.logger.info("System Action: " + str(sys_act))
         if "last_act" not in sys_state:
-            sys_state["last_act"] = sys_act
-        return {'sys_act': sys_act, "sys_state": sys_state}
+            sys_state["last_act"] = sys_act.toDict()
+        return {'sys_act': sys_act.toDict(), "sys_state": sys_state}
 
     def _remove_gen_actions(self, beliefstate: BeliefState):
         """

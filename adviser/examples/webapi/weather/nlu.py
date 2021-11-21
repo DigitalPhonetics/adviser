@@ -84,5 +84,5 @@ class WeatherNLU(Service):
             if match:
                 user_acts.append(UserAct(user_utterance, UserActionType.Inform, 'location', match.group(1)))
 
-        self.debug_logger.dialog_turn("User Actions: %s" % str(user_acts))
+        self.debug_logger.info("User Actions: %s" % str(user_acts))
         return {'user_acts': user_acts}

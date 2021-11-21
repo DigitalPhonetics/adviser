@@ -6,15 +6,24 @@
 import concurrent
 from os import confstr
 import traceback
-from message_codes import MessageCode
-from uri import URI
 import json
+from json import JSONEncoder
 import asyncio
 import websockets
 import random
 from typing import Dict, Callable, List, Tuple
 import logging
-import sys 
+
+from services.backend.message_codes import MessageCode
+from services.backend.uri import URI
+
+
+class _CustomEncoder(JSONEncoder):
+	def default(self, obj):
+		if isinstance(obj, set):
+			return list(obj)
+		return super().default(obj)
+
 
 class Client:	 
 	def __init__(self, identifier: str, url: str = 'localhost', port: int = 44122, realm: URI = URI('adviser'), roles = {"publisher": {}, "subscriber": {}}, subscriptions: List[Tuple[str, Callable]]=[]) -> None:
@@ -33,7 +42,7 @@ class Client:
 		# send subscribe request
 		request_id = random.randint(1, 2**53)
 		msg = [MessageCode.SUBSCRIBE.value, request_id, {}, topic.uri]
-		await self.websocket.send(json.dumps(msg))
+		await self.websocket.send(json.dumps(msg, cls=_CustomEncoder))
 
 		# receive subscription answer
 		answer_serialized = await self.websocket.recv()
@@ -59,7 +68,7 @@ class Client:
 		self.logger.info(f'publishing to {topic}: {kwargs}')
 		msg = [MessageCode.PUBLISH.value, self._request_counter, {}, topic, [], kwargs]
 		self._request_counter += 1
-		await self.websocket.send(json.dumps(msg))
+		await self.websocket.send(json.dumps(msg, cls=_CustomEncoder))
 
 	async def _connect(self, register_subscribers: bool):
 		connected = False
@@ -113,4 +122,4 @@ class Client:
 	async def _send_hello(self, socket):
 		# self.logger.info('sending hello...')
 		msg = [MessageCode.HELLO.value, self._realm.uri, {"roles": self._roles, "identifier": self._identifier}]
-		await socket.send(json.dumps(msg))
+		await socket.send(json.dumps(msg, cls=_CustomEncoder))

@@ -43,7 +43,7 @@ class EmotionPolicy(Service):
         Service.__init__(self, domain=domain)
         self.logger = logger
 
-    def dialog_start(self):
+    async def dialog_start(self):
         pass
 
     @PublishSubscribe(sub_topics=["userstate"], pub_topics=["sys_emotion", "sys_engagement"])

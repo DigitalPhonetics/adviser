@@ -116,12 +116,12 @@ class HandcraftedPolicy(Service):
         else:
             sys_act, sys_state = self._next_action(beliefstate)
 
-        self.logger.dialog_turn("System Action: " + str(sys_act))
+        self.logger.info("System Action: " + str(sys_act))
         if 'last_act' not in sys_state:
             sys_state['last_act'] = sys_act
         return {'sys_act': sys_act, 'sys_state': sys_state}
 
-    def dialog_start(self):
+    async def dialog_start(self):
         self.first_turn = True
         self.last_action = None
         self.current_suggestions = []  # list of current suggestions

@@ -76,7 +76,7 @@ class VideoInput(Service):
     def dialog_end(self):
         self.terminating.set()
 
-    def dialog_start(self):
+    async def dialog_start(self):
         if not self.capture_thread.is_alive():
             print("Starting video capture...")
             self.capture_thread.start()

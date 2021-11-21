@@ -145,7 +145,7 @@ class QuestionParser(Service):
             self.user_acts.append(UserAct(user_utterance, UserActionType.Inform, 'topic', ' '.join(t), 1.0))
 
         result['user_acts'] = self.user_acts
-        self.debug_logger.dialog_turn("User Actions: %s" % str(self.user_acts))
+        self.debug_logger.info("User Actions: %s" % str(self.user_acts))
         return result
 
     def _preprocess_utterance(self, utterance):

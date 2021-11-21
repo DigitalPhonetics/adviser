@@ -26,8 +26,7 @@ import os
 
 from services.bst import HandcraftedBST
 from services.domain_tracker.domain_tracker import DomainTracker
-from services.service import DialogSystem
-from utils.logger import DiasysLogger, LogLevel
+from services.dialogsystem import DialogSystem
 
 
 def load_console():
@@ -154,25 +153,26 @@ if __name__ == "__main__":
     services = []
 
     # setup logger
-    file_log_lvl = LogLevel[args.log_file.upper()]
-    log_lvl = LogLevel[args.log.upper()]
+    # TODO re-enable file logging
+    # file_log_lvl = LogLevel[args.log_file.upper()]
+    # log_lvl = LogLevel[args.log.upper()]
     conversation_log_dir = './conversation_logs'
     speech_log_dir = None
-    if file_log_lvl == LogLevel.DIALOGS:
-        # log user audio, system audio and complete conversation
-        import time
-        from math import floor
+    # if file_log_lvl == LogLevel.DIALOGS:
+    #     # log user audio, system audio and complete conversation
+    #     import time
+    #     from math import floor
 
-        print("This Adviser call will log all your interactions to files.\n")
-        if not os.path.exists(f"./{conversation_log_dir}"):
-            os.mkdir(f"./{conversation_log_dir}/")
-        conversation_log_dir = "./" + conversation_log_dir + "/{}/".format(floor(time.time()))
-        os.mkdir(conversation_log_dir)
-        speech_log_dir = conversation_log_dir
-    logger = DiasysLogger(file_log_lvl=file_log_lvl,
-                          console_log_lvl=log_lvl,
-                          logfile_folder=conversation_log_dir,
-                          logfile_basename="full_log")
+    #     print("This Adviser call will log all your interactions to files.\n")
+    #     if not os.path.exists(f"./{conversation_log_dir}"):
+    #         os.mkdir(f"./{conversation_log_dir}/")
+    #     conversation_log_dir = "./" + conversation_log_dir + "/{}/".format(floor(time.time()))
+    #     os.mkdir(conversation_log_dir)
+    #     speech_log_dir = conversation_log_dir
+    # logger = DiasysLogger(file_log_lvl=file_log_lvl,
+    #                       console_log_lvl=log_lvl,
+    #                       logfile_folder=conversation_log_dir,
+    #                       logfile_basename="full_log")
 
     # load domain specific services
     if 'lecturers' in args.domains:
@@ -209,40 +209,19 @@ if __name__ == "__main__":
 
     # setup dialog system
     services.append(DomainTracker(domains=domains))
-    debug_logger = logger if args.debug else None
-    ds = DialogSystem(services=services, debug_logger=debug_logger)
-    error_free = ds.is_error_free_messaging_pipeline()
-    if not error_free:
-        ds.print_inconsistencies()
-    if args.debug:
-        ds.draw_system_graph()
+    # debug_logger = logger if args.debug else None
+    ds = DialogSystem(services=services)
+    # error_free = ds.is_error_free_messaging_pipeline()
+    # if not error_free:
+    #     ds.print_inconsistencies()
+    # if args.debug:
+    #     ds.draw_system_graph()
 
 
     if args.gui:
         # run dialogs in webui
-        import tornado
-        import tornado.websocket
-        import json
-        class SimpleWebSocket(tornado.websocket.WebSocketHandler):
-            def open(self, *args):
-                gui_service.websocket = self
-        
-            def on_message(self, message):
-                data = json.loads(message)
-                # check token validity
-                topic = data['topic']
-                if topic == 'start_dialog':
-                    ds._start_dialog({"gen_user_utterance": ""})
-                elif topic == 'gen_user_utterance':
-                    gui_service.user_utterance(message=data['msg'])
-
-            def check_origin(self, *args, **kwargs):
-                # allow cross-origin
-                return True
-
-        app = tornado.web.Application([ (r"/ws", SimpleWebSocket)])
-        app.listen(21512)
-        tornado.ioloop.IOLoop.current().start()
+        # TODO add gui
+        pass
     else:
         # run dialogs in terminal
         try:

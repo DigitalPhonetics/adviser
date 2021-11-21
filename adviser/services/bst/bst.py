@@ -54,6 +54,7 @@ class HandcraftedBST(Service):
         # save last turn to memory
         self.bs.start_new_turn()
         if user_acts:
+            user_acts = [UserAct.fromDict(act) for act in user_acts]
             self._reset_informs(user_acts)
             self._reset_requests()
             self.bs["user_acts"] = self._get_all_usr_action_types(user_acts)
@@ -64,9 +65,9 @@ class HandcraftedBST(Service):
             self.bs["num_matches"] = num_entries
             self.bs["discriminable"] = discriminable
 
-        return {'beliefstate': self.bs}
+        return {'beliefstate': self.bs.toDict()}
 
-    def dialog_start(self):
+    async def dialog_start(self):
         """
             Restets the belief state so it is ready for a new dialog
 
@@ -106,7 +107,7 @@ class HandcraftedBST(Service):
         """
         action_type_set = set()
         for act in user_acts:
-            action_type_set.add(act.type)
+            action_type_set.add(act.type.value)
         return action_type_set
 
     def _handle_user_acts(self, user_acts: List[UserAct]):

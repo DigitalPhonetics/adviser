@@ -118,7 +118,7 @@ class DQNPolicy(RLPolicy, Service):
         self.turns = 0
         self.cumulative_train_dialogs = -1
 
-    def dialog_start(self, dialog_start=False):
+    async def dialog_start(self, dialog_start=False):
         self.turns = 0
         self.last_sys_act = None
         if self.is_training:
@@ -202,7 +202,7 @@ class DQNPolicy(RLPolicy, Service):
             self.last_sys_act = bye_action
             # self.end_dialog(sim_goal)
             if self.logger:
-                self.logger.dialog_turn("system action > " + str(bye_action))
+                self.logger.info("system action > " + str(bye_action))
             sys_state = {"last_act": bye_action}
             return {'sys_act': bye_action, "sys_state": sys_state}
 

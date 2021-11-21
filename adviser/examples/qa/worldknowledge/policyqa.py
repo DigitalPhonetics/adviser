@@ -79,7 +79,7 @@ class QaPolicy(Service):
 
         sys_acts = [SysAct(SysActionType.InformByName, slot_values=answer) for answer in answers]
 
-        self.debug_logger.dialog_turn("System Action: " + '; '.join(
+        self.debug_logger.info("System Action: " + '; '.join(
             [str(sys_act) for sys_act in sys_acts]))
         return {'sys_acts': sys_acts}
 

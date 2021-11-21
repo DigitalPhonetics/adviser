@@ -1,8 +1,5 @@
 import asyncio
-from service import RemoteService, Service
-from client import Client
 import json
-from message_codes import MessageCode
 import multiprocessing
 from multiprocessing import Manager
 from typing import Dict, Union, List
@@ -10,15 +7,12 @@ import time
 import logging
 import logging.handlers
 import sys
-from uri import URI
 
-from router import Router, parse_msg_type
-
-class DiasysLogger:
-    pass
-class Domain:
-    pass
-
+from services.service import RemoteService, Service
+from services.backend.client import Client
+from services.backend.message_codes import MessageCode
+from services.backend.uri import URI
+from services.backend.router import Router, parse_msg_type
 
 
 def logger_configurer():
@@ -46,7 +40,7 @@ def logger_process(queue):
 
 
 
-class Dialogsystem:
+class DialogSystem:
     def __init__(self, services=[], url='localhost', port=44122, log_level: int = logging.INFO) -> None:
         self.services = services
 
@@ -96,13 +90,13 @@ class Dialogsystem:
         await self.ds_client._connect(False)
         self.logger.info('ds client connected')
 
-        await self.ds_client.publish(URI('dialog_start').uri, {})
+        await self.ds_client.publish(URI('_ctrl_dialog_start').uri, {})
         
         start_tasks = []
         for start_topic in start_msgs:
             # msg = json.dumps([MessageCode.PUBLISH.value, 1, {}, URI(start_topic).uri, [], start_msgs[start_topic]])
             # _, msg_type_end_idx = parse_msg_type(msg)
-            start_tasks.append(asyncio.create_task(self.ds_client.publish(URI(start_topic).uri, start_msgs[start_topic])))
+            start_tasks.append(asyncio.create_task(self.ds_client.publish(URI(start_topic).uri, {start_topic: start_msgs[start_topic]})))
         await asyncio.wait(start_tasks)
         self.logger.info('all start messages triggered')
 
@@ -110,6 +104,6 @@ class Dialogsystem:
             # removing this code will close the ds_client socket - find a way to deal with that
             print('server msg', msg)
 
-    def start(self, start_msgs: Dict[str, dict]):
+    def run_dialog(self, start_msgs: Dict[str, dict]):
         asyncio.run(self._start(start_msgs))
 

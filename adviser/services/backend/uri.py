@@ -7,8 +7,9 @@ _uri_pattern_strict = re.compile(r"^([0-9a-z_]+\.)*([0-9a-z_]+)$") # URI compone
 
 class URI:
 	def __init__(self, uri: str) -> None:
-		self._validate(uri)
-		self.uri = uri 
+		print("URI", uri)
+		self._validate(uri.lower())
+		self.uri = uri.lower()
 
 	def components(self) -> List[str]:
 		return self.uri.split('.')

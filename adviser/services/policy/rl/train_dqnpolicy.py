@@ -99,7 +99,7 @@ def train(domain_name: str, log_to_file: bool, seed: int, train_epochs: int, tra
         for episode in range(train_dialogs):
             if episode % 100 == 0:
                 print("DIALOG", episode)
-            logger.dialog_turn("\n\n!!!!!!!!!!!!!!!! NEW DIALOG !!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n")
+            logger.info("\n\n!!!!!!!!!!!!!!!! NEW DIALOG !!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n")
             ds.run_dialog(start_signals={f'user_acts/{domain.get_domain_name()}': []})
         evaluator.end_epoch()
         policy.save()
@@ -109,7 +109,7 @@ def train(domain_name: str, log_to_file: bool, seed: int, train_epochs: int, tra
         policy.eval()
         evaluator.start_epoch()
         for episode in range(eval_dialogs):
-            logger.dialog_turn("\n\n!!!!!!!!!!!!!!!! NEW DIALOG !!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n")
+            logger.info("\n\n!!!!!!!!!!!!!!!! NEW DIALOG !!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n")
             ds.run_dialog(start_signals={f'user_acts/{domain.get_domain_name()}': []})
         evaluator.end_epoch()
     ds.shutdown()

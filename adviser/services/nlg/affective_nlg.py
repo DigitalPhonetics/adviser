@@ -84,7 +84,7 @@ class HandcraftedEmotionNLG(HandcraftedNLG):
             self.logger.info("System Action: " + str(sys_act.type)
                              + " - Slots: " + str(sys_act.slot_values))
 
-        # self.logger.dialog_turn("System Action: " + message)
+        # self.logger.info("System Action: " + message)
         return {'sys_utterance': message}
 
     def _initialise_templates(self):

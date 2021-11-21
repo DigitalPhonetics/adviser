@@ -66,7 +66,7 @@ class EngagementTracker(Service):
         self.extractor_thread = None
 
 
-    def dialog_start(self):
+    async def dialog_start(self):
         # Set openface to publishing mode and wait until it is ready
         self.openface_endpoint.send(bytes(f"OPENFACE_START", encoding="ascii"))
         self.extracting = False

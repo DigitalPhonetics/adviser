@@ -102,7 +102,7 @@ class HandcraftedUserSimulator(Service):
         self.agenda = Agenda()
         self.num_actions_next_turn = -1
 
-    def dialog_start(self):
+    async def dialog_start(self):
         """Resets the user model at the beginning of a dialog, e.g. draws a new goal and populates
         the agenda according to the goal."""
         # self.goal = Goal(self.domain, self.parameters['goal'])
@@ -110,10 +110,10 @@ class HandcraftedUserSimulator(Service):
         self.goal.init()
         self.agenda.init(self.goal)
         if self.logger:
-            self.logger.dialog_turn(
+            self.logger.info(
                 "New goal has constraints {} and requests {}.".format(
                     self.goal.constraints, self.goal.requests))
-            self.logger.dialog_turn("New agenda initialized: {}".format(self.agenda))
+            self.logger.info("New agenda initialized: {}".format(self.agenda))
 
         # add hello action with some probability
         if common.random.random() < self.parameters['usermodel']['Greeting']:
@@ -157,7 +157,7 @@ class HandcraftedUserSimulator(Service):
 
         # user_acts = [UserAct(text="Hi!", act_type=UserActionType.Hello, score=1.)]
 
-        self.logger.dialog_turn("User Action: " + str(user_acts))
+        self.logger.info("User Action: " + str(user_acts))
         # input()
         return {'user_acts': user_acts}
 
@@ -180,7 +180,7 @@ class HandcraftedUserSimulator(Service):
         self.last_system_action = sys_act
 
         if self.patience == 0:
-            self.logger.dialog_turn("User patience run out, ending dialog.")
+            self.logger.info("User patience run out, ending dialog.")
             self.agenda.clear()
             self._finish_dialog(ungrateful=True)
         else:
@@ -518,7 +518,7 @@ class HandcraftedUserSimulator(Service):
                     "The given constraints (probably by the system) are not part of the goal!")
             new_constraints.append(Constraint(_constraint.slot, value))
 
-        self.logger.dialog_turn(
+        self.logger.info(
             "Goal altered! {} -> {}.".format(constraints_to_alter, new_constraints))
 
         return new_constraints

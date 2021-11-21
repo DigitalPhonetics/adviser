@@ -58,6 +58,15 @@ class SysAct(object):
             {f", {self._slot_value_dict_to_str(self.slot_values)}"
             if self._slot_value_dict_to_str(self.slot_values) else ""})"""
 
+    
+    def toDict(self):
+        return {"SysAct": {"type": self.type.value, "slot_values": self.slot_values}}
+
+    @classmethod
+    def fromDict(cls, dict_instance):
+        inner = dict_instance["SysAct"]
+        return SysAct(act_type=SysActionType(inner["type"]), slot_values=inner['slot_values'])
+
     def __str__(self):
         if self.type is not None:
             return self.type.value + \

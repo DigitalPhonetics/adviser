@@ -37,7 +37,7 @@ class DomainTracker(Service):
         self.current_domain = None
         self.greet_on_first_turn = greet_on_first_turn
 
-    def dialog_start(self):
+    async def dialog_start(self):
         """
             Resets the domain tracker for the start of a new dialog
         """
@@ -57,6 +57,8 @@ class DomainTracker(Service):
                 (dict): A dictionary with "user_utterane" as a key and a string as the value with the
                         selected domain appended to the end so the message can be properly routed.
         """
+
+        self.logger.info("\n\n\n\n\n\nDOMAIN TRACKER \n\n\n\n\n\n")
 
         self.turn += 1
         if self.turn == 1 and self.greet_on_first_turn:
@@ -81,13 +83,13 @@ class DomainTracker(Service):
 
         # if there are active domains, use the first one
         elif active_domains:
-            out_key = f"user_utterance/{active_domains[0].get_domain_name()}"
+            out_key = f"user_utterance.{active_domains[0].get_domain_name().lower()}"
             self.current_domain = active_domains[0]
             return {out_key: user_utterance}
 
         # if no domain is explicitely mentioned, assume the last one is still active
         elif self.current_domain:
-            out_key = f"user_utterance/{self.current_domain.get_domain_name()}"
+            out_key = f"user_utterance.{self.current_domain.get_domain_name().lower()}"
             return {out_key: user_utterance}
 
         # Otherwise ask the user what domain they want
