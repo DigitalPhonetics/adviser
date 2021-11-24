@@ -6,4 +6,4 @@ The hci folder contains files related interacting with the dialog system. In thi
 * `video`: A folder for code related to video input
 * `console.py`: Defines a service for console input and a service for console output
 * `gui.py`: Defines a way for the dialog system to itegrate with web interface.
-            Note: this requires a valid node.js installation and npm.
+          

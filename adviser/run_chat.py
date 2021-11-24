@@ -195,11 +195,9 @@ if __name__ == "__main__":
         services.extend(qa_services)
 
     # load HCI interfaces
-    gui_server_prochandle = None
     if args.gui:
         gui_service= load_gui()
         services.append(gui_service)
-        num_dialogs += 1  # FIXME: temporary workaround - server always sends 2 gen_user_utterances in the beginning
     else:
         services.extend(load_console())
 
@@ -236,6 +234,7 @@ if __name__ == "__main__":
                 # check token validity
                 topic = data['topic']
                 if topic == 'start_dialog':
+                    # dialog start is triggered from web ui here
                     ds._start_dialog({"gen_user_utterance": ""})
                 elif topic == 'gen_user_utterance':
                     gui_service.user_utterance(message=data['msg'])
