@@ -92,15 +92,50 @@
 
 <script>
     var messages = [];
-    const socket = new WebSocket("ws://127.0.0.1:21512/ws");
-    socket.onmessage = (msg) => {
-        console.log('got message')
-        addSystemMessage([{content: msg.data}]);
+    var socket = null;
+    let connectIntervalId;
+
+    function connect() {
+        socket = new WebSocket("ws://127.0.0.1:21512/ws");
+        return new Promise((resolve, reject) => {
+            socket.onmessage = (msg) => {
+                console.log('received msg', msg.data);
+                addSystemMessage([{content: msg.data}]);
+            }
+            socket.onopen = (event) => {
+                startDialog();
+                resolve(connected);
+            };
+            socket.onerror = (event) => {
+                socket = null;
+                reject(event)
+            }
+            socket.onclose = (event) => {
+                socket = null;
+                reject(event);
+            }
+        });
+       
     }
-    socket.onopen = (event) => {
-        console.log('connected');
-        startDialog();
-    };
+
+    async function reconnect() {
+        if(!socket){
+            await connect()
+                .then(res => {
+                    clearInterval(connectIntervalId);
+                    connectIntervalId = setInterval(reconnect, 5000); // increase wait interval after first connection to 5 seconds 
+                }).catch(err => {
+                    $("#messagelist").append(`
+                            <div class="speech-bubble-system">
+                                <div class="message">Connection error, trying to reconnect in 5 seconds</div>
+                            </div>
+                    `);
+                    clearInterval(connectIntervalId);
+                    connectIntervalId = setInterval(reconnect, 5000); // increase wait interval after first connection problem to 5 seconds
+            });
+        }
+    }
+    connectIntervalId = setInterval(reconnect, 500); // wait 500 ms for first connect. increase wait interval afterwards
 
     function startDialog() {
         messages = [];
