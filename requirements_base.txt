@@ -7,3 +7,6 @@ lxml==4.6.3
 requests==2.23.0
 PyInquirer==1.0.3
 tornado==6.1.0
+black
+isort
+mdformat
