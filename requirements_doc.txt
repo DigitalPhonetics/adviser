@@ -78,3 +78,6 @@ zipp==3.1.0
 zmq==0.0.0
 tornado==6.1.0
 git+git://github.com/imgarylai/bert-embedding
+black
+isort
+mdformat
