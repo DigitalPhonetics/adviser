@@ -30,7 +30,7 @@ from services.domain_tracker import DomainTracker
 
 from services.service import DialogSystem
 
-from tensorboardX import SummaryWriter
+from torch.utils.tensorboard import SummaryWriter
 from services.policy.rl.experience_buffer import NaivePrioritizedBuffer
 from services.simulator import HandcraftedUserSimulator
 from services.policy import DQNPolicy

@@ -28,6 +28,7 @@ import sounddevice
 from services.service import PublishSubscribe
 from services.service import Service
 from utils.domain.domain import Domain
+import soundfile as sf
 
 
 class SpeechOutputPlayer(Service):
@@ -58,6 +59,6 @@ class SpeechOutputPlayer(Service):
         # log the utterance
         if self.conversation_log_dir is not None:
             file_path = os.path.join(self.conversation_log_dir, (str(math.floor(time.time()))))
-            librosa.output.write_wav(file_path + "_system.wav", system_speech[0], system_speech[1])
+            sf.write(file_path + "_system.wav", system_speech[0], system_speech[1], 'PCM_24')
             with open(file_path + "_system.txt", "w") as convo_log:
                 convo_log.write(system_speech[2])

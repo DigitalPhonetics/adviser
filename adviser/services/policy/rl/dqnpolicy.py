@@ -24,7 +24,7 @@ from typing import List, Type
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from tensorboardX import SummaryWriter
+from torch.utils.tensorboard import SummaryWriter
 
 from services.policy.rl.policy_rl import RLPolicy
 from services.policy.rl.dqn import DQN, DuelingDQN, NetArchitecture

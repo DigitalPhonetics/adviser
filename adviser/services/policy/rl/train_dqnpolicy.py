@@ -43,7 +43,7 @@ from services.stats.evaluation import PolicyEvaluator
 from utils.domain.jsonlookupdomain import JSONLookupDomain
 from utils import DiasysLogger, LogLevel
 from services.service import DialogSystem
-from tensorboardX import SummaryWriter
+from torch.utils.tensorboard import SummaryWriter
 
 from utils import common
 
