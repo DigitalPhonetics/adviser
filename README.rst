@@ -39,7 +39,8 @@ If `Git` is installed on your machine, you may instead clone the repository by e
 System Library Requirements
 ---------------------------
 
-If you want to make use of the function ``services.service.Service.draw_system_graph``,
+* If you want to use speech in-/output, please make sure you have the `hdf5`, `portaudio` and `sndfile` libraries installed.
+* If you want to make use of the function ``services.service.Service.draw_system_graph``,
 you will need to install the ``graphviz`` library via your system's package manager.
 If you can't install it (no sufficient user rights), don't use this function in your scripts.
 
