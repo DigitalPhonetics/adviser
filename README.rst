@@ -24,13 +24,13 @@ Note: Adviser 2.0 is currently only tested on Linux and Mac (Windows is possible
 Downloading the code
 --------------------
 
-If `Git` is not installated on your machine, just download the Adviser 2.0 file available in ``relases`` section. Then unzip and navigate to the main folder.
+If ``Git`` is not installated on your machine, just download the Adviser 2.0 file available in ``relases`` section. Then unzip and navigate to the main folder.
 Note that this method has some disadvantages (you'll only be able to run basic text-to-text terminal conversations).
 
 Cloning the repository (recommended)
 ------------------------------------
 
-If `Git` is installed on your machine, you may instead clone the repository by entering in a terminal window:
+If ``Git`` is installed on your machine, you may instead clone the repository by entering in a terminal window:
 
 .. code-block:: bash
 
@@ -63,7 +63,7 @@ Install python requirements with pip
 ADvISER needs to be executed in a Python3 environment.
 
 Once you obtained the code, navigate to its top level directory where you will find the file
-`requirements_base.txt`, which lists all modules you need to run a basic text-to-text version of ADvISER. We suggest to create a
+``requirements_base.txt``, which lists all modules you need to run a basic text-to-text version of ADvISER. We suggest to create a
 virtual environment from the top level directory, as shown below, followed by installing the necessary packages.
 
 
@@ -138,21 +138,28 @@ Then, try running
 Instructions for Macs with M1 Chips 
 ===================================
 
-In general, everything should work if you're using `conda`` instead of `pip`.
+In general, everything should work if you're using ``conda`` instead of ``pip``.
 For pip users, the following installation instructions worked:
 
-1. Install the system library requirements as stated above (using `homebrew`).
+1. Install the system library requirements as stated above (using ``homebrew``).
 
 2.  pip install -i https://pypi.anaconda.org/numba/label/wheels_experimental_m1/simple numba
 
 3. Remove pyaudio from the requirements file and instead execute this command to install pyaudio:
-`python -m pip install --global-option='build_ext' --global-option='-I/opt/homebrew/Cellar/portaudio/19.7.0/include' --global-option='-L/opt/homebrew/Cellar/portaudio/19.7.0/lib' pyaudio`
 
-4. Proceed with the normal requirements
+.. code-block:: bash
+    
+    python -m pip install --global-option='build_ext' --global-option='-I/opt/homebrew/Cellar/portaudio/19.7.0/include' --global-option='-L/opt/homebrew/Cellar/portaudio/19.7.0/lib' pyaudio
 
-5. Switch to the adviser folder `cd adviser` (containing the `run_chat.py` file)
+4. Proceed with installing requirements as described above
 
-6. Copy the snd library into the current folder `cp /opt/homebrew/lib/libsndfile.dylib`.
+5. Switch to the adviser folder ``cd adviser`` (containing the ``run_chat.py`` file)
+
+6. Copy the snd library into the current folder:
+
+.. code-block:: bash
+    
+    cp /opt/homebrew/lib/libsndfile.dylib
 
 Support
 =======
