@@ -8,7 +8,7 @@ pyinquirer==1.0.3
 matplotlib==3.2.1
 configargparse==1.2.3
 torchaudio==0.5.0
-nltk==3.6.4
+nltk==3.6.6
 pyyaml==5.4
 g2p-en==2.1.0
 parallel-wavegan==0.3.5
