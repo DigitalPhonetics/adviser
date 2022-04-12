@@ -19,7 +19,7 @@ Adviser 2.0 is released!
 Installation
 ============
 
-Note: Adviser 2.0 is currently only tested on Linux and Mac (Windows is possible using WSL2 (Ubuntu)).
+Note: Adviser 2.0 is currently only tested on Linux and Mac (Windows is possible using WSL2 (Ubuntu), for M1 chips see the extra section near the bottom of this file).
 
 Downloading the code
 --------------------
@@ -55,6 +55,7 @@ On Mac, you will need to install homebrew by executing:
 and then calling ``brew install graphviz``.
 
 For other OS please see https://graphviz.gitlab.io/download/.
+
 
 Install python requirements with pip
 ------------------------------------
@@ -131,6 +132,27 @@ You can enable ASR / TTS by adding ``--asr`` and ``--tts`` to the command line o
 Then, try running 
 
 ``python run_demo_multidomain.py``
+
+
+
+Instructions for Macs with M1 Chips 
+===================================
+
+In general, everything should work if you're using `conda`` instead of `pip`.
+For pip users, the following installation instructions worked:
+
+1. Install the system library requirements as stated above (using `homebrew`).
+
+2.  pip install -i https://pypi.anaconda.org/numba/label/wheels_experimental_m1/simple numba
+
+3. Remove pyaudio from the requirements file and instead execute this command to install pyaudio:
+`python -m pip install --global-option='build_ext' --global-option='-I/opt/homebrew/Cellar/portaudio/19.7.0/include' --global-option='-L/opt/homebrew/Cellar/portaudio/19.7.0/lib' pyaudio`
+
+4. Proceed with the normal requirements
+
+5. Switch to the adviser folder `cd adviser` (containing the `run_chat.py` file)
+
+6. Copy the snd library into the current folder `cp /opt/homebrew/lib/libsndfile.dylib`.
 
 Support
 =======
