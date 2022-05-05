@@ -20,6 +20,7 @@
 
 """Emotion recognition module."""
 
+import warnings
 import numpy as np
 import os
 import pickle
@@ -30,7 +31,10 @@ from torchaudio.compliance.kaldi import fbank
 from services.service import PublishSubscribe
 from services.service import Service
 from utils.userstate import EmotionType
-from resources.models.emotion.emotion_cnn import cnn
+try:
+    from resources.models.emotion.emotion_cnn import cnn
+except:
+    warnings.warn("Could not import additional resources. Some parts might not work until you run `sh download_models.sh`.")
 
 
 class EmotionRecognition(Service):

@@ -19,6 +19,7 @@
 
 import os
 import time
+import warnings
 import wave
 from typing import Union
 
@@ -26,7 +27,11 @@ import librosa
 import numpy as np
 import pyaudio
 from matplotlib import pyplot as plt
-from pynput import keyboard  # this needs sudo under MacOS, except if you add python to the accessibility tab
+try:
+    from pynput import keyboard  # this needs sudo under MacOS, except if you add python to the accessibility tab
+except:
+    # make sure that imports work if XServer is not available
+    warnings.warn("Could not import pynput, speech recorder will not work.")
 
 from services.service import PublishSubscribe
 from services.service import Service

@@ -21,7 +21,7 @@ from typing import List
 import os
 import json
 import torch
-from bert_embedding import BertEmbedding
+# from bert_embedding import BertEmbedding
 import numpy as np
 
 from utils.logger import DiasysLogger
@@ -71,7 +71,8 @@ class QuestionParser(Service):
         self.tags = self._load_tag_set()
 
         self.max_seq_len = 40
-        self.embedding_creator = BertEmbedding(max_seq_length=self.max_seq_len)
+        # self.embedding_creator = BertEmbedding(max_seq_length=self.max_seq_len)
+        raise RuntimeError("This domain is currently disabled and has to be updated.")
 
     def _load_relation_model(self):
         model = SimpleDot(100, 400, True).to(self.device)
