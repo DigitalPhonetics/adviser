@@ -1,539 +1,911 @@
 
-<!DOCTYPE html>
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://digitalphonetics.github.io/adviser/tutorials/advanced/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.13">
+    
+    
+      
+        <title>Advanced - Adviser</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e411adfe.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cc9b2e1e.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
 
-<html class="no-js" lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="https://digitalphonetics.github.io/adviser/tutorials/advanced/" rel="canonical"/>
-<link href="../../assets/images/favicon.png" rel="shortcut icon"/>
-<meta content="mkdocs-1.1, mkdocs-material-5.1.4" name="generator"/>
-<title>Advanced - Adviser</title>
-<link href="../../assets/stylesheets/main.c4007cdc.min.css" rel="stylesheet"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
-<style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
-<link href="../../custom.css" rel="stylesheet"/>
-</head>
-<body dir="ltr">
-<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
-<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
-<label class="md-overlay" for="__drawer"></label>
-<div data-md-component="skip">
-<a class="md-skip" href="#advanced-topics-with-adviser-20">
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#advanced-topics-with-adviser-20" class="md-skip">
           Skip to content
         </a>
-</div>
-<div data-md-component="announce">
-</div>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
 <header class="md-header" data-md-component="header">
-<nav aria-label="Header" class="md-header-nav md-grid">
-<a aria-label="Adviser" class="md-header-nav__button md-logo" href="https://digitalphonetics.github.io/adviser/" title="Adviser">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
-</a>
-<label class="md-header-nav__button md-icon" for="__drawer">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
-</label>
-<div class="md-header-nav__title" data-md-component="header-title">
-<div class="md-header-nav__ellipsis">
-<span class="md-header-nav__topic md-ellipsis">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Adviser" class="md-header__button md-logo" aria-label="Adviser" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
             Adviser
           </span>
-<span class="md-header-nav__topic md-ellipsis">
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
             
               Advanced
             
           </span>
-</div>
-</div>
-<label class="md-header-nav__button md-icon" for="__search">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
-</label>
-<div class="md-search" data-md-component="search" role="dialog">
-<label class="md-search__overlay" for="__search"></label>
-<div class="md-search__inner" role="search">
-<form class="md-search__form" name="search">
-<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" data-md-state="active" name="query" placeholder="Search" spellcheck="false" type="text"/>
-<label class="md-search__icon md-icon" for="__search">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
-</label>
-<button aria-label="Clear" class="md-search__icon md-icon" data-md-component="search-reset" tabindex="-1" type="reset">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
-</button>
-</form>
-<div class="md-search__output">
-<div class="md-search__scrollwrap" data-md-scrollfix="">
-<div class="md-search-result" data-md-component="search-result">
-<div class="md-search-result__meta">
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
             Initializing search
           </div>
-<ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="md-header-nav__source">
-<a class="md-source" href="https://github.com/DigitalPhonetics/adviser/" title="Go to repository">
-<div class="md-source__icon md-icon">
-<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
-</div>
-<div class="md-source__repository">
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/DigitalPhonetics/adviser" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
     GitHub
   </div>
 </a>
-</div>
-</nav>
+      </div>
+    
+  </nav>
+  
 </header>
-<div class="md-container" data-md-component="container">
-<main class="md-main" data-md-component="main">
-<div class="md-main__inner md-grid">
-<div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
-<div class="md-sidebar__scrollwrap">
-<div class="md-sidebar__inner">
-<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
-<label class="md-nav__title" for="__drawer">
-<a aria-label="Adviser" class="md-nav__button md-logo" href="https://digitalphonetics.github.io/adviser/" title="Adviser">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
-</a>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Adviser" class="md-nav__button md-logo" aria-label="Adviser" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
     Adviser
   </label>
-<div class="md-nav__source">
-<a class="md-source" href="https://github.com/DigitalPhonetics/adviser/" title="Go to repository">
-<div class="md-source__icon md-icon">
-<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
-</div>
-<div class="md-source__repository">
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/DigitalPhonetics/adviser" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
     GitHub
   </div>
 </a>
-</div>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../.." title="Home">
-      Home
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../getting-started/" title="Getting Started">
-      Getting Started
-    </a>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" id="nav-3" type="checkbox"/>
-<label class="md-nav__link" for="nav-3">
-      Reference
-      <span class="md-nav__icon md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"></path></svg>
-</span>
-</label>
-<nav aria-label="Reference" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="nav-3">
-<span class="md-nav__icon md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
-</span>
-        Reference
-      </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../api/services/" title="Services">
-      Services
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../api/examples/" title="Examples">
-      Examples
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../api/utils/" title="Utils">
-      Utils
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../api/tools/" title="Tools">
-      Tools
-    </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="nav-4" id="nav-4" type="checkbox"/>
-<label class="md-nav__link" for="nav-4">
-      Tutorials
-      <span class="md-nav__icon md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"></path></svg>
-</span>
-</label>
-<nav aria-label="Tutorials" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="nav-4">
-<span class="md-nav__icon md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
-</span>
-        Tutorials
-      </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../introduction/" title="Introduction">
-      Introduction
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../services/" title="Services">
-      Services
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../dialogsystem/" title="Dialog System">
-      Dialog System
-    </a>
-</li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/services/" class="md-nav__link">
+        Services
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/utils/" class="md-nav__link">
+        Utils
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/tools/" class="md-nav__link">
+        Tools
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../introduction/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/" class="md-nav__link">
+        Services
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dialogsystem/" class="md-nav__link">
+        Dialog System
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Advanced
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Advanced
-        <span class="md-nav__icon md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"></path></svg>
-</span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./" title="Advanced">
-      Advanced
-    </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
-</span>
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#creating-a-new-domain">
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-new-domain" class="md-nav__link">
     Creating a New Domain
   </a>
-<nav aria-label="Creating a New Domain" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#database">
+  
+    <nav class="md-nav" aria-label="Creating a New Domain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#database" class="md-nav__link">
     Database
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#ontology">
+        
+          <li class="md-nav__item">
+  <a href="#ontology" class="md-nav__link">
     Ontology
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#domain-object">
+        
+          <li class="md-nav__item">
+  <a href="#domain-object" class="md-nav__link">
     Domain Object
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#nlu-and-nlg">
+        
+          <li class="md-nav__item">
+  <a href="#nlu-and-nlg" class="md-nav__link">
     NLU and NLG
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#policy">
+        
+          <li class="md-nav__item">
+  <a href="#policy" class="md-nav__link">
     Policy
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#creating-a-new-service">
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-new-service" class="md-nav__link">
     Creating a New Service
   </a>
-<nav aria-label="Creating a New Service" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#inheriting-from-the-service-class">
+  
+    <nav class="md-nav" aria-label="Creating a New Service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inheriting-from-the-service-class" class="md-nav__link">
     Inheriting from the service class
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#determine-what-methods-need-to-be-decorated">
+        
+          <li class="md-nav__item">
+  <a href="#determine-what-methods-need-to-be-decorated" class="md-nav__link">
     Determine what methods need to be decorated
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#managing-dialog-dependent-state">
+        
+          <li class="md-nav__item">
+  <a href="#managing-dialog-dependent-state" class="md-nav__link">
     Managing Dialog-Dependent State
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#adding-task-specific-feature-extraction">
+      
+        <li class="md-nav__item">
+  <a href="#adding-task-specific-feature-extraction" class="md-nav__link">
     Adding Task-specific Feature Extraction
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#adding-emotion-recognition">
+      
+        <li class="md-nav__item">
+  <a href="#adding-emotion-recognition" class="md-nav__link">
     Adding Emotion Recognition
   </a>
-<nav aria-label="Adding Emotion Recognition" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#using-emotion-in-a-dialog-system">
+  
+    <nav class="md-nav" aria-label="Adding Emotion Recognition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-emotion-in-a-dialog-system" class="md-nav__link">
     Using Emotion in a Dialog System
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#adding-backchanneling">
+      
+        <li class="md-nav__item">
+  <a href="#adding-backchanneling" class="md-nav__link">
     Adding Backchanneling
   </a>
-<nav aria-label="Adding Backchanneling" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#backchannel-prediction">
+  
+    <nav class="md-nav" aria-label="Adding Backchanneling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backchannel-prediction" class="md-nav__link">
     Backchannel prediction
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#integrating-backchannel-to-the-systems-response">
+        
+          <li class="md-nav__item">
+  <a href="#integrating-backchannel-to-the-systems-response" class="md-nav__link">
     Integrating backchannel to the system's response
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#from-single-to-multidomain">
+      
+        <li class="md-nav__item">
+  <a href="#from-single-to-multidomain" class="md-nav__link">
     From Single- to Multidomain
   </a>
-<nav aria-label="From Single- to Multidomain" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#domain-dependent-modules">
+  
+    <nav class="md-nav" aria-label="From Single- to Multidomain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#domain-dependent-modules" class="md-nav__link">
     Domain Dependent Modules
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#domain-independent-modules">
+        
+          <li class="md-nav__item">
+  <a href="#domain-independent-modules" class="md-nav__link">
     Domain Independent Modules
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#domain-tracker-module">
+        
+          <li class="md-nav__item">
+  <a href="#domain-tracker-module" class="md-nav__link">
     Domain Tracker Module
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#creating-a-domain-tracker">
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-domain-tracker" class="md-nav__link">
     Creating a Domain Tracker
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#putting-it-all-together">
+        
+          <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
     Putting it All Together
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#running-a-distributed-dialog-system">
+      
+        <li class="md-nav__item">
+  <a href="#running-a-distributed-dialog-system" class="md-nav__link">
     Running A Distributed Dialog System
   </a>
+  
 </li>
-</ul>
+      
+    </ul>
+  
 </nav>
-</li>
-</ul>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+    
+  </ul>
 </nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../faq/" title="FAQ">
-      FAQ
-    </a>
-</li>
-</ul>
-</nav>
-</div>
-</div>
-</div>
-<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
-<div class="md-sidebar__scrollwrap">
-<div class="md-sidebar__inner">
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
-</span>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#creating-a-new-domain">
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-new-domain" class="md-nav__link">
     Creating a New Domain
   </a>
-<nav aria-label="Creating a New Domain" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#database">
+  
+    <nav class="md-nav" aria-label="Creating a New Domain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#database" class="md-nav__link">
     Database
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#ontology">
+        
+          <li class="md-nav__item">
+  <a href="#ontology" class="md-nav__link">
     Ontology
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#domain-object">
+        
+          <li class="md-nav__item">
+  <a href="#domain-object" class="md-nav__link">
     Domain Object
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#nlu-and-nlg">
+        
+          <li class="md-nav__item">
+  <a href="#nlu-and-nlg" class="md-nav__link">
     NLU and NLG
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#policy">
+        
+          <li class="md-nav__item">
+  <a href="#policy" class="md-nav__link">
     Policy
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#creating-a-new-service">
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-new-service" class="md-nav__link">
     Creating a New Service
   </a>
-<nav aria-label="Creating a New Service" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#inheriting-from-the-service-class">
+  
+    <nav class="md-nav" aria-label="Creating a New Service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inheriting-from-the-service-class" class="md-nav__link">
     Inheriting from the service class
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#determine-what-methods-need-to-be-decorated">
+        
+          <li class="md-nav__item">
+  <a href="#determine-what-methods-need-to-be-decorated" class="md-nav__link">
     Determine what methods need to be decorated
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#managing-dialog-dependent-state">
+        
+          <li class="md-nav__item">
+  <a href="#managing-dialog-dependent-state" class="md-nav__link">
     Managing Dialog-Dependent State
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#adding-task-specific-feature-extraction">
+      
+        <li class="md-nav__item">
+  <a href="#adding-task-specific-feature-extraction" class="md-nav__link">
     Adding Task-specific Feature Extraction
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#adding-emotion-recognition">
+      
+        <li class="md-nav__item">
+  <a href="#adding-emotion-recognition" class="md-nav__link">
     Adding Emotion Recognition
   </a>
-<nav aria-label="Adding Emotion Recognition" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#using-emotion-in-a-dialog-system">
+  
+    <nav class="md-nav" aria-label="Adding Emotion Recognition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-emotion-in-a-dialog-system" class="md-nav__link">
     Using Emotion in a Dialog System
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#adding-backchanneling">
+      
+        <li class="md-nav__item">
+  <a href="#adding-backchanneling" class="md-nav__link">
     Adding Backchanneling
   </a>
-<nav aria-label="Adding Backchanneling" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#backchannel-prediction">
+  
+    <nav class="md-nav" aria-label="Adding Backchanneling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backchannel-prediction" class="md-nav__link">
     Backchannel prediction
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#integrating-backchannel-to-the-systems-response">
+        
+          <li class="md-nav__item">
+  <a href="#integrating-backchannel-to-the-systems-response" class="md-nav__link">
     Integrating backchannel to the system's response
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#from-single-to-multidomain">
+      
+        <li class="md-nav__item">
+  <a href="#from-single-to-multidomain" class="md-nav__link">
     From Single- to Multidomain
   </a>
-<nav aria-label="From Single- to Multidomain" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#domain-dependent-modules">
+  
+    <nav class="md-nav" aria-label="From Single- to Multidomain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#domain-dependent-modules" class="md-nav__link">
     Domain Dependent Modules
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#domain-independent-modules">
+        
+          <li class="md-nav__item">
+  <a href="#domain-independent-modules" class="md-nav__link">
     Domain Independent Modules
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#domain-tracker-module">
+        
+          <li class="md-nav__item">
+  <a href="#domain-tracker-module" class="md-nav__link">
     Domain Tracker Module
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#creating-a-domain-tracker">
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-domain-tracker" class="md-nav__link">
     Creating a Domain Tracker
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#putting-it-all-together">
+        
+          <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
     Putting it All Together
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#running-a-distributed-dialog-system">
+      
+        <li class="md-nav__item">
+  <a href="#running-a-distributed-dialog-system" class="md-nav__link">
     Running A Distributed Dialog System
   </a>
+  
 </li>
-</ul>
+      
+    </ul>
+  
 </nav>
-</div>
-</div>
-</div>
-<div class="md-content">
-<article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/DigitalPhonetics/adviser/edit/master/docs/tutorials/advanced/index.md" title="Edit this page">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
-</a>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/DigitalPhonetics/adviser/edit/master/docs/tutorials/advanced/index.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
 <blockquote>
 <p>You can find the Jupyter Notebook in <a href="https://github.com/DigitalPhonetics/adviser/blob/master/adviser/tutorials/04_adviser_advanced_topics/4_tutorial_advanced_topics.ipynb">our GitHub repository</a>.</p>
 </blockquote>
-<h1 id="advanced-topics-with-adviser-20">Advanced Topics With ADVISER 2.0<a class="headerlink" href="#advanced-topics-with-adviser-20" title="Permanent link">¶</a></h1>
+<h1 id="advanced-topics-with-adviser-20">Advanced Topics With ADVISER 2.0<a class="headerlink" href="#advanced-topics-with-adviser-20" title="Permanent link">&para;</a></h1>
 <p>Now that you have covered how to work with the existing core services of the ADVISER 2.0 Toolkit, let's discuss some of the more advanced features, such as running a distributed system, emotion detection, how create a new domain, and how to add new services</p>
-<h2 id="creating-a-new-domain">Creating a New Domain<a class="headerlink" href="#creating-a-new-domain" title="Permanent link">¶</a></h2>
-<h3 id="database">Database<a class="headerlink" href="#database" title="Permanent link">¶</a></h3>
+<h2 id="creating-a-new-domain">Creating a New Domain<a class="headerlink" href="#creating-a-new-domain" title="Permanent link">&para;</a></h2>
+<h3 id="database">Database<a class="headerlink" href="#database" title="Permanent link">&para;</a></h3>
 <p>In order to create a new domain, you need an SQLite database with the following properties:
 * it contains a single table
 * each row represents an entity in the database
 * each column in the table represents a slot (entity property such as "name", "color", "last_known_location", etc)
     * binary slots should only have values true or false </p>
 <p>As a note, it is also possible to create a new domain with an API backend instead of a fixed database, but in this case, it may not be possible to use the ontology generation tool shown in the next session.</p>
-<h3 id="ontology">Ontology<a class="headerlink" href="#ontology" title="Permanent link">¶</a></h3>
+<h3 id="ontology">Ontology<a class="headerlink" href="#ontology" title="Permanent link">&para;</a></h3>
 <p>Once you have a database, the next step is to create an ontology for the new domain. This can be done using the ontology creation tool provided with ADVISER 2.0. The tool is located in the folder <code>resources/ontologies/create_ontology.py</code></p>
 <p>To use the tool, open a terminal and navigate to the folder with the ontology creation tool. The tool can then be called by typing the following command:</p>
 <div class="codehilite"><pre><span></span><code>python3 create_ontology.py path/to/your/database/YourDomainName.db
 </code></pre></div>
+
 <p>As a fist step, you must choose the table you want to use (we will use the ImsCourses database located in resources/databases for demonstration purposes). The interface for this tool can be seen in the image below:</p>
 <p><img src="ontcreator_select_db.png" width="500"/></p>
 <p>Afterwards, you are asked to name your new domain and then apply the appropriate labels to the different slots. Possible slots will be shown and can be navigated through with the arrow keys. The space bar can be used to select any slots a proposed label applies to. An active selection is indicated by a blue circle.</p>
@@ -543,40 +915,41 @@
 * Requestable: information the user can request from the system</p>
 <p>When the system asks you to identify the primary key, this means you should reference the column in your database which uniquely discriminates all database entries (preferably in a human-readable way, not just an index) - in case of the IMSCourses domain, this is the name of the course. </p>
 <p>Selection screens for slots / values look like this:</p>
-<p><img height="65%" src="ontology_tool1.png" width="65%"/></p>
+<p><img src="ontology_tool1.png" width="65%" height="65%"/></p>
 <p>And the end output should be a file in JSON format like the one shown in the excerpt below:</p>
 <p><img src="ontcreator_json.png" width="500"/></p>
 <p>As a final step the system will ask if you want to copy the database, if your database is not already located inside the folder <code>resources/databases</code>, you should select "yes" to this operation, so a copy of your database is where it will be expected when creating a new <code>Domain</code> object.</p>
 <p>After the tool terminates successfully, check that the following two files were created inside the folders <code>resources/databases</code> and <code>resources/ontologies</code>:
 * [YourDomainName].db
 * [YourDomainName].json</p>
-<h3 id="domain-object">Domain Object<a class="headerlink" href="#domain-object" title="Permanent link">¶</a></h3>
+<h3 id="domain-object">Domain Object<a class="headerlink" href="#domain-object" title="Permanent link">&para;</a></h3>
 <p>Once you have your ontology and database, you can create a <code>Domain</code> object for your new domain, as seen in the previous tutorial:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">utils.domain.jsonlookupdomain</span> <span class="kn">import</span> <span class="n">JSONLookupDomain</span>
 
-<span class="n">your_domain_instance</span> <span class="o">=</span> <span class="n">JSONLookupDomain</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'YourDomainName'</span><span class="p">,</span> 
-                            <span class="n">json_ontology_file</span><span class="o">=</span><span class="s1">'resources/databases/YourDomainName.json'</span><span class="p">,</span> 
-                            <span class="n">sqllite_db_file</span><span class="o">=</span><span class="s1">'resources/databases/YourDomainName.db'</span><span class="p">)</span>
+<span class="n">your_domain_instance</span> <span class="o">=</span> <span class="n">JSONLookupDomain</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;YourDomainName&#39;</span><span class="p">,</span> 
+                            <span class="n">json_ontology_file</span><span class="o">=</span><span class="s1">&#39;resources/databases/YourDomainName.json&#39;</span><span class="p">,</span> 
+                            <span class="n">sqllite_db_file</span><span class="o">=</span><span class="s1">&#39;resources/databases/YourDomainName.db&#39;</span><span class="p">)</span>
 </code></pre></div>
+
 <p>You can than use the object to instantiate the modules that constitute your dialog graph.</p>
-<h3 id="nlu-and-nlg">NLU and NLG<a class="headerlink" href="#nlu-and-nlg" title="Permanent link">¶</a></h3>
+<h3 id="nlu-and-nlg">NLU and NLG<a class="headerlink" href="#nlu-and-nlg" title="Permanent link">&para;</a></h3>
 <p>Another important thing to remember is to create NLU regexes and NLG templates for your new domain, see the previous tutorial if you have questions on this process.</p>
-<h3 id="policy">Policy<a class="headerlink" href="#policy" title="Permanent link">¶</a></h3>
+<h3 id="policy">Policy<a class="headerlink" href="#policy" title="Permanent link">&para;</a></h3>
 <p>In some cases, a new domain may require a new policy and new <code>user_acts</code> or <code>sys_acts</code> if the new domain requires functionality not provided by the original policy, it may be neccessary to expand the list of user or system acts. For reference, these lists are shown in the previous sections under the NLU and Policy sections respectively. If new acts are added, the policy must be expanded to be able to accept the new user acts as input and to generate the new system actions as output. This can be done by inheriting from the current policy.</p>
-<h2 id="creating-a-new-service">Creating a New Service<a class="headerlink" href="#creating-a-new-service" title="Permanent link">¶</a></h2>
+<h2 id="creating-a-new-service">Creating a New Service<a class="headerlink" href="#creating-a-new-service" title="Permanent link">&para;</a></h2>
 <p>As we saw in Tutorial 2, all of the modules in the ADVISER 2.0 toolkit are children of the Service class. This means in order to create a new module, you need to create a new service. In the previous tutorial we showed an example of how to do this for a simple case. In this section, we will go into more depth on dialog system specifics to consider when creating a service.</p>
-<h3 id="inheriting-from-the-service-class">Inheriting from the service class<a class="headerlink" href="#inheriting-from-the-service-class" title="Permanent link">¶</a></h3>
+<h3 id="inheriting-from-the-service-class">Inheriting from the service class<a class="headerlink" href="#inheriting-from-the-service-class" title="Permanent link">&para;</a></h3>
 <p>Step one is always to inherit from the service class. Doing this means that your new service requires a <code>domain</code> argument on instantiation, but also that it can take the following optional arguments (which you saw in Tutorial 3):
 * <code>sub_topic_domains</code>
 * <code>pub_topic_domains</code></p>
 <p>which allow users to overwrite subsribe/publish topics on instantiation. This can be useful in some cases when combining domain specific services with non domain specific services.</p>
-<h3 id="determine-what-methods-need-to-be-decorated">Determine what methods need to be decorated<a class="headerlink" href="#determine-what-methods-need-to-be-decorated" title="Permanent link">¶</a></h3>
+<h3 id="determine-what-methods-need-to-be-decorated">Determine what methods need to be decorated<a class="headerlink" href="#determine-what-methods-need-to-be-decorated" title="Permanent link">&para;</a></h3>
 <p>The next important step is to consider which methods in your new service should be decorated and what topics it should subscibe to/publish. As a general rule, only methods which will directly interact with other services need to be decorated. If all communication happens inside of a class, normal class methods are sufficient. Another important note, when decorating a method make sure that the list of subscribe topics matches the list of method arguments and that you have checked the topics you subsrcibe to will be published by another method and the topics which you publish will be subscribed to by another method.</p>
-<h3 id="managing-dialog-dependent-state">Managing Dialog-Dependent State<a class="headerlink" href="#managing-dialog-dependent-state" title="Permanent link">¶</a></h3>
+<h3 id="managing-dialog-dependent-state">Managing Dialog-Dependent State<a class="headerlink" href="#managing-dialog-dependent-state" title="Permanent link">&para;</a></h3>
 <p>Another important concern is dialog dependent state. That is, information which gets tracked within a service over the course of a dialog, but should be reset between dialogs. If you want to initialize/reset per-dialog state or want to perform other actions before the first / after the last dialog turn, you can overwrite the <code>dialog_start</code> and <code>dialog_end</code> methods provided by the <code>Service</code> class. </p>
 <p>These will automatically be called before the start and end of a dialog, so you do not need to worry about decorating them extra. In fact, since topics don't have any guarantees on order of delivery using these methods is preferable to decorating because the methods are guranteed to be called before the first dialog turn and after the last one respectively.</p>
 <p><em>Since our dialog system might be migrated to multi-session support at some point, we consider it best practice to initialize/reset all dialog-dependent state not in the constructor but rather inside these two methods.</em></p>
-<h2 id="adding-task-specific-feature-extraction">Adding Task-specific Feature Extraction<a class="headerlink" href="#adding-task-specific-feature-extraction" title="Permanent link">¶</a></h2>
+<h2 id="adding-task-specific-feature-extraction">Adding Task-specific Feature Extraction<a class="headerlink" href="#adding-task-specific-feature-extraction" title="Permanent link">&para;</a></h2>
 <p>Certain tasks, such as emotion recognition or backchanneling, require specific acoustic and/or visual features as input (see the following sections). To retain maximum modularity, we recommend that feature extraction is separated from the actual task. Therefore, in this section we look at an example of a speech feature extraction module which subscribes to an audio recording and publishes a feature vector.</p>
 <p>The feature extractor is a service, i.e. it inherits from the service class:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">services.service</span> <span class="kn">import</span> <span class="n">PublishSubscribe</span>
@@ -584,19 +957,21 @@
 <span class="kn">from</span> <span class="nn">torchaudio.compliance</span> <span class="kn">import</span> <span class="n">kaldi</span>
 
 <span class="k">class</span> <span class="nc">SpeechFeatureExtractor</span><span class="p">(</span><span class="n">Service</span><span class="p">):</span>
-    <span class="sd">"""Simple feature extractor which uses torchaudio to compute MFCCs."""</span>
+    <span class="sd">&quot;&quot;&quot;Simple feature extractor which uses torchaudio to compute MFCCs.&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">Service</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </code></pre></div>
+
 <p>Now, let's create a simple decorated method for feature extraction. Note, in the current ADVISER implementation, 'speech_in' is a tuple that consists of a numpy array representing the audio recording and the sampling rate: (data, sample_rate). This way, everything can be handled in memory without needing to write and delete files. </p>
-<div class="codehilite"><pre><span></span><code>    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s1">'speech_in'</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s1">'mfcc_features'</span><span class="p">])</span>
+<div class="codehilite"><pre><span></span><code>    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;speech_in&#39;</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mfcc_features&#39;</span><span class="p">])</span>
     <span class="k">def</span> <span class="nf">speech_to_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speech_in</span><span class="p">):</span>
         <span class="n">features</span> <span class="o">=</span> <span class="n">kaldi</span><span class="o">.</span><span class="n">mfcc</span><span class="p">(</span><span class="n">speech_in</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sample_frequency</span><span class="o">=</span><span class="n">speech_in</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
-        <span class="k">return</span> <span class="p">{</span><span class="s1">'mfcc_features'</span><span class="p">:</span> <span class="n">features</span><span class="p">}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;mfcc_features&#39;</span><span class="p">:</span> <span class="n">features</span><span class="p">}</span>
 </code></pre></div>
+
 <p>For the sake of illustration, this example uses <a href="https://pytorch.org/audio/compliance.kaldi.html">torchaudio</a> to extract <a href="https://en.wikipedia.org/wiki/Mel-frequency_cepstrum">MFCC features</a>. In the current ADVISER implementation, we use the <a href="https://www.audeering.com/opensmile/">openSMILE</a> toolkit to extract MFCCs and addtionally, <a href="https://ieeexplore.ieee.org/abstract/document/7160715">GeMAPS</a> features, which are used for emotion recognition.</p>
-<h2 id="adding-emotion-recognition">Adding Emotion Recognition<a class="headerlink" href="#adding-emotion-recognition" title="Permanent link">¶</a></h2>
+<h2 id="adding-emotion-recognition">Adding Emotion Recognition<a class="headerlink" href="#adding-emotion-recognition" title="Permanent link">&para;</a></h2>
 <p>The current implementation of ADVISER 2.0 provides a basic module for emotion recognition from speech features.
 The prerequisites for this module are:
 * A pre-trained model for emotion prediction
@@ -608,23 +983,24 @@ In the following code, we see an example emotion recognition class. As with any 
         <span class="n">Service</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">emotion_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
         <span class="n">model_path</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="n">file</span> <span class="n">path</span> <span class="n">to</span> <span class="n">emotion</span> <span class="n">recognition</span> <span class="n">models</span><span class="o">&gt;&gt;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">arousal_model</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="s1">'mlp_audio_arousal.joblib'</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arousal_model</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="s1">&#39;mlp_audio_arousal.joblib&#39;</span><span class="p">))</span>
 
 
-    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">"gemaps_features"</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">"emotion"</span><span class="p">])</span>
+    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;gemaps_features&quot;</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;emotion&quot;</span><span class="p">])</span>
     <span class="k">def</span> <span class="nf">predict_from_audio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gemaps_features</span><span class="p">):</span>
         <span class="n">arousal_prediction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arousal_model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">gemaps_features</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="p">{</span><span class="s1">'emotion'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'arousal'</span><span class="p">:</span> <span class="n">arousal_prediction</span><span class="p">}}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;emotion&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;arousal&#39;</span><span class="p">:</span> <span class="n">arousal_prediction</span><span class="p">}}</span>
 </code></pre></div>
+
 <p>Note, this emotion recognition module is a very basic implementation for illustration purposes. It can easily be improved by inserting more sophisticated machine learning models or by adding video features to perform multimodal emotion recognition.</p>
 <p>[1] Busso, Carlos, et al. "MSP-IMPROV: An acted corpus of dyadic interactions to study emotion perception." IEEE Transactions on Affective Computing 8.1 (2016): 67-80.</p>
-<h3 id="using-emotion-in-a-dialog-system">Using Emotion in a Dialog System<a class="headerlink" href="#using-emotion-in-a-dialog-system" title="Permanent link">¶</a></h3>
+<h3 id="using-emotion-in-a-dialog-system">Using Emotion in a Dialog System<a class="headerlink" href="#using-emotion-in-a-dialog-system" title="Permanent link">&para;</a></h3>
 <p>The ADVISER 2.0 currently provides a <code>UserStateTracker</code> service which keeps track of the detected user emotion and user engagement level. This module works in conjunction with a naive <code>EmotionPolicy</code> service to map user emotion to a system emotional response. Currently this is done with a direct mapping from the recognized user emotion to the same emotion for the system response. This "system emotion" can then be used bye the <code>HandcraftedEmotionNLG</code> service to select an affective NLG template in order to react to user emotion. This system can be seen below.</p>
-<p><img height="75%" src="emotion_system.png" width="75%"/></p>
+<p><img src="emotion_system.png" width="75%" height="75%" /></p>
 <p>This direct mapping is obviously highly simplistic and may be expanded in future versions of ADVISER.</p>
-<h2 id="adding-backchanneling">Adding Backchanneling<a class="headerlink" href="#adding-backchanneling" title="Permanent link">¶</a></h2>
-<h3 id="backchannel-prediction">Backchannel prediction<a class="headerlink" href="#backchannel-prediction" title="Permanent link">¶</a></h3>
+<h2 id="adding-backchanneling">Adding Backchanneling<a class="headerlink" href="#adding-backchanneling" title="Permanent link">&para;</a></h2>
+<h3 id="backchannel-prediction">Backchannel prediction<a class="headerlink" href="#backchannel-prediction" title="Permanent link">&para;</a></h3>
 <p>ADVISER 2.0 comes with an acoustic backchannel module that makes use of a pre-trained backchanneler model and 
 MFCC features as input (<a href="#features">see section above</a>).</p>
 <p>The backchanneller implementation consists of a convolutional neural network model based on [1] and trained on the Switchboard benchmark dataset [2]. As input, it receives 13 Mel-frequency-cepstral coefficients from the user’s speech signal. The model assigns one of three categories from the proactive backchanneling theory [3] to each user utterance {no-backchannel, backchannel-continuer and backchannel-assessment}. The predicted category is used to add the backchannel realization, such as Okay or Um-hum, at the begining the next system response.</p>
@@ -637,8 +1013,8 @@ MFCC features as input (<a href="#features">see section above</a>).</p>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">AcousticBackchanneller</span><span class="p">(</span><span class="n">Service</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">Service</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">speech_in_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span> <span class="o">+</span> <span class="s1">'/'</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">trained_model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">'resources'</span><span class="p">,</span> <span class="s1">'models'</span><span class="p">,</span> <span class="s1">'backchannel'</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'/pytorch_acoustic_backchanneller.pt'</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speech_in_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trained_model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;resources&#39;</span><span class="p">,</span> <span class="s1">&#39;models&#39;</span><span class="p">,</span> <span class="s1">&#39;backchannel&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/pytorch_acoustic_backchanneller.pt&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">load_model</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -646,28 +1022,29 @@ MFCC features as input (<a href="#features">see section above</a>).</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trained_model_path</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
 
-    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s1">'mfcc_features'</span><span class="p">],</span>
-                      <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">"predicted_BC"</span><span class="p">])</span>
+    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mfcc_features&#39;</span><span class="p">],</span>
+                      <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;predicted_BC&quot;</span><span class="p">])</span>
     <span class="k">def</span> <span class="nf">backchannel_prediction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mfcc_features</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">):</span>
-        <span class="sd">"""Takes temporary user utterance wav file and extracts features from it."""</span>
+        <span class="sd">&quot;&quot;&quot;Takes temporary user utterance wav file and extracts features from it.&quot;&quot;&quot;</span>
         <span class="n">scaler</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">StandardScaler</span><span class="p">()</span>
         <span class="n">mfcc_features</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">mfcc_features</span><span class="p">)</span>
         <span class="n">input_splits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_input_data</span><span class="p">(</span><span class="n">mfcc_features</span><span class="p">)</span>
         <span class="n">prediction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">input_splits</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="c1"># Returning the majority, unless a BC appears,</span>
-        <span class="c1"># class_int_mapping = {0: b'no_bc', 1: b'assessment', 2: b'continuer'}</span>
+        <span class="c1"># class_int_mapping = {0: b&#39;no_bc&#39;, 1: b&#39;assessment&#39;, 2: b&#39;continuer&#39;}</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">prediction</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s1">'predicted_BC'</span><span class="p">:</span>  <span class="n">prediction</span><span class="p">[</span><span class="mi">0</span><span class="p">]}</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;predicted_BC&#39;</span><span class="p">:</span>  <span class="n">prediction</span><span class="p">[</span><span class="mi">0</span><span class="p">]}</span>
         <span class="k">elif</span> <span class="mi">1</span> <span class="ow">in</span> <span class="n">prediction</span> <span class="ow">and</span> <span class="mi">2</span> <span class="ow">in</span> <span class="n">prediction</span><span class="p">:</span>
             <span class="n">ones</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">prediction</span><span class="p">[</span><span class="n">prediction</span><span class="o">==</span><span class="mi">1</span><span class="p">])</span>
             <span class="n">twos</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">prediction</span><span class="p">[</span><span class="n">prediction</span><span class="o">==</span><span class="mi">2</span><span class="p">])</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s1">'predicted_BC'</span><span class="p">:</span>  <span class="mi">1</span> <span class="k">if</span> <span class="n">ones</span> <span class="o">&gt;</span> <span class="n">twos</span> <span class="k">else</span> <span class="mi">2</span><span class="p">}</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;predicted_BC&#39;</span><span class="p">:</span>  <span class="mi">1</span> <span class="k">if</span> <span class="n">ones</span> <span class="o">&gt;</span> <span class="n">twos</span> <span class="k">else</span> <span class="mi">2</span><span class="p">}</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s1">'predicted_BC'</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="mi">1</span> <span class="ow">in</span> <span class="n">prediction</span> <span class="k">else</span> <span class="mi">2</span><span class="p">}</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;predicted_BC&#39;</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="mi">1</span> <span class="ow">in</span> <span class="n">prediction</span> <span class="k">else</span> <span class="mi">2</span><span class="p">}</span>
 </code></pre></div>
+
 <p>This backchanneller only makes use of acoustic features, however, a more complex module can be implemented, so that it can also profit from ASR trancriptions as shown in [2].</p>
-<h3 id="integrating-backchannel-to-the-systems-response">Integrating backchannel to the system's response<a class="headerlink" href="#integrating-backchannel-to-the-systems-response" title="Permanent link">¶</a></h3>
+<h3 id="integrating-backchannel-to-the-systems-response">Integrating backchannel to the system's response<a class="headerlink" href="#integrating-backchannel-to-the-systems-response" title="Permanent link">&para;</a></h3>
 <p>After the backchannel prediction is done, the corresponding backchannel realization should be added to the system response. For simplicity, we decided to add it at the beginning of the system response already generated by the <code>NLG</code> module.  This code can be found in the class <code>BackchannelHandcraftedNLG(HandcraftedNLG)</code>. Here we have a sample of the most relevant code.</p>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">BackchannelHandcraftedNLG</span><span class="p">(</span><span class="n">HandcraftedNLG</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="n">Domain</span><span class="p">,</span> <span class="n">sub_topic_domains</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{},</span> <span class="n">template_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -678,29 +1055,30 @@ MFCC features as input (<a href="#features">see section above</a>).</p>
             <span class="n">logger</span><span class="o">=</span><span class="n">DiasysLogger</span><span class="p">(),</span> <span class="n">template_file_german</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
             <span class="n">language</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sub_topic_domains</span><span class="o">=</span><span class="n">sub_topic_domains</span><span class="p">)</span>
 
-        <span class="c1"># class_int_mapping = {0: b'no_bc', 1: b'assessment', 2: b'continuer'}</span>
+        <span class="c1"># class_int_mapping = {0: b&#39;no_bc&#39;, 1: b&#39;assessment&#39;, 2: b&#39;continuer&#39;}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">backchannels</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="mi">0</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>
-            <span class="mi">1</span><span class="p">:</span> <span class="s1">'Okay. '</span><span class="p">,</span>
-            <span class="mi">2</span><span class="p">:</span> <span class="s1">'Um-hum. '</span>
+            <span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;Okay. &#39;</span><span class="p">,</span>
+            <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;Um-hum. &#39;</span>
         <span class="p">}</span>
 
 
-    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">"sys_act"</span><span class="p">,</span> <span class="s1">'predicted_BC'</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">"sys_utterance"</span><span class="p">])</span>
+    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sys_act&quot;</span><span class="p">,</span> <span class="s1">&#39;predicted_BC&#39;</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sys_utterance&quot;</span><span class="p">])</span>
     <span class="k">def</span> <span class="nf">generate_system_utterance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sys_act</span><span class="p">:</span> <span class="n">SysAct</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">predicted_BC</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">(</span><span class="n">sys_utterance</span><span class="o">=</span><span class="nb">str</span><span class="p">):</span>
 
         <span class="n">rule_found</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="s2">""</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">templates</span><span class="o">.</span><span class="n">create_message</span><span class="p">(</span><span class="n">sys_act</span><span class="p">)</span>
-            <span class="k">if</span> <span class="s1">'Sorry'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">message</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;Sorry&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">message</span><span class="p">:</span>
                 <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">backchannels</span><span class="p">[</span><span class="n">predicted_BC</span><span class="p">]</span> <span class="o">+</span> <span class="n">message</span>
         <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
             <span class="n">rule_found</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
             <span class="k">raise</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
 </code></pre></div>
+
 <p>The backchanneller does not show variety in its realizations, however, this can be easily implemented if needed.</p>
 <p>[1] Daniel Ortega, Chia-Yu Li, NgocThang Vu. "Oh,Jeez! or uh-huh?" A listener- aware backchannel predictor on ASR transcriptions. ICASSP,2020.</p>
 <p>[2] D. Jurafsky and E. Shriberg. “Switchboard swbd-damsl
@@ -709,9 +1087,9 @@ Institute of Cognitive Science Technical Report, 1997.</p>
 <p>[3] Charles Goodwin. 1986. Between and within: Alterna-
 tive sequential treatments of continuers and assess-
 ments." Journal of Human Studies.</p>
-<h2 id="from-single-to-multidomain">From Single- to Multidomain<a class="headerlink" href="#from-single-to-multidomain" title="Permanent link">¶</a></h2>
+<h2 id="from-single-to-multidomain">From Single- to Multidomain<a class="headerlink" href="#from-single-to-multidomain" title="Permanent link">&para;</a></h2>
 <p>For more complex scenarios, it may make sense to split your dialog system into multiple domains. For example if your goal is to create a university student assistant bot. You may decide that as a start you want your system to help students find information about lecturers and help students to find out what the dining hall (Mensa) is serving. While in theory these two topics could be put together into the same domain, mensa information updates every day so accessing this through a web API is preferable to only having a fixed database. For the lecturers, however there is no web API, and this inofmration remains largely static, so a fixed database is preferable. At this point, since the data sources, and the actual topics of conversation for each topic are so different, giving each its own domain makes sense. But how do we do that?</p>
-<h3 id="domain-dependent-modules">Domain Dependent Modules<a class="headerlink" href="#domain-dependent-modules" title="Permanent link">¶</a></h3>
+<h3 id="domain-dependent-modules">Domain Dependent Modules<a class="headerlink" href="#domain-dependent-modules" title="Permanent link">&para;</a></h3>
 <p>Services like the Natural Language Understanding, Belief State Tracker and Policy are domain dependent:
 they require domain-specific ontology knowledge (e.g. towns for weather, food names for the mensa) or database access to function. Rather than re-implementing these modules for your specific purposes, however, you can instantiate these services with the corresponding domains (one instance per domain).</p>
 <p>First we will handle importing all the modules we need and create our domain objects:</p>
@@ -720,7 +1098,7 @@ they require domain-specific ontology knowledge (e.g. towns for weather, food na
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 <span class="kn">import</span> <span class="nn">time</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">'../..'</span><span class="p">))</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;../..&#39;</span><span class="p">))</span>
 
 <span class="kn">from</span> <span class="nn">services.service</span> <span class="kn">import</span> <span class="n">Service</span><span class="p">,</span> <span class="n">PublishSubscribe</span><span class="p">,</span> <span class="n">RemoteService</span>
 <span class="kn">from</span> <span class="nn">services.nlu</span> <span class="kn">import</span> <span class="n">HandcraftedNLU</span>
@@ -738,14 +1116,16 @@ they require domain-specific ontology knowledge (e.g. towns for weather, food na
 
 <span class="c1"># CREATE DOMAIN OBJECTS</span>
 <span class="n">canteen</span> <span class="o">=</span> <span class="n">MensaDomain</span><span class="p">()</span>
-<span class="n">lecturers</span> <span class="o">=</span> <span class="n">JSONLookupDomain</span><span class="p">(</span><span class="s1">'ImsLecturers'</span><span class="p">)</span>
+<span class="n">lecturers</span> <span class="o">=</span> <span class="n">JSONLookupDomain</span><span class="p">(</span><span class="s1">&#39;ImsLecturers&#39;</span><span class="p">)</span>
 </code></pre></div>
+
 <p>Next let's start creating our Domain Dependent modules:
 * <code>NLU</code> is domain dependent because it needs access to different regex files depending on the domain</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># NLU needs domain to load correct regexe files</span>
 <span class="n">lecturer_nlu</span> <span class="o">=</span> <span class="n">HandcraftedNLU</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">lecturers</span><span class="p">)</span>
 <span class="n">dining_hall_nlu</span> <span class="o">=</span> <span class="n">MensaNLU</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">canteen</span><span class="p">)</span>
 </code></pre></div>
+
 <ul>
 <li><code>BST</code> is domain dependent because it needs access to an ontology so it knows what the informable requestable slots it needs to track</li>
 </ul>
@@ -753,6 +1133,7 @@ they require domain-specific ontology knowledge (e.g. towns for weather, food na
 <span class="n">lecturer_bst</span> <span class="o">=</span> <span class="n">HandcraftedBST</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">lecturers</span><span class="p">)</span>
 <span class="n">dining_hall_bst</span> <span class="o">=</span> <span class="n">HandcraftedBST</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">canteen</span><span class="p">)</span>
 </code></pre></div>
+
 <ul>
 <li><code>Policy</code> is domain dependent because it needs to know which database to query to determine the next system action</li>
 </ul>
@@ -760,6 +1141,7 @@ they require domain-specific ontology knowledge (e.g. towns for weather, food na
 <span class="n">lecturer_policy</span> <span class="o">=</span> <span class="n">HandcraftedPolicy</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">lecturers</span><span class="p">)</span>
 <span class="n">dining_hall_policy</span> <span class="o">=</span> <span class="n">PolicyAPI</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">canteen</span><span class="p">)</span>
 </code></pre></div>
+
 <ul>
 <li><code>NLG</code> is domain dependent because it needs to access the correct template files to generate natural language output</li>
 </ul>
@@ -767,41 +1149,43 @@ they require domain-specific ontology knowledge (e.g. towns for weather, food na
 <span class="n">lecturer_nlg</span> <span class="o">=</span> <span class="n">HandcraftedNLG</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">lecturers</span><span class="p">)</span>
 <span class="n">dining_hall_nlg</span> <span class="o">=</span> <span class="n">HandcraftedNLG</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">canteen</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="domain-independent-modules">Domain Independent Modules<a class="headerlink" href="#domain-independent-modules" title="Permanent link">¶</a></h3>
+
+<h3 id="domain-independent-modules">Domain Independent Modules<a class="headerlink" href="#domain-independent-modules" title="Permanent link">&para;</a></h3>
 <p>In comparison to the previously shown services, there are also modules in a dialog system that are domain independent, such as ASR and TTS or console input and console output. Regardless of the domain, these modules do the same thing: take in a user input and pass it out as a string. Since these services do not change, domain-independent services only need to be instantiated once. </p>
 <p>An example using console input and console output modules is shown below. Where previously we passed in a domain, here since they are domain independent, we pass in an empty string.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">services.hci.console</span> <span class="kn">import</span> <span class="n">ConsoleInput</span><span class="p">,</span> <span class="n">ConsoleOutput</span>
-<span class="n">user_in</span> <span class="o">=</span> <span class="n">ConsoleInput</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span>
-<span class="n">user_out</span> <span class="o">=</span> <span class="n">ConsoleOutput</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span>
+<span class="n">user_in</span> <span class="o">=</span> <span class="n">ConsoleInput</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">user_out</span> <span class="o">=</span> <span class="n">ConsoleOutput</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="domain-tracker-module">Domain Tracker Module<a class="headerlink" href="#domain-tracker-module" title="Permanent link">¶</a></h3>
+
+<h3 id="domain-tracker-module">Domain Tracker Module<a class="headerlink" href="#domain-tracker-module" title="Permanent link">&para;</a></h3>
 <p>Once you have created all of domain dependent and independent modules, you will need some way to decide which domain should be active at a given time. That is where the <code>DomainTracker</code> module comes in. 
 The goal of this module is to take in a domain independent user utterance and map it to the correct domain as shown in the image below:</p>
-<p><img height="75%" src="topic_tracker.png" width="75%"/></p>
+<p><img src="topic_tracker.png" width="75%" height="75%" /></p>
 <p>The domain tracker is something between domain dependent and domain independent. On instantiation, it takes in a list of possible domains which it can forward a user utterance to, although there is no need to create a new <code>DomainTracker</code> for each domain in the dialog system. In the current implementation, this module relies on keywords matching, inspired by commercial systems, to determine which domain should be active at any given time. This means that at any time, at most one domain will be active. However a more advanced domain tracker could be implemented to replace this in the future and might even be able to support dialog in multiple domains at the same time.</p>
 <p>To determine which domain should be active, the <code>DomainTracker</code> follows a series of simple rules shown in the image below: </p>
-<p><img height="65%" src="d_tracker_flow.png" width="65%"/></p>
+<p><img src="d_tracker_flow.png" width="65%" height="65%" /></p>
 <p>If there is only one domain, that domain is always active. If there are more domains, the tracker checks if it is the first turn. If so the system issues a greeting to the user and tells them what domains the dialog system can talk about. If not, the domain tracker checks for domain keywords. If any appear in the user utterance, the first to appear is the domain selected, as the dialog system is not yet capable of handling multiple domains active during the same turn. If there is no keyword, the tracker checks to see if a domain was active the previous turn, if yes, it is assumed that that domain remains active. If there was no active domain in the previous turn, the tracker checks to see if the user said 'bye', if so the tracker will also say 'bye'. If not, the tracker then reminds the user of the domains it is capable of tracking.</p>
 <p>This can also be seen in the code below:</p>
-<div class="codehilite"><pre><span></span><code><span class="sd">""" The domain tracker has to know all domains our application should be able to handle, but not not append domain names to topics by default, so it stores a list of domains, but doesn't forward any of them to the service base class constructor: """</span>
+<div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot; The domain tracker has to know all domains our application should be able to handle, but not not append domain names to topics by default, so it stores a list of domains, but doesn&#39;t forward any of them to the service base class constructor: &quot;&quot;&quot;</span>
 <span class="k">class</span> <span class="nc">DomainTracker</span><span class="p">(</span><span class="n">Service</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domains</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Domain</span><span class="p">],</span> <span class="n">greet_on_first_turn</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
-        <span class="n">Service</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span>
+        <span class="n">Service</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">domains</span> <span class="o">=</span> <span class="n">domains</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_domain</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">greet_on_first_turn</span> <span class="o">=</span> <span class="n">greet_on_first_turn</span>
 
-    <span class="sd">""" Since service output relies on per-dialog state (turn count, currently active domain), it needs to initialize this state before each new dialog:"""</span>
+    <span class="sd">&quot;&quot;&quot; Since service output relies on per-dialog state (turn count, currently active domain), it needs to initialize this state before each new dialog:&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">dialog_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">turn</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="sd">""" Furthermore, it needs to subscribe to user utterances and forward them (`gen_user_utterance` is short for `generic user utterance`) as a domain-dependent user utterance, or, if no domain is active, publish a system utterance listing all available domains: """</span>
-    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">"gen_user_utterance"</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">"user_utterance"</span><span class="p">,</span> <span class="s2">"sys_utterance"</span><span class="p">])</span>
+    <span class="sd">&quot;&quot;&quot; Furthermore, it needs to subscribe to user utterances and forward them (`gen_user_utterance` is short for `generic user utterance`) as a domain-dependent user utterance, or, if no domain is active, publish a system utterance listing all available domains: &quot;&quot;&quot;</span>
+    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;gen_user_utterance&quot;</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;user_utterance&quot;</span><span class="p">,</span> <span class="s2">&quot;sys_utterance&quot;</span><span class="p">])</span>
     <span class="k">def</span> <span class="nf">select_domain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gen_user_utterance</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">(</span><span class="n">user_utterance</span><span class="o">=</span><span class="nb">str</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">turn</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">turn</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">greet_on_first_turn</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s1">'sys_utterance'</span><span class="p">:</span> <span class="s2">"Hello, please let me know how I can help you, I can discuss "</span> <span class="o">+</span>
-                    <span class="sa">f</span><span class="s2">"the following domains: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">domains_to_str</span><span class="p">()</span><span class="si">}</span><span class="s2">."</span><span class="p">}</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;sys_utterance&#39;</span><span class="p">:</span> <span class="s2">&quot;Hello, please let me know how I can help you, I can discuss &quot;</span> <span class="o">+</span>
+                    <span class="sa">f</span><span class="s2">&quot;the following domains: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">domains_to_str</span><span class="p">()</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">}</span>
 
         <span class="c1"># if there is only a single domain, simply route the message forward</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">domains</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
@@ -816,40 +1200,42 @@ The goal of this module is to take in a domain independent user utterance and ma
         <span class="n">active_domains</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">domains</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">get_keyword</span><span class="p">()</span> <span class="ow">in</span> <span class="n">user_utterance</span><span class="p">]</span>
 
         <span class="c1"># Even if no domain has been specified, we should be able to exit</span>
-        <span class="k">if</span> <span class="s2">"bye"</span> <span class="ow">in</span> <span class="n">user_utterance</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_domain</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s2">"sys_utterance"</span><span class="p">:</span> <span class="s2">"Thank you, goodbye."</span><span class="p">}</span>
+        <span class="k">if</span> <span class="s2">&quot;bye&quot;</span> <span class="ow">in</span> <span class="n">user_utterance</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_domain</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;sys_utterance&quot;</span><span class="p">:</span> <span class="s2">&quot;Thank you, goodbye.&quot;</span><span class="p">}</span>
 
         <span class="c1"># if there are active domains, use the first one</span>
         <span class="k">elif</span> <span class="n">active_domains</span><span class="p">:</span>
-            <span class="n">out_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"user_utterance/</span><span class="si">{</span><span class="n">active_domains</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_domain_name</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span>
+            <span class="n">out_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;user_utterance/</span><span class="si">{</span><span class="n">active_domains</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_domain_name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">current_domain</span> <span class="o">=</span> <span class="n">active_domains</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">return</span> <span class="p">{</span><span class="n">out_key</span><span class="p">:</span> <span class="n">user_utterance</span><span class="p">}</span>
 
         <span class="c1"># if no domain is explicitely mentioned, assume the last one is still active</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_domain</span><span class="p">:</span>
-            <span class="n">out_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"user_utterance/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">current_domain</span><span class="o">.</span><span class="n">get_domain_name</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span>
+            <span class="n">out_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;user_utterance/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">current_domain</span><span class="o">.</span><span class="n">get_domain_name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="k">return</span> <span class="p">{</span><span class="n">out_key</span><span class="p">:</span> <span class="n">user_utterance</span><span class="p">}</span>
 
         <span class="c1"># Otherwise ask the user what domain they want</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s2">"sys_utterance"</span><span class="p">:</span> <span class="s2">"Hello, please let me know how I can help you, I can discuss "</span> <span class="o">+</span>
-                    <span class="sa">f</span><span class="s2">"the following domains: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">domains_to_str</span><span class="p">()</span><span class="si">}</span><span class="s2">."</span><span class="p">}</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;sys_utterance&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello, please let me know how I can help you, I can discuss &quot;</span> <span class="o">+</span>
+                    <span class="sa">f</span><span class="s2">&quot;the following domains: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">domains_to_str</span><span class="p">()</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">}</span>
 
-    <span class="sd">""" Convert list of domains to a string for console output """</span>
+    <span class="sd">&quot;&quot;&quot; Convert list of domains to a string for console output &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">domains_to_str</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">domains</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">domains</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_display_name</span><span class="p">()</span>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">domains</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">" and "</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">d</span><span class="o">.</span><span class="n">get_display_name</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">domains</span><span class="p">])</span>
+            <span class="k">return</span> <span class="s2">&quot; and &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">d</span><span class="o">.</span><span class="n">get_display_name</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">domains</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">d</span><span class="o">.</span><span class="n">get_display_name</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">domains</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">", and </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">domains</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_display_name</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span>
+            <span class="k">return</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">d</span><span class="o">.</span><span class="n">get_display_name</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">domains</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;, and </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">domains</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_display_name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
 </code></pre></div>
+
 <p>As a note, once the <code>DomainTracker</code> has selected a domain, this is appended to the output dictionary so that only modules of that same domain will receive the published message.</p>
-<h3 id="creating-a-domain-tracker">Creating a Domain Tracker<a class="headerlink" href="#creating-a-domain-tracker" title="Permanent link">¶</a></h3>
+<h3 id="creating-a-domain-tracker">Creating a Domain Tracker<a class="headerlink" href="#creating-a-domain-tracker" title="Permanent link">&para;</a></h3>
 <p>The code for creating a <code>DomainTracker</code> is nearly the same as any other module. However instead of taking in a <code>domain</code> argument as a string or <code>Domain</code> object, the <code>DomainTracker</code> takes in a <code>domains</code> argument which must be a list of domain objects</p>
 <div class="codehilite"><pre><span></span><code><span class="n">domain_tracker</span> <span class="o">=</span> <span class="n">DomainTracker</span><span class="p">(</span><span class="n">domains</span><span class="o">=</span><span class="p">[</span><span class="n">lecturers</span><span class="p">,</span> <span class="n">canteen</span><span class="p">])</span>
 </code></pre></div>
-<h3 id="putting-it-all-together">Putting it All Together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">¶</a></h3>
+
+<h3 id="putting-it-all-together">Putting it All Together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h3>
 <p>The last thing left to do is now to combine all of this into one single dialog system and run it!
 * Sending an emty message to <code>gen_user_utterance</code> will trigger the domain tracker
 * The domian tracker will then see that we're on the first turn with no active domain, thus generating a system message which will inform the user of all available domains (lecturers and canteen)</p>
@@ -860,33 +1246,35 @@ The goal of this module is to take in a domain independent user utterance and ma
                             <span class="n">lecturer_policy</span><span class="p">,</span> <span class="n">dining_hall_policy</span><span class="p">,</span><span class="c1"># Policies</span>
                             <span class="n">lecturer_nlg</span><span class="p">,</span> <span class="n">dining_hall_nlg</span><span class="p">,</span>      <span class="c1"># NLGs</span>
                     <span class="p">])</span>
-<span class="n">ds</span><span class="o">.</span><span class="n">run_dialog</span><span class="p">({</span><span class="s1">'gen_user_utterance'</span><span class="p">:</span> <span class="s2">""</span><span class="p">})</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">run_dialog</span><span class="p">({</span><span class="s1">&#39;gen_user_utterance&#39;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">})</span>
 </code></pre></div>
+
 <p>Alternatively, you can have a look at the <code>run_chat.py</code> file
 * calling <code>python run_chat lecturers mensa</code> from your terminal in the ADVISER main folder will do exactly the same
 * you can specify more options, e.g. for using ASR, TTS, etc.</p>
-<h2 id="running-a-distributed-dialog-system">Running A Distributed Dialog System<a class="headerlink" href="#running-a-distributed-dialog-system" title="Permanent link">¶</a></h2>
+<h2 id="running-a-distributed-dialog-system">Running A Distributed Dialog System<a class="headerlink" href="#running-a-distributed-dialog-system" title="Permanent link">&para;</a></h2>
 <p>If you're relying on computationally intense services, e.g. <code>ASR</code> or <code>TTS</code> modules, ADVISER 2.0 provdies a way to split up dialog processing so these services can be run remotely, e.g. on more powerful machines, while the rest of the dialog system remains local. </p>
 <p>The easiest way to do this is to use <em>ssh port-forwarding</em>, but you can also specify arbitrary IP-adresses (you might have to adapt your router settings for this approach).
 Therefore, we will use the port-forwarding approach in the following description.</p>
 <p>The good news first: running some modules remotely, does not require any large changes!
 1. The first change is that you will need to pass a unique <code>identifier</code> to your service constructor; so rather than just taking in a <code>domain</code> your service will also need to take in an <code>identifier</code> as shown below:</p>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">ConcatenateServiceWithDomain</span><span class="p">(</span><span class="n">Service</span><span class="p">):</span>
-    <span class="sd">""" new here: identifier argument"""</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"mydomain"</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="sd">""" NEW: domain name! """</span>
+    <span class="sd">&quot;&quot;&quot; new here: identifier argument&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;mydomain&quot;</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; NEW: domain name! &quot;&quot;&quot;</span>
         <span class="n">Service</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">,</span> <span class="n">identifier</span> <span class="o">=</span> <span class="n">identifier</span><span class="p">)</span>
 
-    <span class="sd">""" nothing changes here """</span>
-    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">"A"</span><span class="p">,</span> <span class="s2">"B"</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">"C"</span><span class="p">,</span> <span class="s2">"D"</span><span class="p">])</span>
+    <span class="sd">&quot;&quot;&quot; nothing changes here &quot;&quot;&quot;</span>
+    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">])</span>
     <span class="k">def</span> <span class="nf">concatenate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span><span class="n">D</span><span class="o">=</span><span class="nb">str</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">"CONCATENATING "</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="s2">"AND "</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="s2">" "</span> <span class="o">+</span> <span class="n">B</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CONCATENATING &quot;</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="s2">&quot;AND &quot;</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">B</span>
         <span class="k">if</span> <span class="n">A</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s1">'D'</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span>  <span class="p">{</span><span class="s1">'C'</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+            <span class="k">return</span>  <span class="p">{</span><span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
 </code></pre></div>
+
 <ol>
 <li>Next create an instance of your service with an identifier of your choosing in a script <em>on your remote machine</em>; <ul>
 <li>The only important thing when choosing the identifier is that you don't use the same identifier for two different service instances. But it is recommended that the name is at least somewhat descriptive.</li>
@@ -894,20 +1282,22 @@ Therefore, we will use the port-forwarding approach in the following description
 </li>
 <li><em>In the same script,</em> call this services's <code>run_standalone()</code> method. This will kickoff a registration routine with the dialog system instance we're going to run on your local machine</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="n">concatenate_service</span> <span class="o">=</span> <span class="n">ConcatenateServiceWithDomain</span><span class="p">(</span><span class="n">identifier</span><span class="o">=</span><span class="s2">"myconcatenateservice1"</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="n">concatenate_service</span> <span class="o">=</span> <span class="n">ConcatenateServiceWithDomain</span><span class="p">(</span><span class="n">identifier</span><span class="o">=</span><span class="s2">&quot;myconcatenateservice1&quot;</span><span class="p">)</span>
 <span class="n">concatenate_service</span><span class="o">.</span><span class="n">run_standalone</span><span class="p">()</span>
 </code></pre></div>
+
 <ol>
 <li>On <em>your local machine</em> which is going to run the dialog system, create a placeholder, <code>RemoteService</code> (This is really just a dummy class storing the identifier). This allows the remote service to register with the dialog system; important is that you use <em>the same</em> identifier here as you used to create the remote service</li>
 <li>Then, go ahead and instantiate your dialog system, providing the remote service intance instead of the real service to the service list</li>
 </ol>
 <div class="codehilite"><pre><span></span><code><span class="c1"># create dummy service</span>
-<span class="n">remote_concatenate_service</span> <span class="o">=</span> <span class="n">RemoteService</span><span class="p">(</span><span class="n">identifier</span><span class="o">=</span><span class="s2">"myconcatenateservice1"</span><span class="p">)</span>
+<span class="n">remote_concatenate_service</span> <span class="o">=</span> <span class="n">RemoteService</span><span class="p">(</span><span class="n">identifier</span><span class="o">=</span><span class="s2">&quot;myconcatenateservice1&quot;</span><span class="p">)</span>
 
 <span class="c1"># pass dummy service in as part of dialog system</span>
 <span class="n">ds_with_remote</span> <span class="o">=</span> <span class="n">DialogSystem</span><span class="p">(</span><span class="n">services</span><span class="o">=</span><span class="p">[</span><span class="n">remote_concatenate_service</span><span class="p">,</span> <span class="c1"># remote service placeholder</span>
                             <span class="n">print_service</span><span class="p">])</span>             <span class="c1"># local print service</span>
 </code></pre></div>
+
 <p>From here on, you can call your dialog system with the usual <code>run_dialog(...)</code> routine</p>
 <p>But to be able to connect to the remote machine, you need to forward the required ports.
 For this, on your local machine, call port forwarding for
@@ -918,69 +1308,82 @@ For this, on your local machine, call port forwarding for
 ssh -fNR <span class="m">65534</span>:localhost:65534 adress.to.your.remote@machine
 ssh -fNR <span class="m">65535</span>:localhost:65535 adress.to.your.remote@machine
 </code></pre></div>
+
 <p>If those ports are already in use on your machine, you may change them explicitly in the <code>Service</code> <em>AND</em> <code>DialogSystem</code> constructors, just be consistent. See the docstrings on these classes for more information.</p>
 <p>Once you start the <code>concatenate_service.run_standalone()</code> on your remote machine and the <code>ds_with_remote.run_dialog(...)</code> on your local machine, you will see notifications on the terminal giving you information about the connection state between your local and remote services. </p>
 <p>If you want to have a look at another example (with both services running on the same machine, so you don't need to call ssh for this), look at the <code>run_chat.py</code> file with <code>--gui</code> option enabled: this starts a webserver as a remote service connecting to the dialog system.</p>
 <div class="codehilite"><pre><span></span><code>
 </code></pre></div>
-</article>
-</div>
-</div>
-</main>
-<footer class="md-footer">
-<div class="md-footer-nav">
-<nav aria-label="Footer" class="md-footer-nav__inner md-grid">
-<a class="md-footer-nav__link md-footer-nav__link--prev" href="../dialogsystem/" rel="prev" title="Dialog System">
-<div class="md-footer-nav__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
-</div>
-<div class="md-footer-nav__title">
-<div class="md-ellipsis">
-<span class="md-footer-nav__direction">
-                  Previous
-                </span>
-                Dialog System
-              </div>
-</div>
-</a>
-<a class="md-footer-nav__link md-footer-nav__link--next" href="../../faq/" rel="next" title="FAQ">
-<div class="md-footer-nav__title">
-<div class="md-ellipsis">
-<span class="md-footer-nav__direction">
-                  Next
-                </span>
-                FAQ
-              </div>
-</div>
-<div class="md-footer-nav__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
-</div>
-</a>
-</nav>
-</div>
-<div class="md-footer-meta md-typeset">
-<div class="md-footer-meta__inner md-grid">
-<div class="md-footer-copyright">
+
+              
+            </article>
+          </div>
+        </div>
         
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
-          Material for MkDocs
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../dialogsystem/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Dialog System" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Dialog System
+            </div>
+          </div>
         </a>
+      
+      
+        
+        <a href="../../faq/" class="md-footer__link md-footer__link--next" aria-label="Next: FAQ" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              FAQ
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
 </div>
-</div>
-</div>
+      
+    </div>
+  </div>
 </footer>
-</div>
-<script src="../../assets/javascripts/vendor.83fe6e3c.min.js"></script>
-<script src="../../assets/javascripts/bundle.7e1cb91c.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
-<script>
-        app = initialize({
-          base: "../..",
-          features: [],
-          search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.37585f48.min.js"
-          }, typeof search !== "undefined" && search)
-        })
-      </script>
-</body>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.ed9748b7.min.js"></script>
+      
+    
+  </body>
 </html>
