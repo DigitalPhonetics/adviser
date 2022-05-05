@@ -12,10 +12,6 @@ Documentation
 
     Please see the `documentation <https://digitalphonetics.github.io/adviser/>`_ for more details.
 
-New Version
-===========
-Adviser 2.0 is released! 
-
 Installation
 ============
 
@@ -160,6 +156,13 @@ For pip users, the following installation instructions worked:
 .. code-block:: bash
     
     cp /opt/homebrew/lib/libsndfile.dylib
+
+Building the documentation
+==========================
+
+1. Install the Python packages from ``requirements_doc.txt``.
+
+2. Run ``PYTHONPATH=./adviser mkdocs gh-deploy``.
 
 Support
 =======
