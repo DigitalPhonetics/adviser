@@ -162,7 +162,7 @@ Building the documentation
 
 1. Install the Python packages from ``requirements_doc.txt``.
 
-2. Run ``PYTHONPATH=./adviser mkdocs gh-deploy``.
+2. Run ``PYTHONPATH=./adviser mkdocs build`` or ``PYTHONPATH=./adviser mkdocs gh-deploy`` for pushing directly to GitHub Pages.
 
 Support
 =======
