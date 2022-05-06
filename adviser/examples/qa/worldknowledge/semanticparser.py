@@ -155,15 +155,12 @@ class QuestionParser(Service):
         encoded_input = self.tokenizer(utterance, return_tensors='pt', truncation=True, max_length=self.max_seq_len)
         with torch.no_grad():
             embeddings: torch.Tensor = self.embedder(**encoded_input).last_hidden_state
-        # embs_result = self.embedding_creator([utterance], filter_spec_tokens=False)
-        # tokens, embeddings = embs_result[0][0], embs_result[0][1]
         embeddings = torch.cat((embeddings, embeddings.new_zeros(1,self.max_seq_len - embeddings.size(1),768)), dim=1)
-        # embeddings.extend([np.zeros(768, dtype='float32')] * (self.max_seq_len - len(embeddings)))
-        # embeddings = [[elem, elem] for elem in embeddings[:self.max_seq_len]]  # batch of size 1  --> B x T x E
         return self.tokenizer.tokenize(utterance, add_special_tokens=False), embeddings.permute(1,0,2)
 
     def _predict_relation(self, embeddings):
-        rel_scores = self.nn_relation(embeddings)
+        with torch.no_grad():
+            rel_scores = self.nn_relation(embeddings)
         _, pred_rel = torch.max(rel_scores, 1)
         return pred_rel
 
@@ -171,12 +168,14 @@ class QuestionParser(Service):
         return self.tags[int(prediction[0])]
 
     def _predict_topic_entities(self, embeddings):
-        ent_scores = self.nn_entity(embeddings)
+        with torch.no_grad():
+            ent_scores = self.nn_entity(embeddings)
         _, preds_ent = torch.max(ent_scores, 2)
         return preds_ent
 
     def _predict_direction(self, embeddings):
-        tag_scores = self.nn_direction(embeddings)
+        with torch.no_grad():
+            tag_scores = self.nn_direction(embeddings)
         _, preds = torch.max(tag_scores, 1)
         return preds
 
