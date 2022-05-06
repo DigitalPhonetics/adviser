@@ -36,6 +36,8 @@ from .neuralmodels.simpledot import SimpleDot
 from .neuralmodels.tagger import Tagger, extract_entities
 from .neuralmodels.director import Classifier
 
+from transformers import BertTokenizerFast, BertModel
+
 def get_root_dir():
     return os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
@@ -54,7 +56,7 @@ class QuestionParser(Service):
     """
 
     def __init__(self, domain: LookupDomain, \
-        logger: DiasysLogger = DiasysLogger(), device: str = 'cpu'):
+        logger: DiasysLogger = DiasysLogger(), device: str = 'cpu', cache_dir: str = None):
         """Creates neural networks for semantic parsing and other required utils
 
         Args:
@@ -71,8 +73,8 @@ class QuestionParser(Service):
         self.tags = self._load_tag_set()
 
         self.max_seq_len = 40
-        # self.embedding_creator = BertEmbedding(max_seq_length=self.max_seq_len)
-        raise RuntimeError("This domain is currently disabled and has to be updated.")
+        self.tokenizer = BertTokenizerFast.from_pretrained('bert-base-uncased', cache_dir=cache_dir)
+        self.embedder = BertModel.from_pretrained('bert-base-uncased', cache_dir=cache_dir)
 
     def _load_relation_model(self):
         model = SimpleDot(100, 400, True).to(self.device)
@@ -135,7 +137,7 @@ class QuestionParser(Service):
         direction_out = self._predict_direction(embeddings)
 
         relation_pred = self._lookup_relation(relation_out)
-        entities_pred = extract_entities(tokens[1:], entities_out[:,0])
+        entities_pred = extract_entities(tokens, entities_out[:,0])
         direction_pred = self._lookup_direction(direction_out)
 
         self.user_acts.extend([
@@ -143,18 +145,22 @@ class QuestionParser(Service):
             UserAct(user_utterance, UserActionType.Inform, 'direction', direction_pred, 1.0)
         ])
         for t in entities_pred:
-            self.user_acts.append(UserAct(user_utterance, UserActionType.Inform, 'topic', ' '.join(t), 1.0))
+            self.user_acts.append(UserAct(user_utterance, UserActionType.Inform, 'topic', self.tokenizer.convert_tokens_to_string(t), 1.0))
 
         result['user_acts'] = self.user_acts
         self.debug_logger.dialog_turn("User Actions: %s" % str(self.user_acts))
         return result
 
     def _preprocess_utterance(self, utterance):
-        embs_result = self.embedding_creator([utterance], filter_spec_tokens=False)
-        tokens, embeddings = embs_result[0][0], embs_result[0][1]
-        embeddings.extend([np.zeros(768, dtype='float32')] * (self.max_seq_len - len(embeddings)))
-        embeddings = [[elem, elem] for elem in embeddings[:self.max_seq_len]]  # batch of size 1  --> B x T x E
-        return tokens, torch.Tensor(embeddings).to(self.device)
+        encoded_input = self.tokenizer(utterance, return_tensors='pt', truncation=True, max_length=self.max_seq_len)
+        with torch.no_grad():
+            embeddings: torch.Tensor = self.embedder(**encoded_input).last_hidden_state
+        # embs_result = self.embedding_creator([utterance], filter_spec_tokens=False)
+        # tokens, embeddings = embs_result[0][0], embs_result[0][1]
+        embeddings = torch.cat((embeddings, embeddings.new_zeros(1,self.max_seq_len - embeddings.size(1),768)), dim=1)
+        # embeddings.extend([np.zeros(768, dtype='float32')] * (self.max_seq_len - len(embeddings)))
+        # embeddings = [[elem, elem] for elem in embeddings[:self.max_seq_len]]  # batch of size 1  --> B x T x E
+        return self.tokenizer.tokenize(utterance, add_special_tokens=False), embeddings.permute(1,0,2)
 
     def _predict_relation(self, embeddings):
         rel_scores = self.nn_relation(embeddings)
