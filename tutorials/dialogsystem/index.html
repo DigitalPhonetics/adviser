@@ -1230,37 +1230,36 @@
 </blockquote>
 <h1 id="task-oriented-dialog-systems-with-adviser-20">Task Oriented Dialog Systems with ADVISER 2.0<a class="headerlink" href="#task-oriented-dialog-systems-with-adviser-20" title="Permanent link">&para;</a></h1>
 <p>Already we have seen a little bit how services operate and the basic modules needed to make a dialog system. In this tutorial, we will introduce service based implementations of these modules which come as part of the ADVISER 2.0 toolkit.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># FIRST SET UP ENVIRONMENT</span>
-
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;../..&#39;</span><span class="p">))</span>
-
-<span class="kn">from</span> <span class="nn">utils.topics</span> <span class="kn">import</span> <span class="n">Topic</span>
-<span class="kn">from</span> <span class="nn">services.service</span> <span class="kn">import</span> <span class="n">Service</span><span class="p">,</span> <span class="n">PublishSubscribe</span><span class="p">,</span> <span class="n">RemoteService</span>
-
-<span class="kn">from</span> <span class="nn">utils.domain.domain</span> <span class="kn">import</span> <span class="n">Domain</span>
-<span class="kn">from</span> <span class="nn">utils.domain.jsonlookupdomain</span> <span class="kn">import</span> <span class="n">JSONLookupDomain</span>
-<span class="kn">from</span> <span class="nn">utils.logger</span> <span class="kn">import</span> <span class="n">DiasysLogger</span><span class="p">,</span> <span class="n">LogLevel</span>
-
-<span class="kn">from</span> <span class="nn">services.hci</span> <span class="kn">import</span> <span class="n">ConsoleInput</span><span class="p">,</span> <span class="n">ConsoleOutput</span>
-<span class="kn">from</span> <span class="nn">services.nlu</span> <span class="kn">import</span> <span class="n">HandcraftedNLU</span>
-<span class="kn">from</span> <span class="nn">services.bst</span> <span class="kn">import</span> <span class="n">HandcraftedBST</span>
-<span class="kn">from</span> <span class="nn">services.policy</span> <span class="kn">import</span> <span class="n">HandcraftedPolicy</span>
-<span class="kn">from</span> <span class="nn">services.nlg</span> <span class="kn">import</span> <span class="n">HandcraftedNLG</span>
-<span class="kn">from</span> <span class="nn">services.domain_tracker</span> <span class="kn">import</span> <span class="n">DomainTracker</span>
-
-<span class="kn">from</span> <span class="nn">services.service</span> <span class="kn">import</span> <span class="n">DialogSystem</span>
-
-<span class="kn">from</span> <span class="nn">torch.utils.tensorboard</span> <span class="kn">import</span> <span class="n">SummaryWriter</span>
-<span class="kn">from</span> <span class="nn">services.policy.rl.experience_buffer</span> <span class="kn">import</span> <span class="n">NaivePrioritizedBuffer</span>
-<span class="kn">from</span> <span class="nn">services.simulator</span> <span class="kn">import</span> <span class="n">HandcraftedUserSimulator</span>
-<span class="kn">from</span> <span class="nn">services.policy</span> <span class="kn">import</span> <span class="n">DQNPolicy</span>
-<span class="kn">from</span> <span class="nn">services.stats.evaluation</span> <span class="kn">import</span> <span class="n">PolicyEvaluator</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># FIRST SET UP ENVIRONMENT</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span> <span class="nn">sys</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">import</span> <span class="nn">os</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="kn">import</span> <span class="nn">time</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;../..&#39;</span><span class="p">))</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="kn">from</span> <span class="nn">utils.topics</span> <span class="kn">import</span> <span class="n">Topic</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="kn">from</span> <span class="nn">services.service</span> <span class="kn">import</span> <span class="n">Service</span><span class="p">,</span> <span class="n">PublishSubscribe</span><span class="p">,</span> <span class="n">RemoteService</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="kn">from</span> <span class="nn">utils.domain.domain</span> <span class="kn">import</span> <span class="n">Domain</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="kn">from</span> <span class="nn">utils.domain.jsonlookupdomain</span> <span class="kn">import</span> <span class="n">JSONLookupDomain</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="kn">from</span> <span class="nn">utils.logger</span> <span class="kn">import</span> <span class="n">DiasysLogger</span><span class="p">,</span> <span class="n">LogLevel</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="kn">from</span> <span class="nn">services.hci</span> <span class="kn">import</span> <span class="n">ConsoleInput</span><span class="p">,</span> <span class="n">ConsoleOutput</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="kn">from</span> <span class="nn">services.nlu</span> <span class="kn">import</span> <span class="n">HandcraftedNLU</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="kn">from</span> <span class="nn">services.bst</span> <span class="kn">import</span> <span class="n">HandcraftedBST</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="kn">from</span> <span class="nn">services.policy</span> <span class="kn">import</span> <span class="n">HandcraftedPolicy</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="kn">from</span> <span class="nn">services.nlg</span> <span class="kn">import</span> <span class="n">HandcraftedNLG</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="kn">from</span> <span class="nn">services.domain_tracker</span> <span class="kn">import</span> <span class="n">DomainTracker</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="kn">from</span> <span class="nn">services.service</span> <span class="kn">import</span> <span class="n">DialogSystem</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="kn">from</span> <span class="nn">torch.utils.tensorboard</span> <span class="kn">import</span> <span class="n">SummaryWriter</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="kn">from</span> <span class="nn">services.policy.rl.experience_buffer</span> <span class="kn">import</span> <span class="n">NaivePrioritizedBuffer</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="kn">from</span> <span class="nn">services.simulator</span> <span class="kn">import</span> <span class="n">HandcraftedUserSimulator</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="kn">from</span> <span class="nn">services.policy</span> <span class="kn">import</span> <span class="n">DQNPolicy</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="kn">from</span> <span class="nn">services.stats.evaluation</span> <span class="kn">import</span> <span class="n">PolicyEvaluator</span>
 </code></pre></div>
-
 <h2 id="domains-ontologies-and-databasesapis">Domains, Ontologies, and Databases/APIs<a class="headerlink" href="#domains-ontologies-and-databasesapis" title="Permanent link">&para;</a></h2>
 <p>Since this is a tutorial about task-oriented dialog systems, we need to introduce the concept of a domain here.
 A domain is a limited topic of conversation, e.g. weather, lecturers, or restaurants. In the context of the ADVISER 2.0 toolkit, a domain is defined by an ontology - which describes the types of entities which can be discussed in a domain, their properties, and which properties the user and system can ask after - and a database which can be queried by the system to anser user requests.</p>
@@ -1276,52 +1275,51 @@ These properties are then split into three (overlapping) categories:
     * eg. "what is their secret identity?" something that only makes sense after an entity has been suggested
 * <strong>system requestables:</strong> Properties the system can ask the user for to help it figure out what entity best fills the user's goal</p>
 <p>The general properties (loyalty, name, etc.) are called slots, and the specific instances of a slot ("Avengers", "Aqua Man", etc.) are called values. As one of the ontology's main purposes is to support in natural language understanding and a user will only provide values for <em>informable</em> slots, these are the only values which must be listed in the ontology.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-    <span class="s2">&quot;informable&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;loyality&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;Avengers&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Justice League&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Guardians of the Galaxy&quot;</span><span class="p">,</span>
-             <span class="o">...</span>
-        <span class="p">],</span>
-        <span class="s2">&quot;main_superpower&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;Claws&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Gadgets&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Magic&quot;</span><span class="p">,</span>
-             <span class="o">...</span>
-        <span class="p">],</span>
-        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;Aqua Man&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Batman&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Black Widow&quot;</span><span class="p">,</span>
-             <span class="o">...</span>
-        <span class="p">],</span>
-        <span class="s2">&quot;primary_uniform_color&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="s2">&quot;Black&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Blue&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;Yellow&quot;</span><span class="p">,</span>
-             <span class="o">...</span>
-        <span class="p">]</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;requestable&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;primary_uniform_color&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;main_superpower&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;last_known_location&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;loyality&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;description&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;real_name&quot;</span>
-    <span class="p">],</span>
-    <span class="s2">&quot;system_requestable&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;primary_uniform_color&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;main_superpower&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;loyality&quot;</span>
-    <span class="p">]</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="s2">&quot;informable&quot;</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        <span class="s2">&quot;loyality&quot;</span><span class="p">:</span> <span class="p">[</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>            <span class="s2">&quot;Avengers&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>            <span class="s2">&quot;Justice League&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>            <span class="s2">&quot;Guardians of the Galaxy&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>             <span class="o">...</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        <span class="p">],</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>        <span class="s2">&quot;main_superpower&quot;</span><span class="p">:</span> <span class="p">[</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>            <span class="s2">&quot;Claws&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>            <span class="s2">&quot;Gadgets&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>            <span class="s2">&quot;Magic&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>             <span class="o">...</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>        <span class="p">],</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>            <span class="s2">&quot;Aqua Man&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>            <span class="s2">&quot;Batman&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>            <span class="s2">&quot;Black Widow&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>             <span class="o">...</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>        <span class="p">],</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>        <span class="s2">&quot;primary_uniform_color&quot;</span><span class="p">:</span> <span class="p">[</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>            <span class="s2">&quot;Black&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>            <span class="s2">&quot;Blue&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>            <span class="s2">&quot;Yellow&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>             <span class="o">...</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>        <span class="p">]</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>    <span class="p">},</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>    <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>    <span class="s2">&quot;requestable&quot;</span><span class="p">:</span> <span class="p">[</span>
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>        <span class="s2">&quot;primary_uniform_color&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>        <span class="s2">&quot;main_superpower&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>        <span class="s2">&quot;last_known_location&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a>        <span class="s2">&quot;loyality&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>        <span class="s2">&quot;description&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>        <span class="s2">&quot;real_name&quot;</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a>    <span class="p">],</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a>    <span class="s2">&quot;system_requestable&quot;</span><span class="p">:</span> <span class="p">[</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>        <span class="s2">&quot;primary_uniform_color&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a>        <span class="s2">&quot;main_superpower&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a>        <span class="s2">&quot;loyality&quot;</span>
+<a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a>    <span class="p">]</span>
+<a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a><span class="p">}</span>
 </code></pre></div>
-
-<div class="codehilite"><pre><span></span><code>{&#39;informable&#39;: {&#39;loyality&#39;: [&#39;Avengers&#39;,
+<div class="highlight"><pre><span></span><code>{&#39;informable&#39;: {&#39;loyality&#39;: [&#39;Avengers&#39;,
    &#39;Justice League&#39;,
    &#39;Guardians of the Galaxy&#39;,
    Ellipsis],
@@ -1340,7 +1338,6 @@ These properties are then split into three (overlapping) categories:
   &#39;main_superpower&#39;,
   &#39;loyality&#39;]}
 </code></pre></div>
-
 <p>This information is useful to e.g. NLU and Policy:</p>
 <ul>
 <li>A regular expression based NLU can match known values from the ontology against user input<ul>
@@ -1368,30 +1365,28 @@ The <code>Domain</code> class provides an abstract interface for connecting to t
 * <code>ontologies/{domain_name}.json</code>
 * <code>databasees/{domain_name}.db</code>
 then only the <code>domain_name</code> is necessary to pass to the <code>JSONLookupDomain</code> object to instantiate it as shown below:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Here we can instantiate the domain with just the name string since the paths to our ontology</span>
-<span class="c1"># and database files follow the correct pattern</span>
-<span class="n">super_domain</span> <span class="o">=</span> <span class="n">JSONLookupDomain</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;superhero&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Here we can instantiate the domain with just the name string since the paths to our ontology</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># and database files follow the correct pattern</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">super_domain</span> <span class="o">=</span> <span class="n">JSONLookupDomain</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;superhero&quot;</span><span class="p">)</span>
 </code></pre></div>
-
 <h3 id="topics-and-domains">Topics and Domains<a class="headerlink" href="#topics-and-domains" title="Permanent link">&para;</a></h3>
 <p>If you're providing domain-objects (or, equivalently, domain name strings) to a <code>Service</code> constructor, all subscribed and published topics for this service will implicitly append the domain name to allow for multi domain dialog systems. The exact reasons for this will be explained in more depth in the <em>mutlidomain</em> section of the next tutorial.</p>
 <p>Let's alter our <code>ConcatenateService</code> to accept a domain name:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">ConcatenateServiceWithDomain</span><span class="p">(</span><span class="n">Service</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;mydomain&quot;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; NEW: domain name! &quot;&quot;&quot;</span>
-        <span class="n">Service</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">)</span>
-
-    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">])</span>
-    <span class="k">def</span> <span class="nf">concatenate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span><span class="n">D</span><span class="o">=</span><span class="nb">str</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; NOTE: This function did not change at all &quot;&quot;&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CONCATENATING &quot;</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="s2">&quot;AND &quot;</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">B</span>
-        <span class="k">if</span> <span class="n">A</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span>  <span class="p">{</span><span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">class</span> <span class="nc">ConcatenateServiceWithDomain</span><span class="p">(</span><span class="n">Service</span><span class="p">):</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;mydomain&quot;</span><span class="p">):</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>        <span class="sd">&quot;&quot;&quot; NEW: domain name! &quot;&quot;&quot;</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>        <span class="n">Service</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">])</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="k">def</span> <span class="nf">concatenate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span><span class="n">D</span><span class="o">=</span><span class="nb">str</span><span class="p">):</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>        <span class="sd">&quot;&quot;&quot; NOTE: This function did not change at all &quot;&quot;&quot;</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CONCATENATING &quot;</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="s2">&quot;AND &quot;</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>        <span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">B</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>        <span class="k">if</span> <span class="n">A</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>            <span class="k">return</span>  <span class="p">{</span><span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
 </code></pre></div>
-
 <p>If we would run the dialog system example above again, replacing the old <code>ConcatenateService</code> with the new <code>ConcatenateServiceWithDomain</code>, we would observe no more prints from it and also no more messages to topics <code>C</code> and <code>D</code>.
 This is because the toics for <code>ConcatenateServiceWithDomain</code> were internally remapped to:
 * <code>A</code> -&gt; <code>A/mydomain</code>
@@ -1410,10 +1405,9 @@ This is because the toics for <code>ConcatenateServiceWithDomain</code> were int
 * combine domain-agnostic with domain-aware services (eg. a console input module and an NLU module)
 * change routing behaviour of our provided services without subclassing them and overwriting the respective functions
 the <code>Service</code> constructor offers a way to overwrite topics on instantiation:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Service</span><span class="p">:</span>
-    <span class="fm">__init__</span><span class="p">(</span><span class="n">domain</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Domain</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">sub_topic_domains</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{},</span> <span class="n">pub_topic_domains</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{},</span> <span class="o">...</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">class</span> <span class="nc">Service</span><span class="p">:</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="fm">__init__</span><span class="p">(</span><span class="n">domain</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Domain</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">sub_topic_domains</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{},</span> <span class="n">pub_topic_domains</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{},</span> <span class="o">...</span><span class="p">)</span>
 </code></pre></div>
-
 <ul>
 <li><code>sub_topic_domains</code> is a mapping for overwriting subscriber topics<ul>
 <li><code>key</code>: the original topic as given in the <code>PublishSubscribe</code>-decorator</li>
@@ -1427,42 +1421,40 @@ the <code>Service</code> constructor offers a way to overwrite topics on instant
 <li><code>pub_topic_domains</code> works analogously</li>
 </ul>
 <p>So, if we change our constructor as follows:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">ConcatenateServiceWithDomain</span><span class="p">(</span><span class="n">Service</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;mydomain&quot;</span><span class="p">,</span> 
-                       <span class="n">sub_topic_domains</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                                            <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">}):</span>
-        <span class="sd">&quot;&quot;&quot; NEW: domain name! &quot;&quot;&quot;</span>
-        <span class="n">Service</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">)</span>
-
-    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">])</span>
-    <span class="k">def</span> <span class="nf">concatenate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span><span class="n">D</span><span class="o">=</span><span class="nb">str</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; NOTE: This function did not change at all &quot;&quot;&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CONCATENATING &quot;</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="s2">&quot;AND &quot;</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">B</span>
-        <span class="k">if</span> <span class="n">A</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span>  <span class="p">{</span><span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">class</span> <span class="nc">ConcatenateServiceWithDomain</span><span class="p">(</span><span class="n">Service</span><span class="p">):</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;mydomain&quot;</span><span class="p">,</span> 
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>                       <span class="n">sub_topic_domains</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>                                            <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">}):</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>        <span class="sd">&quot;&quot;&quot; NEW: domain name! &quot;&quot;&quot;</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>        <span class="n">Service</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">)</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">])</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="k">def</span> <span class="nf">concatenate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span><span class="n">D</span><span class="o">=</span><span class="nb">str</span><span class="p">):</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>        <span class="sd">&quot;&quot;&quot; NOTE: This function did not change at all &quot;&quot;&quot;</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CONCATENATING &quot;</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="s2">&quot;AND &quot;</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>        <span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">B</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>        <span class="k">if</span> <span class="n">A</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>            <span class="k">return</span>  <span class="p">{</span><span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
 </code></pre></div>
-
 <p>everything will work again, meaning we will observe prints and published messages to <code>C</code> and <code>D</code> again, because we explicitly overwrite the appended domain with the empty string
 * <code>A/mydomain</code> -&gt; <code>A</code>
 * <code>B/mydomain</code> -&gt; <code>B</code></p>
 <p>Another way to alter topics is to append domain strings manually in the return dictionary of any <code>Publish/Subscribe</code> function (Note: <em>This only works, if you didn't provide a domain (or domain name) to the service base class constructor</em>.):
 You may append any domain string to the dictionary keys, seperated by a slash: <code>/</code>.</p>
 <p>We could e.g. alter our <code>ConcatenateService</code> class:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">ConcatenateService</span><span class="p">(</span><span class="n">Service</span><span class="p">):</span>
-
-    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">])</span>
-    <span class="k">def</span> <span class="nf">concatenate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span><span class="n">D</span><span class="o">=</span><span class="nb">str</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CONCATENATING &quot;</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="s2">&quot;AND &quot;</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">B</span>
-        <span class="k">if</span> <span class="n">A</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;D/domain1&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span>  <span class="p">{</span><span class="s1">&#39;C/domain2&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">class</span> <span class="nc">ConcatenateService</span><span class="p">(</span><span class="n">Service</span><span class="p">):</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">])</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="k">def</span> <span class="nf">concatenate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span><span class="n">D</span><span class="o">=</span><span class="nb">str</span><span class="p">):</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CONCATENATING &quot;</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="s2">&quot;AND &quot;</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>        <span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">B</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>        <span class="k">if</span> <span class="n">A</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;D/domain1&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>            <span class="k">return</span>  <span class="p">{</span><span class="s1">&#39;C/domain2&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
 </code></pre></div>
-
 <p>Now, our <code>ConcatenateService</code> gets all messages for topics starting with <code>A</code> and <code>B</code> (and independent of their domain) again, like in our very first <code>ConcatenateService</code> example.
 But, on the publishing side, we're now publishing to two different domains, <code>domain1</code> and <code>domain2</code>, by appending these domain names explicitly after the topic followed by the topic-domain-seperator: <code>C/domain2</code> and <code>D/domain1</code>.</p>
 <p>Equipped with these insights into the inner workings of the message routing mechanism, we can evolve our tutorial system to a multi-domain dialog system in the following chapter.</p>
@@ -1477,18 +1469,17 @@ But, on the publishing side, we're now publishing to two different domains, <cod
 <p><strong>Example:</strong></p>
 <p>To create instances of each of these three classes, see the code below</p>
 <p><strong>NOTE:</strong> This only works if you have installed the requirements for the multimodal system (they are large, so this is not recommended if you will only be working with text)</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">services.hci.speech</span> <span class="kn">import</span> <span class="n">SpeechInputDecoder</span>
-<span class="kn">from</span> <span class="nn">services.hci.speech</span> <span class="kn">import</span> <span class="n">SpeechInputFeatureExtractor</span>
-<span class="kn">from</span> <span class="nn">services.hci.speech</span> <span class="kn">import</span> <span class="n">SpeechRecorder</span>
-
-<span class="n">conversation_log_dir</span> <span class="o">=</span> <span class="s2">&quot;tutorial_logs&quot;</span>
-<span class="n">use_cuda</span> <span class="o">=</span> <span class="kc">False</span>
-
-<span class="n">recorder</span> <span class="o">=</span> <span class="n">SpeechRecorder</span><span class="p">(</span><span class="n">conversation_log_dir</span><span class="o">=</span><span class="n">conversation_log_dir</span><span class="p">)</span>
-<span class="n">speech_in_feature_extractor</span> <span class="o">=</span> <span class="n">SpeechInputFeatureExtractor</span><span class="p">()</span>
-<span class="n">speech_in_decoder</span> <span class="o">=</span> <span class="n">SpeechInputDecoder</span><span class="p">(</span><span class="n">conversation_log_dir</span><span class="o">=</span><span class="n">conversation_log_dir</span><span class="p">,</span> <span class="n">use_cuda</span><span class="o">=</span><span class="n">use_cuda</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span> <span class="nn">services.hci.speech</span> <span class="kn">import</span> <span class="n">SpeechInputDecoder</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">from</span> <span class="nn">services.hci.speech</span> <span class="kn">import</span> <span class="n">SpeechInputFeatureExtractor</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="kn">from</span> <span class="nn">services.hci.speech</span> <span class="kn">import</span> <span class="n">SpeechRecorder</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">conversation_log_dir</span> <span class="o">=</span> <span class="s2">&quot;tutorial_logs&quot;</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">use_cuda</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">recorder</span> <span class="o">=</span> <span class="n">SpeechRecorder</span><span class="p">(</span><span class="n">conversation_log_dir</span><span class="o">=</span><span class="n">conversation_log_dir</span><span class="p">)</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="n">speech_in_feature_extractor</span> <span class="o">=</span> <span class="n">SpeechInputFeatureExtractor</span><span class="p">()</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="n">speech_in_decoder</span> <span class="o">=</span> <span class="n">SpeechInputDecoder</span><span class="p">(</span><span class="n">conversation_log_dir</span><span class="o">=</span><span class="n">conversation_log_dir</span><span class="p">,</span> <span class="n">use_cuda</span><span class="o">=</span><span class="n">use_cuda</span><span class="p">)</span>
 </code></pre></div>
-
 <h2 id="rule-based-natural-language-understanding-nlu">Rule-based Natural Language Understanding (NLU)<a class="headerlink" href="#rule-based-natural-language-understanding-nlu" title="Permanent link">&para;</a></h2>
 <h3 id="semantic-representation-of-user-actions">Semantic representation of user actions<a class="headerlink" href="#semantic-representation-of-user-actions" title="Permanent link">&para;</a></h3>
 <p>The NLU module is responsible for mapping natural language user input to a machine readable semantic frame representation. In this case the semantic frame is composed of up to three parts:
@@ -1520,13 +1511,12 @@ Therefore, we created a new syntax which allows you to reduce the number of rule
 <h4 id="1-general-syntax">1 General syntax<a class="headerlink" href="#1-general-syntax" title="Permanent link">&para;</a></h4>
 <p>The syntax uses keywords and indentation to create a nested command structure. This means that each line represents one command and each command starts with a keyword identifying the command type. Commands have a "block level" which is represented by their number of leading spaces (Level 0: 0 spaces, Level 1: 4 spaces, Level 2: 8 spaces, ...).</p>
 <p>Rule and function declaration commands are Level 0 commands. Any other commands can be inserted at any level &gt;0 and are automatically added to their "parent" command. A parent command is the last command on the current level -1. In the following example, Command2 is added to Command1, Command4 is added to Command3 and Command5 is added to Command4.</p>
-<div class="codehilite"><pre><span></span><code>Command1 arguments
-    Command2 arguments
-Command3 arguments
-    Command4 arguments
-        Command5 arguments
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Command1 arguments
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    Command2 arguments
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Command3 arguments
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    Command4 arguments
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>        Command5 arguments
 </code></pre></div>
-
 <h4 id="2-commands">2 Commands<a class="headerlink" href="#2-commands" title="Permanent link">&para;</a></h4>
 <p>Currently, the ADVISER NLU syntax provides five possible commands. Each command individually defines what its arguments have to look like and what kind of child commands it allows. This section will show how to use the commands.</p>
 <h5 id="21-rule">2.1 Rule<a class="headerlink" href="#21-rule" title="Permanent link">&para;</a></h5>
@@ -1535,72 +1525,65 @@ Command3 arguments
 <p><strong>Note:</strong> General user acts (those which do not take slots or values as input) are not autogenerated. If you want to edit these, you may do so directly in the file <code>resources/nlu_regexes/GeneralRules.json</code>, however be careful as this file is currently shared across all domains.</p>
 <h5 id="22-regular-expression">2.2 Regular Expression<a class="headerlink" href="#22-regular-expression" title="Permanent link">&para;</a></h5>
 <p>The <code>regex</code> command specifies a regular expression should map to the user act specified in the current rule block. RegEx commands consist of the keyword "regex" and a string wrapped by double quotes. They are usually added as child commands to rules, functions, exceptions and additions.</p>
-<p>The following example shows a valid rule specification, which matches to either "hero" or "superhero" and both the American and British spellings of the word "color".</p>
-<div class="codehilite"><pre><span></span><code>rule request(primary_uniform_color)
-    regex &quot;what is the( super)?hero&#39;s uniform colo(u)?r\?&quot;
+<p>The following example shows a valid rule specification, which matches to either "hero" or "superhero" and both the American and British spellings of the word "color".
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>rule request(primary_uniform_color)
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    regex &quot;what is the( super)?hero&#39;s uniform colo(u)?r\?&quot;
+</code></pre></div></p>
+<p>It is also possible to add multiple regular expressions to rule in order to account for more varied user utterances without making the regular expressions too complicated.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>rule request(primary_uniform_color)
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    regex &quot;what is the( super)? hero&#39;s uniform colo(u)?r\?&quot;
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    regex &quot;what is the colo(u)?r of the( super)? hero&#39;s uniform\?&quot;
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    regex &quot;which colo(u)?r does the( super)? hero wear\?&quot;
+</code></pre></div></p>
+<p>For user acts such as <code>inform</code>, we also need to have access to the slot's value. The value can be accessed in the regular expression using curly braces.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>rule inform(primary_uniform_color)
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    regex &quot;the colo(u)?r should be {primary_uniform_color}&quot;
 </code></pre></div>
-
-<p>It is also possible to add multiple regular expressions to rule in order to account for more varied user utterances without making the regular expressions too complicated.</p>
-<div class="codehilite"><pre><span></span><code>rule request(primary_uniform_color)
-    regex &quot;what is the( super)? hero&#39;s uniform colo(u)?r\?&quot;
-    regex &quot;what is the colo(u)?r of the( super)? hero&#39;s uniform\?&quot;
-    regex &quot;which colo(u)?r does the( super)? hero wear\?&quot;
-</code></pre></div>
-
-<p>For user acts such as <code>inform</code>, we also need to have access to the slot's value. The value can be accessed in the regular expression using curly braces.</p>
-<div class="codehilite"><pre><span></span><code>rule inform(primary_uniform_color)
-    regex &quot;the colo(u)?r should be {primary_uniform_color}&quot;
-</code></pre></div>
-
-<p>This way, we can specify one rule for each value of primary_uniform_color. For example, if the user types <em>the colour should be green</em>, the system detects the user act <code>inform(primary_uniform_color=green)</code>.</p>
+This way, we can specify one rule for each value of primary_uniform_color. For example, if the user types <em>the colour should be green</em>, the system detects the user act <code>inform(primary_uniform_color=green)</code>.</p>
 <p>Note: RegEx commands cannot take any child commands.</p>
 <h5 id="23-exceptions">2.3 Exceptions<a class="headerlink" href="#23-exceptions" title="Permanent link">&para;</a></h5>
-<p>Exceptions can be called inside a rule command/function to override the default messages. Exceptions consist of the keyword "if" and take a constraint as an argument. A constraint can currently only match the pattern <code>variable = "string"</code>. Exceptions particularly make sense in cases where you might prefer to use a synonym rather than the exact value in the database. For example, if a database stores colors by hexadecimal code, the user cannot be expected to know the code for each color. Therefore, we could add an exception using the common name for the color, so that instead of expecting colors in hexadecimal, the system will only recognize the common name for the color.</p>
-<div class="codehilite"><pre><span></span><code>rule inform(primary_uniform_color)
-    regex &quot;the colo(u)?r should be {primary_uniform_color}&quot;
-    if primary_uniform_color = &quot;#ff11bb&quot;
-        regex &quot;the colo(u)?r should be pink&quot;
-</code></pre></div>
-
+<p>Exceptions can be called inside a rule command/function to override the default messages. Exceptions consist of the keyword "if" and take a constraint as an argument. A constraint can currently only match the pattern <code>variable = "string"</code>. Exceptions particularly make sense in cases where you might prefer to use a synonym rather than the exact value in the database. For example, if a database stores colors by hexadecimal code, the user cannot be expected to know the code for each color. Therefore, we could add an exception using the common name for the color, so that instead of expecting colors in hexadecimal, the system will only recognize the common name for the color.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>rule inform(primary_uniform_color)
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    regex &quot;the colo(u)?r should be {primary_uniform_color}&quot;
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    if primary_uniform_color = &quot;#ff11bb&quot;
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>        regex &quot;the colo(u)?r should be pink&quot;
+</code></pre></div></p>
 <p><strong>Note</strong>: Exception commands can take the same child commands as rule commands.</p>
 <h5 id="24-additions">2.4 Additions<a class="headerlink" href="#24-additions" title="Permanent link">&para;</a></h5>
-<p>Additions work very similar to exceptions. The only differences are that "add_if" is used as the keyword and that the messages of the addition command do not override the regexes of the parent command, but instead add possible regexes to the existing ones, this is in particularly well suited to adding synonyms. In the following example, we allow the user to also say <em>cyan</em> or <em>blue</em> as a way to map to the <code>primary_uniform_color</code> <em>blue</em>.</p>
-<div class="codehilite"><pre><span></span><code>rule inform(primary_uniform_color)
-    regex &quot;(the colo(u)?r|) should be {primary_uniform_color}&quot;
-    if primary_uniform_color = &quot;#ff11bb&quot;
-        regex &quot;the colo(u)?r should be pink&quot;
-    add_if primary_uniform_color = &quot;blue&quot;
-        regex &quot;the colo(u)?r should be cyan&quot;
-</code></pre></div>
-
+<p>Additions work very similar to exceptions. The only differences are that "add_if" is used as the keyword and that the messages of the addition command do not override the regexes of the parent command, but instead add possible regexes to the existing ones, this is in particularly well suited to adding synonyms. In the following example, we allow the user to also say <em>cyan</em> or <em>blue</em> as a way to map to the <code>primary_uniform_color</code> <em>blue</em>.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>rule inform(primary_uniform_color)
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    regex &quot;(the colo(u)?r|) should be {primary_uniform_color}&quot;
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    if primary_uniform_color = &quot;#ff11bb&quot;
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>        regex &quot;the colo(u)?r should be pink&quot;
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    add_if primary_uniform_color = &quot;blue&quot;
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>        regex &quot;the colo(u)?r should be cyan&quot;
+</code></pre></div></p>
 <p><strong>Note:</strong> Addition commands can take the same child commands as rule commands.</p>
 <h5 id="25-functions">2.5 Functions<a class="headerlink" href="#25-functions" title="Permanent link">&para;</a></h5>
-<p>Functions are similar to rules. They can take an arbitrary number of parameters and return a regular expression (or normal string). The function command consists of the keyword "function" and the function description using the pattern <code>function_name(argument_one, argument_two)</code>. Functions are particularly useful to improve the structure of your files. In the previous example, we have added <em>cyan</em> to be a synonym of <em>blue</em>. If we want to add synonyms for all colours, we would have to list all possible regexes for all possible synonyms which would result in a huge number of lines and would be quite a mess. Instead, we can specify a function which lists all synonymous colour strings for each possible colour value centrally at one point in the file and whenever we want to use synonyms, we can simply call this function:</p>
-<div class="codehilite"><pre><span></span><code>function color_synonym(generic_color)
-    # the color itself is almost always a synonym
-    regex &quot;{generic_color}&quot;
-    # &#39;add_if&#39; adds regular expressions to the existing ones (see above)
-    add_if generic_color = &quot;red&quot;
-        regex &quot;maroon&quot;
-    add_if generic_color = &quot;green&quot;
-        regex &quot;lime( green)?&quot;
-        regex &quot;olive( green)?&quot;
-        regex &quot;neon green&quot;
-    add_if generic_color = &quot;blue&quot;
-        regex &quot;cyan&quot;
-        regex &quot;turquoise&quot;
-    # &#39;if&#39; overwrites (!) existing regular expressions
-    if generic_color = &quot;#ff11bb&quot;
-        &quot;pink&quot;
-        &quot;magenta&quot;
+<p>Functions are similar to rules. They can take an arbitrary number of parameters and return a regular expression (or normal string). The function command consists of the keyword "function" and the function description using the pattern <code>function_name(argument_one, argument_two)</code>. Functions are particularly useful to improve the structure of your files. In the previous example, we have added <em>cyan</em> to be a synonym of <em>blue</em>. If we want to add synonyms for all colours, we would have to list all possible regexes for all possible synonyms which would result in a huge number of lines and would be quite a mess. Instead, we can specify a function which lists all synonymous colour strings for each possible colour value centrally at one point in the file and whenever we want to use synonyms, we can simply call this function:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>function color_synonym(generic_color)
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    # the color itself is almost always a synonym
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    regex &quot;{generic_color}&quot;
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>    # &#39;add_if&#39; adds regular expressions to the existing ones (see above)
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>    add_if generic_color = &quot;red&quot;
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>        regex &quot;maroon&quot;
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>    add_if generic_color = &quot;green&quot;
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>        regex &quot;lime( green)?&quot;
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>        regex &quot;olive( green)?&quot;
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>        regex &quot;neon green&quot;
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>    add_if generic_color = &quot;blue&quot;
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>        regex &quot;cyan&quot;
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>        regex &quot;turquoise&quot;
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>    # &#39;if&#39; overwrites (!) existing regular expressions
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>    if generic_color = &quot;#ff11bb&quot;
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a>        &quot;pink&quot;
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>        &quot;magenta&quot;
 </code></pre></div>
-
-<p>The inform rule would then be simplified to:</p>
-<div class="codehilite"><pre><span></span><code>rule inform(color)
-    &quot;(the colo(u)?r|it) should be {color_synonym(color)}&quot;
+The inform rule would then be simplified to:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>rule inform(color)
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    &quot;(the colo(u)?r|it) should be {color_synonym(color)}&quot;
 </code></pre></div>
-
-<p><strong>Note:</strong> Function commands can take the same child commands as rule commands.</p>
+<strong>Note:</strong> Function commands can take the same child commands as rule commands.</p>
 <h4 id="3-shortcuts-and-syntax-simplification">3 Shortcuts and syntax simplification<a class="headerlink" href="#3-shortcuts-and-syntax-simplification" title="Permanent link">&para;</a></h4>
 <p>The examples in the previous section show the ADVISER NLU syntax, as it is read by the interpreter. For simplifications and for a better overview, we allow some simplifications and shortcuts. In a preprocessing step, the simplified template is automatically transformed into a valid syntax.</p>
 <h5 id="31-comments-and-empty-lines">3.1 Comments and empty lines<a class="headerlink" href="#31-comments-and-empty-lines" title="Permanent link">&para;</a></h5>
@@ -1609,16 +1592,14 @@ Command3 arguments
 <p>The original syntax requires four spaces per block level. Alternatively, you can also use a tab instead, since all tabs are replaced by four spaces in the preprocessing step.</p>
 <h5 id="33-automatic-insertion-of-the-regex-keyword">3.3 Automatic insertion of the regex keyword<a class="headerlink" href="#33-automatic-insertion-of-the-regex-keyword" title="Permanent link">&para;</a></h5>
 <p>Regexes do not necessarily need to be marked via the regex keyword. For all lines that start with double quotes, a regex keyword is automatically inserted at the beginning of the line in the preprocessing step.</p>
-<p>Example:</p>
-<div class="codehilite"><pre><span></span><code>rule request(primary_uniform_color)
-    &quot;what is the( super)? hero&#39;s uniform colo(u)?r\?&quot;
-</code></pre></div>
-
+<p>Example:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>rule request(primary_uniform_color)
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>    &quot;what is the( super)? hero&#39;s uniform colo(u)?r\?&quot;
+</code></pre></div></p>
 <h5 id="34-colons">3.4 Colons<a class="headerlink" href="#34-colons" title="Permanent link">&para;</a></h5>
-<p>A neater version of the example in 3.3 would be the following example:</p>
-<div class="codehilite"><pre><span></span><code>rule request(primary_uniform_color): &quot;what is the( super)? hero&#39;s uniform colo(u)?r\?&quot;
-</code></pre></div>
-
+<p>A neater version of the example in 3.3 would be the following example:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>rule request(primary_uniform_color): &quot;what is the( super)? hero&#39;s uniform colo(u)?r\?&quot;
+</code></pre></div></p>
 <p>To allow this syntax, the preprocessor interprets everything coming after a colon (that’s not wrapped by double quotes) as a new child command and moves it to the next line with the respective block level + 1. This way, the above example and the example from 3.3 are exactly the same after preprocessing.</p>
 <h3 id="the-nlu-module">The NLU module<a class="headerlink" href="#the-nlu-module" title="Permanent link">&para;</a></h3>
 <p>ADVISER's NLU module makes use of NLU files which specify the regular expressions with the previously presented syntax.
@@ -1630,20 +1611,18 @@ The pipeline for creating the NLU is the following:</p>
 <li>Check that the tool has created the files <code>{domain_name}InformRules.json</code> for <code>inform</code> acts and <code>{domain_name}RequestRules.json</code> for <code>request</code> acts inside the <code>resources/nlu_regexes</code> folder.</li>
 <li>Once you have all these files, you can use the <code>HandcraftedNLU</code> module in <code>services/nlu</code> by simply passing your domain object in the constructor.</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">utils.domain.jsonlookupdomain</span> <span class="kn">import</span> <span class="n">JSONLookupDomain</span>
-<span class="kn">from</span> <span class="nn">services.nlu.nlu</span> <span class="kn">import</span> <span class="n">HandcraftedNLU</span>
-<span class="n">domain</span> <span class="o">=</span> <span class="n">JSONLookupDomain</span><span class="p">(</span><span class="s1">&#39;superhero&#39;</span><span class="p">)</span>
-<span class="n">nlu</span> <span class="o">=</span> <span class="n">HandcraftedNLU</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kn">from</span> <span class="nn">utils.domain.jsonlookupdomain</span> <span class="kn">import</span> <span class="n">JSONLookupDomain</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="kn">from</span> <span class="nn">services.nlu.nlu</span> <span class="kn">import</span> <span class="n">HandcraftedNLU</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="n">domain</span> <span class="o">=</span> <span class="n">JSONLookupDomain</span><span class="p">(</span><span class="s1">&#39;superhero&#39;</span><span class="p">)</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="n">nlu</span> <span class="o">=</span> <span class="n">HandcraftedNLU</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">)</span>
 </code></pre></div>
-
 <p>You can type some exemplary messages and see which user acts are recognised by the NLU, when you are done, type "bye" to exit the loop:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">user_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;&gt;&gt;&gt; &#39;</span><span class="p">)</span>
-<span class="k">while</span> <span class="n">user_input</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;exit&#39;</span><span class="p">,</span> <span class="s1">&#39;bye&#39;</span><span class="p">,</span> <span class="s1">&#39;goodbye&#39;</span><span class="p">):</span>
-    <span class="n">user_acts</span> <span class="o">=</span> <span class="n">nlu</span><span class="o">.</span><span class="n">extract_user_acts</span><span class="p">(</span><span class="n">user_input</span><span class="p">)[</span><span class="s1">&#39;user_acts&#39;</span><span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">repr</span><span class="p">(</span><span class="n">user_act</span><span class="p">)</span> <span class="k">for</span> <span class="n">user_act</span> <span class="ow">in</span> <span class="n">user_acts</span><span class="p">]))</span>
-    <span class="n">user_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;&gt;&gt;&gt; &#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">user_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;&gt;&gt;&gt; &#39;</span><span class="p">)</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="k">while</span> <span class="n">user_input</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;exit&#39;</span><span class="p">,</span> <span class="s1">&#39;bye&#39;</span><span class="p">,</span> <span class="s1">&#39;goodbye&#39;</span><span class="p">):</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>    <span class="n">user_acts</span> <span class="o">=</span> <span class="n">nlu</span><span class="o">.</span><span class="n">extract_user_acts</span><span class="p">(</span><span class="n">user_input</span><span class="p">)[</span><span class="s1">&#39;user_acts&#39;</span><span class="p">]</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">repr</span><span class="p">(</span><span class="n">user_act</span><span class="p">)</span> <span class="k">for</span> <span class="n">user_act</span> <span class="ow">in</span> <span class="n">user_acts</span><span class="p">]))</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>    <span class="n">user_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;&gt;&gt;&gt; &#39;</span><span class="p">)</span>
 </code></pre></div>
-
 <h2 id="rule-based-belief-state-tracker-bst">Rule-based Belief State Tracker (BST)<a class="headerlink" href="#rule-based-belief-state-tracker-bst" title="Permanent link">&para;</a></h2>
 <p>The BST maintains a representation of the current dialog state. It is responsible for tracking the constraints a user provides over the course of a dialog and their probabilities, recording any requests from the current turn, tracking the types of user acts in the current turn, and registering the number of database matches for the given constraints. In the ADVISER 2.0 Toolkit, this state is built up over the course of the dialog as the user expresses more constraints. Probabilities for each constraint are determined by the NLU and are not currently further processed. An example of the beliefstate for the second turn in a dialog about IMS Courses can be seen below.</p>
 <p><code>{'user_acts': {&lt;UserActionType.Inform: 'inform'&gt;}
@@ -1657,9 +1636,8 @@ The pipeline for creating the NLU is the following:</p>
 <p>As mentioned previously the beliefstate is built up over time. Therfore there are currently only three entries in the <code>informs</code> dictionary as up to this point the user has only provided three constraints. Each constraint has a probability of 1.0 because neither the NLU nor BST have complex rules for handling ambiguous user utterances, but this is an area we may look to improve in the future. </p>
 <p><strong>Example:</strong></p>
 <p>Instantiating a rules based BST is as simple as running the code below</p>
-<div class="codehilite"><pre><span></span><code><span class="n">bst</span> <span class="o">=</span> <span class="n">HandcraftedBST</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">bst</span> <span class="o">=</span> <span class="n">HandcraftedBST</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
 </code></pre></div>
-
 <h2 id="policy">Policy<a class="headerlink" href="#policy" title="Permanent link">&para;</a></h2>
 <h3 id="rule-based-policy">Rule-based Policy<a class="headerlink" href="#rule-based-policy" title="Permanent link">&para;</a></h3>
 <p>The policy is responsible for determining the system's next action. In ADVISER 2.0, we provide two implementations of a rule-based policy (one designed to work with a database and one designed to work with an API backend). Both follow a similar decision flow. Since we focus here on task oriented dialog systems, the policy tries to help a user fulfill their goal as quickly as possible. </p>
@@ -1679,9 +1657,8 @@ The pipeline for creating the NLU is the following:</p>
 <p>As seen in the above diagram, the policy first works to handle general (non-domain specific) user actions. It then queries the database and only asks the user for more information if there are too many entries and asking for more information will help narrow down results. In the actual policy the decisions are a bit more nuanced, but the graphic gives the general idea of the types of rules required for a rules-based policy.</p>
 <p><strong>Example:</strong></p>
 <p>Instantiating a rules-based policy can be done with the code below:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">policy</span> <span class="o">=</span> <span class="n">HandcraftedPolicy</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="n">policy</span> <span class="o">=</span> <span class="n">HandcraftedPolicy</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
 </code></pre></div>
-
 <h3 id="reinforcement-learning-policy">Reinforcement Learning Policy<a class="headerlink" href="#reinforcement-learning-policy" title="Permanent link">&para;</a></h3>
 <h4 id="why-reinforcement-learning">Why reinforcement Learning<a class="headerlink" href="#why-reinforcement-learning" title="Permanent link">&para;</a></h4>
 <p>Developing handcrafted policies can be quite time consuming and have difficulties adapting to unseen scenarios. Therefore a machine learning approach can be preferable. In this type of scenario, training a machine learning agent would circumvent needing to hard code a rule for every edge case scenario. Unfortunately this type of approach normally requires a lot of data to train the policy. Especially for new domains, this kind of data just does not exist, which is where reinforcement learning comes in. </p>
@@ -1696,21 +1673,20 @@ which then get expanded using beliefstate and database information.</p>
 <p>For more information on the architecture see the ADVISER <a href="https://www.aclweb.org/anthology/P19-3016.pdf">paper</a>.</p>
 <p><strong>Example:</strong></p>
 <p>As there are so many parameters for the RL policy, instantiating it requires slightly more code than instantiating other modules. To instantiate an RL policy with the parameters used in the ADVISER paper, see the code below:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Allows you to track training progress using tensorboard</span>
-<span class="n">summary_writer</span> <span class="o">=</span> <span class="n">SummaryWriter</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;logs&#39;</span><span class="p">,</span> <span class="s2">&quot;tutorial&quot;</span><span class="p">))</span>
-
-<span class="c1"># logs summary statistics for each train/test epoch</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">DiasysLogger</span><span class="p">(</span><span class="n">console_log_lvl</span><span class="o">=</span><span class="n">LogLevel</span><span class="o">.</span><span class="n">RESULTS</span><span class="p">,</span> <span class="n">file_log_lvl</span><span class="o">=</span><span class="n">LogLevel</span><span class="o">.</span><span class="n">DIALOGS</span><span class="p">)</span>
-
-<span class="c1"># Create RL policy instance with parameters used in ADVISER paper</span>
-<span class="n">policy</span> <span class="o">=</span> <span class="n">DQNPolicy</span><span class="p">(</span>
-    <span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span> <span class="n">eps_start</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">gradient_clipping</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span>
-    <span class="n">buffer_cls</span><span class="o">=</span><span class="n">NaivePrioritizedBuffer</span><span class="p">,</span> <span class="n">replay_buffer_size</span><span class="o">=</span><span class="mi">8192</span><span class="p">,</span> <span class="n">shared_layer_sizes</span><span class="o">=</span><span class="p">[</span><span class="mi">256</span><span class="p">],</span>
-    <span class="n">train_dialogs</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">target_update_rate</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">training_frequency</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">,</span>
-    <span class="n">summary_writer</span><span class="o">=</span><span class="n">summary_writer</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># Allows you to track training progress using tensorboard</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="n">summary_writer</span> <span class="o">=</span> <span class="n">SummaryWriter</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;logs&#39;</span><span class="p">,</span> <span class="s2">&quot;tutorial&quot;</span><span class="p">))</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="c1"># logs summary statistics for each train/test epoch</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="n">logger</span> <span class="o">=</span> <span class="n">DiasysLogger</span><span class="p">(</span><span class="n">console_log_lvl</span><span class="o">=</span><span class="n">LogLevel</span><span class="o">.</span><span class="n">RESULTS</span><span class="p">,</span> <span class="n">file_log_lvl</span><span class="o">=</span><span class="n">LogLevel</span><span class="o">.</span><span class="n">DIALOGS</span><span class="p">)</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="c1"># Create RL policy instance with parameters used in ADVISER paper</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="n">policy</span> <span class="o">=</span> <span class="n">DQNPolicy</span><span class="p">(</span>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>    <span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span> <span class="n">eps_start</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">gradient_clipping</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span>
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>    <span class="n">buffer_cls</span><span class="o">=</span><span class="n">NaivePrioritizedBuffer</span><span class="p">,</span> <span class="n">replay_buffer_size</span><span class="o">=</span><span class="mi">8192</span><span class="p">,</span> <span class="n">shared_layer_sizes</span><span class="o">=</span><span class="p">[</span><span class="mi">256</span><span class="p">],</span>
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>    <span class="n">train_dialogs</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">target_update_rate</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">training_frequency</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">,</span>
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>    <span class="n">summary_writer</span><span class="o">=</span><span class="n">summary_writer</span><span class="p">)</span>
 </code></pre></div>
-
-<div class="codehilite"><pre><span></span><code>logger: state space dim: 74
+<div class="highlight"><pre><span></span><code>logger: state space dim: 74
 logger: action space dim: 9
 logger: Gradient Clipping: 5.0
 logger: Architecture: Dueling
@@ -1718,7 +1694,6 @@ logger: Update: Double
   REPLAY MEMORY: NAIVE Prioritized
 ARCHITECTURE: Dueling
 </code></pre></div>
-
 <h3 id="user-simulator">User Simulator<a class="headerlink" href="#user-simulator" title="Permanent link">&para;</a></h3>
 <p>To train a reinforcement learning (RL) policy, it is often useful to use a simulated user instead of an actual one at least in the beginning. Simulations, while seldom accurate representations of real users, are substantially more patient. That is, to train or evaluate a dialog policy, thousands of dialogs are required. Having a real human sit through this many dialogs would be very expensive and tedious, especially since at the beginning of training, an RL policy will produce utterly nonsensical dialogs. In comparison, a simulated user is very cheap, will not be bored or annoyed, and can be called whenever you are ready to train or test a dialog. After initial training has been performed with a simulation, it is possible to conduct further training with human users. </p>
 <p>Since a user simulator is an important part of the training process for an RL policy, the next question becomes how to create one. In the ADVISER 2.0 Toolkit, we use an agenda based user simulator based off of <a href="http://mi.eng.cam.ac.uk/~sjy/papers/stwy07.pdf">work by Schatzmann et al.</a>. The basic function of the simulator can be seen in the graphic below:</p>
@@ -1727,20 +1702,18 @@ ARCHITECTURE: Dueling
 <p>In addition to the hardcoded response for each type of system act, the user simulator's behavior is also controlled by configuration parameters. These control behavior such as the maximum number of actions the user takes per turn (default 3), and whether user goals should be possible to fulfill or if it doesn't matter. These additional parameters are stored in an external configuration file.</p>
 <p><strong>Example:</strong></p>
 <p>To create an instance of user simulator see below:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">user_sim</span> <span class="o">=</span> <span class="n">HandcraftedUserSimulator</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="n">user_sim</span> <span class="o">=</span> <span class="n">HandcraftedUserSimulator</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
 </code></pre></div>
-
 <h3 id="evaluation">Evaluation<a class="headerlink" href="#evaluation" title="Permanent link">&para;</a></h3>
 <p>In order to train an RL policy, in addition to a user simulator, we need a reward signal. That is where the evaluation module comes in. There are two evaluation classes which are important to consider. The first one is teh <code>ObjectiveReachedEvaluator</code> which provides the reward signal to the RL policy. The second is the <code>PolicyEvaluator</code> which tracks the percent of successful dialogs, average reward, and average turn number for an epoch. As a note, while the <code>ObjectiveReachedEvaluator</code> is already part of the <code>RLPolicy</code> class, to log statistics, you need to explicitely add the <code>PolicyEvaluator</code> to the dialog graph.</p>
 <p>As a default, a reward of -1 for every turn is assigned to encourage the policy to keep dialogs as short as possible. For every dialog where the user goal is fulfilled, a reward of 20 is given.</p>
 <p><strong>Example:</strong></p>
 <p>A <code>PolicyEvaluator</code> can be created with the code below:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">evaluator</span> <span class="o">=</span> <span class="n">PolicyEvaluator</span><span class="p">(</span>
-    <span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">,</span> <span class="n">use_tensorboard</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">experiment_name</span><span class="o">=</span><span class="s2">&quot;tutorial&quot;</span><span class="p">,</span>
-    <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">,</span> <span class="n">summary_writer</span><span class="o">=</span><span class="n">summary_writer</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="n">evaluator</span> <span class="o">=</span> <span class="n">PolicyEvaluator</span><span class="p">(</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>    <span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">,</span> <span class="n">use_tensorboard</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>    <span class="n">experiment_name</span><span class="o">=</span><span class="s2">&quot;tutorial&quot;</span><span class="p">,</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>    <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">,</span> <span class="n">summary_writer</span><span class="o">=</span><span class="n">summary_writer</span><span class="p">)</span>
 </code></pre></div>
-
 <h3 id="training-a-reinforcement-learning-policy">Training a reinforcement learning policy<a class="headerlink" href="#training-a-reinforcement-learning-policy" title="Permanent link">&para;</a></h3>
 <p>Now that we have a user simulator and an evaluator, we can start using them to train our RL policy. This requires configuring the dialog graph slightly differently. Rather than the graph we saw in Tutorial One, we will only use the beliefstate tracker, RL Policy and a user simulator (optionally an evaluator as well to log statistics). This new graph can be seen below:</p>
 <p><img src="rl_train_loop.png" width="350" align="center"/></p>
@@ -1748,43 +1721,42 @@ ARCHITECTURE: Dueling
 <p>To train the system, a dialog graph is created with all necessary modules, then for the number of training epochs desired, dialogs are carried out and evaluated. During each training epoch, weights are updated for the RL policy and during each testing epoch, the success rate and length of dialogs are evaluated and recorded. The number of dialogs per epoch and the number of epochs can be determined by the user. As a note, when evaluating the overall performance of an RL policy, it is important to run the train/test loop multiple times with different random seeds to make sure that a good performance is not simply because of a good random seed. </p>
 <p><strong>Example:</strong></p>
 <p>Example training and evaluation code (warning takes some time to run):</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># SET CONSTANTS</span>
-<span class="n">TRAIN_EPOCHS</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">TRAIN_EPISODES</span> <span class="o">=</span> <span class="mi">1000</span>
-<span class="n">EVAL_EPISODES</span> <span class="o">=</span> <span class="mi">1000</span>
-<span class="n">MAX_TURNS</span> <span class="o">=</span> <span class="mi">25</span>
-
-<span class="c1"># Choose how many repeated trials</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
-    <span class="n">common</span><span class="o">.</span><span class="n">init_random</span><span class="p">()</span>  <span class="c1"># add seed here as a parameter to the init_random if wanted</span>
-
-    <span class="n">ds</span> <span class="o">=</span> <span class="n">DialogSystem</span><span class="p">(</span><span class="n">services</span><span class="o">=</span><span class="p">[</span><span class="n">user_sim</span><span class="p">,</span> <span class="n">bst</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">],</span> <span class="n">protocol</span><span class="o">=</span><span class="s1">&#39;tcp&#39;</span><span class="p">)</span>
-
-    <span class="c1"># Start train/eval loop</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TRAIN_EPOCHS</span><span class="p">):</span>
-        <span class="c1"># START TRAIN EPOCH</span>
-        <span class="n">evaluator</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
-        <span class="n">policy</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
-        <span class="n">evaluator</span><span class="o">.</span><span class="n">start_epoch</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">episode</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TRAIN_EPISODES</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">episode</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DIALOG&quot;</span><span class="p">,</span> <span class="n">episode</span><span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">dialog_turn</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">!!!!!!!!!!!!!!!! NEW DIALOG !!!!!!!!!!!!!!!!!!!!!!!!!!!!</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">ds</span><span class="o">.</span><span class="n">run_dialog</span><span class="p">(</span><span class="n">start_signals</span><span class="o">=</span><span class="p">{</span><span class="sa">f</span><span class="s1">&#39;user_acts/</span><span class="si">{</span><span class="n">domain</span><span class="o">.</span><span class="n">get_domain_name</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[]})</span>
-        <span class="n">evaluator</span><span class="o">.</span><span class="n">end_epoch</span><span class="p">()</span>
-
-        <span class="c1"># START EVAL EPOCH</span>
-        <span class="n">evaluator</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-        <span class="n">policy</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-        <span class="n">evaluator</span><span class="o">.</span><span class="n">start_epoch</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">episode</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">EVAL_EPISODES</span><span class="p">):</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">dialog_turn</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">!!!!!!!!!!!!!!!! NEW DIALOG !!!!!!!!!!!!!!!!!!!!!!!!!!!!</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">ds</span><span class="o">.</span><span class="n">run_dialog</span><span class="p">(</span><span class="n">start_signals</span><span class="o">=</span><span class="p">{</span><span class="sa">f</span><span class="s1">&#39;user_acts/</span><span class="si">{</span><span class="n">domain</span><span class="o">.</span><span class="n">get_domain_name</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[]})</span>
-        <span class="n">evaluator</span><span class="o">.</span><span class="n">end_epoch</span><span class="p">()</span>
-    <span class="n">policy</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-    <span class="n">ds</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1"># SET CONSTANTS</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="n">TRAIN_EPOCHS</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="n">TRAIN_EPISODES</span> <span class="o">=</span> <span class="mi">1000</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="n">EVAL_EPISODES</span> <span class="o">=</span> <span class="mi">1000</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="n">MAX_TURNS</span> <span class="o">=</span> <span class="mi">25</span>
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="c1"># Choose how many repeated trials</span>
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>    <span class="n">common</span><span class="o">.</span><span class="n">init_random</span><span class="p">()</span>  <span class="c1"># add seed here as a parameter to the init_random if wanted</span>
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>
+<a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>    <span class="n">ds</span> <span class="o">=</span> <span class="n">DialogSystem</span><span class="p">(</span><span class="n">services</span><span class="o">=</span><span class="p">[</span><span class="n">user_sim</span><span class="p">,</span> <span class="n">bst</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">],</span> <span class="n">protocol</span><span class="o">=</span><span class="s1">&#39;tcp&#39;</span><span class="p">)</span>
+<a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>
+<a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>    <span class="c1"># Start train/eval loop</span>
+<a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TRAIN_EPOCHS</span><span class="p">):</span>
+<a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>        <span class="c1"># START TRAIN EPOCH</span>
+<a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a>        <span class="n">evaluator</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a>        <span class="n">policy</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a>        <span class="n">evaluator</span><span class="o">.</span><span class="n">start_epoch</span><span class="p">()</span>
+<a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a>        <span class="k">for</span> <span class="n">episode</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TRAIN_EPISODES</span><span class="p">):</span>
+<a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a>            <span class="k">if</span> <span class="n">episode</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a>                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DIALOG&quot;</span><span class="p">,</span> <span class="n">episode</span><span class="p">)</span>
+<a id="__codelineno-25-22" name="__codelineno-25-22" href="#__codelineno-25-22"></a>            <span class="n">logger</span><span class="o">.</span><span class="n">dialog_turn</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">!!!!!!!!!!!!!!!! NEW DIALOG !!!!!!!!!!!!!!!!!!!!!!!!!!!!</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-25-23" name="__codelineno-25-23" href="#__codelineno-25-23"></a>            <span class="n">ds</span><span class="o">.</span><span class="n">run_dialog</span><span class="p">(</span><span class="n">start_signals</span><span class="o">=</span><span class="p">{</span><span class="sa">f</span><span class="s1">&#39;user_acts/</span><span class="si">{</span><span class="n">domain</span><span class="o">.</span><span class="n">get_domain_name</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[]})</span>
+<a id="__codelineno-25-24" name="__codelineno-25-24" href="#__codelineno-25-24"></a>        <span class="n">evaluator</span><span class="o">.</span><span class="n">end_epoch</span><span class="p">()</span>
+<a id="__codelineno-25-25" name="__codelineno-25-25" href="#__codelineno-25-25"></a>
+<a id="__codelineno-25-26" name="__codelineno-25-26" href="#__codelineno-25-26"></a>        <span class="c1"># START EVAL EPOCH</span>
+<a id="__codelineno-25-27" name="__codelineno-25-27" href="#__codelineno-25-27"></a>        <span class="n">evaluator</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<a id="__codelineno-25-28" name="__codelineno-25-28" href="#__codelineno-25-28"></a>        <span class="n">policy</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<a id="__codelineno-25-29" name="__codelineno-25-29" href="#__codelineno-25-29"></a>        <span class="n">evaluator</span><span class="o">.</span><span class="n">start_epoch</span><span class="p">()</span>
+<a id="__codelineno-25-30" name="__codelineno-25-30" href="#__codelineno-25-30"></a>        <span class="k">for</span> <span class="n">episode</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">EVAL_EPISODES</span><span class="p">):</span>
+<a id="__codelineno-25-31" name="__codelineno-25-31" href="#__codelineno-25-31"></a>            <span class="n">logger</span><span class="o">.</span><span class="n">dialog_turn</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">!!!!!!!!!!!!!!!! NEW DIALOG !!!!!!!!!!!!!!!!!!!!!!!!!!!!</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-25-32" name="__codelineno-25-32" href="#__codelineno-25-32"></a>            <span class="n">ds</span><span class="o">.</span><span class="n">run_dialog</span><span class="p">(</span><span class="n">start_signals</span><span class="o">=</span><span class="p">{</span><span class="sa">f</span><span class="s1">&#39;user_acts/</span><span class="si">{</span><span class="n">domain</span><span class="o">.</span><span class="n">get_domain_name</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">:</span> <span class="p">[]})</span>
+<a id="__codelineno-25-33" name="__codelineno-25-33" href="#__codelineno-25-33"></a>        <span class="n">evaluator</span><span class="o">.</span><span class="n">end_epoch</span><span class="p">()</span>
+<a id="__codelineno-25-34" name="__codelineno-25-34" href="#__codelineno-25-34"></a>    <span class="n">policy</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<a id="__codelineno-25-35" name="__codelineno-25-35" href="#__codelineno-25-35"></a>    <span class="n">ds</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
 </code></pre></div>
-
 <h2 id="handcrafted-natural-language-generation-nlg">Handcrafted Natural Language Generation (NLG)<a class="headerlink" href="#handcrafted-natural-language-generation-nlg" title="Permanent link">&para;</a></h2>
 <p>To transform system acts into natural language utterances, ADVISER 2.0 uses handcrafted templates. Although machine learning generated output can have more breadth of expression, using templates guarentees that all system utterances will be grammatic and sensical. Using templates additionally allows dialog systems for new domains to be created even when there is not sufficient data for those domains to train a machine learning based NLG.</p>
 <p>In ADVISER 2.0, rather than mapping every sys_act, slot, value combination to an individual utterance, templates  are  used  to generalize this process by  specifying placeholders for a system act's slots and/or values. An example of this can be seen below:</p>
@@ -1836,108 +1808,104 @@ ARCHITECTURE: Dueling
 </ul>
 <p><strong>Example:</strong>
 The code to create an NLG service for the superhero domain is shown below:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">nlg</span> <span class="o">=</span> <span class="n">HandcraftedNLG</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="n">nlg</span> <span class="o">=</span> <span class="n">HandcraftedNLG</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
 </code></pre></div>
-
 <h2 id="text-to-speech-tts">Text to Speech (TTS)<a class="headerlink" href="#text-to-speech-tts" title="Permanent link">&para;</a></h2>
 <p>The TTS module is an options module which converts the text natural language output to speech. In the ADVISER 2.0 toolkit, this is done using the <a href="https://arxiv.org/abs/1910.10909">ESPnet-TTS toolkit</a>, which is an extension of the ESPnet toolkit mentioned in the ASR section. We use FastSpeech as a synthesis model, which provides substantially faster voice generation. Additionally, we are able to provide a "cleaner" file to optimize the synthesizer for abbreviations, such as <em>Prof., Univ., IMS, NLP, ECTS,</em> and <em>PhD</em>, as well as for German proper names, such as street names. These optimizations can be easily extended by adding additional words and pronunciation mappings to <code>services/speech/cleaners.py</code>.</p>
 <p><strong>Example:</strong></p>
 <p>Similar to how the ASR module also required a <code>SpeechInputRecorder</code> module, the TTS module also requires a <code>SpeechOutputPlayer</code> in order for the user to be able to hear the generated sound file. The <code>SpeechOutputPlayer</code> and <code>SpeechOutputGenerator</code> can be instantiated with the code below.</p>
 <p><strong>NOTE:</strong> This code will only work if you have installed the requirements for the multimodal dialog system (they are large, so this is not recommended if you will only be working with text)</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">services.hci.speech</span> <span class="kn">import</span> <span class="n">SpeechOutputGenerator</span>
-<span class="kn">from</span> <span class="nn">services.hci.speech</span> <span class="kn">import</span> <span class="n">SpeechOutputPlayer</span>
-
-<span class="c1"># (GPU: 0.4 s/per utterance, CPU: 11 s/per utterance)</span>
-<span class="n">speech_out_generator</span> <span class="o">=</span> <span class="n">SpeechOutputGenerator</span><span class="p">(</span><span class="n">use_cuda</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> 
-
-<span class="n">speech_out_player</span> <span class="o">=</span> <span class="n">SpeechOutputPlayer</span><span class="p">(</span><span class="n">conversation_log_dir</span><span class="o">=</span><span class="n">conversation_log_dir</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="kn">from</span> <span class="nn">services.hci.speech</span> <span class="kn">import</span> <span class="n">SpeechOutputGenerator</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="kn">from</span> <span class="nn">services.hci.speech</span> <span class="kn">import</span> <span class="n">SpeechOutputPlayer</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="c1"># (GPU: 0.4 s/per utterance, CPU: 11 s/per utterance)</span>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="n">speech_out_generator</span> <span class="o">=</span> <span class="n">SpeechOutputGenerator</span><span class="p">(</span><span class="n">use_cuda</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> 
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>
+<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a><span class="n">speech_out_player</span> <span class="o">=</span> <span class="n">SpeechOutputPlayer</span><span class="p">(</span><span class="n">conversation_log_dir</span><span class="o">=</span><span class="n">conversation_log_dir</span><span class="p">)</span>
 </code></pre></div>
-
 <h3 id="cleaning-up-tts-output">Cleaning up TTS output<a class="headerlink" href="#cleaning-up-tts-output" title="Permanent link">&para;</a></h3>
 <p>To improve the speech generation, we also provide a file <code>servicse/hci/speech/cleaners.py</code> which allows you to manually correct pronunciation of words. This allows you to provide either phonetic transcriptions for acronyms, abbreviations, and foreign words or pronunciation patterns for things such as email addresses or telephone numbers. One of the methods from this file is shown below.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">expand_abbreviations</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Preprocesses a text to turn abbreviations into forms that the TTS can pronounce properly</span>
-
-<span class="sd">    text (string): Text to be preprocessed</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">regex</span><span class="p">,</span> <span class="n">replacement</span> <span class="ow">in</span> <span class="n">_abbreviations</span><span class="p">:</span>
-        <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">replacement</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">text</span>
-
-
-<span class="c1"># List of (word, replacement) pairs for acronym or special words:</span>
-<span class="n">_acronym</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">(</span><span class="s1">&#39; a &#39;</span><span class="p">,</span> <span class="s1">&#39; ae &#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39; s &#39;</span><span class="p">,</span> <span class="s1">&#39; eh s, &#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;array&#39;</span><span class="p">,</span> <span class="s1">&#39;ER RAY&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;API&#39;</span><span class="p">,</span> <span class="s1">&#39;AE P I&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;distributional&#39;</span><span class="p">,</span> <span class="s1">&#39;distributionall&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;ECTS&#39;</span><span class="p">,</span> <span class="s1">&#39;E C T EH S,&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;Erasmus&#39;</span><span class="p">,</span> <span class="s1">&#39;E RAS MOUS&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="s1">&#39;I D&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;IMS&#39;</span><span class="p">,</span> <span class="s1">&#39;I M EH S&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;NLP&#39;</span><span class="p">,</span> <span class="s1">&#39;N L P&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;PhD&#39;</span><span class="p">,</span> <span class="s1">&#39;P h D&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;PWR 05B&#39;</span><span class="p">,</span> <span class="s1">&#39;Pfaffen vaald ring five B, &#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;psycholinguistics&#39;</span><span class="p">,</span> <span class="s1">&#39;psycho linguistics&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;stuttgart&#39;</span><span class="p">,</span> <span class="s1">&#39;stu gart&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;Stuttgart&#39;</span><span class="p">,</span> <span class="s1">&#39;Stu gart&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;vegan&#39;</span><span class="p">,</span> <span class="s1">&#39;viygan&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;Vegan&#39;</span><span class="p">,</span> <span class="s1">&#39;Viygan&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;ImsLecturers&#39;</span><span class="p">,</span> <span class="s1">&#39;I M EH S Lecturers&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;imsLecturers&#39;</span><span class="p">,</span> <span class="s1">&#39;I M EH S Lecturers&#39;</span><span class="p">),</span>
-<span class="p">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="k">def</span> <span class="nf">expand_abbreviations</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>    <span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="sd">    Preprocesses a text to turn abbreviations into forms that the TTS can pronounce properly</span>
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="sd">    text (string): Text to be preprocessed</span>
+<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>    <span class="k">for</span> <span class="n">regex</span><span class="p">,</span> <span class="n">replacement</span> <span class="ow">in</span> <span class="n">_abbreviations</span><span class="p">:</span>
+<a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a>        <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">replacement</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a>    <span class="k">return</span> <span class="n">text</span>
+<a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a>
+<a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a>
+<a id="__codelineno-28-12" name="__codelineno-28-12" href="#__codelineno-28-12"></a><span class="c1"># List of (word, replacement) pairs for acronym or special words:</span>
+<a id="__codelineno-28-13" name="__codelineno-28-13" href="#__codelineno-28-13"></a><span class="n">_acronym</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-28-14" name="__codelineno-28-14" href="#__codelineno-28-14"></a>    <span class="p">(</span><span class="s1">&#39; a &#39;</span><span class="p">,</span> <span class="s1">&#39; ae &#39;</span><span class="p">),</span>
+<a id="__codelineno-28-15" name="__codelineno-28-15" href="#__codelineno-28-15"></a>    <span class="p">(</span><span class="s1">&#39; s &#39;</span><span class="p">,</span> <span class="s1">&#39; eh s, &#39;</span><span class="p">),</span>
+<a id="__codelineno-28-16" name="__codelineno-28-16" href="#__codelineno-28-16"></a>    <span class="p">(</span><span class="s1">&#39;array&#39;</span><span class="p">,</span> <span class="s1">&#39;ER RAY&#39;</span><span class="p">),</span>
+<a id="__codelineno-28-17" name="__codelineno-28-17" href="#__codelineno-28-17"></a>    <span class="p">(</span><span class="s1">&#39;API&#39;</span><span class="p">,</span> <span class="s1">&#39;AE P I&#39;</span><span class="p">),</span>
+<a id="__codelineno-28-18" name="__codelineno-28-18" href="#__codelineno-28-18"></a>    <span class="p">(</span><span class="s1">&#39;distributional&#39;</span><span class="p">,</span> <span class="s1">&#39;distributionall&#39;</span><span class="p">),</span>
+<a id="__codelineno-28-19" name="__codelineno-28-19" href="#__codelineno-28-19"></a>    <span class="p">(</span><span class="s1">&#39;ECTS&#39;</span><span class="p">,</span> <span class="s1">&#39;E C T EH S,&#39;</span><span class="p">),</span>
+<a id="__codelineno-28-20" name="__codelineno-28-20" href="#__codelineno-28-20"></a>    <span class="p">(</span><span class="s1">&#39;Erasmus&#39;</span><span class="p">,</span> <span class="s1">&#39;E RAS MOUS&#39;</span><span class="p">),</span>
+<a id="__codelineno-28-21" name="__codelineno-28-21" href="#__codelineno-28-21"></a>    <span class="p">(</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="s1">&#39;I D&#39;</span><span class="p">),</span>
+<a id="__codelineno-28-22" name="__codelineno-28-22" href="#__codelineno-28-22"></a>    <span class="p">(</span><span class="s1">&#39;IMS&#39;</span><span class="p">,</span> <span class="s1">&#39;I M EH S&#39;</span><span class="p">),</span>
+<a id="__codelineno-28-23" name="__codelineno-28-23" href="#__codelineno-28-23"></a>    <span class="p">(</span><span class="s1">&#39;NLP&#39;</span><span class="p">,</span> <span class="s1">&#39;N L P&#39;</span><span class="p">),</span>
+<a id="__codelineno-28-24" name="__codelineno-28-24" href="#__codelineno-28-24"></a>    <span class="p">(</span><span class="s1">&#39;PhD&#39;</span><span class="p">,</span> <span class="s1">&#39;P h D&#39;</span><span class="p">),</span>
+<a id="__codelineno-28-25" name="__codelineno-28-25" href="#__codelineno-28-25"></a>    <span class="p">(</span><span class="s1">&#39;PWR 05B&#39;</span><span class="p">,</span> <span class="s1">&#39;Pfaffen vaald ring five B, &#39;</span><span class="p">),</span>
+<a id="__codelineno-28-26" name="__codelineno-28-26" href="#__codelineno-28-26"></a>    <span class="p">(</span><span class="s1">&#39;psycholinguistics&#39;</span><span class="p">,</span> <span class="s1">&#39;psycho linguistics&#39;</span><span class="p">),</span>
+<a id="__codelineno-28-27" name="__codelineno-28-27" href="#__codelineno-28-27"></a>    <span class="p">(</span><span class="s1">&#39;stuttgart&#39;</span><span class="p">,</span> <span class="s1">&#39;stu gart&#39;</span><span class="p">),</span>
+<a id="__codelineno-28-28" name="__codelineno-28-28" href="#__codelineno-28-28"></a>    <span class="p">(</span><span class="s1">&#39;Stuttgart&#39;</span><span class="p">,</span> <span class="s1">&#39;Stu gart&#39;</span><span class="p">),</span>
+<a id="__codelineno-28-29" name="__codelineno-28-29" href="#__codelineno-28-29"></a>    <span class="p">(</span><span class="s1">&#39;vegan&#39;</span><span class="p">,</span> <span class="s1">&#39;viygan&#39;</span><span class="p">),</span>
+<a id="__codelineno-28-30" name="__codelineno-28-30" href="#__codelineno-28-30"></a>    <span class="p">(</span><span class="s1">&#39;Vegan&#39;</span><span class="p">,</span> <span class="s1">&#39;Viygan&#39;</span><span class="p">),</span>
+<a id="__codelineno-28-31" name="__codelineno-28-31" href="#__codelineno-28-31"></a>    <span class="p">(</span><span class="s1">&#39;ImsLecturers&#39;</span><span class="p">,</span> <span class="s1">&#39;I M EH S Lecturers&#39;</span><span class="p">),</span>
+<a id="__codelineno-28-32" name="__codelineno-28-32" href="#__codelineno-28-32"></a>    <span class="p">(</span><span class="s1">&#39;imsLecturers&#39;</span><span class="p">,</span> <span class="s1">&#39;I M EH S Lecturers&#39;</span><span class="p">),</span>
+<a id="__codelineno-28-33" name="__codelineno-28-33" href="#__codelineno-28-33"></a><span class="p">]</span>
 </code></pre></div>
-
 <h2 id="chatting-with-the-dialog-system">Chatting with the dialog system<a class="headerlink" href="#chatting-with-the-dialog-system" title="Permanent link">&para;</a></h2>
 <p>There are two main ways to interact with an ADVISER 2.0 dialog system: 1) by typing input and reading system output from the terminal or 2) by speaking to the system and receiving audio responses. Since we've already taken a quick look at a spoken dialog system, let's quickly discuss a text based one.</p>
 <p>In short, a text based system is much simpler. Instead of needing multiple modules for input/output, the text based system just needs <code>ConsoleInput</code> and <code>ConsoleOutput</code>. When these are added to the dialog system, the system utterances will appear on the terminal and the user can give their response by typing and pressing enter to end an utterance.</p>
 <p><strong>Example:</strong> </p>
 <p>An example of a dialog system constructed this way can be seen below. </p>
 <p><strong>NOTE:</strong> There is a problem with the user input in Jupyter Notebook. To try the code out, copy the code below to a new file in the <code>adviser</code> folder and run it from the dialog system</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Importing everything we need for a dialog system</span>
-<span class="kn">from</span> <span class="nn">utils.domain.jsonlookupdomain</span> <span class="kn">import</span> <span class="n">JSONLookupDomain</span>
-<span class="kn">from</span> <span class="nn">utils.logger</span> <span class="kn">import</span> <span class="n">DiasysLogger</span><span class="p">,</span> <span class="n">LogLevel</span>
-
-<span class="kn">from</span> <span class="nn">services.hci</span> <span class="kn">import</span> <span class="n">ConsoleInput</span><span class="p">,</span> <span class="n">ConsoleOutput</span>
-<span class="kn">from</span> <span class="nn">services.nlu</span> <span class="kn">import</span> <span class="n">HandcraftedNLU</span>
-<span class="kn">from</span> <span class="nn">services.bst</span> <span class="kn">import</span> <span class="n">HandcraftedBST</span>
-<span class="kn">from</span> <span class="nn">services.policy</span> <span class="kn">import</span> <span class="n">HandcraftedPolicy</span>
-<span class="kn">from</span> <span class="nn">services.nlg</span> <span class="kn">import</span> <span class="n">HandcraftedNLG</span>
-<span class="kn">from</span> <span class="nn">services.domain_tracker</span> <span class="kn">import</span> <span class="n">DomainTracker</span>
-
-<span class="kn">from</span> <span class="nn">services.service</span> <span class="kn">import</span> <span class="n">DialogSystem</span>
-
-<span class="c1"># create domain</span>
-<span class="n">super_domain</span> <span class="o">=</span> <span class="n">JSONLookupDomain</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;superhero&quot;</span><span class="p">)</span>
-
-<span class="c1"># create domain specific modules</span>
-<span class="n">nlu</span> <span class="o">=</span> <span class="n">HandcraftedNLU</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
-<span class="n">bst</span> <span class="o">=</span> <span class="n">HandcraftedBST</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
-<span class="n">policy</span> <span class="o">=</span> <span class="n">HandcraftedPolicy</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
-<span class="n">nlg</span> <span class="o">=</span> <span class="n">HandcraftedNLG</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
-<span class="n">d_tracker</span> <span class="o">=</span> <span class="n">DomainTracker</span><span class="p">(</span><span class="n">domains</span><span class="o">=</span><span class="p">[</span><span class="n">super_domain</span><span class="p">])</span>
-
-<span class="c1"># Input modules (just allow access to terminal for text based dialog)</span>
-<span class="n">user_in</span> <span class="o">=</span> <span class="n">ConsoleInput</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-<span class="n">user_out</span> <span class="o">=</span> <span class="n">ConsoleOutput</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-
-<span class="n">logger</span> <span class="o">=</span> <span class="n">DiasysLogger</span><span class="p">(</span><span class="n">console_log_lvl</span><span class="o">=</span><span class="n">LogLevel</span><span class="o">.</span><span class="n">DIALOGS</span><span class="p">)</span>
-<span class="n">ds</span> <span class="o">=</span> <span class="n">DialogSystem</span><span class="p">(</span><span class="n">services</span><span class="o">=</span><span class="p">[</span><span class="n">d_tracker</span><span class="p">,</span> <span class="n">user_in</span><span class="p">,</span> <span class="n">user_out</span><span class="p">,</span> <span class="n">nlu</span><span class="p">,</span> <span class="n">bst</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">nlg</span><span class="p">],</span> <span class="n">debug_logger</span><span class="o">=</span><span class="n">logger</span><span class="p">)</span>
-
-<span class="n">error_free</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">is_error_free_messaging_pipeline</span><span class="p">()</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">error_free</span><span class="p">:</span>
-    <span class="n">ds</span><span class="o">.</span><span class="n">print_inconsistencies</span><span class="p">()</span>
-
-<span class="n">ds</span><span class="o">.</span><span class="n">draw_system_graph</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;system&#39;</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
-<span class="c1"># start dialog</span>
-<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
-    <span class="n">ds</span><span class="o">.</span><span class="n">run_dialog</span><span class="p">({</span><span class="s1">&#39;gen_user_utterance&#39;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">})</span>
-<span class="n">ds</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="c1"># Importing everything we need for a dialog system</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="kn">from</span> <span class="nn">utils.domain.jsonlookupdomain</span> <span class="kn">import</span> <span class="n">JSONLookupDomain</span>
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="kn">from</span> <span class="nn">utils.logger</span> <span class="kn">import</span> <span class="n">DiasysLogger</span><span class="p">,</span> <span class="n">LogLevel</span>
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="kn">from</span> <span class="nn">services.hci</span> <span class="kn">import</span> <span class="n">ConsoleInput</span><span class="p">,</span> <span class="n">ConsoleOutput</span>
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="kn">from</span> <span class="nn">services.nlu</span> <span class="kn">import</span> <span class="n">HandcraftedNLU</span>
+<a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a><span class="kn">from</span> <span class="nn">services.bst</span> <span class="kn">import</span> <span class="n">HandcraftedBST</span>
+<a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a><span class="kn">from</span> <span class="nn">services.policy</span> <span class="kn">import</span> <span class="n">HandcraftedPolicy</span>
+<a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a><span class="kn">from</span> <span class="nn">services.nlg</span> <span class="kn">import</span> <span class="n">HandcraftedNLG</span>
+<a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a><span class="kn">from</span> <span class="nn">services.domain_tracker</span> <span class="kn">import</span> <span class="n">DomainTracker</span>
+<a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a>
+<a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a><span class="kn">from</span> <span class="nn">services.service</span> <span class="kn">import</span> <span class="n">DialogSystem</span>
+<a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a>
+<a id="__codelineno-29-14" name="__codelineno-29-14" href="#__codelineno-29-14"></a><span class="c1"># create domain</span>
+<a id="__codelineno-29-15" name="__codelineno-29-15" href="#__codelineno-29-15"></a><span class="n">super_domain</span> <span class="o">=</span> <span class="n">JSONLookupDomain</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;superhero&quot;</span><span class="p">)</span>
+<a id="__codelineno-29-16" name="__codelineno-29-16" href="#__codelineno-29-16"></a>
+<a id="__codelineno-29-17" name="__codelineno-29-17" href="#__codelineno-29-17"></a><span class="c1"># create domain specific modules</span>
+<a id="__codelineno-29-18" name="__codelineno-29-18" href="#__codelineno-29-18"></a><span class="n">nlu</span> <span class="o">=</span> <span class="n">HandcraftedNLU</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
+<a id="__codelineno-29-19" name="__codelineno-29-19" href="#__codelineno-29-19"></a><span class="n">bst</span> <span class="o">=</span> <span class="n">HandcraftedBST</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
+<a id="__codelineno-29-20" name="__codelineno-29-20" href="#__codelineno-29-20"></a><span class="n">policy</span> <span class="o">=</span> <span class="n">HandcraftedPolicy</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
+<a id="__codelineno-29-21" name="__codelineno-29-21" href="#__codelineno-29-21"></a><span class="n">nlg</span> <span class="o">=</span> <span class="n">HandcraftedNLG</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">super_domain</span><span class="p">)</span>
+<a id="__codelineno-29-22" name="__codelineno-29-22" href="#__codelineno-29-22"></a><span class="n">d_tracker</span> <span class="o">=</span> <span class="n">DomainTracker</span><span class="p">(</span><span class="n">domains</span><span class="o">=</span><span class="p">[</span><span class="n">super_domain</span><span class="p">])</span>
+<a id="__codelineno-29-23" name="__codelineno-29-23" href="#__codelineno-29-23"></a>
+<a id="__codelineno-29-24" name="__codelineno-29-24" href="#__codelineno-29-24"></a><span class="c1"># Input modules (just allow access to terminal for text based dialog)</span>
+<a id="__codelineno-29-25" name="__codelineno-29-25" href="#__codelineno-29-25"></a><span class="n">user_in</span> <span class="o">=</span> <span class="n">ConsoleInput</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<a id="__codelineno-29-26" name="__codelineno-29-26" href="#__codelineno-29-26"></a><span class="n">user_out</span> <span class="o">=</span> <span class="n">ConsoleOutput</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<a id="__codelineno-29-27" name="__codelineno-29-27" href="#__codelineno-29-27"></a>
+<a id="__codelineno-29-28" name="__codelineno-29-28" href="#__codelineno-29-28"></a><span class="n">logger</span> <span class="o">=</span> <span class="n">DiasysLogger</span><span class="p">(</span><span class="n">console_log_lvl</span><span class="o">=</span><span class="n">LogLevel</span><span class="o">.</span><span class="n">DIALOGS</span><span class="p">)</span>
+<a id="__codelineno-29-29" name="__codelineno-29-29" href="#__codelineno-29-29"></a><span class="n">ds</span> <span class="o">=</span> <span class="n">DialogSystem</span><span class="p">(</span><span class="n">services</span><span class="o">=</span><span class="p">[</span><span class="n">d_tracker</span><span class="p">,</span> <span class="n">user_in</span><span class="p">,</span> <span class="n">user_out</span><span class="p">,</span> <span class="n">nlu</span><span class="p">,</span> <span class="n">bst</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">nlg</span><span class="p">],</span> <span class="n">debug_logger</span><span class="o">=</span><span class="n">logger</span><span class="p">)</span>
+<a id="__codelineno-29-30" name="__codelineno-29-30" href="#__codelineno-29-30"></a>
+<a id="__codelineno-29-31" name="__codelineno-29-31" href="#__codelineno-29-31"></a><span class="n">error_free</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">is_error_free_messaging_pipeline</span><span class="p">()</span>
+<a id="__codelineno-29-32" name="__codelineno-29-32" href="#__codelineno-29-32"></a><span class="k">if</span> <span class="ow">not</span> <span class="n">error_free</span><span class="p">:</span>
+<a id="__codelineno-29-33" name="__codelineno-29-33" href="#__codelineno-29-33"></a>    <span class="n">ds</span><span class="o">.</span><span class="n">print_inconsistencies</span><span class="p">()</span>
+<a id="__codelineno-29-34" name="__codelineno-29-34" href="#__codelineno-29-34"></a>
+<a id="__codelineno-29-35" name="__codelineno-29-35" href="#__codelineno-29-35"></a><span class="n">ds</span><span class="o">.</span><span class="n">draw_system_graph</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;system&#39;</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-29-36" name="__codelineno-29-36" href="#__codelineno-29-36"></a>
+<a id="__codelineno-29-37" name="__codelineno-29-37" href="#__codelineno-29-37"></a><span class="c1"># start dialog</span>
+<a id="__codelineno-29-38" name="__codelineno-29-38" href="#__codelineno-29-38"></a><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-29-39" name="__codelineno-29-39" href="#__codelineno-29-39"></a>    <span class="n">ds</span><span class="o">.</span><span class="n">run_dialog</span><span class="p">({</span><span class="s1">&#39;gen_user_utterance&#39;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">})</span>
+<a id="__codelineno-29-40" name="__codelineno-29-40" href="#__codelineno-29-40"></a><span class="n">ds</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
 </code></pre></div>
-
 <h2 id="check-your-understanding-optional">Check Your Understanding (Optional)<a class="anchor" id="exercise"></a><a class="headerlink" href="#check-your-understanding-optional" title="Permanent link">&para;</a></h2>
 <p>Now that you have read how each of the basic modules provided by the ADVISER 2.0 Toolkit works, let's actually test it out. </p>
 <h3 id="run-a-dialog-system">Run a Dialog System<a class="headerlink" href="#run-a-dialog-system" title="Permanent link">&para;</a></h3>

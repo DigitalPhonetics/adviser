@@ -750,47 +750,45 @@ Each service receives inputs from previous services, processes them, and then pa
 <p>As a note, methods in a service class may act as both a publisher and a subscriber, only one, or neither.</p>
 <h2 id="implementing-a-service">Implementing a Service<a class="headerlink" href="#implementing-a-service" title="Permanent link">&para;</a></h2>
 <p>With this terminology in mind, let's look at the way a service subscribes to and publishes messages. As a first step we'll handle all the imports needed for this tutorial.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># FIRST SET UP ENVIRONMENT</span>
-
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;../..&#39;</span><span class="p">))</span>
-
-<span class="kn">from</span> <span class="nn">services.service</span> <span class="kn">import</span> <span class="n">Service</span><span class="p">,</span> <span class="n">PublishSubscribe</span><span class="p">,</span> <span class="n">RemoteService</span>
-<span class="kn">from</span> <span class="nn">utils.topics</span> <span class="kn">import</span> <span class="n">Topic</span>
-<span class="kn">from</span> <span class="nn">services.service</span> <span class="kn">import</span> <span class="n">DialogSystem</span>
-<span class="kn">from</span> <span class="nn">utils.domain.domain</span> <span class="kn">import</span> <span class="n">Domain</span>
-<span class="kn">from</span> <span class="nn">utils.logger</span> <span class="kn">import</span> <span class="n">DiasysLogger</span><span class="p">,</span> <span class="n">LogLevel</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># FIRST SET UP ENVIRONMENT</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span> <span class="nn">sys</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">import</span> <span class="nn">os</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="kn">import</span> <span class="nn">time</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;../..&#39;</span><span class="p">))</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="kn">from</span> <span class="nn">services.service</span> <span class="kn">import</span> <span class="n">Service</span><span class="p">,</span> <span class="n">PublishSubscribe</span><span class="p">,</span> <span class="n">RemoteService</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="kn">from</span> <span class="nn">utils.topics</span> <span class="kn">import</span> <span class="n">Topic</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="kn">from</span> <span class="nn">services.service</span> <span class="kn">import</span> <span class="n">DialogSystem</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="kn">from</span> <span class="nn">utils.domain.domain</span> <span class="kn">import</span> <span class="n">Domain</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="kn">from</span> <span class="nn">utils.logger</span> <span class="kn">import</span> <span class="n">DiasysLogger</span><span class="p">,</span> <span class="n">LogLevel</span>
 </code></pre></div>
-
 <h3 id="creating-our-first-service">Creating our First Service<a class="headerlink" href="#creating-our-first-service" title="Permanent link">&para;</a></h3>
 <p>For our first service, we are going to make a simple class with a method that subscribes to two input topics, "A" and "B" and can publish to two output topics: "C" and "D". The code for this can be seen below:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">ConcatenateService</span><span class="p">(</span><span class="n">Service</span><span class="p">):</span>
-
-    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">])</span>
-    <span class="k">def</span> <span class="nf">concatenate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span><span class="n">D</span><span class="o">=</span><span class="nb">str</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            A method to concatenate the content of two input topics and conditionally publish to either</span>
-<span class="sd">            topic &quot;C&quot; or topic &quot;D&quot;</span>
-
-<span class="sd">            Args:</span>
-<span class="sd">                A (int): message for topic &quot;A&quot;</span>
-<span class="sd">                B (str): message for topic &quot;B&quot;</span>
-<span class="sd">            Return:</span>
-<span class="sd">                (dict): dictionary where key is the topic to be published to (conditionally &quot;C&quot; or &quot;D&quot;</span>
-<span class="sd">                        depending on whether the value of A is 3) and the value is the concatenation</span>
-<span class="sd">                        of inputs A and B</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CONCATENATING &quot;</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="s2">&quot;AND &quot;</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">B</span>
-        <span class="k">if</span> <span class="n">A</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span>  <span class="p">{</span><span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">class</span> <span class="nc">ConcatenateService</span><span class="p">(</span><span class="n">Service</span><span class="p">):</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">])</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="k">def</span> <span class="nf">concatenate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span><span class="n">D</span><span class="o">=</span><span class="nb">str</span><span class="p">):</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        <span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="sd">            A method to concatenate the content of two input topics and conditionally publish to either</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="sd">            topic &quot;C&quot; or topic &quot;D&quot;</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="sd">            Args:</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="sd">                A (int): message for topic &quot;A&quot;</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="sd">                B (str): message for topic &quot;B&quot;</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="sd">            Return:</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="sd">                (dict): dictionary where key is the topic to be published to (conditionally &quot;C&quot; or &quot;D&quot;</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="sd">                        depending on whether the value of A is 3) and the value is the concatenation</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="sd">                        of inputs A and B</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="sd">        &quot;&quot;&quot;</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CONCATENATING &quot;</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="s2">&quot;AND &quot;</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>        <span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">B</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>        <span class="k">if</span> <span class="n">A</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>            <span class="k">return</span>  <span class="p">{</span><span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
 </code></pre></div>
-
 <p><strong>Inheriting from the Service class:</strong></p>
 <ul>
 <li>Any service that wants to send / receive messages in the ADVISER 2.0 system must inherit from <code>services.service.Service</code>.
@@ -838,63 +836,62 @@ This class handles the communication mechanisms between services and makes sure 
 * As a note: There are  mechanisms for collecting all messages instead of dropping them, but those will be introduced later.</p>
 <h3 id="creating-a-second-service">Creating a Second Service<a class="headerlink" href="#creating-a-second-service" title="Permanent link">&para;</a></h3>
 <p>Finally, we need a second service which is responsible for generating the messages for topics <code>A</code> and <code>B</code>. This new service will also be responsible for shutting down the dialog loop when the example is over, by publishing <code>True</code> to the topic <code>DIALOG_END</code>. This topic is one of the default control message topics and is required to end a dialog. When we create our first dialog system, we will explain this in more detail. For now, let's take a look at our second service:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">PrintService</span><span class="p">(</span><span class="n">Service</span><span class="p">):</span>
-    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;D&quot;</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="n">Topic</span><span class="o">.</span><span class="n">DIALOG_END</span><span class="p">])</span>
-    <span class="k">def</span> <span class="nf">print_d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">D</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            A method which prints the content of topic D and then publishes the end dialog signal</span>
-
-<span class="sd">            Args:</span>
-<span class="sd">                D (str): content of topic D, represents the output of the method concatenate</span>
-<span class="sd">            Return:</span>
-<span class="sd">                (dict): key represents the topic DIALOG_END which should be publsihed to with the value True</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;RECEIVED D=</span><span class="si">{</span><span class="n">D</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">{</span><span class="n">Topic</span><span class="o">.</span><span class="n">DIALOG_END</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
-
-    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">])</span>
-    <span class="k">def</span> <span class="nf">turn_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            A method to start the example communication, it waits for the signal to start the dialog and</span>
-<span class="sd">            then calls the send_a method three times followed by the send_b method once</span>
-
-<span class="sd">            Args:</span>
-<span class="sd">                start (bool): The signal to start the dialog system (will be published by whatever DialogSystem</span>
-<span class="sd">                              object that this class is registered to)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="k">while</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
-            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">send_a</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-            <span class="n">a</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">send_b</span><span class="p">()</span>
-
-    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">])</span>
-    <span class="k">def</span> <span class="nf">send_a</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            A method to print a given integer a and then publish it to topic &quot;A&quot;</span>
-
-<span class="sd">            Args:</span>
-<span class="sd">                a (int): the integer to publish to topic &quot;A&quot;</span>
-<span class="sd">            Return:</span>
-<span class="sd">                (dict): where the key is &quot;A&quot; (topic to publish to) and the value is the given int a</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SENDING A=&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="n">a</span><span class="p">}</span>
-
-    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">])</span>
-    <span class="k">def</span> <span class="nf">send_b</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            A method to publish &quot;messages dropped!&quot; to topic &quot;B&quot;</span>
-
-<span class="sd">            Return:</span>
-<span class="sd">                (dict): where the key is &quot;B&quot; (topic to publish to) and the value is &quot;messages dropped!&quot;</span>
-<span class="sd">        &quot;&quot;&quot;</span>        
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SENDING B&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="s2">&quot;messages dropped!&quot;</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">class</span> <span class="nc">PrintService</span><span class="p">(</span><span class="n">Service</span><span class="p">):</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;D&quot;</span><span class="p">],</span> <span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="n">Topic</span><span class="o">.</span><span class="n">DIALOG_END</span><span class="p">])</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="k">def</span> <span class="nf">print_d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">D</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>        <span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="sd">            A method which prints the content of topic D and then publishes the end dialog signal</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="sd">            Args:</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="sd">                D (str): content of topic D, represents the output of the method concatenate</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="sd">            Return:</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="sd">                (dict): key represents the topic DIALOG_END which should be publsihed to with the value True</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="sd">        &quot;&quot;&quot;</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;RECEIVED D=</span><span class="si">{</span><span class="n">D</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>        <span class="k">return</span> <span class="p">{</span><span class="n">Topic</span><span class="o">.</span><span class="n">DIALOG_END</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">sub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">])</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    <span class="k">def</span> <span class="nf">turn_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>        <span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="sd">            A method to start the example communication, it waits for the signal to start the dialog and</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="sd">            then calls the send_a method three times followed by the send_b method once</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="sd">            Args:</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="sd">                start (bool): The signal to start the dialog system (will be published by whatever DialogSystem</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="sd">                              object that this class is registered to)</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="sd">        &quot;&quot;&quot;</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>        <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>        <span class="k">while</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">send_a</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>            <span class="n">a</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">send_b</span><span class="p">()</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>
+<a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a>    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">])</span>
+<a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a>    <span class="k">def</span> <span class="nf">send_a</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a>        <span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a><span class="sd">            A method to print a given integer a and then publish it to topic &quot;A&quot;</span>
+<a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a>
+<a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a><span class="sd">            Args:</span>
+<a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a><span class="sd">                a (int): the integer to publish to topic &quot;A&quot;</span>
+<a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a><span class="sd">            Return:</span>
+<a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a><span class="sd">                (dict): where the key is &quot;A&quot; (topic to publish to) and the value is the given int a</span>
+<a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a><span class="sd">        &quot;&quot;&quot;</span>
+<a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SENDING A=&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a>        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="n">a</span><span class="p">}</span>
+<a id="__codelineno-2-45" name="__codelineno-2-45" href="#__codelineno-2-45"></a>
+<a id="__codelineno-2-46" name="__codelineno-2-46" href="#__codelineno-2-46"></a>    <span class="nd">@PublishSubscribe</span><span class="p">(</span><span class="n">pub_topics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">])</span>
+<a id="__codelineno-2-47" name="__codelineno-2-47" href="#__codelineno-2-47"></a>    <span class="k">def</span> <span class="nf">send_b</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-2-48" name="__codelineno-2-48" href="#__codelineno-2-48"></a>        <span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-2-49" name="__codelineno-2-49" href="#__codelineno-2-49"></a><span class="sd">            A method to publish &quot;messages dropped!&quot; to topic &quot;B&quot;</span>
+<a id="__codelineno-2-50" name="__codelineno-2-50" href="#__codelineno-2-50"></a>
+<a id="__codelineno-2-51" name="__codelineno-2-51" href="#__codelineno-2-51"></a><span class="sd">            Return:</span>
+<a id="__codelineno-2-52" name="__codelineno-2-52" href="#__codelineno-2-52"></a><span class="sd">                (dict): where the key is &quot;B&quot; (topic to publish to) and the value is &quot;messages dropped!&quot;</span>
+<a id="__codelineno-2-53" name="__codelineno-2-53" href="#__codelineno-2-53"></a><span class="sd">        &quot;&quot;&quot;</span>        
+<a id="__codelineno-2-54" name="__codelineno-2-54" href="#__codelineno-2-54"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SENDING B&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-55" name="__codelineno-2-55" href="#__codelineno-2-55"></a>        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="s2">&quot;messages dropped!&quot;</span><span class="p">}</span>
 </code></pre></div>
-
 <p><strong>print_d():</strong></p>
 <p>This method subscribes to the content of topic <code>D</code> and when it receives a message, prints the content and publishes a signal to <code>DIALOG_END</code> to finish the dialog.</p>
 <p><strong>turn_start():</strong></p>
@@ -909,21 +906,18 @@ The <code>sleep</code> calls are inserted here so we can watch the messages in t
 A dialog system is important, because it is responsible for handling synchronization and message passing, registering remote services, and providing debugging functionality.</p>
 <h3 id="creating-a-new-dialog-system">Creating a New Dialog System<a class="headerlink" href="#creating-a-new-dialog-system" title="Permanent link">&para;</a></h3>
 <p>To get started, we will create an instance of each of our services and register them with a dialog system by passing them in to the <code>services</code> parameter as a list:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">concatenate_service</span> <span class="o">=</span> <span class="n">ConcatenateService</span><span class="p">()</span>
-<span class="n">print_service</span> <span class="o">=</span> <span class="n">PrintService</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">concatenate_service</span> <span class="o">=</span> <span class="n">ConcatenateService</span><span class="p">()</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">print_service</span> <span class="o">=</span> <span class="n">PrintService</span><span class="p">()</span>
 </code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="n">ds</span> <span class="o">=</span> <span class="n">DialogSystem</span><span class="p">(</span><span class="n">services</span><span class="o">=</span><span class="p">[</span><span class="n">concatenate_service</span><span class="p">,</span> <span class="n">print_service</span><span class="p">],</span> <span class="n">debug_logger</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">ds</span> <span class="o">=</span> <span class="n">DialogSystem</span><span class="p">(</span><span class="n">services</span><span class="o">=</span><span class="p">[</span><span class="n">concatenate_service</span><span class="p">,</span> <span class="n">print_service</span><span class="p">],</span> <span class="n">debug_logger</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
-
 <p><strong>Note:</strong> Because a dialog system also sets up the communications pipelines for each of the services, it is important that you only have one dialog system active at a time. If you try to instantiate a new dialog system without shutting down the previous one, you will get an error as the ports are already in use. You can shut down the dialog system by typing: <code>ds.shutdown()</code></p>
 <h2 id="debugging-a-dialog-system">Debugging a Dialog System<a class="headerlink" href="#debugging-a-dialog-system" title="Permanent link">&para;</a></h2>
 <h3 id="checking-for-inconsistencies">Checking for Inconsistencies<a class="headerlink" href="#checking-for-inconsistencies" title="Permanent link">&para;</a></h3>
 <p>To see if all of our required / offered service topics are actually connected to something, we can check the dialog system for inconsistencies:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">ds</span><span class="o">.</span><span class="n">print_inconsistencies</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">ds</span><span class="o">.</span><span class="n">print_inconsistencies</span><span class="p">()</span>
 </code></pre></div>
-
-<div class="codehilite"><pre><span></span><code>[91m
+<div class="highlight"><pre><span></span><code>[91m
 (Potential) Errors (subscribed topics without publishers):
   topic: &#39;start&#39;, subscribed to in services: {&#39;PrintService&#39;}
 [0m
@@ -933,20 +927,18 @@ Warnings (published topics without subscribers):
   topic: &#39;dialog_end&#39;, published in services: {&#39;PrintService&#39;}
 [0m
 </code></pre></div>
-
 <p>Here, we can see that <code>PrintService</code> has to receive an external <code>start</code>-topic message to be able to function - without that, <code>turn_start</code> will never be called. In this case, this is okay because the dialog system can provide this start message, however in a case where we would want start turn to be called multiple times, this would be a problem.
 Additionally, we publish to topic <code>C</code> but no service subscribes to this.</p>
 <p>As you can see, when your functions are not called as expected, this output might help you track down bugs in your system.</p>
 <p>If you want to get even more detailed debug output (print all messages and associated topics), you can provide a <code>utils.logger.DiasysLogger</code> instance to the <code>debug_logger</code> argument of the <code>DialogSystem</code> constructor and to the constructor for each service you want to log information from.</p>
 <h3 id="displaying-the-system-graph">Displaying the System Graph<a class="headerlink" href="#displaying-the-system-graph" title="Permanent link">&para;</a></h3>
 <p>To get an overview of the system, we can also draw a graph of all services and their connections which is helpful to make sure that all services are connected in the ways that we thought they were. The code for drawing this graph can be seen below:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">ds</span><span class="o">.</span><span class="n">draw_system_graph</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;tutorialgraph&#39;</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># render image to tutorials/tutorialgraph.gv.png</span>
-
-<span class="c1"># render image in jupyter notebook</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span> 
-<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;tutorialgraph.gv.png&#39;</span><span class="p">))</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">ds</span><span class="o">.</span><span class="n">draw_system_graph</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;tutorialgraph&#39;</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># render image to tutorials/tutorialgraph.gv.png</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1"># render image in jupyter notebook</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span> 
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;tutorialgraph.gv.png&#39;</span><span class="p">))</span>
 </code></pre></div>
-
 <p><img alt="png" src="output_20_0.png" /></p>
 <p>You can see in the system graph that <code>PrintService</code> needs an outside message to a <code>start</code> topic (which in turn triggers the counter for $a=1,\dots,3$).
 Both topics, <code>A</code> and <code>B</code>, are published by <code>PrintService</code> and subscribed to by <code>ConcatenateService</code>.
@@ -959,40 +951,34 @@ Similarly, <code>ConcatenateService</code> publishes to topic <code>C</code> and
 * DIALOGS: All user/system utterances and summary statistics</p>
 <p>The logger can be passed to any of the modules, to log that module's output, however when passed to the dialog system itself, the logger will additionally be able to log any messages sent through and all received by the dialog system - including the message's topic and content.</p>
 <p>A DiasysLogger can be instantiated as below:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># create logger to log everything to a file</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">DiasysLogger</span><span class="p">(</span><span class="n">console_log_lvl</span><span class="o">=</span><span class="n">LogLevel</span><span class="o">.</span><span class="n">NONE</span><span class="p">,</span> <span class="n">file_log_lvl</span><span class="o">=</span><span class="n">LogLevel</span><span class="o">.</span><span class="n">DIALOGS</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># create logger to log everything to a file</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">logger</span> <span class="o">=</span> <span class="n">DiasysLogger</span><span class="p">(</span><span class="n">console_log_lvl</span><span class="o">=</span><span class="n">LogLevel</span><span class="o">.</span><span class="n">NONE</span><span class="p">,</span> <span class="n">file_log_lvl</span><span class="o">=</span><span class="n">LogLevel</span><span class="o">.</span><span class="n">DIALOGS</span><span class="p">)</span>
 </code></pre></div>
-
 <p>And passed to a dialog system to log all message communication by passing it in with the <code>debug_logger</code> parameter on instantiation.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">#ds = DialogSystem(services=[concatenate_service, print_service], debug_logger=logger)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">#ds = DialogSystem(services=[concatenate_service, print_service], debug_logger=logger)</span>
 </code></pre></div>
-
 <h2 id="running-a-dialog">Running a Dialog<a class="headerlink" href="#running-a-dialog" title="Permanent link">&para;</a></h2>
 <p>To start a new dialog you can call the <code>DialogSystem</code> object's <code>run_dialog</code> method. When doing this, it is important to specify a <code>start_signal</code> in the form of a dictionary where keys are the topics the signal will be published to and values are the message content to be published.
 We need an external signal because the <code>run_dialog</code> method is blocking and no function calls after <code>run_dialog</code> will be executed until the dialog sends an exit signal. Therefore, the start signal is an external one time message (or multiple messages) which kickstart the normal dialog loop. In our case, the start signal is to publish to the <code>start</code> topic and since the value of this is never used, we simply set it to <code>True</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="n">ds</span><span class="o">.</span><span class="n">run_dialog</span><span class="p">(</span><span class="n">start_signals</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
-<span class="n">ds</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">ds</span><span class="o">.</span><span class="n">run_dialog</span><span class="p">(</span><span class="n">start_signals</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">ds</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
 </code></pre></div>
-
-<div class="codehilite"><pre><span></span><code>SENDING A= 1
+<div class="highlight"><pre><span></span><code>SENDING A= 1
 SENDING A= 2
 SENDING A= 3
 SENDING B
 CONCATENATING  3 AND  messages dropped!
 RECEIVED D=3 messages dropped!
 </code></pre></div>
-
 <p>... And we get exactly the output described in the previous section!
 <code>concatenate</code> was only called after a message from both topics, <code>A</code> and <code>B</code>, arrived - and since <code>A</code> received multiple messages before <code>B</code>, those messages were dropped so only one concatenated string is printed.</p>
 <p>Since the dialog system loop is blocking for a whole dialog, it is very important to make sure there is an end condition to close the loop (i.e. publishing <code>True</code> to the topic <code>DIALOG_END</code>). If none of our services did this,
 this notebook code would be stuck after calling the <code>run_dialog</code> and no new code could be executed. To prove this is not the case, try running the code cell below :)</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Not stuck in a dialog loop!&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Not stuck in a dialog loop!&quot;</span><span class="p">)</span>
 </code></pre></div>
-
-<div class="codehilite"><pre><span></span><code>Not stuck in a dialog loop!
+<div class="highlight"><pre><span></span><code>Not stuck in a dialog loop!
 </code></pre></div>
-
-<div class="codehilite"><pre><span></span><code>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>
 </code></pre></div>
 
               
