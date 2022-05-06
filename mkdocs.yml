@@ -23,10 +23,15 @@ markdown_extensions:
   - toc:
       permalink: true
   # - smarty
-  - codehilite:
-      guess_lang: false
+  # - codehilite:
+      # guess_lang: false
   - admonition
   - pymdownx.tabbed
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
 
 plugins:
   - search
