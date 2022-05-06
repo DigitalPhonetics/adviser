@@ -85,8 +85,6 @@ class SimpleDot(nn.Module):
         last_relation_out = relation_out[0][:,self.hidden:]  # R x H
 
         # relation prediction
-        # matrix = last_relation_out.repeat(last_question_out.size(0), 1, 1)  # B x R x H
-        # vector = last_question_out
         rel_scores = torch.matmul(last_question_out, last_relation_out.transpose(0,1))
         if self.softmax:
             rel_scores = F.log_softmax(rel_scores, dim=1)

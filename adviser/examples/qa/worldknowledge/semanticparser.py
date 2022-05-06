@@ -63,6 +63,7 @@ class QuestionParser(Service):
             domain: the QA domain
             logger: the logger
             device: PyTorch device name
+            cache_dir: the cache directory for transformers' models
         """
         Service.__init__(self, domain=domain, debug_logger=logger)
         self.device = torch.device(device)
