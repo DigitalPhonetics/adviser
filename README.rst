@@ -159,10 +159,10 @@ For pip users, the following installation instructions worked:
     cp /opt/homebrew/lib/libsndfile.dylib
     
 
-Experimental Windows 11 Instructions
+Experimental Windows Instructions
 ====================================
 
-NOTE: Windows support is not thoroughly tested so far and in experimental stage!
+NOTE: Windows support is not thoroughly tested so far and in experimental stage! Only tested on Windows 11 so far.
 If you encounter an error message about failing to build some library while installing the python dependencies, try installing the vcc build tools and repeat the failing step (https://visualstudio.microsoft.com/de/visual-cpp-build-tools/, yselect Desktop Development with C++ in installer).
 
 
