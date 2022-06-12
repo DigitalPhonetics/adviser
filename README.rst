@@ -15,7 +15,8 @@ Documentation
 Installation
 ============
 
-Note: Adviser 2.0 is currently only tested on Linux and Mac (Windows is possible using WSL2 (Ubuntu), for M1 chips see the extra section near the bottom of this file).
+Note: Adviser 2.0 is currently only tested on Linux and Mac (for M1 chips see the extra section near the bottom of this file).
+(Windows is possible using WSL2 or check the instructions at the bottom for an experimental Windows setup)
 
 Downloading the code
 --------------------
@@ -156,6 +157,47 @@ For pip users, the following installation instructions worked:
 .. code-block:: bash
     
     cp /opt/homebrew/lib/libsndfile.dylib
+    
+
+Experimental Windows 11 Instructions
+====================================
+
+NOTE: Windows support is not thoroughly tested so far and in experimental stage!
+If you encounter an error message about failing to build some library while installing the python dependencies, try installing the vcc build tools and repeat the failing step (https://visualstudio.microsoft.com/de/visual-cpp-build-tools/, yselect Desktop Development with C++ in installer).
+
+
+0. Install Anaconda from https://www.anaconda.com/
+   IMPORTANT: The following commands have to be executed from the Anaconda prompt!
+   
+1. Create a virtual env for python3.8 using conda 
+   (there are no precompiled pyaudio packages for newer python versions at the time of writing)
+
+.. code-block:: bash
+   
+   conda create -n YOURVIRTUALENV python=3.8
+
+2. Install pytorch from https://pytorch.org/get-started/locally/ .
+   Select options ``build: stable``, ``os0: windows``, ``package: conda``, ``language: python``, ``compute platform: cuda XX.X`` if you have an NVIDIA GPU, else ``platform: cpu``
+   
+3. Download sqlite3 precompiled library for Windows from https://www.sqlite.org/download.html .
+   After unzipping, you will find a file ``sqlite3.dll``. 
+   Copy this file into the DLL folder of your virtual environment (usually located at ``C:\Users\YOURSELF\anaconda3\envs\YOURVIRTUALENV\DLLs\``).
+
+4. Download and install grapviz installer for windows (version 4.X): https://www.graphviz.org/download/
+
+If you don't want a multimodal setup, SKIP STEPS 5) and 6)
+
+5. Install precompiled pyaudio
+
+.. code-block:: bash
+   
+   conda install pyaudio
+   
+6. Download trained models from http://adviserresources.ims.uni-stuttgart.de/models/adviser_models.zip and unzip into ``adviser/resources/models`` (folder 'models' does not exist initially)
+
+7. Remove from the files ``requirements.txt`` and ``requirements_multimodal.txt`` the lines starting with ``torch``, ``torchaudio``, ``PyAudio``.
+
+8. Install the requirements from either ```requirements.txt`` or ``requirements_multimodal.txt`` if you want a multimodal setup.
 
 Building the documentation
 ==========================
