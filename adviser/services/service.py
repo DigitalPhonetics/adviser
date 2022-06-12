@@ -25,6 +25,7 @@ import threading
 import time
 from threading import Thread
 from typing import List, Dict, Union, Iterable, Any
+import platform
 
 import zmq
 from zmq import Context, Socket
@@ -824,7 +825,10 @@ class DialogSystem:
         """ Block until all receivers started listening.
             Then, call `dialog_start`on all registered services.
             Finally, publish all start signals given. """
+    
         self._stopEvent.clear()
+        if platform.system().lower() == 'windows':
+            time.sleep(1) # wait until stop event is cleared and dialog system is listening
         # start receivers (blocking)
         for start_topic in self._start_topics:
             _send_msg(self._control_channel_pub, start_topic, True)
