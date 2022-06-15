@@ -86,6 +86,17 @@ def load_weather_domain():
     return weather, [weather_nlu, weather_nlg, weather_bst, weather_policy]
 
 
+def load_movie_domain():
+    from examples.webapi.movie import MovieNLU, MovieNLG, MovieDomain
+    from services.policy.policy_api import HandcraftedPolicy as PolicyAPI
+    movie = MovieDomain()
+    movie_nlu = MovieNLU(domain=movie)
+    movie_nlg = MovieNLG(domain=movie)
+    movie_bst = HandcraftedBST(domain=movie)
+    movie_policy = PolicyAPI(domain=movie)
+    return movie, [movie_nlu, movie_nlg, movie_bst, movie_policy]
+
+
 def load_mensa_domain(backchannel: bool = False):
     from examples.webapi.mensa import MensaDomain, MensaNLU
     from services.policy.policy_api import HandcraftedPolicy as PolicyAPI
@@ -126,7 +137,7 @@ def load_qa_domain():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='ADVISER 2.0 Dialog System')
-    parser.add_argument('domains', nargs='+', choices=['lecturers', 'weather', 'mensa', 'qa'],
+    parser.add_argument('domains', nargs='+', choices=['lecturers', 'weather', 'mensa', 'qa', 'movies'],
                         help="Chat domain(s). For multidomain type as list: domain1 domain2 .. \n",
                         default="ImsLecturers")
     parser.add_argument('-g', '--gui', action='store_true', help="Start Webui server")
@@ -190,6 +201,10 @@ if __name__ == "__main__":
         qa_domain, qa_services = load_qa_domain()
         domains.append(qa_domain)
         services.extend(qa_services)
+    if 'movies' in args.domains:
+        m_domain, m_services = load_movie_domain()
+        domains.append(m_domain)
+        services.extend(m_services)
 
     # load HCI interfaces
     if args.gui:
