@@ -5,7 +5,7 @@ mkdocs
 mkdocs-material
 mkdocstrings
 zmq==0.0.0
-numpy==1.21.5
+numpy==1.22.0
 torch==1.11.0
 graphviz==0.19.2
 lxml==4.8.0
