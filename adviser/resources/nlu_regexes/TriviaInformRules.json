@@ -1,0 +1,7 @@
+{
+    "difficult_level": {
+        "easy": "(I want to play easy trivia|easy)",
+        "mediukm": "(I want to play hard trivia|hard)",
+        "hard": "(I want to play hard trivia|hard)"
+    }
+}

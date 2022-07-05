@@ -109,6 +109,18 @@ def load_lecturers_domain(backchannel: bool = False):
     lect_nlg = load_nlg(backchannel=backchannel, domain=domain)
     return domain, [lect_nlu, lect_bst, lect_policy, lect_nlg]
 
+
+def load_trivia_domain(backchannel: bool = False):
+    from examples.webapi.trivia import TriviaDomain, TriviaNLU
+    from services.policy.policy_api import HandcraftedPolicy as PolicyAPI
+    trivia = TriviaDomain()
+    trivia_nlu = TriviaNLU(domain=trivia)
+    trivia_bst = HandcraftedBST(domain=trivia)
+    trivia_policy = PolicyAPI(domain=trivia)
+    trivia_nlg = load_nlg(backchannel=backchannel, domain=trivia)
+    return trivia, [trivia_nlu, trivia_bst, trivia_policy, trivia_nlg]
+
+
 def load_qa_domain():
     from examples.qa.worldknowledge.semanticparser import QuestionParser
     from examples.qa.worldknowledge.domain import WorldKnowledgeDomain
@@ -124,9 +136,10 @@ def load_qa_domain():
     qa_nlg = MultiNLG(domain=domain)
     return domain, [qa_nlu, qa_policy, qa_nlg]
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='ADVISER 2.0 Dialog System')
-    parser.add_argument('domains', nargs='+', choices=['lecturers', 'weather', 'mensa', 'qa'],
+    parser.add_argument('domains', nargs='+', choices=['lecturers', 'weather', 'mensa', 'qa', 'trivia'],
                         help="Chat domain(s). For multidomain type as list: domain1 domain2 .. \n",
                         default="ImsLecturers")
     parser.add_argument('-g', '--gui', action='store_true', help="Start Webui server")
@@ -190,6 +203,10 @@ if __name__ == "__main__":
         qa_domain, qa_services = load_qa_domain()
         domains.append(qa_domain)
         services.extend(qa_services)
+    if 'trivia' in args.domains:
+        trivia_domain, trivia_services = load_trivia_domain()
+        domains.append(trivia_domain)
+        services.extend(trivia_services)
 
     # load HCI interfaces
     if args.gui:

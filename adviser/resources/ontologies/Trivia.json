@@ -1,0 +1,52 @@
+{
+    "informable": {
+        "difficulty_level": [
+            "easy",
+            "medium",
+            "hard"
+        ],
+        "category": [
+            "Any Category",
+            "General Knowledge",
+            "Entertainment: Books",
+            "Entertainment: Film",
+            "Entertainment: Music",
+            "Entertainment: Musicals & Theatres",
+            "Entertainment: Television",
+            "Entertainment: Video Games",
+            "Entertainment: Board Games",
+            "Science & Nature",
+            "Science: Computers",
+            "Science: Mathematics",
+            "Mythology",
+            "Sports",
+            "Geography",
+            "History",
+            "Politics",
+            "Art",
+            "Celebrities",
+            "Animals",
+            "Vehicles",
+            "Entertainment: Comics",
+            "Science: Gadgets",
+            "Entertainment: Japanese Anime & Manga",
+            "Entertainment: Cartoon & Animations"
+        ],
+        "type": [
+            "any_type",
+            "multiple_choice",
+            "true_false"
+        ],
+        "game_length": [
+        ]
+    },
+    "requestable": [
+        "question",
+        "highscore"
+    ],
+    "system_requestable": [
+        "answer",
+        "score",
+        "counter"
+    ]
+}
