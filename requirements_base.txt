@@ -1,5 +1,5 @@
 graphviz==0.19.2
-lxml==4.8.0
+lxml==4.9.1
 numpy==1.22.3
 PyInquirer==1.0.3
 pyzmq==22.3.0
