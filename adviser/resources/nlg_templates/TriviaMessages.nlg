@@ -1,18 +1,10 @@
-template welcomemsg(): "Welcome to the Trivia chat bot. Do you want to play?"
+template welcomemsg(): "Welcome to the Trivia chat bot. Which level do you want to play?"
 template welcomemsg(help): "Sorry, I cannot understand you. Please tell me again what you are looking for."
 template welcomemsg(more) : "Can I help you with anything else?"
 template bad() : "Sorry I am a bit confused; please tell me again what you are looking for."
 # repeat() : "Could you please repeat that?"
 template closingmsg() : "Thank you, goodbye."
 
-
-# Rules for System Inform
-
-function info(slot, value, name)
-	if slot = "loyality": "works with the following organisation: \"{value}\""
-	if slot = "description": "has the following description: \"{value}\""
-	if slot = "main_superpower": "uses \"{value}\""
-	if slot = "primary_uniform_color": "wears a uniform with \"{value}\" as main color"
 
 template inform_byname(name)
 	"Here is a statement: {name}. Is it true?"

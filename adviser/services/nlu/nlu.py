@@ -312,7 +312,6 @@ class HandcraftedNLU(Service):
         Returns:
 
         """
-
         # Iteration over all user informable slots and their slots
         for slot in self.USER_INFORMABLE:
             for value in self.inform_regex[slot]:
@@ -383,7 +382,6 @@ class HandcraftedNLU(Service):
             True/False if match happened
 
         """
-
         if re_object is None:
             return False
         for o in re_object.groups():

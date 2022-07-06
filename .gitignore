@@ -37,6 +37,7 @@ wheels/
 MANIFEST
 adviser_env/
 adviserenv/
+adviservenv
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -207,3 +208,5 @@ adviser/tools/*.zip
 
 # models
 adviser/resources/models
+
+sqlite-tools-win32-x86-3390000/

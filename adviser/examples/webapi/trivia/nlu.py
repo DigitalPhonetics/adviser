@@ -65,19 +65,7 @@ class TriviaNLU(HandcraftedNLU):
             self._match_general_act(user_utterance)
             self._match_domain_specific_act(user_utterance)
 
-            self._disambiguate_co_occurrence(beliefstate)
-            self._solve_informable_values()
+            print('USER_ACTS', self.user_acts)
 
-            if len(self.user_acts) == 0:
-                if self.domain.get_keyword() in user_utterance:
-                    self.user_acts.append(UserAct(text=user_utterance if user_utterance else "",
-                                                act_type=UserActionType.SelectDomain))
-                elif self.sys_act_info['last_act'] is not None:
-                    # start of dialogue or no regex matched
-                    self.user_acts.append(UserAct(text=user_utterance if user_utterance else "",
-                                                act_type=UserActionType.Bad))
-
-        self._assign_scores()
-        result['user_acts'] = self.user_acts
         self.logger.dialog_turn("User Actions: %s" % str(self.user_acts))
-        return result
+        return {'user_acts': self.user_acts}

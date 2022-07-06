@@ -18,10 +18,10 @@
 ###############################################################################
 
 import json
+import ssl
 from typing import List, Iterable
 from utils.domain.lookupdomain import LookupDomain
 from urllib.request import urlopen
-
 
 
 class TriviaDomain(LookupDomain):
@@ -40,6 +40,7 @@ class TriviaDomain(LookupDomain):
             requested_slots (Iterable): list of slots that should be returned in addition to the
                                         system requestable slots and the primary key
         """
+        print(constraints)
         trivia_instance = self._query()
         if trivia_instance is None:
             return []
@@ -48,6 +49,7 @@ class TriviaDomain(LookupDomain):
             'question': trivia_instance['results'][0]['question'],
             'correct_answer': trivia_instance['results'][0]['correct_answer']
         }
+        print(requested_slots)
         if any(True for _ in requested_slots):
             cleaned_result_dict = {slot: result_dict[slot] for slot in requested_slots}
         else:
@@ -70,15 +72,15 @@ class TriviaDomain(LookupDomain):
 
     def get_requestable_slots(self) -> List[str]:
         """ Returns a list of all slots requestable by the user. """
-        return []
+        return ['question', 'highscore']
 
     def get_system_requestable_slots(self) -> List[str]:
         """ Returns a list of all slots requestable by the system. """
-        return []
+        return ['answer', 'score', 'counter']
 
     def get_informable_slots(self) -> List[str]:
         """ Returns a list of all informable slots. """
-        return []
+        return ['difficulty_level', 'category', 'type', 'game_length']
 
     def get_mandatory_slots(self) -> List[str]:
         """ Returns a list of all mandatory slots. """
@@ -108,7 +110,8 @@ class TriviaDomain(LookupDomain):
     def _query(self, level='easy', quiztype='boolean'):
         url = f'https://opentdb.com/api.php?amount=1&difficulty={level}&type={quiztype}'
         try:
-            f = urlopen(url)
+            context = ssl._create_unverified_context()
+            f = urlopen(url, context=context)
             instance = json.loads(f.read())
             return instance
         except BaseException as e:
