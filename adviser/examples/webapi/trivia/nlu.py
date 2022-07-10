@@ -55,17 +55,13 @@ class TriviaNLU(HandcraftedNLU):
         result = {}
         self.user_acts = []
         self.slots_requested, self.slots_informed = set(), set()
-        
-        print('USER UTTERANCES', user_utterance)
-        
+                
         if not user_utterance:
             return {'user_acts': None}
         else:
             user_utterance = user_utterance.strip()
             self._match_general_act(user_utterance)
             self._match_domain_specific_act(user_utterance)
-
-            print('USER_ACTS', self.user_acts)
 
         self.logger.dialog_turn("User Actions: %s" % str(self.user_acts))
         return {'user_acts': self.user_acts}

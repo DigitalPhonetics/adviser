@@ -19,10 +19,17 @@
 
 import json
 import ssl
+import random
 from typing import List, Iterable
 from utils.domain.lookupdomain import LookupDomain
 from urllib.request import urlopen
 
+categories = {
+    'general': [9],
+    'entertainment': [10,11,12,13,14,15,16,26,29,31,32],
+    'science': [17,18,19,27,30],
+    'society': [20,21,22,23,24,25,28]
+}
 
 class TriviaDomain(LookupDomain):
     """Domain for the Trivia API"""
@@ -40,22 +47,36 @@ class TriviaDomain(LookupDomain):
             requested_slots (Iterable): list of slots that should be returned in addition to the
                                         system requestable slots and the primary key
         """
-        print(constraints)
-        trivia_instance = self._query()
+        level='easy'
+        quiztype='boolean'
+        category='general'
+        length='5'
+
+        trivia_instance = self._query(
+            level = constraints['difficulty_level'] if 'difficulty_level' in constraints else level,
+            quiztype = constraints['quiztype'] if 'quiztype' in constraints else quiztype,
+            category = constraints['category'] if 'category' in constraints else category
+            )
+
         if trivia_instance is None:
             return []
+        
         result_dict = {
             'artificial_id': 1,
             'question': trivia_instance['results'][0]['question'],
-            'correct_answer': trivia_instance['results'][0]['correct_answer']
+            'correct_answer': trivia_instance['results'][0]['correct_answer'],
+            'difficulty_level': constraints['difficulty_level'] if 'difficulty_level' in constraints else level,
+            'type': constraints['quiztype'] if 'quiztype' in constraints else quiztype,
+            'category': constraints['category'] if 'category' in constraints else category,
+            'game_length': constraints['length'] if 'length' in constraints else length
         }
-        print(requested_slots)
+
         if any(True for _ in requested_slots):
             cleaned_result_dict = {slot: result_dict[slot] for slot in requested_slots}
         else:
             cleaned_result_dict = result_dict
         self.last_results.append(cleaned_result_dict)
-        print(cleaned_result_dict)
+        
         return [cleaned_result_dict]
 
     def find_info_about_entity(self, entity_id: str, requested_slots: Iterable):
@@ -107,8 +128,9 @@ class TriviaDomain(LookupDomain):
         """ Returns the slot name that will be used as the 'name' of an entry """
         return 'artificial_id'
 
-    def _query(self, level='easy', quiztype='boolean'):
-        url = f'https://opentdb.com/api.php?amount=1&difficulty={level}&type={quiztype}'
+    def _query(self, level, quiztype, category):
+        url = f'https://opentdb.com/api.php?amount=1&difficulty={level}' \
+            f'&type={quiztype}&category={random.choice(categories[category])}'
         try:
             context = ssl._create_unverified_context()
             f = urlopen(url, context=context)
