@@ -65,10 +65,10 @@ class TriviaDomain(LookupDomain):
             'artificial_id': 1,
             'question': trivia_instance['results'][0]['question'],
             'correct_answer': trivia_instance['results'][0]['correct_answer'],
-            'difficulty_level': constraints['difficulty_level'] if 'difficulty_level' in constraints else level,
-            'type': constraints['quiztype'] if 'quiztype' in constraints else quiztype,
+            'level': constraints['difficulty_level'] if 'difficulty_level' in constraints else level,
+            'quiztype': constraints['quiztype'] if 'quiztype' in constraints else quiztype,
             'category': constraints['category'] if 'category' in constraints else category,
-            'game_length': constraints['length'] if 'length' in constraints else length
+            'length': constraints['length'] if 'length' in constraints else length
         }
 
         if any(True for _ in requested_slots):
@@ -77,7 +77,7 @@ class TriviaDomain(LookupDomain):
             cleaned_result_dict = result_dict
         self.last_results.append(cleaned_result_dict)
         
-        return [cleaned_result_dict]
+        return cleaned_result_dict
 
     def find_info_about_entity(self, entity_id: str, requested_slots: Iterable):
         """ Returns the values (stored in the data backend) of the specified slots for the
@@ -101,7 +101,7 @@ class TriviaDomain(LookupDomain):
 
     def get_informable_slots(self) -> List[str]:
         """ Returns a list of all informable slots. """
-        return ['difficulty_level', 'category', 'type', 'game_length']
+        return ['level', 'category', 'quiztype', 'length']
 
     def get_mandatory_slots(self) -> List[str]:
         """ Returns a list of all mandatory slots. """

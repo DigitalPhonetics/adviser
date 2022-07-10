@@ -1,5 +1,5 @@
 {
-    "difficulty_level": {
+    "level": {
         "easy": "(I want to play easy trivia|easy)",
         "mediukm": "(I want to play hard trivia|hard)",
         "hard": "(I want to play hard trivia|hard)"
@@ -11,12 +11,12 @@
         "scienceNature": "(Science and Nature|Science|Nature)",
         "society": "(Society)"
     },
-    "type": {
+    "quiztype": {
         "anyType": "(All Quiz types|all types)",
         "multipleChoice": "(Multiple Choice)",
         "trueFalse": "(True False| Statements)"
     },
-    "game_length": {
+    "length": {
         "number": "(5|10)",
         "infinity": "(infinity)"
     }

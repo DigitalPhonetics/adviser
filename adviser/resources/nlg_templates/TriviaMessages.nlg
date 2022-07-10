@@ -6,8 +6,6 @@ template bad() : "Sorry I am a bit confused; please tell me again what you are l
 template closingmsg() : "Thank you, goodbye."
 
 
-template inform_byname(name)
-	"Here is a statement: {name}. Is it true?"
-
-	special_case name = "none"
-		"I’m sorry, I could not find a question."
+template tell_question(question)
+	"Here is a statement: {question} Is it true?"
+	special_case question = "unknown": "’m sorry, I could not find a statement."

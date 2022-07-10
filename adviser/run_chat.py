@@ -111,13 +111,13 @@ def load_lecturers_domain(backchannel: bool = False):
 
 
 def load_trivia_domain(backchannel: bool = False):
-    from examples.webapi.trivia import TriviaDomain, TriviaNLU, TriviaPolicy
+    from examples.webapi.trivia import TriviaDomain, TriviaNLU, TriviaPolicy, TriviaNLG
     from services.policy.policy_api import HandcraftedPolicy as PolicyAPI
     trivia = TriviaDomain()
     trivia_nlu = TriviaNLU(domain=trivia)
-    # trivia_bst = HandcraftedBST(domain=trivia)
+    trivia_bst = HandcraftedBST(domain=trivia)
     trivia_policy = TriviaPolicy(domain=trivia)
-    trivia_nlg = load_nlg(backchannel=backchannel, domain=trivia)
+    trivia_nlg = TriviaNLG(domain=trivia)
     return trivia, [trivia_nlu, trivia_policy, trivia_nlg]
 
 

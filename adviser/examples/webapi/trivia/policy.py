@@ -44,15 +44,6 @@ class TriviaPolicy(Service):
 
     @PublishSubscribe(sub_topics=["user_acts"], pub_topics=["sys_acts", "sys_state"])
     def generate_sys_acts(self, user_acts: List[UserAct] = None) -> dict(sys_acts=List[SysAct]):
-        """Generates system acts by looking up answers to the given user question.
-
-        Args:
-            user_acts: The list of user acts containing information about the predicted relation,
-                topic entities and relation direction
-
-        Returns:
-            dict with 'sys_acts' as key and list of system acts as value
-        """
         if user_acts is None:
             return { 'sys_acts': [SysAct(SysActionType.Welcome)]}
         elif any([user_act.type == UserActionType.Bye for user_act in user_acts]):
@@ -62,23 +53,26 @@ class TriviaPolicy(Service):
         
         user_acts = [user_act for user_act in user_acts if user_act.type != UserActionType.SelectDomain]
         if len(user_acts) == 0:
-           return { 'sys_acts': [SysAct(SysActionType.Welcome)]} 
+           return { 'sys_acts': [SysAct(SysActionType.Welcome)]}
+        
+        entities_constraints = {}
+        for user_act in user_acts:
+            if user_act.type == UserActionType.Inform:
+                if user_act.slot == 'level':
+                    entities_constraints.update({
+                        'level': user_act.value
+                    })
+                if user_act.slot == 'quiztype':
+                    entities_constraints.update({
+                        'quiztype': user_act.value
+                    })
+                if user_act.slot == 'category':
+                    entities_constraints.update({
+                        'category': user_act.value
+                    })
 
-        # relation = [user_act.value for user_act in user_acts \
-        #     if user_act.type == UserActionType.Inform and user_act.slot == 'relation'][0]
-        # topics = [user_act.value for user_act in user_acts \
-        #     if user_act.type == UserActionType.Inform and user_act.slot == 'topic']
-        # direction = [user_act.value for user_act in user_acts \
-        #     if user_act.type == UserActionType.Inform and user_act.slot == 'direction'][0]
+        question = self.domain.find_entities(entities_constraints)
+        sys_act = SysAct(SysActionType.TellQuestion, slot_values={'question': question['question']})
 
-        # if not topics:
-        #     return { 'sys_acts': [SysAct(SysActionType.Bad)] }
-
-        # # currently, short answers are used for world knowledge
-        # answers = self._get_short_answers(relation, topics, direction)
-
-        # sys_acts = [SysAct(SysActionType.InformByName, slot_values=answer) for answer in answers]
-
-        # self.debug_logger.dialog_turn("System Action: " + '; '.join(
-        #     [str(sys_act) for sys_act in sys_acts]))
-        return {'sys_acts': sys_acts}
+        self.debug_logger.dialog_turn("System Action: " + '; ' + str(sys_act))
+        return {'sys_acts': [sys_act]}
