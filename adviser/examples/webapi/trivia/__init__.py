@@ -20,3 +20,4 @@
 # from .nlu import TriviaNLU
 from .domain import TriviaDomain
 from .nlu import TriviaNLU
+from .policy import TriviaPolicy
