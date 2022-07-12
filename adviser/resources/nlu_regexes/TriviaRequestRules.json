@@ -1,4 +1,4 @@
 {
-    "question": "Here is the question: ",
-    "highscore": "The highscore is:"
+    "true": "(True|Is it true|true)",
+    "false": "(False|Is it false|false)"
 }

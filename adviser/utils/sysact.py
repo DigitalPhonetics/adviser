@@ -37,6 +37,7 @@ class SysActionType(Enum):
     Bye = 'closingmsg'
     ConfirmRequest = 'confreq'
     TellQuestion = 'tell_question'
+    TellFirstQuestion = 'tell_first_question'
 
 
 class SysAct(object):

@@ -5,7 +5,13 @@ template bad() : "Sorry I am a bit confused; please tell me again what you are l
 # repeat() : "Could you please repeat that?"
 template closingmsg() : "Thank you, goodbye."
 
+# System Requests
+template request(category): "What category do you want to play?"
 
-template tell_question(question)
-	"Here is a statement: {question} Is it true?"
-	special_case question = "unknown": "’m sorry, I could not find a statement."
+template tell_first_question(question)
+	"Here is the first statement: {question} Is it true or false?"
+	special_case question = "unknown": "I’m sorry, I could not find a statement."
+
+template tell_question(question, given_answer)
+	"Your answer was {given_answer}. Here is the next statement {question}. Is it true or false."
+	special_case question = "unknown": "I’m sorry, I could not find a statement."
