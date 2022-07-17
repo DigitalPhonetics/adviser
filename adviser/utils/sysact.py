@@ -38,6 +38,7 @@ class SysActionType(Enum):
     ConfirmRequest = 'confreq'
     TellQuestion = 'tell_question'
     TellFirstQuestion = 'tell_first_question'
+    Customize = 'customize'
 
 
 class SysAct(object):

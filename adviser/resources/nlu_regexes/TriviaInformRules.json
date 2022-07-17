@@ -1,20 +1,20 @@
 {
     "level": {
         "easy": "(I want to play easy trivia|easy)",
-        "mediukm": "(I want to play hard trivia|hard)",
+        "medium": "(I want to play hard trivia|medium)",
         "hard": "(I want to play hard trivia|hard)"
     },
     "category": {
-        "anyCategory": "(Any Category|Anything|All Categories)",
+        "any": "(Any Category|Anything|All Categories)",
         "entertainment": "(Entertainment)",
-        "generalKnowledge": "(General Knowledge)",
-        "scienceNature": "(Science and Nature|Science|Nature)",
+        "general": "(General Knowledge)",
+        "science": "(Science and Nature|Science|Nature)",
         "society": "(Society)"
     },
     "quiztype": {
-        "anyType": "(All Quiz types|all types)",
-        "multipleChoice": "(Multiple Choice)",
-        "trueFalse": "(True False| Statements)"
+        "any": "(All Quiz types|all types)",
+        "multiple": "(Multiple Choice)",
+        "boolean": "(True False|Statements)"
     },
     "length": {
         "number": "(5|10)",

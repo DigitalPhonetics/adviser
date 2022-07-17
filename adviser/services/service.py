@@ -112,7 +112,7 @@ class Service:
     """
 
     def __init__(self, domain: Union[str, Domain] = "", sub_topic_domains: Dict[str, str] = {}, pub_topic_domains: Dict[str, str] = {},
-                 ds_host_addr: str = "127.0.0.1", sub_port: int = 65534, pub_port: int = 65535, protocol: str = "tcp",
+                 ds_host_addr: str = "127.0.0.1", sub_port: int = 64000, pub_port: int = 64001, protocol: str = "tcp",
                  debug_logger: DiasysLogger = None, identifier: str = None):
         """
         Create a new service instance *(call this super constructor from your inheriting classes!)*.
@@ -605,8 +605,8 @@ class DialogSystem:
     This class is also used to communicate / synchronize with services running on different nodes.
     """
 
-    def __init__(self, services: List[Union[Service, RemoteService]], sub_port: int = 65534, pub_port: int = 65535,
-                 reg_port: int = 65536, protocol: str = 'tcp', debug_logger: DiasysLogger = None):
+    def __init__(self, services: List[Union[Service, RemoteService]], sub_port: int = 64000, pub_port: int = 64001,
+                 reg_port: int = 64002, protocol: str = 'tcp', debug_logger: DiasysLogger = None):
         """
         Args:
             services (List[Union[Service, RemoteService]]): List of all (remote) services to connect to.

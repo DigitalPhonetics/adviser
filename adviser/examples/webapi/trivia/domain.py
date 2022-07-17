@@ -40,34 +40,49 @@ class TriviaDomain(LookupDomain):
         self.score = 0
         self.correct_answer = None
         self.question = None
+        self.level = None
+        self.quiztype = None
+        self.category = None
+        self.length = None
 
-    def find_entities(self, constraints: dict, requested_slots: Iterable = iter(())):
-        level = constraints['difficulty_level'] if 'difficulty_level' in constraints else 'easy'
-        quiztype = constraints['quiztype'] if 'quiztype' in constraints else 'boolean'
-        category = constraints['category'] if 'category' in constraints else 'general'
-        length='5'
+    def find_entities(
+        self,
+        constraints: dict,
+        requested_slots: Iterable = iter(())
+    ):
+        self.level = constraints['difficulty_level'] \
+            if 'difficulty_level' in constraints else self.level
+        self.quiztype = constraints['quiztype'] \
+            if 'quiztype' in constraints else self.quiztype
+        self.category = constraints['category'] \
+            if 'category' in constraints else self.category
+        self.length = '5'
 
         trivia_instance = self._query(
-            level = level,
-            quiztype =  quiztype,
-            category =  category
+            level = self.level,
+            quiztype =  self.quiztype,
+            category =  self.category
             )
 
         if trivia_instance is None:
             return []
 
-        self.correct_answer = True if trivia_instance['results'][0]['correct_answer'] == "True" else False
+        self.correct_answer = True \
+            if trivia_instance['results'][0]['correct_answer'] == "True" else False
         self.question = trivia_instance['results'][0]['question']
         
         self.count += 1
         
         return [{
-            'artificial_id': 1, 'level': level, 'quiztype': quiztype,
-            'category': category, 'length': length
+            'artificial_id': 1, 'level': self.level, 'quiztype': self.quiztype,
+            'category': self.category, 'length': self.length
         }]
 
     def find_info_about_entity(self, entity_id: str, requested_slots: Iterable):
-        result = {slot: self.last_results[int(entity_id)-1][slot] for slot in requested_slots}
+        result = {
+            slot: self.last_results[int(entity_id)-1][slot] \
+                for slot in requested_slots
+        }
         result['artificial_id'] = entity_id
         return [result]
 
@@ -94,6 +109,7 @@ class TriviaDomain(LookupDomain):
         return 'artificial_id'
 
     def _query(self, level, quiztype, category):
+        print(level, quiztype, category)
         url = f'https://opentdb.com/api.php?amount=1&difficulty={level}' \
             f'&type={quiztype}&category={random.choice(categories[category])}'
         try:
