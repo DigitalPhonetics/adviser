@@ -39,20 +39,29 @@ class TriviaPolicy(Service):
             return { 'sys_acts': [SysAct(SysActionType.Bye)] }
         else:
             entities_constraints = {}
-            question = self.domain.find_entities(beliefstate["informs"])
+            self.domain.find_entities(beliefstate["informs"])
             
             if beliefstate['requests']:
-                given_answer = 'correct' if beliefstate['requests']['true'] else 'incorrect'
+                try: 
+                    beliefstate['requests']['true']
+                except KeyError:
+                    given_answer = False
+                else:
+                    given_answer = True
+                is_correct = True if given_answer == self.domain.correct_answer else False
+                if is_correct:
+                    self.domain.score += 1
+                correct_text = 'correct' if is_correct else 'incorrect'
                 sys_act = SysAct(
                     SysActionType.TellQuestion, slot_values={
-                        'question': question[0]['question'],
-                        'given_answer': given_answer
+                        'question': self.domain.question,
+                        'given_answer': correct_text
                     }
                 )
             else:
                 sys_act = SysAct(
                     SysActionType.TellFirstQuestion, slot_values={
-                        'question': question[0]['question']
+                        'question': self.domain.question
                     }
                 )
             sys_state = {'last_act': sys_act}

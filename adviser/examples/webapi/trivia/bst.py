@@ -20,7 +20,6 @@ class TriviaBST(Service):
         user_acts: List[UserAct] = None,
     ) -> dict(beliefstate=BeliefState):
         self.bs.start_new_turn()
-        print('BST BST', self.bs)
         if user_acts:
             self._reset_informs(user_acts)
             self._reset_requests()

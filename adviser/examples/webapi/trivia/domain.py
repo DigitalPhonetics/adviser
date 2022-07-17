@@ -36,34 +36,35 @@ class TriviaDomain(LookupDomain):
 
     def __init__(self):
         LookupDomain.__init__(self, 'Trivia', 'Trivia')
-        self.last_results = []
+        self.count = 0
+        self.score = 0
+        self.correct_answer = None
+        self.question = None
 
     def find_entities(self, constraints: dict, requested_slots: Iterable = iter(())):
-        level='easy'
-        quiztype='boolean'
-        category='general'
+        level = constraints['difficulty_level'] if 'difficulty_level' in constraints else 'easy'
+        quiztype = constraints['quiztype'] if 'quiztype' in constraints else 'boolean'
+        category = constraints['category'] if 'category' in constraints else 'general'
         length='5'
 
         trivia_instance = self._query(
-            level = constraints['difficulty_level'] if 'difficulty_level' in constraints else level,
-            quiztype = constraints['quiztype'] if 'quiztype' in constraints else quiztype,
-            category = constraints['category'] if 'category' in constraints else category
+            level = level,
+            quiztype =  quiztype,
+            category =  category
             )
 
         if trivia_instance is None:
             return []
+
+        self.correct_answer = True if trivia_instance['results'][0]['correct_answer'] == "True" else False
+        self.question = trivia_instance['results'][0]['question']
         
-        result_dict = {
-            'artificial_id': 1,
-            'question': trivia_instance['results'][0]['question'],
-            'correct_answer': trivia_instance['results'][0]['correct_answer'],
-            'level': constraints['difficulty_level'] if 'difficulty_level' in constraints else level,
-            'quiztype': constraints['quiztype'] if 'quiztype' in constraints else quiztype,
-            'category': constraints['category'] if 'category' in constraints else category,
-            'length': constraints['length'] if 'length' in constraints else length
-        }
+        self.count += 1
         
-        return [result_dict]
+        return [{
+            'artificial_id': 1, 'level': level, 'quiztype': quiztype,
+            'category': category, 'length': length
+        }]
 
     def find_info_about_entity(self, entity_id: str, requested_slots: Iterable):
         result = {slot: self.last_results[int(entity_id)-1][slot] for slot in requested_slots}
