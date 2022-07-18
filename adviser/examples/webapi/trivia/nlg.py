@@ -36,12 +36,23 @@ class TriviaNLG(HandcraftedNLG):
 
     This change is necessary for QA, since the policy publishes multiple system acts.
     """
-    def __init__(self, domain: Domain, template_file: str = None, sub_topic_domains: Dict[str, str] = {},
-                 logger: DiasysLogger = DiasysLogger(), template_file_german: str = None,
-                 language: Language = None):
-        HandcraftedNLG.__init__(self, domain, template_file, sub_topic_domains, logger, template_file_german, language)
+    def __init__(
+        self,
+        domain: Domain,
+        template_file: str = None,
+        sub_topic_domains: Dict[str, str] = {},
+        logger: DiasysLogger = DiasysLogger(),
+        template_file_german: str = None,
+        language: Language = None
+    ):
+        HandcraftedNLG.__init__(self, domain, template_file, sub_topic_domains,
+            logger, template_file_german, language)
 
     @PublishSubscribe(sub_topics=["sys_acts"], pub_topics=["sys_utterance"])
-    def publish_system_utterance(self, sys_acts: List[SysAct] = None) -> dict(sys_utterance=str):
-        message = '\n'.join([self.generate_system_utterance(sys_act) for sys_act in sys_acts])
+    def publish_system_utterance(
+        self, sys_acts: List[SysAct] = None
+    ) -> dict(sys_utterance=str):
+        message = '\n'.join(
+            [self.generate_system_utterance(sys_act) for sys_act in sys_acts]
+        )
         return {'sys_utterance': message}

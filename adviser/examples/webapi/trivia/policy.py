@@ -20,13 +20,13 @@ class TriviaPolicy(Service):
         sub_topics=["beliefstate"],
         pub_topics=["sys_acts", "sys_state"]
     )
+            
     def generate_sys_acts(
             self,
             beliefstate: BeliefState = None,
             sys_act: SysAct = None
         ) -> dict(sys_acts=List[SysAct]):
-        sys_state = {}
-        
+                
         if self.first_turn and not beliefstate['user_acts']:
             self.first_turn = False
             return {'sys_acts': [SysAct(SysActionType.Welcome)]}
@@ -40,64 +40,110 @@ class TriviaPolicy(Service):
             self.domain.category = 'general'
             self.domain.length = '5'
         else:
-            if 'level' in beliefstate['informs']:
-                self.domain.level = beliefstate['informs']['level']
-            if 'quiztype' in beliefstate['informs']:
-                self.domain.quiztype = beliefstate['informs']['quiztype']
-            if 'category' in beliefstate['informs']:
-                self.domain.category = beliefstate['informs']['category']
-            if 'length' in beliefstate['informs']:
-                self.domain.length = beliefstate['informs']['length']
+            constraints = beliefstate['informs']
+            if constraints:
+                if 'level' in constraints:
+                    self.domain.level = constraints['level']
+                if 'quiztype' in constraints:
+                    self.domain.quiztype = constraints['quiztype']
+                if 'category' in constraints:
+                    self.domain.category = constraints['category']
+                if 'length' in constraints:
+                    self.domain.length = constraints['length']
 
             if not self.domain.level:
-                return {'sys_acts': [SysAct(SysActionType.Customize, slot_values={
-                    'slot': 'level'
-                })]}
+                return {
+                    'sys_acts': [
+                        SysAct(SysActionType.Customize, slot_values={
+                            'slot': 'level'
+                        })
+                    ]
+                }
             elif not self.domain.quiztype:
-                return {'sys_acts': [SysAct(SysActionType.Customize, slot_values={
-                    'slot': 'quiztype'
-                })]}
+                return {
+                    'sys_acts': [
+                        SysAct(SysActionType.Customize, slot_values={
+                            'slot': 'quiztype'
+                        })
+                    ]
+                }
             elif not self.domain.category:
-                return {'sys_acts': [SysAct(SysActionType.Customize, slot_values={
-                    'slot': 'category'
-                })]}
+                return {
+                    'sys_acts': [
+                        SysAct(SysActionType.Customize, slot_values={
+                            'slot': 'category'
+                        })
+                    ]
+                }
             elif not self.domain.length:
-                return {'sys_acts': [SysAct(SysActionType.Customize, slot_values={
-                    'slot': 'length'
-                })]}
-
-        self.domain.find_entities(beliefstate["informs"])
+                return {
+                    'sys_acts': [
+                        SysAct(SysActionType.Customize, slot_values={
+                            'slot': 'length'
+                        })
+                    ]
+                }
         
-        if beliefstate['requests']:
-            if 'true' in beliefstate['requests']:
-                given_answer = True
-            else:
-                given_answer = False
+        self.domain.find_entities(beliefstate["informs"])
+        if not beliefstate['requests']:
+            return {
+                'sys_acts': [
+                    SysAct(SysActionType.TellFirstQuestion, slot_values={
+                        'question': self.domain.question
+                    })
+                ]
+            }
+            
+        given_answer = True if 'true' in beliefstate['requests'] else False
+        is_correct = True if given_answer == self.domain.correct_answer else False
 
-            is_correct = True if given_answer == self.domain.correct_answer else False
+        try:
+            int(self.domain.length)
+        except ValueError:
             if is_correct:
-                self.domain.score += 1
-            correct_text = 'correct' if is_correct else 'incorrect'
-
-            sys_act = SysAct(
-                SysActionType.TellQuestion, slot_values={
-                    'question': self.domain.question,
-                    'given_answer': correct_text
+                return {
+                    "sys_acts" : [
+                        SysAct(SysActionType.TellQuestion, slot_values={
+                            'question': self.domain.question,
+                            'given_answer': 'correct' if is_correct else 'incorrect'
+                        })
+                    ]
                 }
-            )
+            else:
+                return {
+                    "sys_acts": [
+                        SysAct(SysActionType.TellEnd, slot_values={
+                            'score': str(self.domain.score),
+                            'count': str(self.domain.count),
+                        })
+                    ]
+                }
         else:
-            sys_act = SysAct(
-                SysActionType.TellFirstQuestion, slot_values={
-                    'question': self.domain.question
+            if self.domain.count < int(self.domain.length):
+                self.domain.score += 1 if is_correct else 0
+                return {
+                    "sys_acts" : [
+                        SysAct(SysActionType.TellQuestion, slot_values={
+                            'question': self.domain.question,
+                            'given_answer': 'correct' if is_correct else 'incorrect'
+                        })
+                    ]
+                }   
+            else:
+                return {
+                    "sys_acts": [
+                        SysAct(SysActionType.TellEnd, slot_values={
+                            'score': str(self.domain.score),
+                            'count': str(self.domain.count),
+                        })
+                    ]
                 }
-            )
+
         sys_state = {'last_act': sys_act}
         
         self.debug_logger.dialog_turn("System Action: " + str(sys_act))
-        if 'last_act' not in sys_state:
-            sys_state['last_act'] = sys_act
+        
         return {
             'sys_acts': [sys_act],
             'sys_state': sys_state,
         }
-    

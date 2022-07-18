@@ -39,6 +39,7 @@ class SysActionType(Enum):
     TellQuestion = 'tell_question'
     TellFirstQuestion = 'tell_first_question'
     Customize = 'customize'
+    TellEnd = 'tell_end'
 
 
 class SysAct(object):

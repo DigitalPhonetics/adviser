@@ -1,4 +1,8 @@
 {
     "true": "(True|Is it true|true)",
-    "false": "(False|Is it false|false)"
+    "false": "(False|Is it false|false)",
+    "a": "(a)",
+    "b": "(b)",
+    "c": "(c)",
+    "d": "(d)"
 }

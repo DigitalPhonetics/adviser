@@ -36,7 +36,7 @@ class TriviaDomain(LookupDomain):
 
     def __init__(self):
         LookupDomain.__init__(self, 'Trivia', 'Trivia')
-        self.count = 0
+        self.count = -1
         self.score = 0
         self.correct_answer = None
         self.question = None
@@ -56,7 +56,8 @@ class TriviaDomain(LookupDomain):
             if 'quiztype' in constraints else self.quiztype
         self.category = constraints['category'] \
             if 'category' in constraints else self.category
-        self.length = '5'
+        self.length = constraints['length'] \
+            if 'length' in constraints else self.length
 
         trivia_instance = self._query(
             level = self.level,
@@ -66,9 +67,15 @@ class TriviaDomain(LookupDomain):
 
         if trivia_instance is None:
             return []
-
-        self.correct_answer = True \
-            if trivia_instance['results'][0]['correct_answer'] == "True" else False
+        if self.quiztype == 'boolean':
+            self.correct_answer = True \
+                if trivia_instance['results'][0]['correct_answer'] == "True" else False
+        elif self.quiztype == 'multiple':
+            self.correct_answer = trivia_instance['results'][0]['correct_answer']
+            possible_answers = self.correct_answer.append(
+                trivia_instance['results'][0]['incorrect_answers']
+            )
+            
         self.question = trivia_instance['results'][0]['question']
         
         self.count += 1
@@ -109,7 +116,6 @@ class TriviaDomain(LookupDomain):
         return 'artificial_id'
 
     def _query(self, level, quiztype, category):
-        print(level, quiztype, category)
         url = f'https://opentdb.com/api.php?amount=1&difficulty={level}' \
             f'&type={quiztype}&category={random.choice(categories[category])}'
         try:
