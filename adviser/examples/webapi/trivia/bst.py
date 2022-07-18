@@ -61,7 +61,7 @@ class TriviaBST(Service):
         # Handle user acts
         for act in user_acts:
             if act.type == UserActionType.Request:
-                self.bs['requests'][act.slot] = act.score
+                self.bs['requests'] = act.slot
             elif act.type == UserActionType.Inform:
                 # add informs and their scores to the beliefstate
                 self.bs['informs'][act.slot] = act.value

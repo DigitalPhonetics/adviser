@@ -8,19 +8,19 @@ template closingmsg() : "Thank you, goodbye."
 # System Requests
 template request(category): "What category do you want to play?"
 
-template tell_first_question(question)
-	"Here is the first statement: {question} Is it true or false?"
-	special_case question = "unknown": "I’m sorry, I could not find a statement."
+template tell_first_question(question, quiztype, a, b, c, d)
+	if quiztype = "boolean": "Here is the first statement: {question} Is it true or false?"
+	if quiztype = "multiple": "Here is the first question: {question} Answer options are: A) {a}, B) {b}, C) {c} or D) {d}."
 
-template tell_question(question, given_answer)
-	"Your answer was {given_answer}. Here is the next statement {question} Is it true or false?"
-	special_case question = "unknown": "I’m sorry, I could not find a statement."
+template tell_question(question, given_answer, quiztype, a, b, c, d)
+	if quiztype = "boolean":  "Your answer was {given_answer}. Here is the next statement: {question} Is it true or false?"
+	if quiztype = "multiple": "Your answer was {given_answer}. Here is the next question: {question} Answer options are: A) {a}, B) {b}, C) {c} or D) {d}."
 
 template tell_end(count, score)
 	"You got {score} out of {count} questions right. Thank you for playing. Bye!"
 
 template customize(slot)
-	if slot = "level": "Which level of difficulty do you want to play? Easy, medium or hard."
+	if slot = "level": "Which level of difficulty do you want to play? Easy, medium, hard or any level."
 	if slot = "quiztype": "What type of quiz do you want to play? Multiple Choice or True/False."
-	if slot = "category": "From what category do you want questions? General knowledge, Entertainment, Society or Science."
+	if slot = "category": "From what category do you want questions? General knowledge, Entertainment, Society, Science or any category."
 	if slot = "length": "How many questions do you want to answer? 5, 10, 15 or 20 or infinity, where you can play until you get the first wrong answer."

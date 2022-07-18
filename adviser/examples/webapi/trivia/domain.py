@@ -20,6 +20,8 @@
 import json
 import ssl
 import random
+import html
+
 from typing import List, Iterable
 from utils.domain.lookupdomain import LookupDomain
 from urllib.request import urlopen
@@ -31,6 +33,8 @@ categories = {
     'society': [20,21,22,23,24,25,28]
 }
 
+multiple_choices = ['a', 'b', 'c', 'd']
+
 class TriviaDomain(LookupDomain):
     """Domain for the Trivia API"""
 
@@ -39,11 +43,21 @@ class TriviaDomain(LookupDomain):
         self.count = -1
         self.score = 0
         self.correct_answer = None
+        self.incorrect_answers = {}
         self.question = None
         self.level = None
         self.quiztype = None
         self.category = None
         self.length = None
+        self.previous_questions = []
+
+    def _format_question(self, question):
+        question = html.unescape(question)
+        if self.quiztype == 'multiple':
+            question = f"{question}?" if not question.endswith('?') else question
+        else:
+            question = f"{question}." if not question.endswith('.') else question
+        return question
 
     def find_entities(
         self,
@@ -59,24 +73,39 @@ class TriviaDomain(LookupDomain):
         self.length = constraints['length'] \
             if 'length' in constraints else self.length
 
-        trivia_instance = self._query(
-            level = self.level,
-            quiztype =  self.quiztype,
-            category =  self.category
+        while True:
+            trivia_instance = self._query(
+                level = self.level,
+                quiztype =  self.quiztype,
+                category =  self.category
             )
+            if trivia_instance['results'][0]['question'] not in self.previous_questions:
+                break
 
         if trivia_instance is None:
             return []
         if self.quiztype == 'boolean':
             self.correct_answer = True \
-                if trivia_instance['results'][0]['correct_answer'] == "True" else False
+                if trivia_instance['results'][0]['correct_answer'] == "True" \
+                    else False
         elif self.quiztype == 'multiple':
-            self.correct_answer = trivia_instance['results'][0]['correct_answer']
-            possible_answers = self.correct_answer.append(
-                trivia_instance['results'][0]['incorrect_answers']
-            )
-            
-        self.question = trivia_instance['results'][0]['question']
+            self.correct_answer = {
+                random.choice(multiple_choices) : \
+                    trivia_instance['results'][0]['correct_answer']
+            }
+            iteration = 0
+            self.incorrect_answers = {}
+            for multiple_choice in multiple_choices:
+                if multiple_choice not in self.correct_answer:
+                    self.incorrect_answers.update(
+                        {
+                            multiple_choice : trivia_instance['results'][0]['incorrect_answers'][iteration]
+                        }
+                    )
+                    iteration += 1
+
+        self.question = self._format_question(trivia_instance['results'][0]['question'])
+        self.previous_questions.append(self.question)
         
         self.count += 1
         
@@ -94,10 +123,10 @@ class TriviaDomain(LookupDomain):
         return [result]
 
     def get_requestable_slots(self) -> List[str]:
-        return ['true', 'false']
+        return ['True', 'False', 'a', 'b', 'c', 'd']
 
     def get_system_requestable_slots(self) -> List[str]:
-        return ['answer', 'score', 'counter']
+        return ['answer', 'score', 'count']
 
     def get_informable_slots(self) -> List[str]:
         return ['level', 'category', 'quiztype', 'length']
@@ -116,8 +145,9 @@ class TriviaDomain(LookupDomain):
         return 'artificial_id'
 
     def _query(self, level, quiztype, category):
-        url = f'https://opentdb.com/api.php?amount=1&difficulty={level}' \
-            f'&type={quiztype}&category={random.choice(categories[category])}'
+        level = f'&difficulty={level}' if level != 'anyLevel' else ''
+        category = f'&category={random.choice(categories[category])}' if category != 'anyCategory' else ''
+        url = f'https://opentdb.com/api.php?amount=1&type={quiztype}{level}{category}'
         try:
             context = ssl._create_unverified_context()
             f = urlopen(url, context=context)

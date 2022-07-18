@@ -1,8 +1,8 @@
 {
-    "true": "(True|Is it true|true)",
-    "false": "(False|Is it false|false)",
-    "a": "(a)",
-    "b": "(b)",
-    "c": "(c)",
-    "d": "(d)"
+    "True": "(True|Is it true|true)",
+    "False": "(False|Is it false|false)",
+    "a": "(a|A|Answer (A|a))",
+    "b": "(b|B|Answer (B|b))",
+    "c": "(c|C|Answer (C|c))",
+    "d": "(d|D|Answer (D|d))"
 }
