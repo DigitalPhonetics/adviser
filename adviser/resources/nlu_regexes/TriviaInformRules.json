@@ -7,10 +7,10 @@
     },
     "category": {
         "anyCategory": "(Any Category|Anything|Everything|All Categories|All)",
-        "entertainment": "(Entertainment|Second|2|E)",
-        "general": "(General Knowledge|GK|First|1|G)",
-        "science": "(Science and Nature|Science|Nature|Fourth|4|Sci)",
-        "society": "(Society|Third|3|S)"
+        "entertainment": "(Entertainment|Second|2)",
+        "general": "(General Knowledge|GK|First|1)",
+        "science": "(Science and Nature|Science|Nature|Fourth|4)",
+        "society": "(Society|Third|3)"
     },
     "quiztype": {
         "multiple": "(Multiple Choice|First|MC|Multiple)",
