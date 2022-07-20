@@ -35,10 +35,10 @@ class TriviaPolicy(Service):
         elif UserActionType.Bye in beliefstate["user_acts"]:
             return { 'sys_acts': [SysAct(SysActionType.Bye)] }
         elif UserActionType.Deny in beliefstate["user_acts"]:
-            self.domain.level = 'anyLevel'
+            self.domain.level = 'easy'
             self.domain.quiztype = 'multiple'
             self.domain.category = 'anyCategory'
-            self.domain.length = '10'
+            self.domain.length = '5'
         else:
             constraints = beliefstate['informs']
             if constraints:
@@ -182,13 +182,13 @@ class TriviaPolicy(Service):
                     }
                 else:
                     possible_answers = self.domain.correct_answer | self.domain.incorrect_answers
-                    print(possible_answers)
                     return {
                         "sys_acts" : [
                             SysAct(SysActionType.TellQuestion, slot_values={
                                 'question': self.domain.question,
                                 'given_answer': 'correct' if is_correct else 'incorrect',
                                 'quiztype': 'multiple',
+                                'correct_answer': [f'{key.capitalize()}) {value}' for key, value in prev_correct_answer.items()][0] if not is_correct else "None",
                                 'a': possible_answers['a'],
                                 'b': possible_answers['b'],
                                 'c': possible_answers['c'],
@@ -200,6 +200,7 @@ class TriviaPolicy(Service):
                 return {
                     "sys_acts": [
                         SysAct(SysActionType.TellEnd, slot_values={
+                            'given_answer': 'correct' if is_correct else 'incorrect',
                             'score': str(self.domain.score),
                             'count': str(self.domain.count),
                         })
