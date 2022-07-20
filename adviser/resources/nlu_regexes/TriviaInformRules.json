@@ -1,20 +1,20 @@
 {
     "level": {
-        "anyLevel": "(any level|all levels)",
-        "easy": "(I want to play easy trivia|easy)",
-        "medium": "(I want to play hard trivia|medium)",
-        "hard": "(I want to play hard trivia|hard)"
+        "anyLevel": "(any level|all levels|all of them|everyone|all)",
+        "easy": "(I want to play easy trivia|easy|simple)",
+        "medium": "(I want to play medium trivia|medium|middle)",
+        "hard": "(I want to play hard trivia|hard|difficult)"
     },
     "category": {
-        "anyCategory": "(Any Category|Anything|All Categories)",
-        "entertainment": "(Entertainment)",
-        "general": "(General Knowledge)",
-        "science": "(Science and Nature|Science|Nature)",
-        "society": "(Society)"
+        "anyCategory": "(Any Category|Anything|Everything|All Categories|All)",
+        "entertainment": "(Entertainment|Second|2|E)",
+        "general": "(General Knowledge|GK|First|1|G)",
+        "science": "(Science and Nature|Science|Nature|Fourth|4|Sci)",
+        "society": "(Society|Third|3|S)"
     },
     "quiztype": {
-        "multiple": "(Multiple Choice)",
-        "boolean": "(True False|Statements)"
+        "multiple": "(Multiple Choice|First|MC|Multiple)",
+        "boolean": "(True False|Second|True|False|Statements)"
     },
     "length": {
         "5": "(5)",
