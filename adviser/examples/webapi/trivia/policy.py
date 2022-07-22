@@ -36,8 +36,8 @@ class TriviaPolicy(Service):
             return { 'sys_acts': [SysAct(SysActionType.Bye)] }
         elif UserActionType.Deny in beliefstate["user_acts"]:
             self.domain.level = 'easy'
-            self.domain.quiztype = 'multiple'
-            self.domain.category = 'anyCategory'
+            self.domain.quiztype = 'boolean'
+            self.domain.category = 'science'
             self.domain.length = '5'
         else:
             constraints = beliefstate['informs']
@@ -131,8 +131,9 @@ class TriviaPolicy(Service):
                         "sys_acts" : [
                             SysAct(SysActionType.TellQuestion, slot_values={
                                 'question': self.domain.question,
-                                'given_answer': 'correct' if is_correct else 'incorrect',
+                                'given_answer': None,
                                 'quiztype': 'boolean',
+                                'length': 'infinity',
                                 'a': None,
                                 'b': None,
                                 'c': None,
@@ -145,8 +146,9 @@ class TriviaPolicy(Service):
                         "sys_acts" : [
                             SysAct(SysActionType.TellQuestion, slot_values={
                                 'question': self.domain.question,
-                                'given_answer': 'correct' if is_correct else 'incorrect',
+                                'given_answer': None,
                                 'quiztype': 'multiple',
+                                'length': 'infinity',
                                 'a': possible_answers['a'],
                                 'b': possible_answers['b'],
                                 'c': possible_answers['c'],
@@ -155,14 +157,32 @@ class TriviaPolicy(Service):
                         ]
                     }
             else:
-                return {
-                    "sys_acts": [
-                        SysAct(SysActionType.TellEnd, slot_values={
-                            'score': str(self.domain.score),
-                            'count': str(self.domain.count),
-                        })
-                    ]
-                }
+                if self.domain.quiztype == "boolean":
+                    return {
+                        "sys_acts": [
+                            SysAct(SysActionType.TellEnd, slot_values={
+                                'quiztype': 'boolean',
+                                'given_answer': None,
+                                'correct_answer': None,
+                                'length': 'infinity',
+                                'score': str(self.domain.score),
+                                'count': str(self.domain.count),
+                            })
+                        ]
+                    }
+                else:
+                    return {
+                        "sys_acts": [
+                            SysAct(SysActionType.TellEnd, slot_values={
+                                'quiztype': 'multiple',
+                                'given_answer': None,
+                                'correct_answer': None,
+                                'length': 'infinity',
+                                'score': str(self.domain.score),
+                                'count': str(self.domain.count),
+                            })
+                        ]
+                    }       
         else:
             if self.domain.count < int(self.domain.length):
                 self.domain.score += 1 if is_correct else 0
@@ -172,7 +192,9 @@ class TriviaPolicy(Service):
                             SysAct(SysActionType.TellQuestion, slot_values={
                                 'question': self.domain.question,
                                 'given_answer': 'correct' if is_correct else 'incorrect',
+                                'correct_answer': None,
                                 'quiztype': 'boolean',
+                                'length': 'number',
                                 'a': None,
                                 'b': None,
                                 'c': None,
@@ -188,7 +210,10 @@ class TriviaPolicy(Service):
                                 'question': self.domain.question,
                                 'given_answer': 'correct' if is_correct else 'incorrect',
                                 'quiztype': 'multiple',
-                                'correct_answer': [f'{key.capitalize()}) {value}' for key, value in prev_correct_answer.items()][0] if not is_correct else "None",
+                                'length': 'number',
+                                'correct_answer': [
+                                    f'{key.capitalize()}) {value}' for key, value in prev_correct_answer.items()
+                                ][0] if not is_correct else "None",
                                 'a': possible_answers['a'],
                                 'b': possible_answers['b'],
                                 'c': possible_answers['c'],
@@ -197,15 +222,34 @@ class TriviaPolicy(Service):
                         ]
                     }
             else:
-                return {
-                    "sys_acts": [
-                        SysAct(SysActionType.TellEnd, slot_values={
-                            'given_answer': 'correct' if is_correct else 'incorrect',
-                            'score': str(self.domain.score),
-                            'count': str(self.domain.count),
-                        })
-                    ]
-                }
+                if self.domain.quiztype == "boolean": 
+                    return {
+                        "sys_acts": [
+                            SysAct(SysActionType.TellEnd, slot_values={
+                                'quiztype': 'boolean',
+                                'given_answer': 'correct' if is_correct else 'incorrect',
+                                'correct_answer': None,
+                                'length': 'number',
+                                'score': str(self.domain.score),
+                                'count': str(self.domain.count),
+                            })
+                        ]
+                    }
+                else:
+                    return {
+                        "sys_acts": [
+                            SysAct(SysActionType.TellEnd, slot_values={
+                                'quiztype': 'multiple',
+                                'given_answer': 'correct' if is_correct else 'incorrect',
+                                'length': 'number',
+                                'correct_answer': [
+                                    f'{key.capitalize()}) {value}' for key, value in prev_correct_answer.items()
+                                ][0] if not is_correct else "None",
+                                'score': str(self.domain.score),
+                                'count': str(self.domain.count),
+                            })
+                        ]
+                    }
 
         sys_state = {'last_act': sys_act}
         
