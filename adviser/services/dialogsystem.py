@@ -1,6 +1,7 @@
 import asyncio
 from typing import Any, Dict, List, Union
 from autobahn.asyncio.component import Component, run
+from autobahn.wamp import SubscribeOptions
 
 from services.service import ControlChannelMessages, RemoteService, Service
 
@@ -17,11 +18,12 @@ class _ServiceConfiguration:
         self.instance = instance
         self.remote = remote
         self.connected = False
+        self.active = False
 
 class DialogSystem:
     def __init__(self, services: List[Union[Service, RemoteService]], transports: str = "ws://localhost:8080/ws", realm="adviser") -> None:
         # organize all services (remote & local)
-        self.components = [_ServiceConfiguration(service._identifier, service, isinstance(service, RemoteService)) for service in services]
+        self.components = {service._identifier: _ServiceConfiguration(service._identifier, service, isinstance(service, RemoteService)) for service in services}
 
         self._ctrl_component = Component(transports=transports, realm=realm)
         self._ctrl_component.on_connect(self._onConnect)
@@ -35,14 +37,24 @@ class DialogSystem:
         self.dialog_counter = 0
 
     async def _publish(self, topic: str, value: Any):
-        while (isinstance(self._ctrl_component.__getattribute__("_session"), type(None)) or isinstance(self._ctrl_component._session, type(None))) or not all([component.connected for component in self.components]):
-            # print("Retry sending to", topic)
-            await asyncio.sleep(1.0)
-        self._ctrl_component._session.publish(topic, value)
+        while (isinstance(self._ctrl_component.__getattribute__("_session"), type(None)) or isinstance(self._ctrl_component._session, type(None))) or not all([self.components[component].connected for component in self.components]) or not all([self.components[component].active for component in self.components]):
+            print("Retry sending to", topic)
+            await asyncio.sleep(0.1)
+        self._ctrl_component._session.publish(topic, **{topic: value})
 
     async def _startup(self, tasks):
         # print(tasks)
         await asyncio.gather(*tasks)
+
+    async def _on_dialog_state_changed(self, user_id: int, **kwargs):
+        """ Wait for all services to reply with an ACK to the DIALOG_END message  """
+        for key in kwargs:
+            if kwargs[key] == False:
+                return
+        while (isinstance(self._ctrl_component.__getattribute__("_session"), type(None)) or isinstance(self._ctrl_component._session, type(None))) or not all([self.components[component].connected for component in self.components]):
+            await asyncio.sleep(0.1)
+        for component in self.components:
+            self.components[component].active = await self._ctrl_component._session.call(f"{ControlChannelMessages.DIALOG_START}.{self.components[component].identifier}", user_id=user_id)
 
     def run(self, start_messages: Dict[str, Any] = {ControlChannelMessages.DIALOG_START: True}):
         """
@@ -54,12 +66,12 @@ class DialogSystem:
             start_messages: None (dialog starts have to be triggered by inputs) or a mapping: topic -> value (e.g. DIALOG_START: True, USER_UTTERANCE: "")
         """
         # TODO fire start_messages: create a coroutine task for publishing them, add task to event look
-        tasks = []
+        tasks = [self._on_dialog_state_changed(user_id=0, changed=True)]
         for msg in start_messages:
             tasks.append(self._publish(msg, start_messages[msg]))
             # print("Created startup msg task for", msg)
         # print(f"Starting {len([component.instance._component for component in self.components if not component.remote])} components...")
-        run([component.instance._component for component in self.components if not component.remote] + [self._ctrl_component], start_loop=False)
+        run([self.components[component].instance._component for component in self.components if not self.components[component].remote] + [self._ctrl_component], start_loop=False)
         # print("STARTING LOOP", tasks)
         if len(tasks) > 0:
             asyncio.get_event_loop().create_task(self._startup(tasks))
@@ -81,19 +93,16 @@ class DialogSystem:
         print("-> registered component", component.identifier)
 
     async def _register_components(self, session):
-        await asyncio.gather(*[self._register_component(session, component) for component in self.components])
-        # for component in self.components:
-        #     print("Trying to connect to component ", component.identifier)
-        #     component.connected = await session.call(f'dialogsystem.register.{component.identifier}')
-        #     print("Done")
+        await asyncio.gather(*[self._register_component(session, self.components[component]) for component in self.components])
         print("-- ALL SYSTEMS CONNECTED -- ")
         # TODO check system 
 
     async def _init_pubsub(self, session):
         # Control channel messaging system setup
         # print("INIT CTRL CHANNELS")
-        self._ctrl_component.subscribe(ControlChannelMessages.DIALOGSYSTEM_SHUTDOWN)
-        self._ctrl_component.subscribe(ControlChannelMessages.DIALOG_END) # do we need this?
+        # TODO self._ctrl_component.subscribe(ControlChannelMessages.DIALOGSYSTEM_SHUTDOWN)
+        self._ctrl_component._session.subscribe(self._on_dialog_state_changed, topic=ControlChannelMessages.DIALOG_START, options=SubscribeOptions("prefix"))
+        self._ctrl_component._session.subscribe(self._on_dialog_state_changed, topic=ControlChannelMessages.DIALOG_END, options=SubscribeOptions("prefix"))
             
     def draw_dialog_graph(self):
         pass

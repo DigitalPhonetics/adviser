@@ -19,6 +19,7 @@
 
 from collections import defaultdict
 from typing import List, Dict
+from utils.memory import UserState
 
 from services.service import PublishSubscribe
 from services.service import Service
@@ -49,7 +50,8 @@ class HandcraftedPolicy(Service):
     """
 
     def __init__(self, domain: JSONLookupDomain, logger: DiasysLogger = DiasysLogger(),
-                 max_turns: int = 25):
+                 max_turns: int = 25, identifier="Policy_Handcrafted",
+                 transports: str = "ws://localhost:8080/ws", realm="adviser") -> None:
         """
         Initializes the policy
 
@@ -57,26 +59,27 @@ class HandcraftedPolicy(Service):
             domain {domain.jsonlookupdomain.JSONLookupDomain} -- Domain
 
         """
-        self.first_turn = True
-        Service.__init__(self, domain=domain)
-        self.current_suggestions = []  # list of current suggestions
-        self.s_index = 0  # the index in current suggestions for the current system reccomendation
-        self.domain_key = domain.get_primary_key()
+        Service.__init__(self, domain=domain, identifier=identifier, transports=transports, realm=realm)
         self.logger = logger
         self.max_turns = max_turns
 
-    def dialog_start(self):
+        self.turns = UserState(lambda: 0)
+        self.first_turn = UserState(lambda: True)
+        self.current_suggestions = UserState(lambda: list())  # list of current suggestions
+        self.s_index = UserState(lambda: 0)  # the index in current suggestions for the current system reccomendation
+        self.domain_key = domain.get_primary_key()
+
+    async def on_dialog_start(self, user_id: int):
         """
             resets the policy after each dialog
         """
-        self.turns = 0
-        self.first_turn = True
-        self.current_suggestions = []  # list of current suggestions
-        self.s_index = 0  # the index in current suggestions for the current system reccomendation
+        self.turns[user_id] = 0
+        self.first_turn[user_id]= True
+        self.current_suggestions[user_id] = list()  # list of current suggestions
+        self.s_index[user_id] = 0  # the index in current suggestions for the current system reccomendation
 
-    @PublishSubscribe(sub_topics=["beliefstate"], pub_topics=["sys_act", "sys_state"])
-    def choose_sys_act(self, beliefstate: BeliefState) \
-            -> dict(sys_act=SysAct):
+    @PublishSubscribe(sub_topics=["beliefstate"], pub_topics=["sys_act", "sys_state"], user_id=True)
+    async def choose_sys_act(self, beliefstate: BeliefState, user_id: int) -> dict(sys_act=SysAct):
 
         """
             Responsible for walking the policy through a single turn. Uses the current user
@@ -93,21 +96,21 @@ class HandcraftedPolicy(Service):
                         action
 
         """
-        self.turns += 1
+        self.turns[user_id] += 1
         # do nothing on the first turn --LV
         sys_state = {}
-        if self.first_turn and not beliefstate['user_acts']:
-            self.first_turn = False
+        if self.first_turn[user_id] and not beliefstate['user_acts']:
+            self.first_turn[user_id] = False
             sys_act = SysAct()
             sys_act.type = SysActionType.Welcome
             sys_state["last_act"] = sys_act
             return {'sys_act': sys_act, "sys_state": sys_state}
 
         # Handles case where it was the first turn, but there are user acts
-        elif self.first_turn:
-            self.first_turn = False
+        elif self.first_turn[user_id]:
+            self.first_turn[user_id] = False
 
-        if self.turns >= self.max_turns:
+        if self.turns[user_id] >= self.max_turns[user_id]:
             sys_act = SysAct()
             sys_act.type = SysActionType.Bye
             sys_state["last_act"] = sys_act
@@ -144,11 +147,11 @@ class HandcraftedPolicy(Service):
 
             # If we switch to the domain, start a new dialog
             if UserActionType.SelectDomain in beliefstate["user_acts"]:
-                self.dialog_start()
-            self.first_turn = False
+                await self.on_dialog_start()
+            self.first_turn[user_id] = False
         # handle domain specific actions
         else:
-            sys_act, sys_state = self._next_action(beliefstate)
+            sys_act, sys_state = self._next_action(beliefstate, user_id)
         if self.logger:
             self.logger.dialog_turn("System Action: " + str(sys_act))
         if "last_act" not in sys_state:
@@ -180,7 +183,7 @@ class HandcraftedPolicy(Service):
             else:
                 break
 
-    def _query_db(self, beliefstate: BeliefState):
+    def _query_db(self, beliefstate: BeliefState, user_id: int):
         """Based on the constraints specified, uses the domain to generate the appropriate type
            of query for the database
 
@@ -193,7 +196,7 @@ class HandcraftedPolicy(Service):
         --LV
         """
         # determine if an entity has already been suggested or was mentioned by the user
-        name = self._get_name(beliefstate)
+        name = self._get_name(beliefstate, user_id)
         # if yes and the user is asking for info about a specific entity, generate a query to get
         # that info for the slots they have specified
         if name and beliefstate['requests']:
@@ -205,7 +208,7 @@ class HandcraftedPolicy(Service):
             constraints, _ = self._get_constraints(beliefstate)
             return self.domain.find_entities(constraints)
 
-    def _get_name(self, beliefstate: BeliefState):
+    def _get_name(self, beliefstate: BeliefState, user_id: int):
         """Finds if an entity has been suggested by the system (in the form of an offer candidate)
            or by the user (in the form of an InformByName act). If so returns the identifier for
            it, otherwise returns None
@@ -225,8 +228,8 @@ class HandcraftedPolicy(Service):
             name = sorted(possible_names.items(), key=lambda kv: kv[1], reverse=True)[0][0]
         # if the user is tyring to query by name
         else:
-            if self.s_index < len(self.current_suggestions):
-                current_suggestion = self.current_suggestions[self.s_index]
+            if self.s_index[user_id] < len(self.current_suggestions[user_id]):
+                current_suggestion = self.current_suggestions[user_id][self.s_index]
                 if current_suggestion:
                     name = current_suggestion[self.domain_key]
         return name
@@ -275,7 +278,7 @@ class HandcraftedPolicy(Service):
                 return slot
         return None
 
-    def _next_action(self, beliefstate: BeliefState):
+    def _next_action(self, beliefstate: BeliefState, user_id: int):
         """Determines the next system action based on the current belief state and
            previous action.
 
@@ -293,7 +296,7 @@ class HandcraftedPolicy(Service):
         sys_state = {}
         # Assuming this happens only because domain is not actually active --LV
         if UserActionType.Bad in beliefstate['user_acts'] or beliefstate['requests'] \
-                and not self._get_name(beliefstate):
+                and not self._get_name(beliefstate, user_id):
             sys_act = SysAct()
             sys_act.type = SysActionType.Bad
             return sys_act, {'last_act': sys_act}
@@ -308,11 +311,11 @@ class HandcraftedPolicy(Service):
                 and not beliefstate['requests']:
             sys_act = SysAct()
             sys_act.type = SysActionType.InformByName
-            sys_act.add_value(self.domain.get_primary_key(), self._get_name(beliefstate))
+            sys_act.add_value(self.domain.get_primary_key(), self._get_name(beliefstate, user_id))
             return sys_act, {'last_act': sys_act}
 
         # Otherwise we need to query the db to determine next action
-        results = self._query_db(beliefstate)
+        results = self._query_db(beliefstate, user_id)
         sys_act = self._raw_action(results, beliefstate)
 
         # requests are fairly easy, if it's a request, return it directly
@@ -322,7 +325,7 @@ class HandcraftedPolicy(Service):
 
         # otherwise we need to convert a raw inform into a one with proper slots and values
         elif sys_act.type == SysActionType.InformByName:
-            self._convert_inform(results, sys_act, beliefstate)
+            self._convert_inform(results, sys_act, beliefstate, user_id)
             # update belief state to reflect the offer we just made
             values = sys_act.get_values(self.domain.get_primary_key())
             if values:
@@ -425,7 +428,8 @@ class HandcraftedPolicy(Service):
         return sorted_diffs[0][0]
 
     def _convert_inform(self, q_results: iter,
-                        sys_act: SysAct, beliefstate: BeliefState):
+                        sys_act: SysAct, beliefstate: BeliefState,
+                        user_id: int):
         """Fills in the slots and values for a raw inform so it can be returned as the
            next system action.
 
@@ -439,16 +443,17 @@ class HandcraftedPolicy(Service):
         """
 
         if beliefstate["requests"] or self.domain.get_primary_key() in beliefstate['informs']:
-            self._convert_inform_by_primkey(q_results, sys_act, beliefstate)
+            self._convert_inform_by_primkey(q_results, sys_act, beliefstate, user_id)
 
         elif UserActionType.RequestAlternatives in beliefstate['user_acts']:
-            self._convert_inform_by_alternatives(sys_act, q_results, beliefstate)
+            self._convert_inform_by_alternatives(sys_act, q_results, beliefstate, user_id)
 
         else:
-            self._convert_inform_by_constraints(q_results, sys_act, beliefstate)
+            self._convert_inform_by_constraints(q_results, sys_act, beliefstate, user_id)
 
     def _convert_inform_by_primkey(self, q_results: iter,
-                                   sys_act: SysAct, beliefstate: BeliefState):
+                                   sys_act: SysAct, beliefstate: BeliefState,
+                                   user_id: int):
         """
             Helper function that adds the values for slots to a SysAct object when the system
             is answering a request for information about an entity from the user
@@ -470,13 +475,14 @@ class HandcraftedPolicy(Service):
                 sys_act.add_value(k, res)
             # Name might not be a constraint in request queries, so add it
             if self.domain_key not in keys:
-                name = self._get_name(beliefstate)
+                name = self._get_name(beliefstate, user_id)
                 sys_act.add_value(self.domain_key, name)
         else:
             sys_act.add_value(self.domain_key, 'none')
 
     def _convert_inform_by_alternatives(
-            self, sys_act: SysAct, q_res: iter, beliefstate: BeliefState):
+            self, sys_act: SysAct, q_res: iter, beliefstate: BeliefState,
+            user_id: int):
         """
             Helper Function, scrolls through the list of alternative entities which match the
             user's specified constraints and uses the next item in the list to fill in the raw
@@ -490,29 +496,29 @@ class HandcraftedPolicy(Service):
                 beliefstate (BeliefState): current system belief state
 
         """
-        if q_res and not self.current_suggestions:
-            self.current_suggestions = []
-            self.s_index = -1
+        if q_res and not self.current_suggestions[user_id]:
+            self.current_suggestions[user_id] = []
+            self.s_index[user_id] = -1
             for result in q_res:
-                self.current_suggestions.append(result)
+                self.current_suggestions[user_id].append(result)
 
-        self.s_index += 1
+        self.s_index[user_id] += 1
         # here we should scroll through possible offers presenting one each turn the user asks
         # for alternatives
-        if self.s_index <= len(self.current_suggestions) - 1:
+        if self.s_index[user_id] <= len(self.current_suggestions[user_id]) - 1:
             # the first time we inform, we should inform by name, so we use the right template
-            if self.s_index == 0:
+            if self.s_index[user_id] == 0:
                 sys_act.type = SysActionType.InformByName
             else:
                 sys_act.type = SysActionType.InformByAlternatives
-            result = self.current_suggestions[self.s_index]
+            result = self.current_suggestions[user_id][self.s_index[user_id]]
             # Inform by alternatives according to our current templates is
             # just a normal inform apparently --LV
             sys_act.add_value(self.domain_key, result[self.domain_key])
         else:
             sys_act.type = SysActionType.InformByAlternatives
             # default to last suggestion in the list
-            self.s_index = len(self.current_suggestions) - 1
+            self.s_index[user_id] = len(self.current_suggestions[user_id]) - 1
             sys_act.add_value(self.domain.get_primary_key(), 'none')
 
         # in addition to the name, add the constraints the user has specified, so they know the
@@ -522,7 +528,8 @@ class HandcraftedPolicy(Service):
             sys_act.add_value(c, constraints[c])
 
     def _convert_inform_by_constraints(self, q_results: iter,
-                                       sys_act: SysAct, beliefstate: BeliefState):
+                                       sys_act: SysAct, beliefstate: BeliefState,
+                                       user_id: int):
         """
             Helper function for filling in slots and values of a raw inform act when the system is
             ready to make the user an offer
@@ -536,11 +543,11 @@ class HandcraftedPolicy(Service):
         # TODO: Do we want some way to allow users to scroll through
         # result set other than to type 'alternatives'? --LV
         if q_results:
-            self.current_suggestions = []
-            self.s_index = 0
+            self.current_suggestions[user_id] = []
+            self.s_index[user_id] = 0
             for result in q_results:
-                self.current_suggestions.append(result)
-            result = self.current_suggestions[0]
+                self.current_suggestions[user_id].append(result)
+            result = self.current_suggestions[user_id][0]
             sys_act.add_value(self.domain_key, result[self.domain_key])
         else:
             sys_act.add_value(self.domain_key, 'none')

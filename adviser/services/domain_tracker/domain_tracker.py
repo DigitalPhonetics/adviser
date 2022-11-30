@@ -22,7 +22,8 @@
 from services.service import PublishSubscribe
 from services.service import Service
 from utils.domain import Domain
-from typing import List
+from typing import List, Union
+from utils.memory import UserState
 
 
 class DomainTracker(Service):
@@ -31,21 +32,23 @@ class DomainTracker(Service):
         Current implmentation uses keywords to switch domains.
     """
 
-    def __init__(self, domains: List[Domain], greet_on_first_turn: bool = False):
-        Service.__init__(self, domain="")
+    def __init__(self, domains: List[Domain], greet_on_first_turn: bool = False, identifier: str = "DomainTracker", transports: str = "ws://localhost:8080/ws", realm="adviser") -> None:
+        Service.__init__(self, identifier=identifier, domain="", transports=transports, realm=realm)
         self.domains = domains
         self.current_domain = None
         self.greet_on_first_turn = greet_on_first_turn
+        self.turn = UserState(lambda: 0)
+        self.current_domain = UserState(lambda: None)
 
-    def dialog_start(self):
+    async def on_dialog_start(self, user_id: int):
         """
             Resets the domain tracker for the start of a new dialog
         """
-        self.turn = 0
-        self.current_domain = None
+        self.turn[user_id] = 0
+        self.current_domain[user_id] = None
 
-    @PublishSubscribe(sub_topics=["gen_user_utterance"], pub_topics=["user_utterance", "sys_utterance"])
-    def select_domain(self, gen_user_utterance: str = None) -> dict(user_utterance=str):
+    @PublishSubscribe(sub_topics=["gen_user_utterance"], pub_topics=["user_utterance", "sys_utterance"], user_id=True)
+    def select_domain(self, gen_user_utterance: str, user_id: int) -> dict(user_utterance=str):
         """
             Determines which domain should currently be active. In general, if a keyword is mentioned, the domain
             will change, otherwise it is assumed that the previous domain is still active.
@@ -58,14 +61,14 @@ class DomainTracker(Service):
                         selected domain appended to the end so the message can be properly routed.
         """
 
-        self.turn += 1
-        if self.turn == 1 and self.greet_on_first_turn:
+        self.turn[user_id] += 1
+        if self.turn[user_id] == 1 and self.greet_on_first_turn:
             return {'sys_utterance': "Hello, please let me know how I can help you, I can discuss " +
                     f"the following domains: {self.domains_to_str()}."}
 
         # if there is only a single domain, simply route the message forward
         if len(self.domains) == 1:
-            self.current_domain = self.domains[0]
+            self.current_domain[user_id] = self.domains[0]
 
         # make sure the utterance is lowercase if there is one
         user_utterance = gen_user_utterance
@@ -81,13 +84,13 @@ class DomainTracker(Service):
 
         # if there are active domains, use the first one
         elif active_domains:
-            out_key = f"user_utterance/{active_domains[0].get_domain_name()}"
-            self.current_domain = active_domains[0]
+            out_key = f"user_utterance.{active_domains[0].get_domain_name()}"
+            self.current_domain[user_id] = active_domains[0]
             return {out_key: user_utterance}
 
         # if no domain is explicitely mentioned, assume the last one is still active
-        elif self.current_domain:
-            out_key = f"user_utterance/{self.current_domain.get_domain_name()}"
+        elif self.current_domain[user_id]:
+            out_key = f"user_utterance.{self.current_domain.get_domain_name()}"
             return {out_key: user_utterance}
 
         # Otherwise ask the user what domain they want

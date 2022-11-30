@@ -29,7 +29,7 @@ from utils.common import Language
 from utils.domain.domain import Domain
 from utils.logger import DiasysLogger
 from utils.sysact import SysAct
-from typing import Dict
+from typing import Any, Dict
 
 
 class HandcraftedNLG(Service):
@@ -49,11 +49,13 @@ class HandcraftedNLG(Service):
         template_german (str): the name of the German NLG template file
         language (Language): the language of the dialogue
     """
-    def __init__(self, domain: Domain, template_file: str = None, sub_topic_domains: Dict[str, str] = {},
+    def __init__(self, domain: Domain, template_file: str = None,
                  logger: DiasysLogger = DiasysLogger(), template_file_german: str = None,
-                 language: Language = None):
+                 language: Language = None, identifier="NLG_Handcrafted",
+                 transports: str = "ws://localhost:8080/ws", realm="adviser") -> None:
         """Constructor mainly extracts methods and rules from the template file"""
-        Service.__init__(self, domain=domain, sub_topic_domains=sub_topic_domains)
+
+        Service.__init__(self, domain=domain, identifier=identifier, transports=transports, realm=realm)
 
         self.language = language if language else Language.ENGLISH
         self.template_english = template_file
@@ -69,7 +71,7 @@ class HandcraftedNLG(Service):
 
 
     @PublishSubscribe(sub_topics=["sys_act"], pub_topics=["sys_utterance"])
-    def publish_system_utterance(self, sys_act: SysAct = None) -> dict(sys_utterance=str):
+    def publish_system_utterance(self, sys_act: Dict[str, Any] = None) -> dict(sys_utterance=str):
         """Generates the system utterance and publishes it.
 
         Args:
@@ -78,6 +80,7 @@ class HandcraftedNLG(Service):
         Returns:
             dict: a dict containing the system utterance
         """
+        sys_act = SysAct.from_json(sys_act)
         return {'sys_utterance': self.generate_system_utterance(sys_act)}
 
 

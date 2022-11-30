@@ -20,14 +20,17 @@
 """The console module provides ADVISER modules that access the console for input and output."""
 import math
 import os
-import sys
 import time
+from typing import Union
+from services.service import ControlChannelMessages
 
 from services.service import PublishSubscribe
 from services.service import Service
-from utils.common import Language
 from utils.domain import Domain
-from utils.topics import Topic
+
+import asyncio
+from aioconsole import ainput
+from services.service import PublishSubscribe, Service
 
 
 class ConsoleInput(Service):
@@ -36,85 +39,37 @@ class ConsoleInput(Service):
 
     Waits for the built-in input function to return a non-empty text.
     """
-
-    def __init__(self, domain: Domain = None, conversation_log_dir: str = None, language: Language = None):
-        Service.__init__(self, domain=domain)
-        # self.language = language
-        self.language = Language.ENGLISH
+    def __init__(self, identifier="ConsoleInput", domain: Union[str, Domain] = "", conversation_log_dir: str = None, transports: str = "ws://localhost:8080/ws", realm="adviser") -> None:
+        super().__init__(identifier=identifier, domain=domain, transports=transports, realm=realm)
         self.conversation_log_dir = conversation_log_dir
-        self.interaction_count = 0
-        # if self.language is None:
-        #     self.language = self._set_language()
+    
+    # async def on_dialog_start(self, user_id: int):
+    #     # print("CONSOLE START")
+    #     await asyncio.create_task(self.user_utterance(user_id=0, turn_end=False))
 
-    def dialog_start(self):
-        self.interaction_count = 0
-
-    @PublishSubscribe(sub_topics=[Topic.DIALOG_END], pub_topics=["gen_user_utterance"])
-    def get_user_input(self, dialog_end: bool = True) -> dict(user_utterance=str):
-        """
-
-        If this function has not been called before, do not pass a message.
-        Otherwise, it blocks the application until the user has entered a
-        valid (i.e. non-empty) message in the console.
-
-        Returns:
-            dict: a dict containing the user utterance
-        """
-        if dialog_end:
-            return
-
-        utterance = self._input()
-        # write into logging directory
+    @PublishSubscribe(sub_topics={ControlChannelMessages.DIALOG_END: "dialog_end"})
+    async def turn_end(self, dialog_end: bool):
+        # print("CONSOLE START")
+        if not dialog_end:
+            await asyncio.create_task(self.get_user_utterance())
+        
+    @PublishSubscribe(pub_topics=["gen_user_utterance"])
+    async def get_user_utterance(self):
+        # print(f"WAITING FOR UTTERANCE from {user_id}")
+        utterance = await ainput(">>>")
         if self.conversation_log_dir is not None:
-            with open(os.path.join(self.conversation_log_dir, (str(math.floor(time.time())) + "_user.txt")),
-                      "w") as convo_log:
-                convo_log.write(utterance)
-        return {'gen_user_utterance': utterance}
-
-    def _input(self):
-        "Helper function for reading text input from the console"
-        utterance = ''
-        try:
-            sys.stdout.write('>>> ')
-            sys.stdout.flush()
-            line = sys.stdin.readline()
-            while line.strip() == '' and not getattr(self, '_dialog_system_parent').terminating():
-                line = sys.stdin.readline()
-            utterance = line
-            if getattr(self, '_dialog_system_parent').terminating():
-                sys.stdin.close()
-            return utterance
-        except:
-            return utterance
-
-    def _set_language(self) -> Language:
-        """
-            asks the user to select the language of the system, returning the enum
-            representing their preference, or None if they don't give a recognized
-            input
-        """
-        utterance = ""
-        print("Please select your language: English or German")
-        while utterance.strip() == "":
-            utterance = input(">>> ")
-        utterance = utterance.lower()
-        if utterance == 'e' or utterance == 'english':
-            return Language.ENGLISH
-        elif utterance == 'g' or utterance == 'german' or utterance == 'deutsch' \
-                or utterance == 'd':
-            return Language.GERMAN
-        else:
-            return None
+            with open(os.path.join(self.conversation_log_dir, (str(math.floor(time.time())) + "_user.txt")), "w") as conv_log:
+                conv_log.write(utterance)
+        # print(" - got ", utterance)
+        return {"gen_user_utterance": utterance}
 
 
 class ConsoleOutput(Service):
-    """Writes the system utterance to the console."""
-
-    def __init__(self, domain: Domain = None):
-        Service.__init__(self, domain=domain)
-
-    @PublishSubscribe(sub_topics=["sys_utterance"], pub_topics=[Topic.DIALOG_END])
-    def print_sys_utterance(self, sys_utterance: str = None) -> dict():
+    def __init__(self, identifier="ConsoleOutput", domain: Union[str, Domain] = "", transports: str = "ws://localhost:8080/ws", realm="adviser") -> None:
+        super().__init__(identifier=identifier, domain=domain, transports=transports, realm=realm)
+        
+    @PublishSubscribe(sub_topics=["sys_utterance"], pub_topics=[ControlChannelMessages.DIALOG_END])
+    async def print_sys_utterance(self, sys_utterance: str):
         """
 
         The message is simply printed to the console.
@@ -131,6 +86,8 @@ class ConsoleOutput(Service):
         if sys_utterance is not None and sys_utterance != "":
             print("System: {}".format(sys_utterance))
         else:
-            raise ValueError("There is no system utterance. Did you forget to call an NLG module before?")
+            raise ValueError("The system utterance is empty. Did you forget to call an NLG module before?")
+        
+        # print(f"GOT UTTERANCE", user_utterance)
+        return {ControlChannelMessages.DIALOG_END: 'bye' in sys_utterance}
 
-        return {Topic.DIALOG_END: 'bye' in sys_utterance}

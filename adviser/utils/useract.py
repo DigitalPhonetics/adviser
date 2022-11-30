@@ -22,7 +22,7 @@
 from enum import Enum
 
 
-class UserActionType(Enum):
+class UserActionType(str, Enum):
     """The type for a user action as used in :class:`UserAct`."""
 
     Inform = 'inform'

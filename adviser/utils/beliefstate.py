@@ -20,11 +20,12 @@
 """ This module provides the BeliefState class. """
 
 import copy
-
+from typing import Any, Dict
+from utils.serializable import JSONSerializable
 from utils.domain.jsonlookupdomain import JSONLookupDomain
 
 
-class BeliefState:
+class BeliefState(JSONSerializable):
     """
     A representation of the belief state, can be accessed like a dictionary.
 
@@ -43,6 +44,9 @@ class BeliefState:
     def dialog_start(self):
         self._history = [self._init_beliefstate()]
 
+    def to_json(self) -> Dict[str, Any]:
+        return self._history[-1]
+
     def __getitem__(self, val):  # for indexing
         # if used with numbers: int (e.g. state[-2]) or slice (e.g. state[3:6])
         if isinstance(val, int) or isinstance(val, slice):
@@ -51,6 +55,9 @@ class BeliefState:
         elif isinstance(val, str):
             # take the current turn's belief state
             return self._history[-1][val]
+
+    def as_dict(self):
+        return self._history[-1]
 
     def __iter__(self):
         return iter(self._history[-1])

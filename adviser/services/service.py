@@ -3,13 +3,14 @@ from collections import defaultdict
 from functools import partial
 import functools
 from inspect import isawaitable
-from typing import Callable, Dict, Iterable, Union
+from typing import Any, Callable, Dict, Iterable, Union
 from autobahn.asyncio.component import Component, run
 from autobahn.wamp import SubscribeOptions
 from datetime import datetime
-from adviser.utils.domain.domain import Domain
+from utils.serializable import JSONSerializable
+from utils.domain.domain import Domain
 from utils.memory import UserState
-
+import warnings
 
 # TODO where / how to add WAMP subscribe options (wildcard, prefix?) -> prefix should be default I think
 # PubSub(topics={"domain1.topicA": "arg1", domain2.topicA": "arg2"}) ==> topic->arg mapping is more flexible than arg->topic
@@ -18,11 +19,26 @@ from utils.memory import UserState
 class ControlChannelMessages:
     DIALOG_START = "dialogsystem.start"           # Triggered whenever a new dialog starts. This message has a single argument: user_id
     DIALOG_END = "dialogsystem.end"               # Triggered whenever a dialog was ended. This message has a single argument: user_id
+
     DIALOGSYSTEM_SHUTDOWN = "dialogsystem.shutdown"     # Triggered whenever a the dialog system should shut down. Will try to stop all services. This message has no arguments.
     DIALOGSYSTEM_STARTUP = "dialogsystem.startup" # TODO add event handlers, fire once DS is set up -> entry loop
 
+    _DIALOG_START_ACK = 'ack.dialogsystem.start'
+    _DIALOG_END_ACK = 'ack.dialogsystem.end'
+
+
+
+def _serialize(key: str, value: Any) -> Dict[str, Any]:
+    if isinstance(value, dict):
+        return {key: _serialize(inner_key, value[inner_key]) for inner_key in value}
+    elif isinstance(value, JSONSerializable):
+        return {key: value.to_json()}
+    else:
+        return {key: value}
+
+
 class _ServiceFunctionDelegate:
-    def __init__(self, fn: Callable, sub_topics: Union[Dict[str, str], Iterable], sub_topics_queued: Union[Dict[str, str], Iterable], pub_topics: Union[Dict[str, str], Iterable], user_id: bool, timestamps: bool) -> None:
+    def __init__(self, fn: Callable, sub_topics: Union[Dict[str, str], Iterable], sub_topics_queued: Union[Dict[str, str], Iterable], pub_topics: Iterable[str], user_id: bool, timestamps: bool) -> None:
         self.fn = fn
         self.fn_name = fn.__name__
         self.sub_topics = sub_topics if isinstance(sub_topics, dict) else {arg: arg for arg in sub_topics}
@@ -37,6 +53,11 @@ class _ServiceFunctionDelegate:
         self.call_args_cache = UserState(lambda: defaultdict(lambda: list())) # user -> data: arg_name -> List[values]
         self.timestamp_cache = UserState(lambda: defaultdict(lambda: list())) # user -> data: arg_name -> List[datetime]
 
+    def set_domain_suffix(self, domain_suffix: str):
+        self.domain_suffix = domain_suffix
+        self.suffixed_sub_topics = {topic + domain_suffix: self.sub_topics[topic] for topic in self.sub_topics}
+        self.suffixed_sub_topics_queued = {topic + domain_suffix: self.sub_topics_queued[topic] for topic in self.sub_topics_queued}
+
     def ready_for_call(self, user_id: int) -> bool:
         """
         Returns True, if at least 1 value was received for each function argument since the last call, else False.
@@ -46,13 +67,7 @@ class _ServiceFunctionDelegate:
                 return False
         return True
 
-    async def receive(self, other, user_id: int = 0, **kwargs):
-        """
-        Called whenever a value to a subscribed topic is received.
-        Will store all received values since the last function call if topic is subscribed to in queued mode, else will only remember last received value.
-        Once at least 1 value is available for each function argument, will call the function and reset the value buffers.
-        """
-        # print(f" --- RECV FOR {self.fn_name}", other, user_id, kwargs)
+    def append_values(self, user_id, **kwargs):
         now = datetime.now()
         for topic in kwargs:
             # cache call args
@@ -61,45 +76,74 @@ class _ServiceFunctionDelegate:
                 self.call_args_cache[user_id][self.sub_topics[topic]] = [kwargs[topic]]
                 if self.timestamps:
                     self.timestamp_cache[user_id][self.sub_topics[topic]] = [now]
+            elif topic in self.suffixed_sub_topics:
+                # override values that might already have been published since last function call
+                self.call_args_cache[user_id][self.suffixed_sub_topics[topic]] = [kwargs[topic]]
+                if self.timestamps:
+                    self.timestamp_cache[user_id][self.suffixed_sub_topics[topic]] = [now]
             if topic in self.sub_topics_queued:
                 # accumulate values between function calls for queued topics
                 self.call_args_cache[user_id][self.sub_topics_queued[topic]].append(kwargs[topic])
                 if self.timestamps:
                     self.timestamp_cache[user_id][self.sub_topics_queued[topic]].append(now)
+            elif topic in self.suffixed_sub_topics_queued:
+                # accumulate values between function calls for queued topics
+                self.call_args_cache[user_id][self.suffixed_sub_topics_queued[topic]].append(kwargs[topic])
+                if self.timestamps:
+                    self.timestamp_cache[user_id][self.suffixed_sub_topics_queued[topic]].append(now)
+
+
+    async def call(self, other, user_id: int = 0, **kwargs) -> Any:
+        # gather all call arguments
+        callargs = {
+            arg: self.call_args_cache[user_id][arg][0] for arg in self.sub_topics.values() # handle scalar args
+        } | {
+            arg: self.call_args_cache[user_id][arg] for arg in self.sub_topics_queued.values() # handle list-valued args
+        }
+        if self.user_id:
+            callargs['user_id'] = user_id   # add user id, if neccessary
+        if self.timestamps:
+            callargs['timestamps'] = dict(self.timestamp_cache[user_id])   # add timestamps, if neccessary
+        # then, reset arg buffers
+        self.call_args_cache[user_id] = defaultdict(lambda: list())
+        self.timestamp_cache[user_id] = defaultdict(lambda: list())
+
+        # execute function            
+        result = self.fn(other, **callargs)
+        if isawaitable(result): # handle coroutine case
+            # print("WAIT FOR RESULT")
+            result = await result
+        return result
+
+    def publish(self, other, topic: str, value: Any, user_id: int):
+        print("PUBLISHING RESULT TO", topic + self.domain_suffix)
+        serialized = _serialize(topic, value)
+        serialized["user_id"] = user_id
+        other._component._session.publish(topic + self.domain_suffix, **serialized)
+
+    async def receive(self, other, user_id: int = 0, **kwargs):
+        """
+        Called whenever a value to a subscribed topic is received.
+        Will store all received values since the last function call if topic is subscribed to in queued mode, else will only remember last received value.
+        Once at least 1 value is available for each function argument, will call the function and reset the value buffers.
+        """
+        print(f" --- RECV FOR {self.fn_name}", other, user_id, kwargs)
+        self.append_values(user_id, **kwargs)
         if self.ready_for_call(user_id):
             # function has >= 1 values for each argument -> call
-            
-            # gather all call arguments
-            callargs = {
-                arg: self.call_args_cache[user_id][arg][0] for arg in self.sub_topics.values() # handle scalar args
-            } | {
-                arg: self.call_args_cache[user_id][arg] for arg in self.sub_topics_queued.values() # handle list-valued args
-            }
-            if self.user_id:
-                callargs['user_id'] = user_id   # add user id, if neccessary
-            if self.timestamps:
-                callargs['timestamps'] = dict(self.timestamp_cache[user_id])   # add timestamps, if neccessary
-            # then, reset arg buffers
-            self.call_args_cache[user_id] = defaultdict(lambda: list())
-            self.timestamp_cache[user_id] = defaultdict(lambda: list())
-
-            # execute function            
-            result = self.fn(other, **callargs)
-            if isawaitable(result): # handle coroutine case
-                # print("WAIT FOR RESULT")
-                result = await result
-            # print("DONE")
-            # print(result)
+            result = await self.call(other=other, user_id=user_id, **kwargs)
+            # publish results, if applicable
             for pub_topic in self.pub_topics:
                 if pub_topic in result:
-                    if isinstance(self.pub_topics, dict):
-                        # if pub topics is a dictionary, don't append the domain to the topics automatically
-                        other._component._session.publish(topic=pub_topic, **{pub_topic: result[pub_topic], "user_id": user_id})
-                    else:
-                        # if pub topics is a list, append the domain to the topics automatically
-                        other._component._session.publish(topic=pub_topic + self.domain_suffix, **{pub_topic: result[pub_topic], "user_id": user_id})
-                        
+                    self.publish(other=other, topic=pub_topic, value=result[pub_topic], user_id=user_id)
+                else:
+                    msg = f"Function {self.fn} tried to publish to a topic not decared in the decorator and thus will not be published: {pub_topic}"
+                    warnings.warn(msg)
                     
+            if not isinstance(result, type(None)) and len(set(result.keys()).difference(self.pub_topics)) > 0:
+                msg = f"Function {self.fn} published only to a subset of topics, potentially missing topics: {set(result.keys()).difference(self.pub_topics)}"
+                warnings.warn(msg)
+  
 
 class Service:
     def __init__(self, identifier: str, domain: Union[str, Domain] = "", transports: str = "ws://localhost:8080/ws", realm="adviser") -> None:
@@ -117,7 +161,7 @@ class Service:
                    Choose a unique string shared between the dialog system instance and all service instances per dialog system instance.
         """
         self.domain = domain
-        self._domain_suffix = domain if isinstance(domain, str) else f".{domain.name}"
+        self._domain_suffix = domain if isinstance(domain, str) else f".{domain.get_domain_name()}"
         self._identifier = identifier
         self._component = Component(transports=transports, realm=realm)
         self._component.on_connect(self._onConnect)
@@ -134,22 +178,30 @@ class Service:
             if hasattr(func_inst, "_pubsub"):
                 # found decorated publisher / subscriber function -> setup sockets and listeners
                 delegate: _ServiceFunctionDelegate = func_inst._delegate
-                delegate.domain_suffix = self._domain_suffix
+                delegate.set_domain_suffix(self._domain_suffix)
                 # subscribe to all topics at central dispatcher
                 for topic in set(delegate.sub_topics.keys()).union(delegate.sub_topics_queued.keys()):
-                    res = session.subscribe(partial(delegate.receive, other=self), topic=topic + self._domain_suffix, options=SubscribeOptions("prefix"))
-                    # print("Subscribung to", topic)
+                    res = session.subscribe(partial(delegate.receive, other=self), topic=topic, options=SubscribeOptions("prefix"))
+                    print("Subscribung to", topic)
     
     async def _setup_ctrl_msg_channel(self, session):
         """
         Setup control channels with the dialog system, including start / stop messages and service registration with the dialog system.
         """
-        session.subscribe(self.on_dialog_start, topic=ControlChannelMessages.DIALOG_START)
-        session.subscribe(self.on_dialog_start, topic=ControlChannelMessages.DIALOG_END)
-        # print("subscribed")
+        await session.register(self._on_dialog_start,f"{ControlChannelMessages.DIALOG_START}.{self._identifier}")
+        await session.register(self._on_dialog_end, f"{ControlChannelMessages.DIALOG_END}.{self._identifier}")
         await session.register(self._register_service, f'dialogsystem.register.{self._identifier}')
         # print("registered")
         # print("Procedure name:", f'dialogsystem.register.{self._identifier}')
+
+    async def _on_dialog_start(self, user_id: int) -> bool:
+        print("DIALOG START:", self._identifier)
+        await self.on_dialog_start(user_id)
+        return True
+
+    async def _on_dialog_end(self, user_id: int) -> bool:
+        await self.on_dialog_end(user_id)
+        return False
 
     def _register_service(self) -> bool:
         print("Call REGISTER function inside service")
@@ -242,24 +294,21 @@ def PublishSubscribe(sub_topics: Union[Dict[str, str], Iterable[str]] = [], queu
         @functools.wraps(func) # we want to keep the original function signature / details
         async def delegate(self, *args, **kwargs):
             # support for calling function as either coroutine or regular function
-            # print("DELEGATE CALL", func.__name__, args, kwargs)
+            print("DELEGATE CALL", func.__name__, args, kwargs)
             if asyncio.iscoroutinefunction(func):
-                # print("ASYNC", func.__name__)
+                print("ASYNC", func.__name__)
                 result = await func(self, *args, **kwargs)
             else:
-                # print("NON-ASYNC", func.__name__)
+                print("NON-ASYNC", func.__name__)
                 result = func(self, *args, **kwargs)
         
             if result:
                 # publish messages
                 for pub_topic in pub_topics:
                     if pub_topic in result:
-                        if isinstance(self.pub_topics, dict):
-                            # if pub topics is a dictionary, don't append the domain to the topics automatically
-                            self._component._session.publish(topic=pub_topic, **{pub_topic: result[pub_topic], "user_id": kwargs["user_id"]})
-                        else:
-                            # if pub topics is a list, append the domain to the topics automatically
-                            self._component._session.publish(topic=pub_topic + self.domain_suffix, **{pub_topic: result[pub_topic], "user_id": kwargs["user_id"]})
+                        serialized = _serialize(pub_topic, result[pub_topic])
+                        serialized["user_id"] = user_id
+                        self._component._session.publish(pub_topic + self._domain_suffix, **serialized) 
             # return function result in case decorated function was called normally and not triggered by a subscription event
 
 

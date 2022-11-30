@@ -22,7 +22,6 @@
 import random
 from enum import Enum
 
-import numpy
 
 GLOBAL_SEED = None
 
@@ -41,6 +40,7 @@ def init_random(seed: int = None):
         seed (int): The seed used for all random generators.
 
     """
+    import numpy
     global GLOBAL_SEED  # pylint: disable=global-statement
     if GLOBAL_SEED is not None:
         return

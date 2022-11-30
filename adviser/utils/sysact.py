@@ -21,9 +21,12 @@
 
 from enum import Enum
 from typing import Dict, List
+from typing_extensions import override
+
+from utils.serializable import JSONSerializable
 
 
-class SysActionType(Enum):
+class SysActionType(str, Enum):
     """The type for a system action as used in :class:`SysAct`."""
 
     Welcome = 'welcomemsg'
@@ -38,7 +41,7 @@ class SysActionType(Enum):
     ConfirmRequest = 'confreq'
 
 
-class SysAct(object):
+class SysAct(JSONSerializable):
 
     def __init__(self, act_type: SysActionType = None, slot_values: Dict[str, List[str]] = None):
         """
@@ -52,6 +55,22 @@ class SysAct(object):
         """
         self.type = act_type
         self.slot_values = slot_values if slot_values is not None else {}
+
+    @override
+    def to_json(self):
+        print("SERIALIZING", {
+            "type": self.type.value,
+            "slot_values": self.slot_values
+        })
+        return {
+            "type": self.type.value,
+            "slot_values": self.slot_values
+        }
+
+    @override
+    @classmethod
+    def from_json(cls, json: dict):
+        return cls(act_type=SysActionType(json['type']), slot_values=json['slot_values'])
 
     def __repr__(self):
         return f"""SysAct(act_type={self.type}
