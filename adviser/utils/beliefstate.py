@@ -21,6 +21,8 @@
 
 import copy
 from typing import Any, Dict
+from typing_extensions import override
+from utils.useract import UserActionType
 from utils.serializable import JSONSerializable
 from utils.domain.jsonlookupdomain import JSONLookupDomain
 
@@ -44,8 +46,21 @@ class BeliefState(JSONSerializable):
     def dialog_start(self):
         self._history = [self._init_beliefstate()]
 
+    @override
+    @classmethod
+    def from_json(cls, json: Dict[str, Any]):
+        bs = cls(domain=JSONLookupDomain(name=json.pop('domain')))
+        bs._history = json
+        if 'user_acts' in bs._history:
+            bs._history['user_acts'] = set(UserActionType(act) for act in bs._history['user_acts'])
+
+
     def to_json(self) -> Dict[str, Any]:
-        return self._history[-1]
+        json = copy.deepcopy(self._history[-1])
+        json['domain'] = self.domain.get_domain_name()
+        if 'user_acts' in json:
+            json['user_acts'] = [act.value for act in json['user_acts']]
+        return json
 
     def __getitem__(self, val):  # for indexing
         # if used with numbers: int (e.g. state[-2]) or slice (e.g. state[3:6])

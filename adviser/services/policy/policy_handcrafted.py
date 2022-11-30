@@ -110,7 +110,7 @@ class HandcraftedPolicy(Service):
         elif self.first_turn[user_id]:
             self.first_turn[user_id] = False
 
-        if self.turns[user_id] >= self.max_turns[user_id]:
+        if self.turns[user_id] >= self.max_turns:
             sys_act = SysAct()
             sys_act.type = SysActionType.Bye
             sys_state["last_act"] = sys_act

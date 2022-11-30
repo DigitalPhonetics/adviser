@@ -79,7 +79,7 @@ class DomainTracker(Service):
         active_domains = [d for d in self.domains if d.get_keyword() in user_utterance]
 
         # Even if no domain has been specified, we should be able to exit
-        if "bye" in user_utterance and not self.current_domain:
+        if "bye" in user_utterance and not self.current_domain[user_id]:
             return {"sys_utterance": "Thank you, goodbye."}
 
         # if there are active domains, use the first one
@@ -90,7 +90,7 @@ class DomainTracker(Service):
 
         # if no domain is explicitely mentioned, assume the last one is still active
         elif self.current_domain[user_id]:
-            out_key = f"user_utterance.{self.current_domain.get_domain_name()}"
+            out_key = f"user_utterance.{self.current_domain[user_id].get_domain_name()}"
             return {out_key: user_utterance}
 
         # Otherwise ask the user what domain they want

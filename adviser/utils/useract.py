@@ -20,9 +20,13 @@
 """This module provides the necessary classes for a user action."""
 
 from enum import Enum
+from typing import Any, Dict
+from typing_extensions import override
+
+from utils.serializable import JSONSerializable
 
 
-class UserActionType(str, Enum):
+class UserActionType(Enum):
     """The type for a user action as used in :class:`UserAct`."""
 
     Inform = 'inform'
@@ -40,7 +44,7 @@ class UserActionType(str, Enum):
     SelectDomain = 'selectdomain'
 
 
-class UserAct(object):
+class UserAct(JSONSerializable):
     def __init__(self, text: str = "", act_type: UserActionType = None, slot: str = None,
                  value: str = None, score: float = 1.0):
         """
@@ -63,6 +67,20 @@ class UserAct(object):
         self.slot = slot
         self.value = value
         self.score = score
+
+    def to_json(self) -> Dict[str, Any]:
+        return {
+            "text": self.text,
+            "type": self.type.value,
+            "slot": self.slot,
+            "value": self.value,
+            "score": self.score
+        }
+
+    @override
+    @classmethod
+    def from_json(cls, json: Dict[str, Any]):
+        return cls(text=json['text'], act_type=UserActionType(json['type']), slot=json['slot'], value=json['value'], score=json['score'])
 
     def __repr__(self):
         return "UserAct(\"{}\", {}, {}, {}, {})".format(

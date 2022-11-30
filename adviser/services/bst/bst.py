@@ -17,7 +17,7 @@
 #
 ###############################################################################
 
-from typing import List, Set
+from typing import Any, Dict, List, Set
 from utils.domain.domain import Domain
 from utils.memory import UserState
 
@@ -39,7 +39,7 @@ class HandcraftedBST(Service):
         self.bs = UserState(lambda: BeliefState(domain))
 
     @PublishSubscribe(sub_topics=["user_acts"], pub_topics=["beliefstate"], user_id=True)
-    def update_bst(self, user_acts: List[UserAct], user_id: int) -> dict(beliefstate=BeliefState):
+    def update_bst(self, user_acts: List[Dict[str, Any]], user_id: int) -> dict(beliefstate=BeliefState):
         """
             Updates the current dialog belief state (which tracks the system's
             knowledge about what has been said in the dialog) based on the user actions generated
@@ -54,15 +54,16 @@ class HandcraftedBST(Service):
 
         """
         # save last turn to memory
+        user_acts = [UserAct.from_json(act) for act in user_acts]
         self.bs[user_id].start_new_turn()
         if user_acts:
-            self._reset_informs(user_acts)
-            self._reset_requests()
+            self._reset_informs(user_acts, user_id)
+            self._reset_requests(user_id)
             self.bs[user_id]["user_acts"] = self._get_all_usr_action_types(user_acts)
 
-            self._handle_user_acts(user_acts)
+            self._handle_user_acts(user_acts, user_id)
 
-            num_entries, discriminable = self.bs.get_num_dbmatches()
+            num_entries, discriminable = self.bs[user_id].get_num_dbmatches()
             self.bs[user_id]["num_matches"] = num_entries
             self.bs[user_id]["discriminable"] = discriminable
 

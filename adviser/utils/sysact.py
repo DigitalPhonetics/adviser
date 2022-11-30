@@ -26,7 +26,7 @@ from typing_extensions import override
 from utils.serializable import JSONSerializable
 
 
-class SysActionType(str, Enum):
+class SysActionType(Enum):
     """The type for a system action as used in :class:`SysAct`."""
 
     Welcome = 'welcomemsg'
@@ -58,10 +58,6 @@ class SysAct(JSONSerializable):
 
     @override
     def to_json(self):
-        print("SERIALIZING", {
-            "type": self.type.value,
-            "slot_values": self.slot_values
-        })
         return {
             "type": self.type.value,
             "slot_values": self.slot_values

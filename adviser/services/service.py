@@ -31,10 +31,18 @@ class ControlChannelMessages:
 def _serialize(key: str, value: Any) -> Dict[str, Any]:
     if isinstance(value, dict):
         return {key: _serialize(inner_key, value[inner_key]) for inner_key in value}
+    elif isinstance(value, list):
+        return {key: [_serialize(None, inner_value) for inner_value in value]}
     elif isinstance(value, JSONSerializable):
-        return {key: value.to_json()}
+        if not isinstance(key, type(None)):
+            return {key: value.to_json()}
+        else:
+            return value.to_json()
     else:
-        return {key: value}
+        if not isinstance(key, type(None)):
+            return {key: value}
+        else:
+            return value
 
 
 class _ServiceFunctionDelegate:
@@ -132,12 +140,14 @@ class _ServiceFunctionDelegate:
         if self.ready_for_call(user_id):
             # function has >= 1 values for each argument -> call
             result = await self.call(other=other, user_id=user_id, **kwargs)
+            if isinstance(result, type(None)):
+                return # nothing to publish
+
             # publish results, if applicable
-            for pub_topic in self.pub_topics:
-                if pub_topic in result:
-                    self.publish(other=other, topic=pub_topic, value=result[pub_topic], user_id=user_id)
-                else:
-                    msg = f"Function {self.fn} tried to publish to a topic not decared in the decorator and thus will not be published: {pub_topic}"
+            for pub_topic in result:
+                self.publish(other=other, topic=pub_topic, value=result[pub_topic], user_id=user_id)
+                if not pub_topic in self.pub_topics:
+                    msg = f"Function {self.fn} published to a topic not decared in the decorator: {pub_topic}"
                     warnings.warn(msg)
                     
             if not isinstance(result, type(None)) and len(set(result.keys()).difference(self.pub_topics)) > 0:
