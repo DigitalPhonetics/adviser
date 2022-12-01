@@ -96,38 +96,103 @@
 
 <script>
     var messages = [];
-    var connection = null;
-    var session_ibj = null;
-    let connectIntervalId;
 
-    const connect = () => {
-        connection = new autobahn.Connection({
-            url: "ws://127.0.0.1:8080/ws",
-            realm: "adviser"
-        });
-        
-        connection.onopen = function (session, details) {
-            session_obj = session;
-            console.log('opening...');
-            
-            session.subscribe('sys_utterance.ImsLecturers', onevent, {match: "prefix"});
-            console.log('subscribed...');
-
-            function onevent(args, kwargs) {
-                console.log("Event:", args, kwargs);
-                console.log(kwargs['sys_utterance'], typeof(kwargs['sys_utterance']));
-                console.log([{content: kwargs['sys_utterance']}]);
-                addSystemMessage([{content: kwargs['sys_utterance']}]);
-            }
-
-            session_obj.publish('gen_user_utterance', [], {'gen_user_utterance': ""});
-        }
-        connection.onclose = function(session, details) {
-            console.log("closing...")
-        }
-        connection.open();
+    function partialApply(fn, ...args) {
+        return fn.bind(null, ...args);
     }
-    connect();
+
+    function Sleep(milliseconds) {
+        return new Promise(resolve => setTimeout(resolve, milliseconds));
+    }
+
+    class Service {
+        constructor(identifier, transport = {url: "ws://127.0.0.1:8080/ws", realm: 'adviser'}) {
+            this._identifier = identifier
+            this._connection = new autobahn.Connection(transport);
+            this._connection.onopen = partialApply(this._on_open, this);
+            this._connection.onclose = partialApply(this._on_close, this);
+            this._session = null;
+            this.ready = false;
+        }
+
+        subscribe(session) {
+            throw new Error('You have to implement the method subscribe!');
+        }
+
+        connect() {
+            this._connection.open();
+        }
+
+        on_dialog_start(that, user_id) {
+            // event handler, overwrite if needed
+            console.log('dialog started for user', user_id);
+        }
+
+        on_dialog_end(that, user_id) {
+            // event handler, overwrite if needed
+            console.log('dialog ended for user', user_id);
+        }
+
+        _on_close(that, session, details) {
+            that._session = null;
+        }
+
+        _on_dialog_start(that, user_id) {
+            that.on_dialog_start(user_id);
+            return true;
+        }
+        
+        _on_dialog_end(user_id) {
+            this.on_dialog_end(user_id)
+            return false;
+        }
+
+        _register_service(that) {
+            console.log("Registering with dialog system...");
+            that.ready = true;
+            return true;
+        }
+        
+        _on_open(that, session, details) {
+            that._session = session;
+            // register event handlers
+            session.register(`dialogsystem.start.${that._identifier}`, partialApply(that._on_dialog_start, that));
+            session.register(`dialogsystem.end.${that._identifier}`, partialApply(that._on_dialog_end, that));
+            session.register(`dialogsystem.register.${that._identifier}`, partialApply(that._register_service, that));
+            that.subscribe(session);
+        }       
+    }
+
+    class Webui extends Service {
+        constructor(identifier = "webui", transport = {url: "ws://127.0.0.1:8080/ws", realm: 'adviser'}) {
+            super(identifier, transport);
+        }
+
+        subscribe(session) {
+            session.subscribe("sys_utterance", this.on_sys_utterance, {match: "prefix"})
+        }
+
+        on_sys_utterance(args, kwargs) {
+            console.log("Event:", args, kwargs);
+            addSystemMessage([{content: kwargs['sys_utterance']}]);
+        }
+
+        on_usr_utterance(event) {
+            let user_input = $("#userinput").val();
+            addUserMessage(user_input);
+            this._session.publish('gen_user_utterance', [], {'gen_user_utterance': user_input}); 
+        }
+
+        async start_dialog() {
+            while(!this.ready) {
+                console.log("waiting...");
+                await Sleep(1000);
+            }
+            console.log("starting");
+            this._session.publish('gen_user_utterance', [], {'gen_user_utterance': ""});
+        }
+    }
+
 
     function addUserMessage(query) {
         /*
@@ -141,6 +206,9 @@
                 <div class="message">${query}</div>
             </div>
         `);
+
+        $("#messagelist").animate({ scrollTop: $('#messagelist').prop("scrollHeight")}, 500); // scroll to newest message
+        $('#userinput').val(""); // reset text
     }
 
     function addSystemMessage(msg_list) {
@@ -159,30 +227,20 @@
         });
         sys_msg += '</div></div>';
         $("#messagelist").append(sys_msg);
+
+        $("#messagelist").animate({ scrollTop: $('#messagelist').prop("scrollHeight")}, 500); // scroll to newest message
     }
 
-    const sendMessage = (event) => {
-        console.log("session", session_obj);
-        if(session_obj !== null) {
-            let user_input = $("#userinput").val();
-            // send query, receive and render answer
-            addUserMessage(user_input);
+    const service = new Webui();
+    service.connect();
+    service.start_dialog();
 
-            session_obj.publish('gen_user_utterance', [], {'gen_user_utterance': user_input});
-
-            $("#messagelist").animate({ scrollTop: $('#messagelist').prop("scrollHeight")}, 500); // scroll to newest message
-            $('#userinput').val(""); // reset text
-        } else{
-            addSystemMessage([{content: "The system is currently disconnected. Wait for reconnect."}]);
-        }
-    }
 
     function enterKeyDown(e) {
         if(e.key === "Enter") {
-            sendMessage();
+            service.on_usr_utterance(e);
         }
     }
-
 
 </script>
 
@@ -190,7 +248,7 @@
     <div id="messagelist" class="messagebox"></div>
     <div class="footer">
         <input id="userinput" placeholder="Enter your message here" style="flex:1; display:block;" onkeydown="enterKeyDown(event)"/>
-        <button type="button" class="btn btn-primary" onclick="sendMessage(event)" style="background: #02beff; border: 0">Send</button>
+        <button type="button" class="btn btn-primary" onclick="service.on_usr_utterance(event)" style="background: #02beff; border: 0">Send</button>
     </div>
   
 </body>

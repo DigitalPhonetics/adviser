@@ -23,7 +23,6 @@ This module allows to chat with the dialog system.
 
 import argparse
 import os
-from services.service import ControlChannelMessages
 
 from services.bst import HandcraftedBST
 from services.domain_tracker.domain_tracker import DomainTracker
@@ -36,6 +35,10 @@ def load_console():
     user_in = ConsoleInput(domain="")
     user_out = ConsoleOutput(domain="")
     return [user_in, user_out]
+
+def load_webui():
+    from services.hci.webui import Webui
+    return [Webui()]
 
 
 def load_nlg(backchannel: bool, domain = None):
@@ -131,15 +134,21 @@ if __name__ == "__main__":
         domains.append(m_domain)
         services.extend(m_services)
 
-   
-    services.extend(load_console())
-
+    # load text input
+    if args.gui:
+        services.extend(load_webui())
+    else:
+        services.extend(load_console())
 
     # setup dialog system
     services.append(DomainTracker(domains=domains))
     debug_logger = logger if args.debug else None
 
     ds = DialogSystem(services=services)
-    ds.run(start_messages={"user_utterance.ImsLecturers":""})
+    if args.gui:
+        # start message will be triggered from browser, once connected
+        ds.run(start_messages={})
+    else:
+        ds.run(start_messages={"gen_user_utterance": ""})
     # ds.run(start_messages={ControlChannelMessages.DIALOG_END: False})
    

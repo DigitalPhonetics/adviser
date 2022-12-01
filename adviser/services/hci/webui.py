@@ -17,32 +17,15 @@
 #
 ###############################################################################
 
-import asyncio
+from services.service import RemoteService
 
-from services.service import PublishSubscribe
-from services.service import Service
 import webbrowser
-import asyncio
 import os
-class GUIServer(Service):
-    def __init__(self, logger=None):
-        super().__init__(domain="", identifier="GUIServer")
-        self.websocket = None
-        self.loopy_loop = asyncio.new_event_loop()
+
+class Webui(RemoteService):
+    def __init__(self, identifier="webui"):
+        super().__init__(identifier=identifier)
         # open UI in webbrowser automatically
         webui_path = f"file:///{os.path.join(os.path.realpath(''), 'tools', 'webui', 'chat.html')}"
         print("WEBUI accessible at", webui_path)
-        webbrowser.open(webui_path)
-
-    @PublishSubscribe(pub_topics=['gen_user_utterance'])
-    def user_utterance(self, message = ""):
-        return {'gen_user_utterance': message}
-
-    @PublishSubscribe(sub_topics=['sys_utterance'])
-    def forward_sys_utterance(self, sys_utterance: str):
-        self.forward_message_to_react(message=sys_utterance, topic="sys_utterance")
-
-    def forward_message_to_react(self, message, topic: str):
-        asyncio.set_event_loop(self.loopy_loop)
-        if self.websocket:
-            self.websocket.write_message({"topic": topic, "msg": message})
+        # TODO re-enable webbrowser.open(webui_path) 

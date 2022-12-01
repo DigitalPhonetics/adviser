@@ -88,7 +88,7 @@ class DialogSystem:
                 # print("REGISTER CALL FOR", component.identifier)
                 component.connected = await session.call(f'dialogsystem.register.{component.identifier}')
             except:
-                # print("retry")
+                # print("retry register", component.identifier)
                 await asyncio.sleep(0.5)
         print("-> registered component", component.identifier)
 

@@ -42,6 +42,7 @@ class ConsoleInput(Service):
     def __init__(self, identifier="ConsoleInput", domain: Union[str, Domain] = "", conversation_log_dir: str = None, transports: str = "ws://localhost:8080/ws", realm="adviser") -> None:
         super().__init__(identifier=identifier, domain=domain, transports=transports, realm=realm)
         self.conversation_log_dir = conversation_log_dir
+        self.waiting = False
     
     async def on_dialog_start(self, user_id: int):
         self.waiting = False # This flag solves the problem of waiting on multiple inputs concurrently when dealing with multiple text input sources, e.g. browser + console
@@ -57,11 +58,11 @@ class ConsoleInput(Service):
     async def get_user_utterance(self):
         # print(f"WAITING FOR UTTERANCE from {user_id}")
         utterance = await ainput(">>>")
-        self.waiting = False
         if self.conversation_log_dir is not None:
             with open(os.path.join(self.conversation_log_dir, (str(math.floor(time.time())) + "_user.txt")), "w") as conv_log:
                 conv_log.write(utterance)
         # print(" - got ", utterance)
+        self.waiting = False
         return {"gen_user_utterance": utterance}
 
 
