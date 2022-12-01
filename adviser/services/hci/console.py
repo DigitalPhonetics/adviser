@@ -43,20 +43,21 @@ class ConsoleInput(Service):
         super().__init__(identifier=identifier, domain=domain, transports=transports, realm=realm)
         self.conversation_log_dir = conversation_log_dir
     
-    # async def on_dialog_start(self, user_id: int):
-    #     # print("CONSOLE START")
-    #     await asyncio.create_task(self.user_utterance(user_id=0, turn_end=False))
+    async def on_dialog_start(self, user_id: int):
+        self.waiting = False # This flag solves the problem of waiting on multiple inputs concurrently when dealing with multiple text input sources, e.g. browser + console
 
     @PublishSubscribe(sub_topics={ControlChannelMessages.DIALOG_END: "dialog_end"})
     async def turn_end(self, dialog_end: bool):
         # print("CONSOLE START")
-        if not dialog_end:
+        if not dialog_end and not self.waiting:
+            self.waiting = True
             await asyncio.create_task(self.get_user_utterance())
         
     @PublishSubscribe(pub_topics=["gen_user_utterance"])
     async def get_user_utterance(self):
         # print(f"WAITING FOR UTTERANCE from {user_id}")
         utterance = await ainput(">>>")
+        self.waiting = False
         if self.conversation_log_dir is not None:
             with open(os.path.join(self.conversation_log_dir, (str(math.floor(time.time())) + "_user.txt")), "w") as conv_log:
                 conv_log.write(utterance)

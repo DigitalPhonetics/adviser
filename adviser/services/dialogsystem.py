@@ -38,7 +38,7 @@ class DialogSystem:
 
     async def _publish(self, topic: str, value: Any):
         while (isinstance(self._ctrl_component.__getattribute__("_session"), type(None)) or isinstance(self._ctrl_component._session, type(None))) or not all([self.components[component].connected for component in self.components]) or not all([self.components[component].active for component in self.components]):
-            print("Retry sending to", topic)
+            # print("Retry sending to", topic)
             await asyncio.sleep(0.1)
         self._ctrl_component._session.publish(topic, **{topic: value})
 

@@ -229,7 +229,7 @@ class HandcraftedPolicy(Service):
         # if the user is tyring to query by name
         else:
             if self.s_index[user_id] < len(self.current_suggestions[user_id]):
-                current_suggestion = self.current_suggestions[user_id][self.s_index]
+                current_suggestion = self.current_suggestions[user_id][self.s_index[user_id]]
                 if current_suggestion:
                     name = current_suggestion[self.domain_key]
         return name

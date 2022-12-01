@@ -141,7 +141,5 @@ if __name__ == "__main__":
 
     ds = DialogSystem(services=services)
     ds.run(start_messages={"user_utterance.ImsLecturers":""})
-    # ds.run(start_messages={"user_utterance.ImsLecturers": {
-    #     "user_id": 0,
-    #     "user_utterance": "Test Test"
-    # }})
+    # ds.run(start_messages={ControlChannelMessages.DIALOG_END: False})
+   

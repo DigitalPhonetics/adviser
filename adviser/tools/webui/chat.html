@@ -1,13 +1,17 @@
 <html>
 
 <!-- Bootstrap -->
+<script>
+    AUTOBAHN_DEBUG = true;
+</script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<script src="./autobahn.min.js" type='text/javascript'></script>
+<link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
 <style>
     .footer
@@ -92,58 +96,57 @@
 
 <script>
     var messages = [];
-    var socket = null;
+    var connection = null;
+    var session_ibj = null;
     let connectIntervalId;
 
-    function connect() {
-        socket = new WebSocket("ws://127.0.0.1:21512/ws");
-        return new Promise((resolve, reject) => {
-            socket.onmessage = (msg) => {
-                console.log('received msg', msg.data);
-                addSystemMessage([{content: msg.data}]);
-            }
-            socket.onopen = (event) => {
-                startDialog();
-                resolve(connected);
-            };
-            socket.onerror = (event) => {
-                socket = null;
-                reject(event)
-            }
-            socket.onclose = (event) => {
-                socket = null;
-                reject(event);
-            }
+    const connect = () => {
+        connection = new autobahn.Connection({
+            url: "ws://127.0.0.1:8080/ws",
+            realm: "adviser"
         });
-       
-    }
+        
+        connection.onopen = function (session, details) {
+            session_obj = session;
+            console.log('opening...');
+            
+            session.subscribe('sys_utterance.ImsLecturers', onevent, {match: "prefix"});
+            console.log('subscribed...');
 
-    async function reconnect() {
-        if(!socket){
-            await connect()
-                .then(res => {
-                    clearInterval(connectIntervalId);
-                    connectIntervalId = setInterval(reconnect, 5000); // increase wait interval after first connection to 5 seconds 
-                }).catch(err => {
-                    $("#messagelist").append(`
-                            <div class="speech-bubble-system">
-                                <div class="message">Connection error, trying to reconnect in 5 seconds</div>
-                            </div>
-                    `);
-                    clearInterval(connectIntervalId);
-                    connectIntervalId = setInterval(reconnect, 5000); // increase wait interval after first connection problem to 5 seconds
-            });
+            function onevent(args, kwargs) {
+                console.log("Event:", args, kwargs);
+                console.log(kwargs['sys_utterance'], typeof(kwargs['sys_utterance']));
+                console.log([{content: kwargs['sys_utterance']}]);
+                addSystemMessage([{content: kwargs['sys_utterance']}]);
+            }
+
         }
+        connection.onclose = function(session, details) {
+            console.log("closing...")
+        }
+        connection.open();
     }
-    connectIntervalId = setInterval(reconnect, 500); // wait 500 ms for first connect. increase wait interval afterwards
+    connect();
 
-    function startDialog() {
-        messages = [];
-        socket.send(JSON.stringify({
-            topic: "start_dialog",
-        }));
-        console.log('sent start_dialog');
-    }
+    // async function reconnect() {
+    //     if(!socket){
+    //         await connect()
+    //             .then(res => {
+    //                 clearInterval(connectIntervalId);
+    //                 connectIntervalId = setInterval(reconnect, 5000); // increase wait interval after first connection to 5 seconds 
+    //             }).catch(err => {
+    //                 $("#messagelist").append(`
+    //                         <div class="speech-bubble-system">
+    //                             <div class="message">Connection error, trying to reconnect in 5 seconds</div>
+    //                         </div>
+    //                 `);
+    //                 clearInterval(connectIntervalId);
+    //                 connectIntervalId = setInterval(reconnect, 5000); // increase wait interval after first connection problem to 5 seconds
+    //         });
+    //     }
+    // }
+    // connectIntervalId = setInterval(reconnect, 500); // wait 500 ms for first connect. increase wait interval afterwards
+
 
     function addUserMessage(query) {
         /*
@@ -169,7 +172,7 @@
         var sys_msg = '<div class="speech-bubble-system">'
         msg_list.forEach((msg) => {
             sys_msg += `<div class="system">
-				${JSON.parse(msg.content).msg}
+				${msg.content}
                 </div>
             `;
         });
@@ -177,19 +180,20 @@
         $("#messagelist").append(sys_msg);
     }
 
-    function sendMessage(event) {
-        console.log('sending msg', socket);
-        let user_input = $("#userinput").val();
-        // send query, receive and render answer
-        addUserMessage(user_input);
+    const sendMessage = (event) => {
+        console.log("session", session_obj);
+        if(session_obj !== null) {
+            let user_input = $("#userinput").val();
+            // send query, receive and render answer
+            addUserMessage(user_input);
 
-        socket.send(JSON.stringify({
-            topic: 'gen_user_utterance',
-            msg: user_input,
-        }));
+            session_obj.publish('gen_user_utterance', [], {'gen_user_utterance': user_input});
 
-        $("#messagelist").animate({ scrollTop: $('#messagelist').prop("scrollHeight")}, 500); // scroll to newest message
-        $('#userinput').val(""); // reset text
+            $("#messagelist").animate({ scrollTop: $('#messagelist').prop("scrollHeight")}, 500); // scroll to newest message
+            $('#userinput').val(""); // reset text
+        } else{
+            addSystemMessage([{content: "The system is currently disconnected. Wait for reconnect."}]);
+        }
     }
 
     function enterKeyDown(e) {
