@@ -25,6 +25,7 @@ class ControlChannelMessages:
 
     _DIALOG_START_ACK = 'ack.dialogsystem.start'
     _DIALOG_END_ACK = 'ack.dialogsystem.end'
+    _SERVICE_REGISTER = 'dialogsystem.register'
 
 
 
@@ -173,6 +174,7 @@ class Service:
         self.domain = domain
         self._domain_suffix = domain if isinstance(domain, str) else f".{domain.get_domain_name()}"
         self._identifier = identifier
+        self._delegates = {}
         self._component = Component(transports=transports, realm=realm)
         self._component.on_connect(self._onConnect)
         #self._component.on_connectfailure # TODO
@@ -193,19 +195,11 @@ class Service:
                 for topic in set(delegate.sub_topics.keys()).union(delegate.sub_topics_queued.keys()):
                     res = session.subscribe(partial(delegate.receive, other=self), topic=topic, options=SubscribeOptions("prefix"))
                     print("Subscribung to", topic)
-    
-    async def _setup_ctrl_msg_channel(self, session):
-        """
-        Setup control channels with the dialog system, including start / stop messages and service registration with the dialog system.
-        """
-        await session.register(self._on_dialog_start,f"{ControlChannelMessages.DIALOG_START}.{self._identifier}")
-        await session.register(self._on_dialog_end, f"{ControlChannelMessages.DIALOG_END}.{self._identifier}")
-        await session.register(self._register_service, f'dialogsystem.register.{self._identifier}')
-        # print("registered")
-        # print("Procedure name:", f'dialogsystem.register.{self._identifier}')
+                self._delegates[func_name] = delegate
+
 
     async def _on_dialog_start(self, user_id: int) -> bool:
-        print("DIALOG START:", self._identifier)
+        # print("DIALOG START:", self._identifier)
         await self.on_dialog_start(user_id)
         return True
 
@@ -213,12 +207,8 @@ class Service:
         await self.on_dialog_end(user_id)
         return False
 
-    def _register_service(self) -> bool:
-        print("Call REGISTER function inside service")
-        return True
-
     async def on_dialog_start(self, user_id: int):
-        print("Dialog Start", user_id)
+        # print("Dialog Start", user_id)
         pass
 
     async def on_dialog_end(self, user_id: int):
@@ -231,14 +221,26 @@ class Service:
     def _onChallenge(self, session, challenge):
         print("authentication challenge received")
 
+    async def _register(self, session):
+        sub_topics = { fn_name: list(self._delegates[fn_name].sub_topics.keys()) for fn_name in self._delegates }
+        sub_topics_queued = { fn_name: list(self._delegates[fn_name].sub_topics_queued.keys()) for fn_name in self._delegates }
+        pub_topics = { fn_name: self._delegates[fn_name].pub_topics for fn_name in self._delegates }
+
+        await session.call(ControlChannelMessages._SERVICE_REGISTER, identifier=self._identifier, sub_topics=sub_topics, sub_topics_queued=sub_topics_queued, pub_topics=pub_topics)
+
     async def _onJoin(self, session, details):
         """
         Triggered once the service component is registered with the router.
         At this point, we have a valid transport and can start subsribing to topics.
         """
         # print("JOINING", self._identifier)
-        await self._setup_ctrl_msg_channel(session)
-        self._init_pubsub(session)
+        # Setup control channels with the dialog system, including start / stop messages and service registration with the dialog system.
+        await session.register(self._on_dialog_start,f"{ControlChannelMessages.DIALOG_START}.{self._identifier}")
+        await session.register(self._on_dialog_end, f"{ControlChannelMessages.DIALOG_END}.{self._identifier}")
+
+        self._init_pubsub(session) # setup subscribers
+
+        await self._register(session) # register service with dialog system
 
     def _onLeave(self, session, details):
         print("session left")

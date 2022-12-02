@@ -1,5 +1,5 @@
 import asyncio
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, Iterable, List, Union
 from autobahn.asyncio.component import Component, run
 from autobahn.wamp import SubscribeOptions
 
@@ -21,6 +21,7 @@ class _ServiceConfiguration:
         self.active = False
 
 class DialogSystem:
+    # TODO start router 
     def __init__(self, services: List[Union[Service, RemoteService]], transports: str = "ws://localhost:8080/ws", realm="adviser") -> None:
         # organize all services (remote & local)
         self.components = {service._identifier: _ServiceConfiguration(service._identifier, service, isinstance(service, RemoteService)) for service in services}
@@ -33,13 +34,17 @@ class DialogSystem:
         self._ctrl_component.on_leave(self._onLeave)
         # self._component.on_ready # TODO
 
+        self._all_connected = asyncio.Condition()
+        self._all_active = asyncio.Condition()
+
         # stats
         self.dialog_counter = 0
 
     async def _publish(self, topic: str, value: Any):
-        while (isinstance(self._ctrl_component.__getattribute__("_session"), type(None)) or isinstance(self._ctrl_component._session, type(None))) or not all([self.components[component].connected for component in self.components]) or not all([self.components[component].active for component in self.components]):
-            # print("Retry sending to", topic)
-            await asyncio.sleep(0.1)
+     
+        async with self._all_active:
+            await self._all_active.wait_for(lambda: all([self.components[component].active for component in self.components]))
+
         self._ctrl_component._session.publish(topic, **{topic: value})
 
     async def _startup(self, tasks):
@@ -48,13 +53,17 @@ class DialogSystem:
 
     async def _on_dialog_state_changed(self, user_id: int, **kwargs):
         """ Wait for all services to reply with an ACK to the DIALOG_END message  """
-        for key in kwargs:
-            if kwargs[key] == False:
-                return
-        while (isinstance(self._ctrl_component.__getattribute__("_session"), type(None)) or isinstance(self._ctrl_component._session, type(None))) or not all([self.components[component].connected for component in self.components]):
-            await asyncio.sleep(0.1)
+        # for key in kwargs:
+        #     if kwargs[key] == False:
+        #         return
+
+        async with self._all_connected:
+            await self._all_connected.wait_for(lambda: all([self.components[component].connected for component in self.components]))
+
         for component in self.components:
             self.components[component].active = await self._ctrl_component._session.call(f"{ControlChannelMessages.DIALOG_START}.{self.components[component].identifier}", user_id=user_id)
+            async with self._all_active:
+                self._all_active.notify_all()
 
     def run(self, start_messages: Dict[str, Any] = {ControlChannelMessages.DIALOG_START: True}):
         """
@@ -77,34 +86,25 @@ class DialogSystem:
             asyncio.get_event_loop().create_task(self._startup(tasks))
         asyncio.get_event_loop().run_forever()
 
-    async def _register_component(self, session, component: _ServiceConfiguration):
+    async def _register_component(self, identifier: str, sub_topics: Dict[str, Iterable[str]], sub_topics_queued: Dict[str, Iterable[str]], pub_topics: Dict[str, Iterable[str]]):
         """
-        Register all local and remote services via RPC.
-        This function will retry to call the registration serivce remote procedure associated with component every second.
+        Register a local or remote services via RPC.
+
+        Args:
+            identifier: the realm-unique identifier
+            sub_topics: a mapping of the topics subscribed to by the component to be registered: function name -> topic names
+            sub_topics: a mapping of the queued topics subscribed to by the component to be registered: function name -> topic names
+            sub_topics: a mapping of the topics published by the component to be registered: function name -> topic names
         """
-        # print("trying to connect to component", component.identifier)
-        while not component.connected:
-            try:
-                # print("REGISTER CALL FOR", component.identifier)
-                component.connected = await session.call(f'dialogsystem.register.{component.identifier}')
-            except:
-                # print("retry register", component.identifier)
-                await asyncio.sleep(0.5)
-        print("-> registered component", component.identifier)
-
-    async def _register_components(self, session):
-        await asyncio.gather(*[self._register_component(session, self.components[component]) for component in self.components])
-        print("-- ALL SYSTEMS CONNECTED -- ")
-        # TODO check system 
-
-    async def _init_pubsub(self, session):
-        # Control channel messaging system setup
-        # print("INIT CTRL CHANNELS")
-        # TODO self._ctrl_component.subscribe(ControlChannelMessages.DIALOGSYSTEM_SHUTDOWN)
-        self._ctrl_component._session.subscribe(self._on_dialog_state_changed, topic=ControlChannelMessages.DIALOG_START, options=SubscribeOptions("prefix"))
-        self._ctrl_component._session.subscribe(self._on_dialog_state_changed, topic=ControlChannelMessages.DIALOG_END, options=SubscribeOptions("prefix"))
-            
+        # TODO use this information to draw a system graph / debugging help
+        print("trying to regiser component", identifier, "with services", sub_topics, sub_topics_queued, pub_topics)
+        self.components[identifier].connected = True
+        self.components[identifier].active = False
+        async with self._all_connected:
+            self._all_connected.notify_all()
+       
     def draw_dialog_graph(self):
+        # TODO
         pass
 
     def check_system(self):
@@ -122,11 +122,14 @@ class DialogSystem:
         Triggered once the service component is registered with the router.
         At this point, we have a valid transport and can start subsribing to topics.
         """
-        print("registering components...")
-        await self._register_components(session)
         print("init pubsub system")
-        await self._init_pubsub(session)
-        # print("pubsub running")
+        # Control channel messaging system setup
+        # print("INIT CTRL CHANNELS")
+        # TODO self._ctrl_component.subscribe(ControlChannelMessages.DIALOGSYSTEM_SHUTDOWN)
+        self._ctrl_component._session.subscribe(self._on_dialog_state_changed, topic=ControlChannelMessages.DIALOG_START, options=SubscribeOptions("prefix"))
+        self._ctrl_component._session.subscribe(self._on_dialog_state_changed, topic=ControlChannelMessages.DIALOG_END, options=SubscribeOptions("prefix"))
+        await self._ctrl_component._session.register(self._register_component, ControlChannelMessages._SERVICE_REGISTER)
+        print("Done init pubsub system")
 
     def _onLeave(self, session, details):
         print("DS: session left")

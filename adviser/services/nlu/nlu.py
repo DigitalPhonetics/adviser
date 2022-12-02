@@ -119,7 +119,6 @@ class HandcraftedNLU(Service):
             Empty dictionary
 
         """
-        print("DIALOG START")
         self.sys_act_info[user_id] = {
             'last_act': None, 'lastInformedPrimKeyVal': None, 'lastRequestSlot': None}
         self.user_acts[user_id] = []
