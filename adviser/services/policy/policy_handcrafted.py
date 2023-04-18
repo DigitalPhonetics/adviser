@@ -60,7 +60,7 @@ class HandcraftedPolicy(Service):
         self.first_turn = True
         Service.__init__(self, domain=domain)
         self.current_suggestions = []  # list of current suggestions
-        self.s_index = 0  # the index in current suggestions for the current system reccomendation
+        self.s_index = 0  # the index in current suggestions for the current system recommendation
         self.domain_key = domain.get_primary_key()
         self.logger = logger
         self.max_turns = max_turns
@@ -72,7 +72,7 @@ class HandcraftedPolicy(Service):
         self.turns = 0
         self.first_turn = True
         self.current_suggestions = []  # list of current suggestions
-        self.s_index = 0  # the index in current suggestions for the current system reccomendation
+        self.s_index = 0  # the index in current suggestions for the current system recommendation
 
     @PublishSubscribe(sub_topics=["beliefstate"], pub_topics=["sys_act", "sys_state"])
     def choose_sys_act(self, beliefstate: BeliefState) \
@@ -85,7 +85,7 @@ class HandcraftedPolicy(Service):
             To implement an alternate policy, this method may need to be overwritten
 
             Args:
-                belief_state (BeliefState): a BeliefState obejct representing current system
+                belief_state (BeliefState): a BeliefState object representing current system
                                            knowledge
 
             Returns:
@@ -93,6 +93,12 @@ class HandcraftedPolicy(Service):
                         action
 
         """
+        #################################################################################################
+        # TODO: Finish the TODO parts inside this method.                                               #
+        #       To help, open: utils/sysact.py for a full list of system actions you                    #
+        #       can return in this method                                                               #
+        #################################################################################################
+
         self.turns += 1
         # do nothing on the first turn --LV
         sys_state = {}
@@ -107,6 +113,7 @@ class HandcraftedPolicy(Service):
         elif self.first_turn:
             self.first_turn = False
 
+
         if self.turns >= self.max_turns:
             sys_act = SysAct()
             sys_act.type = SysActionType.Bye
@@ -115,40 +122,31 @@ class HandcraftedPolicy(Service):
 
         # removes hello and thanks if there are also domain specific actions
         self._remove_gen_actions(beliefstate)
+        
 
+        # TODO: check if there is a bad act in the BST, if so, return a bad system act
         if UserActionType.Bad in beliefstate["user_acts"]:
-            sys_act = SysAct()
-            sys_act.type = SysActionType.Bad
-        # if the action is 'bye' tell system to end dialog
+            pass
+
+        # TODO: check if the action is 'bye', if so, return a bye act
         elif UserActionType.Bye in beliefstate["user_acts"]:
-            sys_act = SysAct()
-            sys_act.type = SysActionType.Bye
-        # if user only says thanks, ask if they want anything else
-        elif UserActionType.Thanks in beliefstate["user_acts"]:
-            sys_act = SysAct()
-            sys_act.type = SysActionType.RequestMore
-        # If user only says hello, request a random slot to move dialog along
-        elif UserActionType.Hello in beliefstate["user_acts"] or UserActionType.SelectDomain in beliefstate["user_acts"]:
-            # as long as there are open slots, choose one randomly
-            if self._get_open_slot(beliefstate):
-                sys_act = SysAct()
-                sys_act.type = SysActionType.Request
-                slot = self._get_open_slot(beliefstate)
-                sys_act.add_value(slot)
+            pass
 
-            # If there are no more open slots, ask the user if you can help with anything else since
-            # this can only happen in the case an offer has already been made --LV
-            else:
-                sys_act = SysAct()
-                sys_act.type = SysActionType.RequestMore
+        # TODO: check if "thanks" is in the user act part of the beliefstate, if so, ask if they want anything else (reqMore)
 
-            # If we switch to the domain, start a new dialog
-            if UserActionType.SelectDomain in beliefstate["user_acts"]:
-                self.dialog_start()
-            self.first_turn = False
+
+        # TODO: check is 'hello' is in the in the user act part of the beliefstate, if so:
+        #  check if there are open slots (using the policy's .get_open_slot() method, with the beliefstate as the argument), 
+        #  if so, request a random slot to move dialog along
+        #  (To add a slot to a SysAct, object you can use the .add_value() method with the name of the slot as an argument)
+            
+        #  If there are no more open slots, ask the user if you can help with anything else since
+        #  this can only happen in the case an offer has already been made --LV
+
         # handle domain specific actions
         else:
             sys_act, sys_state = self._next_action(beliefstate)
+
         if self.logger:
             self.logger.dialog_turn("System Action: " + str(sys_act))
         if "last_act" not in sys_state:
@@ -298,12 +296,14 @@ class HandcraftedPolicy(Service):
             sys_act.type = SysActionType.Bad
             return sys_act, {'last_act': sys_act}
 
+        # If user has requested an alternative recommendation and there are no constraints, this is a bad act
         elif UserActionType.RequestAlternatives in beliefstate['user_acts'] \
                 and not self._get_constraints(beliefstate)[0]:
             sys_act = SysAct()
             sys_act.type = SysActionType.Bad
             return sys_act, {'last_act': sys_act}
 
+        # 
         elif self.domain.get_primary_key() in beliefstate['informs'] \
                 and not beliefstate['requests']:
             sys_act = SysAct()
@@ -350,7 +350,6 @@ class HandcraftedPolicy(Service):
         sys_act = SysAct()
         # if there is more than one result
         if len(q_res) > 1 and not beliefstate['requests']:
-            constraints, dontcare = self._get_constraints(beliefstate)
             # Gather all the results for each column
             temp = {key: [] for key in q_res[0].keys()}
             # If any column has multiple values, ask for clarification
@@ -370,7 +369,7 @@ class HandcraftedPolicy(Service):
 
     def _gen_next_request(self, temp: Dict[str, List[str]], belief_state: BeliefState):
         """
-            Calculates which slot to request next based asking for non-binary slotes first and then
+            Calculates which slot to request next based asking for non-binary slots first and then
             based on which binary slots provide the biggest reduction in the size of db results
 
             NOTE: If the dataset is large, this is probably not a great idea to calculate each turn
@@ -394,7 +393,7 @@ class HandcraftedPolicy(Service):
         for slot in non_bin_slots:
             if len(set(temp[slot])) > 1:
                 return slot
-        # Otherwise look to see if there are differnces in binary slots
+        # Otherwise look to see if there are differences in binary slots
         return self._highest_info_gain(bin_slots, temp)
 
     def _highest_info_gain(self, bin_slots: List[str], temp: Dict[str, List[str]]):
