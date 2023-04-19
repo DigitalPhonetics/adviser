@@ -140,6 +140,8 @@ For pip users, the following installation instructions worked:
 
 1. Install the system library requirements as stated above (using ``homebrew``).
 
+2. Install additional reqiuirements: `brew install rust` and `brew install portaudio`
+
 2.  pip install -i https://pypi.anaconda.org/numba/label/wheels_experimental_m1/simple numba
 
 3. Remove pyaudio from the requirements file and instead execute this command to install pyaudio:
