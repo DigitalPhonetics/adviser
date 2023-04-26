@@ -1,0 +1,96 @@
+# user informable slots are name, department and position
+
+rule inform(name)
+    "I want {synonyms("name", name)}"
+
+rule inform(primary_uniform_color)
+    "{primary_uniform_color}"
+    "the uniform should be {primary_uniform_color}"
+
+rule inform(main_superpower)
+    "{main_superpower}"
+    "I want them to be good at {main_superpower}"
+
+rule inform(loyalty)
+    "{loyalty}"
+    "they should be part of {loyalty}"
+
+# All slots are requestable
+
+
+rule request(primary_uniform_color)
+    "what is their {slot_synonyms("primary_uniform_color")}"
+
+rule request(main_superpower)
+    "what is their{slot_synonyms("main_superpower")}"
+
+rule request(name)
+    "What is their name"
+
+rule request(last_known_location)
+    "what is their {slot_synonyms("last_known_location")}"
+
+rule request(loyalty)
+    "what is their {slot_synonyms("loyalty")}"
+
+rule request(description)
+    "what is their {slot_synonyms("description")}"
+
+rule request(real_name)
+    "what is their {slot_synonyms("real_name")}"
+
+
+
+# synonyms
+
+function synonyms(slot, value)
+    "{value}"
+  
+    #add_if slot = "name"
+
+    #add_if slot = "last_known_location"
+
+    #add_if slot = "description"
+
+    #add_if slot = "real_name"
+
+    add_if slot = "main_superpower"
+        if value = "strength"
+            "super strength"
+        if value = "martial arts"
+            "fighting"
+    
+    add_if slot = "loyalty"
+        if value = "he works best alone"
+            "alone"
+            "himself"
+
+
+function slot_synonyms(slot)
+    "{IMPOSSIBLEREGEX()}"
+
+    if slot = "name"
+        "name"
+        "{domain_vocab()}('s)? name"
+        "name of the {domain_vocab()}"
+    if slot = "primary_uniform_color"
+        "colo(u)?r(s)?"
+        "(primary|main) colo(u)?r(s)?"
+    if slot = "main_superpower"
+        "(main|primary)? skill(s)?"
+        "(main|primary)? power(s)?"
+        "(main|primary)? talent(s)?"
+    if slot = "last_known_location"
+        "location"
+        "address"
+        "last (known)? location"
+        "last (known)? address"
+    if slot = "loyalty"
+        "loyalty"
+        "team"
+    if slot = "description"
+        "description"
+    if slot = "real_name"
+        "secret identity"
+        "real name"
+        "alias(es)?"
