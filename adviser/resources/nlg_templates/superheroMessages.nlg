@@ -1,0 +1,66 @@
+# ---------------NEW RULES - SUPERHERO MESSAGES-------------------------
+
+template welcomemsg(): "Welcome to the SuperherO Support (SOS)  chat bot. How may I help you?"
+template welcomemsg(help): "Sorry, I cannot understand you. Please tell me again what you are looking for."
+template welcomemsg(more) : "Can I help you with anything else?"
+template bad() : "Sorry I am a bit confused; please tell me again what you are looking for."
+template closingmsg() : "Thank you, goodbye."
+
+# System Requests
+
+template request(primary_uniform_color): "What should be the primary color of the superhero's uniform?"
+# TODO: add request templates for other requestable slots
+
+# Rules for System Inform
+
+function info(slot, value, name)
+	if slot = "loyality": "works with the following organisation: \"{value}\""
+    # TODO: add if condition for other informable slots
+
+# -------------------------Only Name Slot-----------------------------------#
+
+template inform_byname(name)
+	"There is a superhero called {name}. What do you want to know about them?"
+
+	special_case name = "none"
+		"I’m sorry, I could not find this superhero."
+
+
+#------------------------ Name Slot + Slots----------------------------------#
+
+# TODO: add template for inform by name
+
+# Template for inform_by_alternatives
+template inform_alternatives(name, *slots)
+	"The superhero {name} also {for_entry(slots, "info", ", they ", " and they ", name)}."
+
+
+# ----------------------------System Confirm----------------------------------#
+
+# TODO: write template for confirm without slots
+
+# TODO: write template for confirm with name and addtional slots
+
+# TODO: write template for confirm without name, but with slots 
+
+# ---------------------------System RequestMore------------------------------#
+
+# TODO: write template for reqmore without any slots
+
+template reqmore(primary_uniform_color)
+	if primary_uniform_color = "dontcare"
+		"Would you like me to look for a superhero wearing any uniform color?"
+
+# TODO write templates for reqmore for other requestables
+
+# ---------------------------System Select----------------------------------#
+
+template select(*slot)
+	"Sorry, would you like to have a superhero {for_entry(slot, "info_or_dontcare_list", "", "")}?"
+
+function info_or_dontcare_list(slot, value_list)
+	"{for(value_list, "info_or_dontcare", ", ", " or ", slot)}"
+
+function info_or_dontcare(value, slot)
+	"which {info(slot, value, "none")}"
+	special_case value = "dontcare": "you don't care"

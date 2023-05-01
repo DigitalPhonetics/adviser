@@ -99,6 +99,7 @@ class HandcraftedPolicy(Service):
         #       can return in this method                                                               #
         #################################################################################################
 
+        sys_act = None 
         self.turns += 1
         # do nothing on the first turn --LV
         sys_state = {}
