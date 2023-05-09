@@ -1,4 +1,4 @@
-from examples.ml_nlu.MLNLU import MLNLU
+from services.nlu import MLNLU
 
 # This will download a pre-trained NLU (MultiWoz domain: Restaurants, Hotels, Transportation, ...)
 # More info on the domains: https://github.com/budzianowski/multiwoz/tree/master/data/MultiWOZ_2.2

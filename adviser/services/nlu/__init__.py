@@ -18,3 +18,5 @@
 ###############################################################################
 
 from .nlu import HandcraftedNLU
+from .t5nlu import T5NLU
+from .MLNLU import MLNLU

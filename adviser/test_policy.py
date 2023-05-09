@@ -42,7 +42,11 @@ if __name__ == '__main__':
     nlg = PassThroughNLG(domain=domain)
     # user_out = ConsoleOutput(domain=domain)
 
-    ds = DialogSystem(services=[domain_tracker, nlu, bst, policy, nlg, gui_service]) 
+    ds = DialogSystem(services=[domain_tracker,nlu, bst, policy, nlg, gui_service])
+    error_free = ds.is_error_free_messaging_pipeline()
+    if not error_free:
+        ds.print_inconsistencies()
+        ds.draw_system_graph()
   
     class SimpleWebSocket(tornado.websocket.WebSocketHandler):
         def open(self, *args):
