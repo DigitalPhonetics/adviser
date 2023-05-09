@@ -47,7 +47,7 @@ class MLNLU(Service):
     def dialog_start(self) -> dict:
         """
         Sets the previous system act as None.
-        This function is called when the dialog starts
+        This function is called when the dialog starts to make sure the state is always reset before a new dialog is started
 
         Returns:
             Empty dictionary
