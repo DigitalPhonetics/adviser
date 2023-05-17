@@ -16,7 +16,7 @@ In order to create a new domain, you need an SQLite database with the following 
 As a note, it is also possible to create a new domain with an API backend instead of a fixed database, but in this case, it may not be possible to use the ontology generation tool shown in the next session.
 
 ### Ontology
-Once you have a database, the next step is to create an ontology for the new domain. This can be done using the ontology creation tool provided with ADVISER 2.0. The tool is located in the folder `resources/ontologies/create_ontology.py`
+Once you have a database, the next step is to create an ontology for the new domain. This can be done using the ontology creation tool provided with ADVISER 2.0. The tool is located in the folder `tools/create_ontology.py`
 
 To use the tool, open a terminal and navigate to the folder with the ontology creation tool. The tool can then be called by typing the following command:
 ```bash
