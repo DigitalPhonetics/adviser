@@ -246,9 +246,9 @@ if __name__ == "__main__":
 
     # ask user about filename
     filename_ont = os.path.abspath(
-        os.path.join(os.path.dirname(os.path.abspath(__file__)), f'../../resources/ontologies/{domain}.json'))
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), f'../resources/ontologies/{domain}.json'))
     filename_db = os.path.abspath(
-        os.path.join(os.path.dirname(os.path.abspath(__file__)), f'../../resources/databases/{domain}.db'))
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), f'../resources/databases/{domain}.db'))
     questions = [
         {
             'type': 'input',
