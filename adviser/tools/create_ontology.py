@@ -25,23 +25,9 @@ import os
 import shutil
 import sqlite3
 import sys
-import importlib
+from typing import List
 
-from PyInquirer import prompt, style_from_dict, Token
-
-# taken from the examples package from PyInquirer: https://github.com/CITGuru/PyInquirer/blob/master/examples/__init__.py
-# (this way the examples package does not interfere with our examples sub-package)
-custom_style_2 = style_from_dict({
-    Token.Separator: '#6C6C6C',
-    Token.QuestionMark: '#FF9D00 bold',
-    #Token.Selected: '',  # default
-    Token.Selected: '#5F819D',
-    Token.Pointer: '#FF9D00 bold',
-    Token.Instruction: '',  # default
-    Token.Answer: '#5F819D bold',
-    Token.Question: '',
-})
-
+import inquirer
 
 class DatabaseTable(object):
     def __init__(self, name):
@@ -93,7 +79,7 @@ class Database(object):
 
             # add user and system actions
         
-    def get_tables(self):
+    def get_tables(self) -> List[str]:
         return list(self.tables.keys())
 
     def get_slots(self, table):
@@ -110,53 +96,24 @@ def get_defaults():
 def run_questions(db: Database):
     # initialize with default values
     answers = get_defaults()
-
+    
+    db_table_names = db.get_tables()
+    assert len(db_table_names) > 0, "Your database does not contain any tables"
     questions = [
-        {
-            'type': 'list',
-            'qmark': '>>>',
-            'message': 'Select table to create ontology for',
-            'name': 'table',
-            'choices': [{'key': str(id), 'name': table, 'value': table} for id, table in enumerate(db.get_tables())],
-            'validate': lambda answer: 'You must choose at least one table.' \
-                if len(answer) == 0 else True
-        },
-        {
-            'type': 'input',
-            'qmark': '>>>',
-            'message': 'Enter the name of the domain:',
-            'name': 'domain',
-            'default': lambda answers: answers['table']
-        },
-        {
-            'type': 'list',
-            'qmark': '>>>',
-            'name': 'key',
-            'message': 'Which slot will be used as key? (The key uniquely identifies an entity in the database, e.g. the name in case of restaurants)',
-            'choices': lambda answers: [{'name': slot} for slot in db.get_slots(answers['table'])]
-        },
-        {
-            'type': 'checkbox',
-            'qmark': '>>>',
-            'name': 'requestable',
-            'message': 'Select user requestables',
-            'choices': lambda answers: [{'name': slot, 'checked': slot != 'id'} for slot in db.get_slots(answers['table'])]
-        },
-        {
-            'type': 'checkbox',
-            'qmark': '>>>',
-            'name': 'system_requestable',
-            'message': 'Select system requestables',
-            'choices': lambda answers: [{'name': slot} for slot in db.get_slots(answers['table'])]
-        },
-        {
-            'type': 'checkbox',
-            'qmark': '>>>',
-            'name': 'informable',
-            'message': 'Select informable slots',
-            'choices': lambda answers: [{'name': slot} for slot in db.get_slots(answers['table'])]
-        }]
-    answers_ = prompt(questions, style=custom_style_2)
+        inquirer.List(name='table', message='Select table to create ontology for', default=db_table_names[0],
+             choices=db_table_names, validate=True, carousel=True),
+        inquirer.Text(name='domain', message="Enter the name of the domain", default=lambda answers: answers['table']),
+        inquirer.List(name='key', message='Which slot will be used as key? (The key uniquely identifies an entity in the database, e.g. the name in case of restaurants)',
+                      choices=lambda answers: db.get_slots(answers['table'])),
+        inquirer.Checkbox(name='requestable', message='Select user requestables',
+                          choices=lambda answers: db.get_slots(answers['table'])),
+        inquirer.Checkbox(name='system_requestable', message='Select system requestables',
+                          choices=lambda answers: db.get_slots(answers['table'])),
+        inquirer.Checkbox(name='informable', message='Select informable slots',
+                          choices=lambda answers: db.get_slots(answers['table']))   
+    ]
+  
+    answers_ = inquirer.prompt(questions)
     # check whether there are answers (e.g. if the user cancels the prompt using Ctrl+c)
     if not answers_:
         exit()
@@ -164,30 +121,24 @@ def run_questions(db: Database):
     
     # get values for informable slots
     questions = [
-        {
-            'type': 'checkbox',
-            'qmark': '>>>',
-            'name': slot,
-            'message': f'Select values for informable slot {slot}',
-            'choices': [{'name': value, 'checked': value != 'dontcare'} for value in db.get_slot_values(answers['table'], slot)]
-        } for slot in answers['informable']
+        inquirer.Checkbox(name=slot, message=f'Select values for informable slot {slot}', 
+                          choices=db.get_slot_values(answers['table'], slot),
+                          default=[value for value in db.get_slot_values(answers['table'], slot) if value != 'dontcare'])
+        for slot in answers['informable']
     ]
+    values = inquirer.prompt(questions)
 
-    values = prompt(questions, style=custom_style_2)
     # merge informable slot values with informable slots
     answers['informable'] = {slot: values[slot] for slot in answers['informable'] if slot in values}
 
     # get binary slots
+    binary_slot_candidates = set([slot for slot in list(answers['informable'].keys()) + answers['requestable'] + answers['system_requestable']])
     questions = [
-        {
-            'type': 'checkbox',
-            'qmark': '>>>',
-            'name': 'binary',
-            'message': 'Select binary slots',
-            'choices': [{'name': slot, 'checked': set(db.get_slot_values(answers['table'], slot)) == {'true', 'false'}} for slot in list(answers['informable'].keys()) + answers['requestable'] + answers['system_requestable']]
-        }
+        inquirer.Checkbox(name='binary', message='Select binary slots',
+                          choices=binary_slot_candidates,
+                          default=[slot for slot in binary_slot_candidates if db.get_slot_values(answers['table'], slot) == {'true', 'false'}])
     ]
-    answers_ = prompt(questions, style=custom_style_2)
+    answers_ = inquirer.prompt(questions)
     # check whether there are answers (e.g. if the user cancels the prompt using Ctrl+c)
     if not answers_:
         exit()
@@ -224,14 +175,10 @@ if __name__ == "__main__":
         print("The ontology looks like the following:")
         ont = {key: answers[key] for key in filter(lambda key: key not in ['table', 'domain', 'discourseAct', 'method'], answers.keys())} # exclude some keys
         print(json.dumps(ont, indent=4, sort_keys=True))
-        questions = [{
-            'type': 'confirm',
-            'qmark': '>>>',
-            'message': 'Do you want to change anything?',
-            'name': 'ask_questions',
-            'default': False,
-        }]
-        ask_questions = prompt(questions, style=custom_style_2)
+        questions = [
+            inquirer.Confirm(name='ask_questions', default=False, message='Do you want to change anything?')
+        ]
+        ask_questions = inquirer.prompt(questions)
         # check whether there are answers (e.g. if the user cancels the prompt using Ctrl+c)
         if not ask_questions:
             exit()
@@ -246,43 +193,30 @@ if __name__ == "__main__":
 
     # ask user about filename
     filename_ont = os.path.abspath(
-        os.path.join(os.path.dirname(os.path.abspath(__file__)), f'../../resources/ontologies/{domain}.json'))
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), f'../resources/ontologies/{domain}.json'))
     filename_db = os.path.abspath(
-        os.path.join(os.path.dirname(os.path.abspath(__file__)), f'../../resources/databases/{domain}.db'))
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), f'../resources/databases/{domain}.db'))
     questions = [
-        {
-            'type': 'input',
-            'qmark': '>>>',
-            'message': 'Enter the path including the filename where the ontology will be stored:',
-            'name': 'filename_ont',
-            'default': filename_ont
-        },
-        {
-            'type': 'confirm',
-            'qmark': '>>>',
-            'message': 'Do you want to save the database?',
-            'name': 'save_db',
-            'default': True,
-        },
-        {
-            'type': 'input',
-            'qmark': '>>>',
-            'message': 'Enter the path including the filename where the database will be stored:',
-            'name': 'filename_db',
-            'default': filename_db,
-            'when': lambda answers: answers.get('save_db', True)
-        }
+        inquirer.Path(name='filename_ont', message='Enter the path including the filename where the ontology will be stored',
+                      default=filename_ont),
+        inquirer.Confirm(name='save_db', default=True, message='Do you want to save the database?'),
     ]
-    filenames = prompt(questions, style=custom_style_2)
+    filenames = inquirer.prompt(questions)
 
     # check whether there are answers (e.g. if the user cancels the prompt using Ctrl+c)
     if not filenames:
         exit()
-    
+
     # save ontology
     with open(filenames['filename_ont'], 'w') as fp:
         json.dump(answers, fp, indent=4, sort_keys=True)
 
     # save database
     if filenames['save_db']:
+        questions = [
+            inquirer.Path(name='filename_db', default=filename_db, message='Enter the path including the filename where the database will be stored')
+        ]
+        filenames_ = inquirer.prompt(questions)
+        filenames.update(filenames_)
         shutil.copy2(args.database, filenames['filename_db'])
+  
